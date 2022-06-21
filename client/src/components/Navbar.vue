@@ -21,13 +21,19 @@
       <div class="collapse navbar-collapse" id="navbarsExample07XL">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <router-link to="/">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">My Digimon</a>
+            <router-link to="/mydigimon">
+              <a class="nav-link active" href="#">My Digimon</a>
+            </router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">Topup</a>
+            <router-link to="/topup">
+              <a class="nav-link active" href="#">Topup</a>
+            </router-link>
           </li>
           <!-- <li class="nav-item dropdown">
             <a
@@ -71,13 +77,22 @@
         <!-- <button class="btn btn-primary" style="margin-right: 30px">
             Topup
           </button> -->
-        <button class="btn btn-danger">Logout</button>
+        <button @click="clickLogout" class="btn btn-danger">Logout</button>
       </div>
     </div>
   </nav>
 </template>
 <script>
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useMainStore } from "../stores";
-export default {};
+export default {
+  methods: {
+    ...mapActions(useMainStore, ["setIsLogin"]),
+    clickLogout: function () {
+      localStorage.clear();
+      this.setIsLogin(false);
+      this.$router.push("/login");
+    },
+  },
+};
 </script>

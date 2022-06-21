@@ -48,7 +48,9 @@
             </button>
           </div>
           <div class="col-4 align-items-center m-auto">
-            <a href="#">Sign Up !?</a>
+            <router-link to="/register">
+              <a href="#">Sign Up !?</a>
+            </router-link>
           </div>
         </div>
       </form>

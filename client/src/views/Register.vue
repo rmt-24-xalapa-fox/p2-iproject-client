@@ -55,7 +55,9 @@
             </button>
           </div>
           <div class="col-4 align-items-center m-auto">
-            <a href="#">Login !?</a>
+            <router-link to="/login">
+              <a href="#">Login !?</a>
+            </router-link>
           </div>
         </div>
       </form>

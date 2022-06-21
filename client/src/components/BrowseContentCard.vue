@@ -4,9 +4,10 @@ export default {
 };
 </script>
 <template>
-  <div class="card text-center mb-3" style="height: 17vh; width: 100%">
-    <div class="card-body">
-      <h5 class="card-title">Title: <i>Test Browse</i></h5>
+  <div class="card text-center mb-3" style="height: 20vh; width: 100%">
+    <div class="card-body" style="padding: 1rem">
+      <h5 class="card-title"><i>Test Browse</i></h5>
+      <p style="margin-bottom: 0">By: author</p>
     </div>
     <div class="div card-footer d-flex justify-content-end border-1 bg-footer">
       <div>

@@ -1,7 +1,7 @@
-import { createApp, markRaw } from '../node_modules/vue/dist/vue'
-import { createPinia } from '../node_modules/pinia/dist/pinia'
-import VueSweetalert2 from '../node_modules/vue-sweetalert2/dist/index';
-import '../node_modules/sweetalert2/dist/sweetalert2'
+import { createApp, markRaw } from 'vue'
+import { createPinia } from 'pinia'
+import VueSweetalert2 from 'vue-sweetalert2';
+
 import App from './App.vue'
 import router from './router'
 

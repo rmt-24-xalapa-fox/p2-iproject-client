@@ -29,7 +29,7 @@ export const useMainStore = defineStore({
           icon: 'success'
         })
         localStorage.setItem("access_token", response.data.access_token)
-        // this.router.push('/')
+        this.router.push('/')
       }
       catch(err){
         console.log(err)

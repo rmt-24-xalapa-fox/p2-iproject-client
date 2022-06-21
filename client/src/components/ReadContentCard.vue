@@ -21,9 +21,12 @@ export default {
     style="height: 100%; width: 100%"
   >
     <div class="card-body" style="padding-left: 30%; padding-right: 30%">
-      <h3 class="card-title">
+      <h2 class="card-title">
         <i>{{ poemDetail.title }}</i>
-      </h3>
+      </h2>
+      <p>
+        By: {{poemDetail.author}}
+      </p>
       <p style="font-size: 20px">
         {{ poemDetail.content }}
       </p>

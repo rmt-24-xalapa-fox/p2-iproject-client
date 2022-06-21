@@ -6,14 +6,17 @@ export const useUserStore = defineStore('user', {
     return {
       baseUrl: `http://localhost:4000`,
       province: [],
-      city: []
+      city: [],
+      isLogin: false
     }
   },
   getters: {
 
   },
   actions: {
-
+    setIsLogin(status = false) {
+      this.isLogin = status
+    },
     getProvince() {
       return new Promise(async (resolve, reject) => {
         try {
@@ -66,7 +69,8 @@ export const useUserStore = defineStore('user', {
             email: data.email,
             password: data.password
           })
-          console.log(response.data.access_token);
+          // console.log(response.data.access_token);
+          this.isLogin = true
           localStorage.setItem("access_token", response.data.access_token)
           resolve()
         }

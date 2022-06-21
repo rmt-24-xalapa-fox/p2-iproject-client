@@ -10,7 +10,7 @@ export default {
     HeroSection,
   },
   methods: {
-    ...mapActions(useStore, ["fetchCarts", "moveToRoute"]),
+    ...mapActions(useStore, ["fetchCarts", "moveToRoute", "fetchCities"]),
     formatToRupiah(val) {
       return val.toLocaleString("id-ID", {
         style: "currency",
@@ -20,7 +20,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(useStore, ["carts"]),
+    ...mapState(useStore, ["carts", "cities"]),
     totalPrice() {
       let sum = 0;
       this.carts.forEach((el) => {
@@ -31,15 +31,17 @@ export default {
   },
   created() {
     this.fetchCarts();
+    this.fetchCities().then(() => console.log(this.cities));
   },
 };
 </script>
 
 <template>
   <div>
-    <Navbar /> <HeroSection title="Order Review" />
+    <Navbar /> <HeroSection title="Your Order" />
     <div v-if="carts" class="order-review-container">
-      <h1>Your Order</h1>
+      <!-- <h1>Your Order</h1> -->
+      <h2>Books Ordered</h2>
       <table>
         <thead>
           <th>Title</th>
@@ -65,7 +67,35 @@ export default {
           </tr>
         </tbody>
       </table>
-      <!-- <button class="btn btn-card width-normal">Continue Order</button> -->
+      <h2>Shipping Information</h2>
+      <form action="">
+        <input
+          list="city"
+          autocomplete="off"
+          class="input-box"
+          type="text"
+          name=""
+          id=""
+          placeholder="Destination City"
+        />
+        <datalist id="city">
+          <option
+            v-for="city in cities"
+            :key="city.city_id"
+            :value="city.city_name"
+          >
+            {{ city.city_name }}
+          </option>
+        </datalist>
+
+        <input
+          class="input-box"
+          type="text"
+          name=""
+          id=""
+          placeholder="Your Address"
+        />
+      </form>
     </div>
   </div>
 </template>

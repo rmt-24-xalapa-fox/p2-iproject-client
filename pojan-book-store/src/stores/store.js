@@ -12,6 +12,7 @@ export const useStore = defineStore({
     wishlists: [],
     carts: [],
     categories: [],
+    cities: [],
     accessToken: "",
     book: null,
   }),
@@ -222,6 +223,18 @@ export const useStore = defineStore({
       try {
         const response = await axios.get(`${this.baseUrl}/categories`);
         this.categories = response.data.data;
+      } catch (err) {
+        this.showError(err);
+      }
+    },
+    async fetchCities() {
+      try {
+        const response = await axios.get(`${this.baseUrl}/shipping/cities`, {
+          headers: {
+            access_token: this.accessToken,
+          },
+        });
+        this.cities = response.data.data;
       } catch (err) {
         this.showError(err);
       }

@@ -564,7 +564,9 @@ body {
   color: #fdf2e9;
 }
 .btn.btn-card.btn-checkout:hover {
-  border-color: #e67e22;
+  /* border-color: #e67e22; */
+  background-color: aqua;
+  color: #272523;
 }
 
 /* ********************** */
@@ -573,7 +575,7 @@ body {
 
 .order-review-container {
   background-color: #debc9f;
-  min-height: 100px;
+  min-height: 1000px;
 
   padding: 4rem;
   margin: 6rem 25rem;
@@ -588,6 +590,13 @@ body {
 
 .order-review-container h1 {
   font-size: 3rem;
+}
+
+.order-review-container h2 {
+  font-size: 2rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  /* align-self: flex-start; */
 }
 
 .order-review-container table {
@@ -618,13 +627,13 @@ body {
 }
 
 .input-box {
-  font-size: 1.2rem;
-  padding: 1rem;
+  font-size: 1.6rem;
+  padding: 1.5rem;
   border-radius: 0.7rem;
   border: none;
   border: 1px solid transparent;
-
-  text-align: center;
+  width: 400px;
+  color: #484644;
 }
 
 .input-box:focus {
@@ -634,4 +643,10 @@ body {
 
 .btn.btn-card.width-normal {
   width: 20%;
+}
+
+.order-review-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }

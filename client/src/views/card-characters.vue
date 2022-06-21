@@ -3,10 +3,11 @@ import { PUBLIC_KEY } from "../API/marvel-api-keys";
 import axios from "axios";
 import { mapState } from "pinia";
 import { useMaarvelStore } from "../stores/marvel";
+import CardCharacters from "../components/cardCharacters.vue";
 
 export default {
   name: "card",
-  components: {},
+  components: { CardCharacters },
   data() {
     return {
       characters: [],
@@ -53,64 +54,14 @@ export default {
     >
   </h2>
 
-  <div class="cards" v-for="(character, i) in characters" :key="i" :character="character">
-    <figure class="card">
-      <img :src="character.url" />
+  <div class="cards">
+    <CardCharacters
+      v-for="(character, i) in characters"
+      :key="i"
+      :character="character"
+    />
 
-      <figcaption>{{ character.name }}</figcaption>
-      <!-- <h1>{{ this.character.thumbnail.path }}</h1> -->
-    </figure>
-
-    <!-- <figure class="card">
-      <img src="https://mrreiha.keybase.pub/codepen/hover-fx/2.jpg" />
-
-      <figcaption>Stick Fight</figcaption>
-    </figure>
-
-    <figure class="card">
-      <img src="https://mrreiha.keybase.pub/codepen/hover-fx/3.jpg" />
-
-      <figcaption>Minion Masters</figcaption>
-    </figure>
-
-    <figure class="card">
-      <img src="https://mrreiha.keybase.pub/codepen/hover-fx/4.jpg" />
-
-      <figcaption>KoseBoz!</figcaption>
-    </figure> -->
   </div>
-
-  <h2><strong>What's new?</strong></h2>
-
-  <div class="news">
-    <figure class="article">
-      <img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" />
-
-      <figcaption>
-        <h3>New Item</h3>
-
-        <p>
-          In today’s update, two heads are better than one, and three heads are better
-          than that, as the all-new Flockheart’s Gamble Arcana item for Ogre Magi makes
-          its grand debut.
-        </p>
-      </figcaption>
-    </figure>
-
-    <figure class="article">
-      <img src="https://mrreiha.keybase.pub/codepen/hover-fx/news2.png" />
-
-      <figcaption>
-        <h3>Update</h3>
-
-        <p>
-          Just in time for Lunar New Year and the Rat’s time in the cyclical place of
-          honor, the Treasure of Unbound Majesty is now available.
-        </p>
-      </figcaption>
-    </figure>
-  </div>
-  <!-- </div> -->
 </template>
 
 <style>
@@ -149,7 +100,7 @@ h2 strong,
 .df,
 .cards,
 .news {
-  /* display: flex; */
+  display: flex;
 }
 .dif {
   display: inline-flex;
@@ -229,7 +180,8 @@ h2:after {
   padding-bottom: 10px;
   font-size: 20px;
   background: none;
-  color: #fff;
+  /* color: #fff; */
+  color: red;
   transform: translateY(100%);
   transition: 0.3s;
 }

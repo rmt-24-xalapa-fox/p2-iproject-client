@@ -41,11 +41,19 @@ body {
 
 .content-container {
   display: flex;
-  flex-flow: column;
-  height: 100%;
-  width: 100vw;
+  align-content: center;
+  justify-content: center;
+  /* height: 100%;
+  width: 100vw; */
   min-width: 600px;
   min-height: 400px;
+  box-sizing: border-box;
   border: green 10px solid;
+}
+
+* {  
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
 }
 </style>

@@ -5,6 +5,9 @@ export const useMainStore = defineStore({
   id: "main",
   state: () => ({
     isLogin: false,
+    listFresh: [],
+    listInTraining: [],
+    listRookie: [],
   }),
   getters: {},
   actions: {
@@ -27,6 +30,18 @@ export const useMainStore = defineStore({
         this.isLogin = true;
         console.log(this.isLogin);
         this.router.push("/");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    fetchListDigimon: async function () {
+      try {
+        const response = await axios({
+          method: "get",
+          url: "http://localhost:3000/digimonList",
+        });
+        console.log(response.data.dataDigimonFresh);
+        console.log(response.data.dataDigimonRookie);
       } catch (err) {
         console.log(err);
       }

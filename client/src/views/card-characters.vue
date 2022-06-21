@@ -1,26 +1,67 @@
 <script>
+import { PUBLIC_KEY } from "../API/marvel-api-keys";
+import axios from "axios";
+import { mapState } from "pinia";
+import { useMaarvelStore } from "../stores/marvel";
+
 export default {
   name: "card",
   components: {},
+  data() {
+    return {
+      characters: [],
+      urlCharacters: "",
+      size: "standard_large.jpg",
+      totalCharacters: 0,
+    };
+  },
+  methods: {
+    async fetchCharacters() {
+      try {
+        const { data } = await axios.get(`${this.url}/characters?apikey=${PUBLIC_KEY}`);
+
+        // console.log(data.data);
+        this.totalCharacters = data.data.total;
+        const result = data.data.results;
+        result.forEach((el) => {
+          // console.log(el.thumbnail.path);
+          this.characters.push(el);
+          el.url = `${el.thumbnail.path}/${this.size}`;
+        });
+
+        console.log(this.urlCharacters);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  computed: {
+    ...mapState(useMaarvelStore, ["url"]),
+  },
+
+  mounted() {
+    this.fetchCharacters();
+  },
 };
 </script>
 
 <template>
   <!-- DISPLAY CHARACTERS CARD  -->
-  <!-- <div class="wrapper"> -->
-
   <h2>
-    <strong>All Characters<span>( 4 )</span></strong>
+    <strong
+      >All Characters<span>( {{ totalCharacters }} )</span></strong
+    >
   </h2>
 
-  <div class="cards">
+  <div class="cards" v-for="(character, i) in characters" :key="i" :character="character">
     <figure class="card">
-      <img src="https://mrreiha.keybase.pub/codepen/hover-fx/1.jpg" />
+      <img :src="character.url" />
 
-      <figcaption>Dota 2</figcaption>
+      <figcaption>{{ character.name }}</figcaption>
+      <!-- <h1>{{ this.character.thumbnail.path }}</h1> -->
     </figure>
 
-    <figure class="card">
+    <!-- <figure class="card">
       <img src="https://mrreiha.keybase.pub/codepen/hover-fx/2.jpg" />
 
       <figcaption>Stick Fight</figcaption>
@@ -36,7 +77,7 @@ export default {
       <img src="https://mrreiha.keybase.pub/codepen/hover-fx/4.jpg" />
 
       <figcaption>KoseBoz!</figcaption>
-    </figure>
+    </figure> -->
   </div>
 
   <h2><strong>What's new?</strong></h2>

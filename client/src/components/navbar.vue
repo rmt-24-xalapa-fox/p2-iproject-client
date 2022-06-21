@@ -31,7 +31,7 @@ export default {
       <!-- <div class="hello">Welcome!</div> -->
       <nav>
         <ul>
-          <li class="active"><router-link to="/">RED MARVEL</router-link></li>
+          <li class="active"><router-link to="/" class="active">RED MARVEL</router-link></li>
           <li><router-link to="/characters">Characters</router-link></li>
           <li><router-link to="/comics">Comics</router-link></li>
           <li><a href="#">Favourite</a></li>

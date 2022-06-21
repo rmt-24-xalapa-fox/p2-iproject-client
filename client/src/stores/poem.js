@@ -13,7 +13,7 @@ export const usePoemStore = defineStore({
       try {
         const { data } = await axiosInstance.get("/");
         console.log(data);
-        this.poems = data.data;
+        this.poems = data;
       } catch (err) {
         console.log(err);
       }
@@ -23,7 +23,7 @@ export const usePoemStore = defineStore({
         const id = +localStorage.getItem("selected");
         const { data } = await axiosInstance.get(`/read-more/${id}`);
         console.log(data);
-        this.poemDetail = data.detail;
+        this.poemDetail = data;
       } catch (err) {
         console.log(err);
       }

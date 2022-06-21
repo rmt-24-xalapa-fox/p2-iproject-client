@@ -14,5 +14,18 @@
   </div>
 </template>
 <script>
-export default {};
+import { mapState, mapActions } from "pinia";
+import { useMainStore } from "../stores";
+export default {
+  methods: {
+    ...mapActions(useMainStore, ["fetchListMyDigimon"]),
+  },
+  computed: {
+    ...mapState(useMainStore, ["listMyDigimon"]),
+  },
+  created() {
+    // console.log("masok");
+    this.fetchListMyDigimon();
+  },
+};
 </script>

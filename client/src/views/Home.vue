@@ -39,14 +39,17 @@
     <!-- asdasdas -->
     <div class="row justify-content-start">
       <!-- CARD START -->
-      <div class="card col-1" style="width: 165px; margin: 10px">
-        <img
-          class="card-img-top"
-          src="https://digimon.shadowsmith.com/img/botamon.jpg"
-          alt="Card image cap"
-        />
+      <div
+        v-for="fresh in listFresh"
+        :key="fresh.name"
+        class="card col-1"
+        style="width: 165px; margin: 10px"
+      >
+        <img class="card-img-top" :src="fresh.img" alt="Card image cap" />
         <div class="card-body">
-          <h5 class="card-title retrofont" style="font-size: 0.7em">Botamon</h5>
+          <h5 class="card-title retrofont" style="font-size: 0.7em">
+            {{ fresh.name }}
+          </h5>
         </div>
       </div>
       <!-- CARD END -->
@@ -97,14 +100,17 @@
     <!-- asdasdas -->
     <div class="row justify-content-start">
       <!-- CARD START -->
-      <div class="card col-1" style="width: 165px; margin: 10px">
-        <img
-          class="card-img-top"
-          src="https://digimon.shadowsmith.com/img/koromon.jpg"
-          alt="Card image cap"
-        />
+      <div
+        v-for="intraining in listInTraining"
+        :key="intraining.name"
+        class="card col-1"
+        style="width: 165px; margin: 10px"
+      >
+        <img class="card-img-top" :src="intraining.img" alt="Card image cap" />
         <div class="card-body">
-          <h5 class="card-title retrofont" style="font-size: 0.7em">Koromon</h5>
+          <h5 class="card-title retrofont" style="font-size: 0.7em">
+            {{ intraining.name }}
+          </h5>
         </div>
       </div>
       <!-- CARD END -->
@@ -143,14 +149,17 @@
     <!-- asdasdas -->
     <div class="row justify-content-start">
       <!-- CARD START -->
-      <div class="card col-1" style="width: 165px; margin: 10px">
-        <img
-          class="card-img-top"
-          src="https://digimon.shadowsmith.com/img/agumon.jpg"
-          alt="Card image cap"
-        />
+      <div
+        v-for="rookie in listRookie"
+        :key="rookie.name"
+        class="card col-1"
+        style="width: 165px; margin: 10px"
+      >
+        <img class="card-img-top" :src="rookie.img" alt="Card image cap" />
         <div class="card-body">
-          <h5 class="card-title retrofont" style="font-size: 0.7em">Agumon</h5>
+          <h5 class="card-title retrofont" style="font-size: 0.7em">
+            {{ rookie.name }}
+          </h5>
         </div>
       </div>
       <!-- CARD END -->
@@ -244,5 +253,17 @@
   <!-- ROOKIE LIST END -->
 </template>
 <script>
-export default {};
+import { mapState, mapActions } from "pinia";
+import { useMainStore } from "../stores";
+export default {
+  computed: {
+    ...mapState(useMainStore, ["listFresh", "listInTraining", "listRookie"]),
+  },
+  methods: {
+    ...mapActions(useMainStore, ["fetchListDigimon"]),
+  },
+  created() {
+    this.fetchListDigimon();
+  },
+};
 </script>

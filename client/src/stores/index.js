@@ -33,6 +33,15 @@ export const useMainStore = defineStore({
           imageAlt: "Custom image",
         });
       } catch (err) {
+        const { message } = err.response.data;
+        // console.log(err.response.data);
+        // console.log(message, code);
+        Swal.fire({
+          icon: "error",
+          title: "Ooops..",
+          text: message,
+          footer: "",
+        });
         console.log(err);
       }
     },

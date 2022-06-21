@@ -2,6 +2,12 @@
 export default {
   name: "ContentCard",
   props: ["poem"],
+  methods: {
+    selectedPoem(id) {
+      localStorage.setItem("selected", id)
+      this.$router.push("/readmore")
+    }
+  }
 };
 </script>
 <template>
@@ -14,7 +20,7 @@ export default {
     </div>
     <div class="div card-footer d-flex justify-content-end border-1 bg-footer">
       <div>
-        <button class="button" style="width: 150px">Read More</button>
+        <button @click.prevent="selectedPoem(`${poem.id}`)" class="button" style="width: 150px">Read More</button>
       </div>
     </div>
   </div>

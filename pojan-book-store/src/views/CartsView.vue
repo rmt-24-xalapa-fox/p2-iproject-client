@@ -16,7 +16,7 @@ export default {
     NoProductFound,
   },
   methods: {
-    ...mapActions(useStore, ["fetchCarts"]),
+    ...mapActions(useStore, ["fetchCarts", "moveToRoute"]),
   },
   computed: {
     ...mapState(useStore, ["carts", "isLogin"]),
@@ -33,7 +33,11 @@ export default {
   <div>
     <Navbar />
     <HeroSection title="My Cart" />
-    <div class="checkout-container">
+    <div
+      v-if="productsInCarts"
+      @click="moveToRoute('Order Review')"
+      class="checkout-container"
+    >
       <button class="btn btn-card btn-checkout">Checkout</button>
     </div>
     <ProductsList

@@ -25,7 +25,7 @@ export default {
     },
   },
   created() {
-    this.fetchWishlists().then(() => console.log(this.wishlists));
+    this.fetchWishlists();
   },
 };
 </script>

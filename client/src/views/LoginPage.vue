@@ -48,6 +48,10 @@
                     Sign In
                   </button>
                 </div>
+                <p class="mt-2">
+                  Don't Have Account?
+                  <router-link to="/register">Sign Up here</router-link>
+                </p>
               </div>
             </form>
           </div>
@@ -76,6 +80,7 @@ export default {
     async postLogin() {
       try {
         await this.loginUser(this.dataLogin);
+        this.$router.push("/");
         this.$swal.fire({
           icon: "success",
           title: `Success - 200`,

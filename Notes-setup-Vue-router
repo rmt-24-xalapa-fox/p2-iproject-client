@@ -1,0 +1,60 @@
+1. Bikin folder client
+
+2. install vue @ latest
+
+    npm init vue@latest
+
+3. kasih nama project
+
+4. hanya yes bagian "Router", "Pinia", "ESlint", dan "Prettier"
+
+5. ikutin langkah selanjutnya
+
+6. hapus semua file di component dan view
+
+7. pindahin semua file folder view,
+    kasih nama di export default, ganti nama dengan format pascal-case kasih page di belakangnya
+
+8. kalau file itu sekiranya reusable, taro di view lalu export untuk di import di halaman yang akan tampil
+
+9. setting di router :
+
+    - import semua halaman utama
+    - hapus invoke di createWebHistory
+    - sesuaikan routing untuk path, name dan component dengan soal
+    - bikin navigation guard
+
+10.  setting di app.vue
+    - hapus default yang ada
+    - masukin style global dari template
+    - bikin    <RouterView /> di dalam template
+
+11. Ubah port vite di json, jalankan, lalu cek di browser sudah jalan apa belum
+
+Finish tahap 1 Pecah Komponen!
+
+12. ke folder stores
+
+13. - import axios
+    - import router
+
+14. ubah nama useCounterStore ke nama aplikasi kita, bikin semua logic di sana
+
+
+
+==================================
+
+Cara Ambil id dari params untuk update atau delete
+
+
+1. define id di state data (pakai params)
+
+2. id yang di define di state, pakai untuk di tombol submit
+
+3. id itu nanti di lempar ke bagian methods submit atau @click kita
+
+
+
+
+
+

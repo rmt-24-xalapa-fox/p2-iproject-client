@@ -118,7 +118,7 @@ export const useStore = defineStore({
           title: "Success add book to your carts",
           icon: "success",
         });
-        this.fetchWishlists();
+        this.fetchCarts();
       } catch (err) {
         this.showError(err);
       }

@@ -329,6 +329,7 @@ body {
 
 .after-card {
   display: flex;
+  gap: 1.3rem;
 }
 
 .icon-box {

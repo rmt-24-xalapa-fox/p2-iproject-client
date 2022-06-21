@@ -32,15 +32,15 @@ export default {
 <template>
   <div>
     <Navbar />
-    <HeroSection title="My Wishlists" />
+    <HeroSection title="My Cart" />
     <ProductsList
-      v-if="productsInWishlist"
-      :theBooks="productsInWishlist"
+      v-if="productsInCarts"
+      :theBooks="productsInCarts"
       class="wishlist-container"
     />
     <NoProductFound
-      v-if="productsInWishlist.length === 0"
-      title="No wishlists yet"
+      v-if="productsInCarts.length === 0"
+      title="Your cart is empty"
     />
   </div>
 </template>

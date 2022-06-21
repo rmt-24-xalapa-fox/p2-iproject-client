@@ -9,6 +9,8 @@ export default {
     ...mapActions(useStore, [
       "addWishlists",
       "removeWishlists",
+      "addCarts",
+      "removeCarts",
       "fetchOneBook",
     ]),
     toggleWishlist(bookId) {
@@ -18,9 +20,16 @@ export default {
         this.removeWishlists(bookId);
       }
     },
+    toggleCart(bookId) {
+      if (!this.isInCart) {
+        this.addCarts(bookId);
+      } else {
+        this.removeCarts(bookId);
+      }
+    },
   },
   computed: {
-    ...mapState(useStore, ["isLogin", "wishlists"]),
+    ...mapState(useStore, ["isLogin", "wishlists", "carts"]),
     formatRupiah() {
       return this.book.price.toLocaleString("id-ID", {
         style: "currency",
@@ -31,6 +40,11 @@ export default {
     isInWishlist() {
       return this.wishlists.some((wishlist) => {
         return wishlist.BookId === this.book.id;
+      });
+    },
+    isInCart() {
+      return this.carts.some((cart) => {
+        return cart.BookId === this.book.id;
       });
     },
   },
@@ -66,6 +80,12 @@ export default {
       <button @click="fetchOneBook(book.id)" class="btn btn-card">
         See Details
       </button>
+      <div @click.prevent="toggleCart(book.id)" v-if="isLogin" class="icon-box">
+        <i
+          class="icon-love fa-solid fa-cart-shopping"
+          :class="{ active: isInCart }"
+        ></i>
+      </div>
       <div
         @click.prevent="toggleWishlist(book.id)"
         v-if="isLogin"

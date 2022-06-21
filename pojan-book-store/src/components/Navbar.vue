@@ -40,6 +40,14 @@ export default {
               >Wishlists</a
             >
           </li>
+          <li v-if="isLogin" @click="moveToRoute('Carts')">
+            <a
+              class="main-nav-link"
+              :class="{ active: path === '/carts' }"
+              href="#"
+              >Cart</a
+            >
+          </li>
           <li v-if="isLogin" @click="logoutHandler">
             <a class="main-nav-link nav-cta" href="#">Logout</a>
           </li>

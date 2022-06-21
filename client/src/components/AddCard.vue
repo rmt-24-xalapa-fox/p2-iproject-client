@@ -6,7 +6,7 @@ export default {
 <template>
   <div class="add">
     <div class="row">
-      <div class="card" style="height: 17vh; width: 100%">
+      <div class="card" style="height: 20vh; width: 100%">
         <div class="card-body">
           <h3 class="card-title mb-3 text-center">Create Your Poem</h3>
           <div>

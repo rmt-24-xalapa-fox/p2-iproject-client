@@ -15,6 +15,8 @@ export const useStore = defineStore({
     cities: [],
     accessToken: "",
     book: null,
+    shippingOption: [],
+    isAlreadyChooseCourier: false,
   }),
   getters: {},
   actions: {
@@ -170,12 +172,14 @@ export const useStore = defineStore({
       });
     },
     showError(err) {
-      console.log(err);
-      const msg = err.response.data.error.message;
-      if (Array.isArray(msg)) {
-        swal(msg.join("\n"));
-      } else {
-        swal(msg);
+      // console.log(err);
+      if (err.response) {
+        const msg = err.response.data.error.message;
+        if (Array.isArray(msg)) {
+          swal(msg.join("\n"));
+        } else {
+          swal(msg);
+        }
       }
     },
     moveToRoute(routeName) {
@@ -235,6 +239,23 @@ export const useStore = defineStore({
           },
         });
         this.cities = response.data.data;
+      } catch (err) {
+        this.showError(err);
+      }
+    },
+    async submitRajaOngkir(obj) {
+      try {
+        const response = await axios.post(
+          `${this.baseUrl}/shipping/costs`,
+          obj,
+          {
+            headers: {
+              access_token: this.accessToken,
+            },
+          }
+        );
+        this.shippingOption = response.data.data.shipping;
+        this.isAlreadyChooseCourier = true;
       } catch (err) {
         this.showError(err);
       }

@@ -9,8 +9,24 @@ export default {
     Navbar,
     HeroSection,
   },
+  data() {
+    return {
+      shippingObj: {
+        origin: 22, //Bandung
+        destination: 0,
+        weight: 0,
+        courier: 0,
+      },
+      indexShippingOption: 0,
+    };
+  },
   methods: {
-    ...mapActions(useStore, ["fetchCarts", "moveToRoute", "fetchCities"]),
+    ...mapActions(useStore, [
+      "fetchCarts",
+      "moveToRoute",
+      "fetchCities",
+      "submitRajaOngkir",
+    ]),
     formatToRupiah(val) {
       return val.toLocaleString("id-ID", {
         style: "currency",
@@ -18,9 +34,22 @@ export default {
         minimumFractionDigits: 2,
       });
     },
+    getCityId() {
+      const cityName = document.getElementById("city").value;
+
+      const cityId = document.querySelector(
+        "#cities option[value='" + cityName + "']"
+      ).dataset.value;
+      this.shippingObj.destination = Number(cityId);
+    },
   },
   computed: {
-    ...mapState(useStore, ["carts", "cities"]),
+    ...mapState(useStore, [
+      "carts",
+      "cities",
+      "shippingOption",
+      "isAlreadyChooseCourier",
+    ]),
     totalPrice() {
       let sum = 0;
       this.carts.forEach((el) => {
@@ -28,10 +57,24 @@ export default {
       });
       return this.formatToRupiah(sum);
     },
+    totalPriceAndCost() {
+      if (this.shippingOption[this.indexShippingOption]) {
+        let bookPrice = 0;
+        this.carts.forEach((el) => {
+          bookPrice += el.Book.price;
+        });
+        const totalCost =
+          this.shippingOption[this.indexShippingOption].cost[0].value +
+          bookPrice;
+        return totalCost;
+      }
+    },
   },
   created() {
-    this.fetchCarts();
-    this.fetchCities().then(() => console.log(this.cities));
+    this.fetchCarts().then(
+      () => (this.shippingObj.weight = this.carts.length * 200)
+    );
+    this.fetchCities();
   },
 };
 </script>
@@ -40,7 +83,6 @@ export default {
   <div>
     <Navbar /> <HeroSection title="Your Order" />
     <div v-if="carts" class="order-review-container">
-      <!-- <h1>Your Order</h1> -->
       <h2>Books Ordered</h2>
       <table>
         <thead>
@@ -62,7 +104,7 @@ export default {
             </td>
           </tr>
           <tr>
-            <td>Total Price</td>
+            <td>Total Books Price</td>
             <td colspan="2">{{ totalPrice }}</td>
           </tr>
         </tbody>
@@ -70,18 +112,20 @@ export default {
       <h2>Shipping Information</h2>
       <form action="">
         <input
-          list="city"
+          @change.prevent="getCityId()"
+          list="cities"
           autocomplete="off"
           class="input-box"
           type="text"
           name=""
-          id=""
+          id="city"
           placeholder="Destination City"
         />
-        <datalist id="city">
+        <datalist id="cities">
           <option
             v-for="city in cities"
             :key="city.city_id"
+            :data-value="city.city_id"
             :value="city.city_name"
           >
             {{ city.city_name }}
@@ -95,12 +139,66 @@ export default {
           id=""
           placeholder="Your Address"
         />
-        <select class="input-box">
-          <option disabled selected value="jne">Select Courier</option>
+        <select
+          @change.prevent="submitRajaOngkir(shippingObj)"
+          v-model="shippingObj.courier"
+          class="input-box"
+        >
+          <option disabled selected value="0">Select Courier</option>
           <option value="jne">JNE</option>
           <option value="tiki">TIKI</option>
           <option value="pos">POS Indonesia</option>
         </select>
+
+        <select
+          v-model="indexShippingOption"
+          class="input-box"
+          v-if="shippingOption.length !== 0"
+          placeholder="Choose shipping option"
+        >
+          <option disabled selected value="">Choose shipping option</option>
+          <option v-for="(ship, idx) in shippingOption" :key="idx" :value="idx">
+            {{ ship.description }}
+          </option>
+        </select>
+        <input
+          v-if="
+            shippingOption.length !== 0 && shippingOption[indexShippingOption]
+          "
+          class="input-box"
+          type="text"
+          disabled
+          :value="`Shipping Cost: ${formatToRupiah(
+            shippingOption[indexShippingOption].cost[0].value
+          )}`"
+        />
+
+        <input
+          v-if="
+            shippingOption.length !== 0 && shippingOption[indexShippingOption]
+          "
+          class="input-box"
+          type="text"
+          disabled
+          :value="`Estimated Time of Delivery: ${formatToRupiah(
+            shippingOption[indexShippingOption].cost[0].etd.split(' ')[1]
+              ? shippingOption[indexShippingOption].cost[0].etd.split(' ')[0]
+              : shippingOption[indexShippingOption].cost[0].etd
+          )} days`"
+        />
+        <h4 v-if="shippingOption.length === 0 && isAlreadyChooseCourier">
+          This shipping option is not available
+        </h4>
+        <button
+          v-if="
+            shippingOption.length !== 0 && shippingOption[indexShippingOption]
+          "
+          type="submit"
+          class="btn"
+        >
+          Continue to Payment <br style="margin-bottom: 10px" />
+          ({{ formatToRupiah(totalPriceAndCost) }})
+        </button>
       </form>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div
     class="container-xl text-left page-heading align-items-left justify-content-center rounded"
-    style="height: 100px; background-color: black"
+    style="height: 100px; margin-top: 60px; background-color: black"
   >
     <div class="row">
       <div

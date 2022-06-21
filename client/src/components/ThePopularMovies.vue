@@ -1,9 +1,7 @@
 <script>
 import ThePopularMoviesCard from "../components/ThePopularMoviesCard.vue";
 import { mapState, mapWritableState, mapActions } from "pinia";
-import { useMainStore } from "../stores/store";
-
-const baseUrl = "http://localhost:3000";
+import { moviesStore } from "../stores/movies";
 
 export default {
   name: "ThePopularMovies",
@@ -11,11 +9,11 @@ export default {
     ThePopularMoviesCard,
   },
   computed: {
-    ...mapState(useMainStore, ["movies", "genres"]),
-    ...mapWritableState(useMainStore, [""]),
+    ...mapState(moviesStore, ["movies", "genres"]),
+    ...mapWritableState(moviesStore, [""]),
   },
   methods: {
-    ...mapActions(useMainStore, ["fetchGenres", "fetchMoviesPopular"]),
+    ...mapActions(moviesStore, ["fetchGenres", "fetchMoviesPopular"]),
   },
   created() {
     this.fetchGenres()

@@ -1,26 +1,27 @@
 <script>
 import { RouterView } from "vue-router";
 import { mapState, mapWritableState, mapActions } from "pinia";
-import { useMainStore } from "./stores/store";
+import { moviesStore } from "./stores/movies";
 
 export default {
   components: {
     RouterView,
   },
   computed: {
-    ...mapState(useMainStore, [""]),
-    ...mapWritableState(useMainStore, [""]),
+    ...mapState(moviesStore, [""]),
+    ...mapWritableState(moviesStore, [""]),
   },
   methods: {
-    ...mapActions(useMainStore, [""]),
+    ...mapActions(moviesStore, [""]),
   },
   created() {},
 };
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold underline">Hello world!</h1>
-  <RouterView />
+  <div class="flex justify-between border-b border-gray-500">
+    <RouterView />
+  </div>
 </template>
 
 <style></style>

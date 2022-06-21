@@ -1,7 +1,7 @@
 <script>
 import ThePopularMovies from "../components/ThePopularMovies.vue";
 import { mapState, mapWritableState, mapActions } from "pinia";
-import { useMainStore } from "../stores/store";
+import { moviesStore } from "../stores/movies";
 
 export default {
   name: "HomePage",
@@ -9,11 +9,11 @@ export default {
     ThePopularMovies,
   },
   computed: {
-    ...mapState(useMainStore, [""]),
-    ...mapWritableState(useMainStore, [""]),
+    ...mapState(moviesStore, [""]),
+    ...mapWritableState(moviesStore, [""]),
   },
   methods: {
-    ...mapActions(useMainStore, [""]),
+    ...mapActions(moviesStore, [""]),
   },
   created() {},
 };

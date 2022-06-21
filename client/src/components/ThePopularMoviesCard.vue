@@ -1,19 +1,19 @@
 <script>
 import { mapState, mapWritableState, mapActions } from "pinia";
-import { useMainStore } from "../stores/store";
+import { moviesStore } from "../stores/movies";
 
 export default {
   name: "ThePopularMoviesCard",
   props: ["movie", "genres"],
   computed: {
-    ...mapState(useMainStore, [""]),
-    ...mapWritableState(useMainStore, [""]),
+    ...mapState(moviesStore, [""]),
+    ...mapWritableState(moviesStore, [""]),
     posterPath() {
       return "https://image.tmdb.org/t/p/w500/" + this.movie.poster_path;
     },
   },
   methods: {
-    ...mapActions(useMainStore, [""]),
+    ...mapActions(moviesStore, [""]),
     genreTypeName(genreId, index) {
       for (const item of this.genres) {
         if (item.id == genreId) {

@@ -2,13 +2,15 @@
   "name": "pojan-book-store",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 8080",
     "build": "vite build",
     "preview": "vite preview --port 4173",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "pinia": "^2.0.14",
+    "sweetalert": "^2.1.2",
     "vue": "^3.2.36",
     "vue-router": "^4.0.15"
   },

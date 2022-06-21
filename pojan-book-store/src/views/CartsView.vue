@@ -33,6 +33,9 @@ export default {
   <div>
     <Navbar />
     <HeroSection title="My Cart" />
+    <div class="checkout-container">
+      <button class="btn btn-card btn-checkout">Checkout</button>
+    </div>
     <ProductsList
       v-if="productsInCarts"
       :theBooks="productsInCarts"

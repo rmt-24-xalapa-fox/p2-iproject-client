@@ -548,3 +548,21 @@ body {
 #google-sign-in {
   margin-top: 1.2rem;
 }
+
+/* ********************** */
+/* CART VIEW */
+/* ********************** */
+
+.checkout-container {
+  padding: 2rem;
+  margin-left: 5rem;
+}
+
+.btn.btn-card.btn-checkout {
+  width: 20%;
+  background-color: #cf2e1f;
+  color: #fdf2e9;
+}
+.btn.btn-card.btn-checkout:hover {
+  border-color: #e67e22;
+}

@@ -25,15 +25,15 @@ export default {
   },
   methods: {
     ...mapActions(useStore, [
-      "fetchProducts",
+      "fetchBooks",
       "fetchWishlists",
       "fetchCategories",
     ]),
     clickPagination(value) {
-      this.fetchProducts({ ...this.filterObj, page: value });
+      this.fetchBooks({ ...this.filterObj, page: value });
     },
     submitFilter(obj) {
-      this.fetchProducts(obj);
+      this.fetchBooks(obj);
     },
     clearFilter() {
       this.filterObj.categoryId = [];
@@ -43,15 +43,10 @@ export default {
     },
   },
   computed: {
-    ...mapState(useStore, [
-      "productsObj",
-      "products",
-      "wishlists",
-      "categories",
-    ]),
+    ...mapState(useStore, ["booksObj", "books", "wishlists", "categories"]),
   },
   created() {
-    this.fetchProducts({});
+    this.fetchBooks({});
     this.fetchCategories();
     if (localStorage.getItem("accessToken")) {
       this.fetchWishlists();
@@ -131,35 +126,35 @@ export default {
           <button @click="clearFilter" class="btn clear-btn">Clear</button>
         </form>
         <ProductsList
-          v-if="productsObj.totalItems !== 0"
-          :theProducts="products"
+          v-if="booksObj.totalItems !== 0"
+          :theBooks="books"
           theClass="main-container"
         />
-        <div v-if="productsObj.totalItems === 0">
+        <div v-if="booksObj.totalItems === 0">
           <NoProductFound title="No books meet your criteria" />
         </div>
       </div>
 
-      <div v-if="productsObj.totalItems !== 0" class="pagination-container">
+      <div v-if="booksObj.totalItems !== 0" class="pagination-container">
         <button
-          @click="clickPagination(productsObj.currentPage - 1)"
-          v-if="productsObj.currentPage !== 0"
+          @click="clickPagination(booksObj.currentPage - 1)"
+          v-if="booksObj.currentPage !== 0"
           class="btn btn-pagination"
         >
           Previous
         </button>
         <button
           @click="clickPagination(index - 1)"
-          v-for="index in productsObj.totalPages"
+          v-for="index in booksObj.totalPages"
           :key="index"
           class="btn btn-pagination"
-          :class="{ active: index === productsObj.currentPage + 1 }"
+          :class="{ active: index === booksObj.currentPage + 1 }"
         >
           {{ index }}
         </button>
         <button
-          @click="clickPagination(productsObj.currentPage + 1)"
-          v-if="productsObj.currentPage !== productsObj.totalPages - 1"
+          @click="clickPagination(booksObj.currentPage + 1)"
+          v-if="booksObj.currentPage !== booksObj.totalPages - 1"
           class="btn btn-pagination"
         >
           Next

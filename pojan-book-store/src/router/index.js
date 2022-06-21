@@ -4,6 +4,7 @@ import RegisterView from "../views/RegisterView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
 import LoginView from "../views/LoginView.vue";
 import WishlistsView from "../views/WishlistsView.vue";
+import CartsView from "../views/CartsView.vue";
 import ProductDetails from "../views/ProductDetails.vue";
 
 const router = createRouter({
@@ -30,8 +31,13 @@ const router = createRouter({
       component: WishlistsView,
     },
     {
-      path: "/products/:productId",
-      name: "Product Detail",
+      path: "/carts",
+      name: "Carts",
+      component: CartsView,
+    },
+    {
+      path: "/books/:bookId",
+      name: "Book Details",
       component: ProductDetails,
     },
     {

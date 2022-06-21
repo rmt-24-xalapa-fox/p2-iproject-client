@@ -5,13 +5,13 @@ export default {
   components: {
     Card,
   },
-  props: ["theProducts", "theClass"],
+  props: ["theBooks", "theClass"],
 };
 </script>
 
 <template>
   <div :class="theClass">
-    <Card v-for="product in theProducts" :key="product.id" :product="product" />
+    <Card v-for="book in theBooks" :key="book.id" :book="book" />
   </div>
 </template>
 

@@ -16,16 +16,16 @@ export default {
     NoProductFound,
   },
   methods: {
-    ...mapActions(useStore, ["fetchWishlists"]),
+    ...mapActions(useStore, ["fetchCarts"]),
   },
   computed: {
-    ...mapState(useStore, ["wishlists", "isLogin"]),
-    productsInWishlist() {
-      return this.wishlists.map((el) => el.Book);
+    ...mapState(useStore, ["carts", "isLogin"]),
+    productsInCarts() {
+      return this.carts.map((el) => el.Book);
     },
   },
   created() {
-    this.fetchWishlists().then(() => console.log(this.wishlists));
+    this.fetchCarts();
   },
 };
 </script>

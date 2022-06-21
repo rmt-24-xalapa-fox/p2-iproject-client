@@ -3,26 +3,26 @@ import { mapState, mapActions } from "pinia";
 import { useStore } from "../stores/store";
 export default {
   name: "Card",
-  props: ["product"],
+  props: ["book"],
 
   methods: {
     ...mapActions(useStore, [
       "addWishlists",
       "removeWishlists",
-      "fetchOneProduct",
+      "fetchOneBook",
     ]),
-    toggleWishlist(productId) {
+    toggleWishlist(bookId) {
       if (!this.isInWishlist) {
-        this.addWishlists(productId);
+        this.addWishlists(bookId);
       } else {
-        this.removeWishlists(productId);
+        this.removeWishlists(bookId);
       }
     },
   },
   computed: {
     ...mapState(useStore, ["isLogin", "wishlists"]),
     formatRupiah() {
-      return this.product.price.toLocaleString("id-ID", {
+      return this.book.price.toLocaleString("id-ID", {
         style: "currency",
         currency: "IDR",
         minimumFractionDigits: 2,
@@ -30,7 +30,7 @@ export default {
     },
     isInWishlist() {
       return this.wishlists.some((wishlist) => {
-        return wishlist.BookId === this.product.id;
+        return wishlist.BookId === this.book.id;
       });
     },
   },
@@ -42,17 +42,17 @@ export default {
     <div class="flip-card">
       <div class="flip-card-inner">
         <div class="flip-card-front">
-          <img :src="product.imageUrl" alt="Avatar" />
+          <img :src="book.imageUrl" alt="Avatar" />
         </div>
         <div class="flip-card-back">
           <div class="label-container">
             <h3 class="label">Book Title</h3>
-            <p class="content">{{ product.title }}</p>
+            <p class="content">{{ book.title }}</p>
           </div>
 
           <div class="label-container">
             <h3 class="label">Category</h3>
-            <p class="content">{{ product.Category.name }}</p>
+            <p class="content">{{ book.Category.name }}</p>
           </div>
 
           <div class="label-container">
@@ -63,11 +63,11 @@ export default {
       </div>
     </div>
     <div class="after-card">
-      <button @click="fetchOneProduct(product.id)" class="btn btn-card">
+      <button @click="fetchOneBook(book.id)" class="btn btn-card">
         See Details
       </button>
       <div
-        @click.prevent="toggleWishlist(product.id)"
+        @click.prevent="toggleWishlist(book.id)"
         v-if="isLogin"
         class="icon-box"
       >

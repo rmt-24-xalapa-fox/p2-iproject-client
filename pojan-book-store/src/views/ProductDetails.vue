@@ -10,12 +10,12 @@ export default {
     HeroSection,
   },
   methods: {
-    ...mapActions(useStore, ["fetchOneProduct"]),
+    ...mapActions(useStore, ["fetchOneBook"]),
   },
   computed: {
-    ...mapState(useStore, ["product"]),
+    ...mapState(useStore, ["book"]),
     formatRupiah() {
-      return this.product.price.toLocaleString("id-ID", {
+      return this.book.price.toLocaleString("id-ID", {
         style: "currency",
         currency: "IDR",
         minimumFractionDigits: 2,
@@ -23,35 +23,35 @@ export default {
     },
   },
   created() {
-    const productId = this.$route.params.productId;
-    if (!this.product) {
-      this.fetchOneProduct(productId);
+    const bookId = this.$route.params.bookId;
+    if (!this.book) {
+      this.fetchOneBook(bookId);
     }
   },
 };
 </script>
 
 <template>
-  <div v-if="product">
+  <div v-if="book">
     <Navbar />
     <main>
-      <HeroSection :title="product.title" />
+      <HeroSection :title="book.title" />
       <div class="product-details-container">
         <div class="book-details-img">
-          <img :src="product.imageUrl" alt="" />
+          <img :src="book.imageUrl" alt="" />
         </div>
         <div class="book-details-container">
           <div class="book-details">
             <p class="book-details-title">Book Title</p>
-            <p class="book-details-content">{{ product.title }}</p>
+            <p class="book-details-content">{{ book.title }}</p>
           </div>
           <div>
             <p class="book-details-title">Book Author</p>
-            <p class="book-details-content">{{ product.author }}</p>
+            <p class="book-details-content">{{ book.author }}</p>
           </div>
           <div>
             <p class="book-details-title">Book Category</p>
-            <p class="book-details-content">{{ product.Category.name }}</p>
+            <p class="book-details-content">{{ book.Category.name }}</p>
           </div>
 
           <div>

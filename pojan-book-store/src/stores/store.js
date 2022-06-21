@@ -7,16 +7,17 @@ export const useStore = defineStore({
   state: () => ({
     baseUrl: "http://localhost:3000",
     isLogin: false,
-    products: [],
-    productsObj: {},
+    books: [],
+    booksObj: {},
     wishlists: [],
+    carts: [],
     categories: [],
     accessToken: "",
-    product: null,
+    book: null,
   }),
   getters: {},
   actions: {
-    async fetchProducts(obj) {
+    async fetchBooks(obj) {
       try {
         const { page, name, categoryId, minPrice, maxPrice } = obj;
         const response = await axios.get(`${this.baseUrl}/books`, {
@@ -28,20 +29,20 @@ export const useStore = defineStore({
             maxPrice,
           },
         });
-        this.products = response.data.data.products;
-        this.productsObj = response.data.data;
+        this.books = response.data.data.books;
+        this.booksObj = response.data.data;
       } catch (err) {
         this.showError(err);
       }
     },
-    async fetchOneProduct(id) {
+    async fetchOneBook(id) {
       try {
         const response = await axios.get(`${this.baseUrl}/books/${id}`);
-        this.product = response.data.data;
+        this.book = response.data.data;
         this.router.push({
-          name: "Product Detail",
+          name: "Book Details",
           params: {
-            BookId: id,
+            bookId: id,
           },
         });
       } catch (err) {
@@ -62,9 +63,9 @@ export const useStore = defineStore({
         this.showError(err);
       }
     },
-    async addWishlists(productId) {
+    async addWishlists(bookId) {
       try {
-        await axios.post(`${this.baseUrl}/wishlists/${productId}`, null, {
+        await axios.post(`${this.baseUrl}/wishlists/${bookId}`, null, {
           headers: {
             access_token: this.accessToken,
           },
@@ -78,9 +79,9 @@ export const useStore = defineStore({
         this.showError(err);
       }
     },
-    async removeWishlists(productId) {
+    async removeWishlists(bookId) {
       try {
-        await axios.delete(`${this.baseUrl}/wishlists/${productId}`, {
+        await axios.delete(`${this.baseUrl}/wishlists/${bookId}`, {
           headers: {
             access_token: this.accessToken,
           },
@@ -90,6 +91,50 @@ export const useStore = defineStore({
           icon: "success",
         });
         this.fetchWishlists();
+      } catch (err) {
+        this.showError(err);
+      }
+    },
+    async fetchCarts() {
+      try {
+        const response = await axios.get(`${this.baseUrl}/carts`, {
+          headers: {
+            access_token: this.accessToken,
+          },
+        });
+        this.carts = response.data.data;
+      } catch (err) {
+        this.showError(err);
+      }
+    },
+    async addCarts(bookId) {
+      try {
+        await axios.post(`${this.baseUrl}/carts/${bookId}`, null, {
+          headers: {
+            access_token: this.accessToken,
+          },
+        });
+        swal({
+          title: "Success add book to your carts",
+          icon: "success",
+        });
+        this.fetchWishlists();
+      } catch (err) {
+        this.showError(err);
+      }
+    },
+    async removeCarts(bookId) {
+      try {
+        await axios.delete(`${this.baseUrl}/carts/${bookId}`, {
+          headers: {
+            access_token: this.accessToken,
+          },
+        });
+        swal({
+          title: "Success remove book from your carts",
+          icon: "success",
+        });
+        this.fetchCarts();
       } catch (err) {
         this.showError(err);
       }
@@ -169,7 +214,7 @@ export const useStore = defineStore({
       this.accessToken = accessToken;
       this.moveToRoute("Home");
       swal({
-        title: username ? `Welcome, ${username}!` : "Welcome!",
+        title: username,
         icon: "success",
       });
     },

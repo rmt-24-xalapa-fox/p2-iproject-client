@@ -37,7 +37,7 @@ export default {
               class="main-nav-link"
               :class="{ active: path === '/wishlists' }"
               href="#"
-              >My Wishlists</a
+              >Wishlists</a
             >
           </li>
           <li v-if="isLogin" @click="logoutHandler">

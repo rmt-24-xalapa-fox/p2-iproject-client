@@ -7,7 +7,11 @@ export default {
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#">
+                <img src="../assets/img/Playstation_logo_colour.svg.png" alt="" width="30" height="24"
+                    class="d-inline-block align-text-top">
+                PS Anywhere
+            </a>
             <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
                 data-mdb-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -24,3 +28,6 @@ export default {
         </div>
     </nav>
 </template>
+
+<style>
+</style>

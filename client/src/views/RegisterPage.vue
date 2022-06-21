@@ -1,6 +1,18 @@
 <script>
+import { mapActions } from 'pinia';
+import { useCounterStore } from '../stores/counter';
+
 export default {
-    name: "RegisterPage"
+    name: "RegisterPage",
+    data() {
+        return {
+            email: "",
+            password: ""
+        }
+    },
+    methods: {
+        ...mapActions(useCounterStore, ["registerHandler"])
+    }
 }
 </script>
 
@@ -16,13 +28,17 @@ export default {
                     <form>
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <input type="email" id="form1Example13" class="form-control form-control-lg" />
+                            <input 
+                            v-model="email"
+                            type="email" id="form1Example13" class="form-control form-control-lg" />
                             <label class="form-label" for="form1Example13">Email address</label>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                            <input type="password" id="form1Example23" class="form-control form-control-lg" />
+                            <input 
+                            v-model="password"
+                            type="password" id="form1Example23" class="form-control form-control-lg" />
                             <label class="form-label" for="form1Example23">Password</label>
                         </div>
 
@@ -36,7 +52,7 @@ export default {
                         </div> -->
 
                         <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">Sign up</button>
+                        <button @click.prevent="registerHandler(this.email, this.password)" type="submit" class="btn btn-primary btn-lg btn-block">Sign up</button>
                     </form>
                 </div>
             </div>

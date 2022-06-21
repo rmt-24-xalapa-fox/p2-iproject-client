@@ -17,4 +17,5 @@ export default {
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet&display=swap');
 </style>

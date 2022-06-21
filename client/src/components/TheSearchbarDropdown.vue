@@ -1,10 +1,27 @@
 <script>
+import { mapState, mapActions } from "pinia";
+import { userStore } from "../stores/user";
+
 export default {
+  name: "TheSearchbarDropdown",
   data() {
     return {
       isOpen: false,
     };
   },
+
+   computed: {
+    ...mapState(userStore, ["isLogin"]),
+  },
+
+  methods: {
+    ...mapActions(userStore, ["doLogout"]),
+    
+      buttonLogout() {
+      this.doLogout()
+    },
+  }
+
   
 };
 </script>
@@ -14,7 +31,7 @@ export default {
     <!-- KLIK UNTUK MEMBUKA -->
     <button @click="isOpen = !isOpen" class="focus:outline-none">
       <img
-        src="../../assets/images/user.jpg"
+        src="../assets/user.jpg"
         alt=""
         class="h-10 rounded-full mr-1"
       />
@@ -32,6 +49,39 @@ export default {
       v-if="isOpen"
       class="absolute bg-white py-2 rounded-lg w-48 right-0 mr-3 shadow-xl"
       >
+      <!-- PROFILE -->
+      <a
+        class="text-gray-500 block px-4 py-2 hover:bg-indigo-500 hover:text-white"
+        v-if="isLogin"
+        v-on:click.prevent="this.$router.push('/profile/:id')"
+        >Profile
+      </a>
+
+      <!-- FAVORITE -->
+      <a
+        class="text-gray-500 block px-4 py-2 hover:bg-indigo-500 hover:text-white"
+        v-if="isLogin"
+        v-on:click.prevent="this.$router.push('/favourite')"
+        >Favorite
+      </a>
+
+      <!-- LOGIN -->
+      <a
+        class="text-gray-500 block px-4 py-2 hover:bg-indigo-500 hover:text-white"
+        v-if="!isLogin"
+        v-on:click.prevent="this.$router.push('/login')"
+        >Login
+      </a>
+
+      <!-- LOGOUT -->
+      <a
+        v-on:click.prevent="buttonLogout"
+        v-if="isLogin"
+        href=""
+        class="text-gray-500 block px-4 py-2 hover:bg-indigo-500 hover:text-white"
+        >Logout
+      </a>
+
     </div>
 
   </div>

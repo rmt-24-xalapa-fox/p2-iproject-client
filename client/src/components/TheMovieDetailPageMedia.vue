@@ -3,7 +3,7 @@ export default {
   props: ["value", "mediaURL", "isVideo"],
   methods: {
     close() {
-      this.$emit("input", !this.value);
+      this.$emit(this.value === false);
     },
   },
 };
@@ -21,7 +21,7 @@ export default {
         <!-- CLOSE BUTTON -->
         <div class="flex justify-end pr-4 pt-2">
           <button
-            v-on:click.prevent="close"
+            v-on:click.prevent="close()"
             class="text-3xl leading-none hover:text-gray-300"
           >
             &times;
@@ -45,6 +45,7 @@ export default {
             ></iframe>
           </div>
         </div>
+
       </div>
     </div>
   </div>

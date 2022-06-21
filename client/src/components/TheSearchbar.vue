@@ -1,67 +1,69 @@
-<script>
-import axios from "axios";
-import { RouterLink } from "vue-router";
-// import TheSearchbarDropdown from "./TheSearchbarDropdown.vue";
+<script >
+import axios from "axios"
+import { RouterLink } from 'vue-router'
+import TheSearchbarDropdown from "./TheSearchbarDropdown.vue";
 
-const baseUrl = "http://localhost:3000";
 
 export default {
-  name: "TheSearchbar",
-  components: {
-    // TheSearchbarDropdown
-},
-  data() {
-    return {
-      searchResult: [],
-      searchTerm: "",
-      showSearchResult: false,
-    };
-  },
-
-  methods: {
-    debounceSearch(event) {
-      clearTimeout(this.debounce);
-      this.debounce = setTimeout(() => {
-        if (event.target.value.length > 3) {
-          this.fetchSearch(event.target.value);
-        } else {
-          this.showSearchResult = false;
-        }
-      }, 600);
+    name: "TheSearchbar",
+    components: { 
+      TheSearchbarDropdown
+    },
+    data() {
+        return {
+            searchResult: [],
+            searchTerm: "",
+            showSearchResult: false,
+        };
     },
 
-    async fetchSearch(search) {
-      try {
-        const response = await axios.get(`${baseUrl}/search/movies`, {
-          search: search,
-        });
-        this.searchResult = response.data.results;
-        this.showSearchResult = response.data.results ? true : false;
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    methods: {
+        debounceSearch(event) {
+            clearTimeout(this.debounce);
+            this.debounce = setTimeout(() => {
+                if (event.target.value.length > 3) {
+                    this.fetchSearch(event.target.value);
+                }
+                else {
+                    this.showSearchResult = false;
+                }
+            }, 600);
+        },
 
-    handleFocus() {
-      if (this.searchTerm != "") {
-        this.showSearchResult = true;
-      }
-    },
+        async fetchSearch(term) {
+            try {
+                const response = await axios.get("https://api.themoviedb.org/3/search/movie?api_key=93a882d2427e407e913daed9d97fc683&query=" + term);
+                this.searchResult = response.data.results;
+                this.showSearchResult = response.data.results ? true : false;
+            }
+            catch (error) {
+                console.log(error);
+            }
+        },
 
-    posterPath(poster_path) {
-      if (poster_path) {
-        return "https://image.tmdb.org/t/p/w500/" + poster_path;
-      } else {
-        return "https://via.placeholder.com/50x75";
-      }
+        handleFocus() {
+            if (this.searchTerm != "") {
+                this.showSearchResult = true;
+            }
+        },
+
+        posterPath(poster_path) {
+            if (poster_path) {
+                return "https://image.tmdb.org/t/p/w500/" + poster_path;
+            }
+            else {
+                return "https://via.placeholder.com/50x75";
+            }
+        },
     },
-  },
 };
+
 </script>
 
 <template>
-  <div class="mt-5 flex relative">
-    <!-- INPUT SEARCHBAR -->
+ <div class="mt-5 flex relative">
+
+   <!-- INPUT SEARCHBAR -->
     <input
       ref="searchBox"
       type="text"
@@ -75,7 +77,7 @@ export default {
     <!-- ICON KACA PEMBESAR -->
     <div class="absolute top-0">
       <svg
-        class="fill-current w-4 text-gray-300 mb-5 ml-2 mt-3"
+        class="fill-current w-4 text-gray-300 mt-2 ml-2 mt-3"
         viewBox="0 0 24 24"
       >
         <path
@@ -104,9 +106,14 @@ export default {
       <ul class="px-3" v-if="searchResult.length == 0 && showSearchResult">
         <li>No result found for "{{ searchTerm }}"</li>
       </ul>
+      
     </div>
-    <!-- <TheSearchbarDropdown /> -->
+
+   <TheSearchbarDropdown />
+
   </div>
 </template>
 
-<style></style>
+<style>
+
+</style>

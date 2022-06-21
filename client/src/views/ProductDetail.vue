@@ -1,21 +1,28 @@
 <script>
 import { mapState, mapActions } from "pinia";
 import { useCounter } from "../stores/store";
-import Card from "../components/Card.vue";
+import DetailCard from "../components/DetailCard.vue"
 
 export default {
-  name: "Products",
+  name: "ProductDetail",
+    data() {
+        return {
+            productId: this.productId
+        }
+  },
   components: {
-    Card,
+    DetailCard
   },
   methods: {
-    ...mapActions(useCounter, ["fetchProducts", 'fetchOneProduct']),
+    ...mapActions(useCounter, ["fetchOneProduct"]),
   },
   created() {
-    this.fetchProducts();
+    if (!this.products) {
+        this.fetchOneProduct(this.productId)
+    }
   },
   computed: {
-    ...mapState(useCounter, ["products"]),
+    ...mapState(useCounter, ["products", "productId"]),
   },
 };
 </script>
@@ -23,7 +30,7 @@ export default {
 <template>
   <div id="products-list">
     <div class="container row">
-      <Card v-for="product in products" :key="product.id" :products="product" @click="fetchOneProduct(product.id)"/>
+        <DetailCard :products="products"/>
     </div>
   </div>
 </template>
@@ -32,7 +39,7 @@ export default {
 #products-list {
   background-color: #023047;
   width: 100vw;
-  height: auto;
+  height: 100vh;
 }
 
 .container {

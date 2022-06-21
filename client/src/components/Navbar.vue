@@ -1,30 +1,42 @@
 <script>
+import { mapState, mapActions } from "pinia";
+import { useCounter } from "../stores/store";
 export default {
   name: "Home",
+  methods: {
+    ...mapActions(useCounter, ['clickHome', 'clickProducts', "clickSales"])
+  }
 };
 </script>
 
 <template>
   <nav
-    class="navbar navbar-expand-lg navbar-light bg-light fixed-top"
+    class="navbar navbar-expand navbar-light bg-light fixed-top"
     style="background-color: #ffb703 !important"
   >
     <div class="container">
-      <img src="" alt="logo" style="height: 40px" />
-      <div class="me-auto"></div>
-      <ul class="navbar-nav mx-2 mb-2 mb-lg-0">
+      <ul class="navbar-nav  mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link text-white" aria-current="page" href="#"
+          <a class="nav-link text-white" aria-current="page" href="#" @click="clickHome">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" aria-current="page" href="#" @click="clickProducts"
             >Products</a
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" aria-current="page" href="#">Temp</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" aria-current="page" href="#">Logout</a>
+          <a class="nav-link text-white" aria-current="page" href="#" @click="clickSales"
+            >Sales</a
+          >
         </li>
       </ul>
     </div>
   </nav>
 </template>
+
+<style scoped>
+
+.container {
+  margin-left: 2px;
+}
+</style>

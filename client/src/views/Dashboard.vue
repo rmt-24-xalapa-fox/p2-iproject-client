@@ -42,7 +42,7 @@ export default {
                   <div
                     class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                   >
-                    Earnings (Monthly)
+                    Earnings
                   </div>
                   <div class="h5 mb-0 font-weight-bold text-gray-800">
                     $40,000
@@ -65,7 +65,7 @@ export default {
                   <div
                     class="text-xs font-weight-bold text-success text-uppercase mb-1"
                   >
-                    Earnings (Annual)
+                    Expense
                   </div>
                   <div class="h5 mb-0 font-weight-bold text-gray-800">
                     $215,000

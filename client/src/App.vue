@@ -2,11 +2,13 @@
 import { RouterView } from "vue-router";
 import { mapState, mapWritableState, mapActions } from "pinia";
 import { moviesStore } from "./stores/movies";
+import TheNavbar from "./components/TheNavbar.vue";
 
 export default {
   components: {
     RouterView,
-  },
+    TheNavbar
+},
   computed: {
     ...mapState(moviesStore, [""]),
     ...mapWritableState(moviesStore, [""]),
@@ -19,7 +21,11 @@ export default {
 </script>
 
 <template>
-  <div class="flex justify-between border-b border-gray-500">
+  <div id="app">
+    <div class="flex justify-between border-b border-gray-500">
+      <TheNavbar />
+    </div>
+
     <RouterView />
   </div>
 </template>

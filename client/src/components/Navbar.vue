@@ -66,7 +66,7 @@
           class="text-light retrofont"
           style="margin-right: 5px; font-size: 11px"
         >
-          10000
+          {{ userCoin }}
         </h6>
         <h6
           class="retrofont"
@@ -86,13 +86,19 @@
 import { mapState, mapActions } from "pinia";
 import { useMainStore } from "../stores";
 export default {
+  computed: {
+    ...mapState(useMainStore, ["userCoin"]),
+  },
   methods: {
-    ...mapActions(useMainStore, ["setIsLogin"]),
+    ...mapActions(useMainStore, ["setIsLogin", "fetchGachaCoin"]),
     clickLogout: function () {
       localStorage.clear();
       this.setIsLogin(false);
       this.$router.push("/login");
     },
+  },
+  created() {
+    this.fetchGachaCoin();
   },
 };
 </script>

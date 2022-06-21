@@ -9,6 +9,7 @@ export const useMainStore = defineStore({
     listInTraining: [],
     listRookie: [],
     listMyDigimon: [],
+    userCoin: 0,
   }),
   getters: {},
   actions: {
@@ -21,6 +22,7 @@ export const useMainStore = defineStore({
             access_token: localStorage.getItem("access_token"),
           },
         });
+        this.fetchGachaCoin();
 
         Swal.fire({
           title: response.data.name,
@@ -53,6 +55,20 @@ export const useMainStore = defineStore({
         this.isLogin = true;
         // console.log(this.isLogin);
         this.router.push("/");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    fetchGachaCoin: async function () {
+      try {
+        const response = await axios({
+          method: "get",
+          url: "http://localhost:3000/user/gachaCoin",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.userCoin = response.data.gachaCoin;
       } catch (err) {
         console.log(err);
       }

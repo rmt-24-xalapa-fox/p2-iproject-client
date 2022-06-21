@@ -9,10 +9,10 @@ export default {
 <template>
   <div class="flex">
     
-    <RouterLink to="/">
+    <div>
       <img src="../assets/mF.png" alt="" />
-    </RouterLink>
-
+    </div>
+  
     <ul class="flex mt-5">
       <li>
         <RouterLink to="/" class="ml-5">

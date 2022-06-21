@@ -1,6 +1,7 @@
 <script>
 import { mapState, mapWritableState, mapActions } from "pinia";
 import { moviesStore } from "../stores/movies";
+import { RouterLink } from "vue-router";
 
 export default {
   name: "ThePopularMoviesCard",
@@ -34,12 +35,12 @@ export default {
   <div>
 
     <!-- IMAGE -->
-    <div>
-      <img
+    <RouterLink :to="`/movie/${movie.id}`">
+    <img
         :src="posterPath"
         class="hover:opacity-75 tansition easy-in-out duration-150"
       />
-    </div>
+    </RouterLink>
     <!-- TITLES -->
     <h3>{{ movie.title }}</h3>
 

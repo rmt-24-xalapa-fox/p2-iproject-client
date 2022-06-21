@@ -1,4 +1,6 @@
 <script>
+import { RouterLink } from "vue-router";
+
 export default {
   name: "TheActorsCard",
   props: ["actor"],
@@ -15,10 +17,10 @@ export default {
 
 <template>
   <div>
-    <div>
+    <RouterLink :to="`/actor/${this.actor.id}`">
       <img :src="profileImage" alt="" />
       <h3>{{ actor.name }}</h3>
-    </div>
+    </RouterLink>
   </div>
 </template>
 

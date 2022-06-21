@@ -12,6 +12,28 @@ export const useMainStore = defineStore({
   }),
   getters: {},
   actions: {
+    gachaDigimon: async function () {
+      try {
+        const response = await axios({
+          method: "put",
+          url: "http://localhost:3000/user/gachaDigimon",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+
+        Swal.fire({
+          title: response.data.name,
+          text: response.data.message,
+          imageUrl: `${response.data.img}`,
+          imageWidth: 400,
+          imageHeight: 400,
+          imageAlt: "Custom image",
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
     setIsLogin: function (status) {
       this.isLogin = status;
     },

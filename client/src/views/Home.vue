@@ -15,7 +15,13 @@
         style="color: white; margin-top: 30px; margin-left: 20px"
         class="col-1 align-items-right"
       >
-        <button style="width: 110px" class="btn btn-primary">100 Koin</button>
+        <button
+          @click="clickGachaDigimon"
+          style="width: 110px"
+          class="btn btn-primary"
+        >
+          100 Koin
+        </button>
       </div>
     </div>
   </div>
@@ -50,30 +56,6 @@
           <h5 class="card-title retrofont" style="font-size: 0.7em">
             {{ fresh.name }}
           </h5>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!-- CARD START -->
-      <div class="card col-1" style="width: 165px; margin: 10px">
-        <img
-          class="card-img-top"
-          src="https://digimon.shadowsmith.com/img/punimon.jpg"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Punimon</h5>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!-- CARD START -->
-      <div class="card col-1" style="width: 165px; margin: 10px">
-        <img
-          class="card-img-top"
-          src="https://digimon.shadowsmith.com/img/poyomon.jpg"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Poyomon</h5>
         </div>
       </div>
       <!-- CARD END -->
@@ -114,18 +96,6 @@
         </div>
       </div>
       <!-- CARD END -->
-      <!-- CARD START -->
-      <div class="card col-1" style="width: 165px; margin: 10px">
-        <img
-          class="card-img-top"
-          src="https://digimon.shadowsmith.com/img/yokomon.jpg"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Tsunomon</h5>
-        </div>
-      </div>
-      <!-- CARD END -->
     </div>
   </div>
 
@@ -163,89 +133,7 @@
         </div>
       </div>
       <!-- CARD END -->
-      <!-- CARD START -->
-      <div class="card col-1" style="width: 165px; margin: 10px">
-        <img
-          class="card-img-top"
-          src="https://digimon.shadowsmith.com/img/biyomon.jpg"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Biyomon</h5>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!-- CARD START -->
-      <div class="card col-1" style="width: 165px; margin: 10px">
-        <img
-          class="card-img-top"
-          src="https://digimon.shadowsmith.com/img/gabumon.jpg"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Gabumon</h5>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!-- CARD START -->
-      <div class="card col-1" style="width: 165px; margin: 10px">
-        <img
-          class="card-img-top"
-          src="https://digimon.shadowsmith.com/img/biyomon.jpg"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Biyomon</h5>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!-- CARD START -->
-      <div class="card col-1" style="width: 165px; margin: 10px">
-        <img
-          class="card-img-top"
-          src="https://digimon.shadowsmith.com/img/biyomon.jpg"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Biyomon</h5>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!-- CARD START -->
-      <div class="card col-1" style="width: 165px; margin: 10px">
-        <img
-          class="card-img-top"
-          src="https://digimon.shadowsmith.com/img/biyomon.jpg"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Biyomon</h5>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!-- CARD START -->
-      <div class="card col-1" style="width: 165px; margin: 10px">
-        <img
-          class="card-img-top"
-          src="https://digimon.shadowsmith.com/img/biyomon.jpg"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Biyomon</h5>
-        </div>
-      </div>
-      <!-- CARD END -->
-      <!-- CARD START -->
-      <div class="card col-1" style="width: 165px; margin: 10px">
-        <img
-          class="card-img-top"
-          src="https://digimon.shadowsmith.com/img/biyomon.jpg"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">Biyomon</h5>
-        </div>
-      </div>
+
       <!-- CARD END -->
     </div>
   </div>
@@ -260,7 +148,10 @@ export default {
     ...mapState(useMainStore, ["listFresh", "listInTraining", "listRookie"]),
   },
   methods: {
-    ...mapActions(useMainStore, ["fetchListDigimon"]),
+    ...mapActions(useMainStore, ["fetchListDigimon", "gachaDigimon"]),
+    clickGachaDigimon: function () {
+      this.gachaDigimon();
+    },
   },
   created() {
     this.fetchListDigimon();

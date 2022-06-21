@@ -1,4 +1,14 @@
 <script>
+import { mapActions } from 'pinia';
+import {useMainStore} from '../stores/main'
+export default {
+    methods:{
+        ...mapActions(useMainStore, ["getSeasonAnime"])
+    },
+    created: function(){
+        this.getSeasonAnime()
+    }
+}
 </script>
 <script setup>
 import { ref, onMounted } from 'vue'

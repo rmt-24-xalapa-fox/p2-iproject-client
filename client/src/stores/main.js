@@ -5,7 +5,8 @@ export const useMainStore = defineStore({
   id: 'main',
   state: () => ({
     islogin: false,
-    baseUrl: "http://localhost:3000"
+    baseUrl: "http://localhost:3000",
+    seasonAnime: []
   }),
   getters: {
 
@@ -56,6 +57,23 @@ export const useMainStore = defineStore({
       }
       catch(err){
         console.log(err)
+      }
+    },
+
+    async getSeasonAnime(){
+      try{
+        const response = await axios({
+          url: `${this.baseUrl}/seasonAnime`,
+          method: "get",
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
+        })
+
+        this.seasonAnime = response.data
+      }
+      catch(err){
+        console.log(response)
       }
     }
   }

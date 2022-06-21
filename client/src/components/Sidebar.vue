@@ -16,7 +16,7 @@
                 <span class="material-icons">home</span>
                 <span class="text">Home</span>
             </router-link>
-            <router-link to="/about" class="button">
+            <router-link to="/seasonAnime" class="button">
                 <span class="material-icons">calendar_month</span>
                 <span class="text">Season Anime</span>
             </router-link>

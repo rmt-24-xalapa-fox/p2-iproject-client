@@ -3,11 +3,14 @@ import { RouterView } from "vue-router";
 import { mapState, mapWritableState, mapActions } from "pinia";
 import { moviesStore } from "./stores/movies";
 import TheNavbar from "./components/TheNavbar.vue";
+import TheSearchbar from "./components/TheSearchbar.vue";
+
 
 export default {
   components: {
     RouterView,
-    TheNavbar
+    TheNavbar,
+    TheSearchbar
 },
   computed: {
     ...mapState(moviesStore, [""]),
@@ -24,6 +27,7 @@ export default {
   <div id="app">
     <div class="flex justify-between border-b border-gray-500">
       <TheNavbar />
+      <TheSearchbar />
     </div>
 
     <RouterView />

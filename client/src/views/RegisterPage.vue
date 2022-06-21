@@ -55,7 +55,7 @@
                     placeholder="Phone Number"
                   />
                 </div>
-                <div class="col-lg-8 mt-3">
+                <div class="col-md-8 mt-3">
                   <div class="row">
                     <div class="col-6">
                       <select
@@ -95,7 +95,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-8 mt-3">
+                <div class="col-md-8 mt-3">
                   <textarea
                     v-model="dataReg.address"
                     type="text"
@@ -145,22 +145,20 @@ export default {
       } catch (err) {}
     },
     triggerCity(event) {
-      // console.log(event.target.value);
       this.dataCity(event.target.value);
     },
 
     async postRegister() {
       try {
         await this.registerUser(this.dataReg);
-        // console.log(`berhasil register`);
         this.$swal.fire({
           icon: "success",
           title: `Success - 200`,
           text: `Success Register`,
           timer: 1000,
         });
+        this.$router.pusth("/login");
       } catch (err) {
-        // console.log(err);
         this.$swal.fire({
           icon: "error",
           title: `Error - ${err.response.data.statusCode}`,

@@ -58,6 +58,22 @@ export const useUserStore = defineStore('user', {
           reject(err)
         }
       })
+    },
+    loginUser(data) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await axios.post(`${this.baseUrl}/login`, {
+            email: data.email,
+            password: data.password
+          })
+          console.log(response.data.access_token);
+          localStorage.setItem("access_token", response.data.access_token)
+          resolve()
+        }
+        catch (err) {
+          reject(err)
+        }
+      })
     }
   },
 });

@@ -149,7 +149,7 @@ h2 strong,
 .df,
 .cards,
 .news {
-  display: flex;
+  /* display: flex; */
 }
 .dif {
   display: inline-flex;

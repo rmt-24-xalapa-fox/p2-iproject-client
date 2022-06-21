@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "HomeView",
+  name: "BattleView",
   components: {
 
   },
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <template>
-  
+
 </template>
 
 <style>

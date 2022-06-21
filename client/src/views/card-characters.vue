@@ -21,11 +21,9 @@ export default {
       try {
         const { data } = await axios.get(`${this.url}/characters?apikey=${PUBLIC_KEY}`);
 
-        // console.log(data.data);
         this.totalCharacters = data.data.total;
         const result = data.data.results;
         result.forEach((el) => {
-          // console.log(el.thumbnail.path);
           this.characters.push(el);
           el.url = `${el.thumbnail.path}/${this.size}`;
         });

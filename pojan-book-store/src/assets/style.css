@@ -650,3 +650,9 @@ body {
   flex-direction: column;
   gap: 1.5rem;
 }
+
+.order-review-container form select,
+.order-review-container form input {
+  background-color: #ffff;
+  color: #484644;
+}

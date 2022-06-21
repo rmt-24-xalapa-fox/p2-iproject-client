@@ -18,13 +18,13 @@
       class="container text-center page-heading align-items-center d-flex justify-content-center border border-dark border-4 rounded"
       style="width: 30%; background-color: white"
     >
-      <form>
+      <form @submit.prevent="clickLogin">
         <div class="row" style="margin-top: 40px">
           <div class="col-4">
             <label>Email :</label>
           </div>
           <div class="col-4">
-            <input type="text" />
+            <input v-model="email" type="text" />
           </div>
         </div>
         <div class="row">
@@ -32,7 +32,7 @@
             <label>Password :</label>
           </div>
           <div class="col-4">
-            <input type="password" />
+            <input v-model="password" type="password" />
           </div>
         </div>
 
@@ -56,5 +56,21 @@
   </section>
 </template>
 <script>
-export default {};
+import { mapActions } from "pinia";
+import { useMainStore } from "../stores";
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    ...mapActions(useMainStore, ["piniaLogin"]),
+    clickLogin: function () {
+      console.log("masok");
+      this.piniaLogin(this.email, this.password);
+    },
+  },
+};
 </script>

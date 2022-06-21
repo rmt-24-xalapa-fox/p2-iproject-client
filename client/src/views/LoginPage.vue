@@ -6,9 +6,9 @@
                 <form id="login" class="input-group-login" @submit.prevent="login">
                     <div class="login-text">LOGIN</div>
                     <input v-model="username" type="text" class="input-field" placeholder="username">
-                    <p style="color: red; font-size: 10px;" v-if="isError">Invalid Username</p>
+                    <!-- <p style="color: red; font-size: 10px;" v-if="isError">Invalid Username</p> -->
                     <input v-model="password" type="password" class="input-field" placeholder="Enter Password">
-                    <p style="color: red; font-size: 10px;" v-if="isError">Invalid password</p>
+                    <!-- <p style="color: red; font-size: 10px;" v-if="isError">Invalid password</p> -->
                     <button type="submit" class="submit-btn">Login</button>
 
                     <div class="member-text">
@@ -24,7 +24,22 @@
 </template>
 
 <script>
-
+import { mapActions } from "pinia";
+import { useMainStore } from "../stores/main";
+export default {
+    data() {
+        return {
+            username: "",
+            password: ""
+        }
+    },
+    methods :{
+        ...mapActions(useMainStore, ["toLogin"]),
+        login: function(){
+            this.toLogin(this.username, this.password)
+        }
+    }
+}
 </script>
 
 <style scoped>
@@ -143,6 +158,7 @@ span {
 
 .link-text {
     color: white;
+    font-family: 'Kdam Thmor Pro', sans-serif
 }
 
 .link-text:hover {

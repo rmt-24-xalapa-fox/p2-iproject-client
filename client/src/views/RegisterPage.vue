@@ -1,4 +1,23 @@
 <script>
+import { mapActions } from "pinia";
+import { useMainStore } from "../stores/main";
+export default {
+    data(){
+        return {
+            username: "",
+            email: "",
+            password: "",
+            phoneNumber: "",
+            address: ""
+        }
+    },
+    methods: {
+        ...mapActions(useMainStore, ["addNewUser"]),
+        register: function(){
+            this.addNewUser(this.username,this.email,this.password,this.phoneNumber,this.address)
+        }
+    }
+}
 </script>
 
 <template>
@@ -33,7 +52,7 @@
 </template>
 
 
-<style>
+<style scoped>
 * {
     margin: 0;
     padding: 0;
@@ -43,10 +62,11 @@
 .full-page {
     height: 100%;
     width: 100%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("../assets/1184726.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("../assets/12414151.jpg");
     background-position: center;
     background-size: cover;
     position: absolute;
+    font-family: 'Kdam Thmor Pro', sans-serif
 }
 
 .form-box {
@@ -55,7 +75,7 @@
     position: relative;
     margin: 2% auto;
     margin-top: 100px;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.8);
     padding: 10px;
     overflow: hidden;
     border-radius: 10px;
@@ -138,6 +158,7 @@ span {
     text-align: center;
     font-size: 25px;
     margin-bottom: 30px;
+    font-family: 'Kdam Thmor Pro', sans-serif
 }
 
 .member-text {
@@ -151,6 +172,7 @@ span {
 
 .link-text {
     color: white;
+    font-family: 'Kdam Thmor Pro', sans-serif
 }
 
 .link-text:hover {

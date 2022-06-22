@@ -7,14 +7,14 @@ export const actorsStore = defineStore("actors", {
   state: () => {
     return {
       actors: [],
-      currentPage: 1
+      currentPage: 5
     };
   },
   actions: {
-    async fetchActors(page) {
+    async fetchActors() {
       try {
         const response = await axios.get(`${baseUrl}/actor/popular`, {
-          page: page
+          page: 2
         })
         this.actors = response.data.results;
       } catch (error) {
@@ -24,11 +24,11 @@ export const actorsStore = defineStore("actors", {
 
     next() {
       this.currentPage += 1;
-      this.fetchActors(this.currentPage);
+      // this.fetchActors(this.currentPage);
     },
     previous() {
       this.currentPage -= 1;
-      this.fetchActors(this.currentPage);
+      // this.fetchActors(this.currentPage);
     },
 
   },

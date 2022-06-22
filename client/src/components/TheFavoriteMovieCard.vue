@@ -14,6 +14,7 @@ export default {
   },
   methods: {
     ...mapActions(moviesStore, [""]),
+    
     async hapus() {
       try {
         const response = await axios.delete(`${baseUrl}/favourite/delete`, {

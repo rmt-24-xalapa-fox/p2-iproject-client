@@ -1,51 +1,48 @@
 <script>
 export default {
-    name: "Sidebar"
-}
+  name: "Sidebar",
+};
 </script>
 
 <template>
-    <div id="sidebar" class="active">
-      <div class="sidebar-wrapper active">
-        <div class="sidebar-header">
-          <div class="d-flex justify-content-between">
-            <div class="logo">
-              <a href="index.html">
-                <h2>Count Me in</h2>
-              </a>
-            </div>
-            <div class="toggler">
-              <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-            </div>
-          </div>
-        </div>
-        <div class="sidebar-menu">
-          <ul class="menu">
-            <li class="sidebar-title">Menu</li>
-
-            <li class="sidebar-item active">
-              <a href="" class="sidebar-link" id="products-btn">
-                <i class="bi bi-grid-fill"></i>
-                <span>Products</span>
-              </a>
-            </li>
-            <li class="sidebar-item active">
-              <a href="" class="sidebar-link" id="categories-btn">
-                <i class="bi bi-grid-fill"></i>
-                <span>Categories</span>
-              </a>
-            </li>
-            <li class="sidebar-item active">
-              <a href="" class="sidebar-link" id="history-btn">
-                <i class="bi bi-grid-fill"></i>
-                <span>Histories</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <button class="sidebar-toggler btn x btn-light" type="button">
-          <i data-feather="x"></i>
-        </button>
-      </div>
-    </div>
+  <nav class="sidebar card py-2 mb-4">
+    <ul class="nav flex-column" id="nav_accordion">
+      <li class="nav-item">
+        <a class="nav-link" href="#"> Link name </a>
+      </li>
+      <li class="nav-item has-submenu">
+        <a class="nav-link" href="#"> Submenu links </a>
+        <ul class="submenu collapse">
+          <li><a class="nav-link" href="#">Submenu item 1 </a></li>
+          <li><a class="nav-link" href="#">Submenu item 2 </a></li>
+          <li><a class="nav-link" href="#">Submenu item 3 </a></li>
+        </ul>
+      </li>
+      <li class="nav-item has-submenu">
+        <a class="nav-link" href="#"> More menus </a>
+        <ul class="submenu collapse">
+          <li><a class="nav-link" href="#">Submenu item 4 </a></li>
+          <li><a class="nav-link" href="#">Submenu item 5 </a></li>
+          <li><a class="nav-link" href="#">Submenu item 6 </a></li>
+          <li><a class="nav-link" href="#">Submenu item 7 </a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"> Something </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"> Other link </a>
+      </li>
+    </ul>
+  </nav>
 </template>
+
+<style scoped>
+.sidebar li .submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+</style>

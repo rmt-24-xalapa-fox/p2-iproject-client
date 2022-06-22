@@ -1,32 +1,26 @@
 <script>
 export default {
-  name: "BrowseContentCard",
-  props: ["poem"],
+  name: "MyPoemContentCard",
+  props: ["myPoem"],
   methods: {
     selectedPoem(id) {
-      localStorage.setItem("selected", id);
-      // this.$router.push("/readmore")
-    },
-  },
+      localStorage.setItem("selected", id)
+      this.$router.push("/readmore")
+    }
+  }
 };
 </script>
 <template>
   <div class="card text-center mb-3" style="height: 20vh; width: 100%">
     <div class="card-body" style="padding: 1rem">
       <h5 class="card-title">
-        <i>{{ poem.title }}</i>
+        <i>{{ myPoem.title }}</i>
       </h5>
-      <p style="margin-bottom: 0">By: {{ poem.author }}</p>
+      <p style="margin-bottom: 0">By: {{ myPoem.author }}</p>
     </div>
     <div class="div card-footer d-flex justify-content-end border-1 bg-footer">
       <div>
-        <button
-          @click.prevent="selectedPoem(`${this.$.vnode.key + 1}`)"
-          class="button"
-          style="width: 150px"
-        >
-          Read More
-        </button>
+        <button @click.prevent="selectedPoem(`${myPoem.id}`)" class="button" style="width: 150px">Read More</button>
       </div>
     </div>
   </div>

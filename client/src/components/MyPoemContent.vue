@@ -1,32 +1,28 @@
 <script>
 import { mapActions, mapWritableState } from "pinia";
+import axiosInstance from "../axiosInstance";
 import { usePoemStore } from "../stores/poem";
-import BrowseContentCard from "./BrowseContentCard.vue";
+import MyPoemContentCard from "./MyPoemContentCard.vue";
 
 export default {
-  name: "BrowseContent",
+  name: "MyPoemContent",
   components: {
-    BrowseContentCard,
+    MyPoemContentCard,
   },
   methods: {
-    ...mapActions(usePoemStore, ["getBrowsePoem"]),
+    ...mapActions(usePoemStore, ["getMyPoem"])
   },
   computed: {
-    ...mapWritableState(usePoemStore, ["browsePoems"]),
+    ...mapWritableState(usePoemStore, ["myPoems"])
   },
   created() {
-    this.getBrowsePoem();
+    this.getMyPoem();
   },
 };
 </script>
 <template>
   <div class="content">
-    <!-- {{ browsePoems }} -->
-    <BrowseContentCard
-      v-for="(poem, index) in browsePoems"
-      :key="index"
-      :poem="poem"
-    />
+    <MyPoemContentCard v-for="myPoem in myPoems" :key="myPoem.id" :myPoem="myPoem" />
   </div>
 </template>
 

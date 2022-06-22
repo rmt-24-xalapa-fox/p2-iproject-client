@@ -38,7 +38,7 @@ export default {
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link active text-white" aria-current="page" href="#"
+            <a @click.prevent="changePage('/mypoem')" class="nav-link active text-white" aria-current="page" href="#"
               >My Poem</a
             >
           </li>

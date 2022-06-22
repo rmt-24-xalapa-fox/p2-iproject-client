@@ -1,6 +1,21 @@
 <script>
+import { mapActions } from "pinia";
+import { usePoemStore } from "../stores/poem";
+
 export default {
   name: "BrowseCard",
+  data() {
+    return {
+      author: "",
+    };
+  },
+  methods: {
+    ...mapActions(usePoemStore, ["browseAuthor"]),
+    ...mapActions(usePoemStore, ["getBrowsePoem"]),
+  },
+  created() {
+    this.getBrowsePoem();
+  },
 };
 </script>
 <template>
@@ -14,11 +29,13 @@ export default {
               type="text"
               class="form-control"
               id="email"
-              v-model="title"
+              v-model="author"
             />
           </div>
           <div>
-            <button class="button">Search</button>
+            <button @click.prevent="browseAuthor(this.author)" class="button">
+              Search
+            </button>
           </div>
         </div>
       </div>

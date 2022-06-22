@@ -4,6 +4,8 @@ import Browse from "../views/Browse.vue";
 import ReadMore from "../views/ReadMore.vue";
 import Login from "../views/Login.vue"
 import Register from "../views/Register.vue"
+import MyPoem from "../views/MyPoem.vue"
+import AddPoem from "../views/AddPoem.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +34,16 @@ const router = createRouter({
       path: "/readmore",
       name: "readmore",
       component: ReadMore,
+    },
+    {
+      path: "/mypoem",
+      name: "mypoem",
+      component: MyPoem,
+    },
+    {
+      path: "/create",
+      name: "create",
+      component: AddPoem,
     },
   ],
 });

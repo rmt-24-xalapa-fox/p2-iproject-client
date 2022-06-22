@@ -6,7 +6,10 @@ export const useMainStore = defineStore({
   state: () => ({
     islogin: false,
     baseUrl: "http://localhost:3000",
-    seasonAnime: []
+    seasonAnime: [],
+    currentPage: 1,
+    sizePage: 20,
+    animes: []
   }),
   getters: {
 
@@ -76,8 +79,22 @@ export const useMainStore = defineStore({
         console.log(response)
       }
     },
-    async getAnime(){
-      
+    async getAnime(query){
+        try{
+          const response = await axios({
+            url: `${this.baseUrl}/getAnime`,
+            method: "get",
+            params: {
+              page: this.currentPage,
+              name: query,
+              size: this.sizePage
+            }
+          })
+        this.animes = response.data.Anime.rows
+        }
+        catch(err){
+          console.log(err)
+        }
     }
   }
 })

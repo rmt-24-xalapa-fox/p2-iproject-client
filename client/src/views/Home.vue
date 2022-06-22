@@ -1,20 +1,24 @@
 <script>
-import { mapActions } from 'pinia';
+import { mapActions, mapState, mapWritableState } from 'pinia';
 import { useMainStore } from '../stores/main'
+import CardAnime from '../components/CardAnime.vue'
 const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition
 const sr = new Recognition()
 export default {
+    components: {
+        CardAnime
+    },
+    computed: {
+        ...mapState(useMainStore, ["animes"]),
+        ...mapWritableState(useMainStore, ["currentPage", "sizePage"])
+    },
     methods: {
-        ...mapActions(useMainStore, ["getSeasonAnime"]),
+        ...mapActions(useMainStore, ["getSeasonAnime", "getAnime"]),
         CheckForCommand(result) {
             const t = result[0].transcript;
-            if (t.includes('stop recording')) {
-                sr.stop();
-            } else if (t.includes('what is the time') ||
-                t.includes('what\'s the time')) {
-                sr.stop();
-                alert(new Date().toLocaleTimeString());
-                setTimeout(() => sr.start(), 100);
+            if (t.includes('search')) {
+                this.getAnime(this.query.replace('search', ''))
+                sr.stop()
             }
         },
         ToggleMic() {
@@ -23,11 +27,16 @@ export default {
             } else {
                 sr.start();
             }
+        },
+        searchAnime: function () {
+            this.getAnime(this.query)
+            this.sizePage = 20
         }
 
     },
     created: function () {
         this.getSeasonAnime()
+        this.getAnime(this.query)
     },
     data() {
         return {
@@ -57,7 +66,20 @@ export default {
                 .join('')
 
             this.query = t
-        }
+        },
+            this.getAnime(this.query)
+        window.addEventListener("scroll", () => {
+
+            let scrollTop = document.documentElement.scrollTop;
+            let scrollHeight = document.documentElement.scrollHeight;
+            let clientHeight = document.documentElement.clientHeight;
+
+            if (scrollTop + clientHeight >= scrollHeight - 10) {
+                this.sizePage += 20
+                this.getAnime(this.query)
+            }
+        })
+
     }
 }
 </script>
@@ -66,7 +88,7 @@ export default {
 <template>
     <main id="Home-page">
 
-        <form>
+        <form @submit.prevent="searchAnime">
             <input type="text" placeholder="Search for an anime..." v-model="query" />
             <button type="submit" class="button">Search</button>
             <a href="#" @click.prevent="ToggleMic">
@@ -77,130 +99,11 @@ export default {
 
         <div class="bg-white rounded">
             <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-
+                <div>
+                    <p class="text-5xl mb-10 text-red-900 text-center text-anime">Anime Database</p>
+                </div>
                 <div class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                    <!-- CARD -->
-                    <div class="rounded-xl shadow-lg">
-                        <div class="p-5 flex flex-col">
-                            <div class="rounded-xl overflow-hidden">
-                                <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
-                            </div>
-                            <h5 class="text-2xl md:text-3xl font-medium mt-3">Hataraku Maou-sama!!</h5>
-                            <p class="text-slate-500 text-lg mt-3 mb-2">Second season of Hataraku Maou-sama!</p>
-                            <p class="text-slate-500 text-sm mt-3 mb-2">Score: 8.0</p>
-                            <a href="https://www.youtube.com/embed/LxpTh8GKAL4?enablejsapi=1&wmode=opaque&autoplay=1"
-                                alt="#" class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch
-                                Trailer</a>
-                        </div>
-                    </div>
-                    <div class="rounded-xl shadow-lg">
-                        <div class="p-5 flex flex-col">
-                            <div class="rounded-xl overflow-hidden">
-                                <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
-                            </div>
-                            <h5 class="text-2xl md:text-3xl font-medium mt-3">Hataraku Maou-sama!!</h5>
-                            <p class="text-slate-500 text-lg mt-3 mb-2">Second season of Hataraku Maou-sama!</p>
-                            <p class="text-slate-500 text-sm mt-3 mb-2">Score: 8.0</p>
-                            <a href="https://www.youtube.com/embed/LxpTh8GKAL4?enablejsapi=1&wmode=opaque&autoplay=1"
-                                class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
-                        </div>
-                    </div>
-                    <div class="rounded-xl shadow-lg">
-                        <div class="p-5 flex flex-col">
-                            <div class="rounded-xl overflow-hidden">
-                                <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
-                            </div>
-                            <h5 class="text-2xl md:text-3xl font-medium mt-3">Hataraku Maou-sama!!</h5>
-                            <p class="text-slate-500 text-lg mt-3 mb-2">Second season of Hataraku Maou-sama!</p>
-                            <p class="text-slate-500 text-sm mt-3 mb-2">Score: 8.0</p>
-                            <a href="https://www.youtube.com/embed/LxpTh8GKAL4?enablejsapi=1&wmode=opaque&autoplay=1"
-                                class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
-                        </div>
-                    </div>
-                    <div class="rounded-xl shadow-lg">
-                        <div class="p-5 flex flex-col">
-                            <div class="rounded-xl overflow-hidden">
-                                <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
-                            </div>
-                            <h5 class="text-2xl md:text-3xl font-medium mt-3">Hataraku Maou-sama!!</h5>
-                            <p class="text-slate-500 text-lg mt-3 mb-2">Second season of Hataraku Maou-sama!</p>
-                            <p class="text-slate-500 text-sm mt-3 mb-2">Score: 8.0</p>
-                            <a href="https://www.youtube.com/embed/LxpTh8GKAL4?enablejsapi=1&wmode=opaque&autoplay=1"
-                                class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
-                        </div>
-                    </div>
-                    <div class="rounded-xl shadow-lg">
-                        <div class="p-5 flex flex-col">
-                            <div class="rounded-xl overflow-hidden">
-                                <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
-                            </div>
-                            <h5 class="text-2xl md:text-3xl font-medium mt-3">Hataraku Maou-sama!!</h5>
-                            <p class="text-slate-500 text-lg mt-3 mb-2">Second season of Hataraku Maou-sama!</p>
-                            <p class="text-slate-500 text-sm mt-3 mb-2">Score: 8.0</p>
-                            <a href="https://www.youtube.com/embed/LxpTh8GKAL4?enablejsapi=1&wmode=opaque&autoplay=1"
-                                class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
-                        </div>
-                    </div>
-                    <div class="rounded-xl shadow-lg">
-                        <div class="p-5 flex flex-col">
-                            <div class="rounded-xl overflow-hidden">
-                                <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
-                            </div>
-                            <h5 class="text-2xl md:text-3xl font-medium mt-3">Hataraku Maou-sama!!</h5>
-                            <p class="text-slate-500 text-lg mt-3 mb-2">Second season of Hataraku Maou-sama!</p>
-                            <p class="text-slate-500 text-sm mt-3 mb-2">Score: 8.0</p>
-                            <a href="https://www.youtube.com/embed/LxpTh8GKAL4?enablejsapi=1&wmode=opaque&autoplay=1"
-                                class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
-                        </div>
-                    </div>
-                    <div class="rounded-xl shadow-lg">
-                        <div class="p-5 flex flex-col">
-                            <div class="rounded-xl overflow-hidden">
-                                <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
-                            </div>
-                            <h5 class="text-2xl md:text-3xl font-medium mt-3">Hataraku Maou-sama!!</h5>
-                            <p class="text-slate-500 text-lg mt-3 mb-2">Second season of Hataraku Maou-sama!</p>
-                            <p class="text-slate-500 text-sm mt-3 mb-2">Score: 8.0</p>
-                            <a href="https://www.youtube.com/embed/LxpTh8GKAL4?enablejsapi=1&wmode=opaque&autoplay=1"
-                                class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
-                        </div>
-                    </div>
-                    <div class="rounded-xl shadow-lg">
-                        <div class="p-5 flex flex-col">
-                            <div class="rounded-xl overflow-hidden">
-                                <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
-                            </div>
-                            <h5 class="text-2xl md:text-3xl font-medium mt-3">Hataraku Maou-sama!!</h5>
-                            <p class="text-slate-500 text-lg mt-3 mb-2">Second season of Hataraku Maou-sama!</p>
-                            <p class="text-slate-500 text-sm mt-3 mb-2">Score: 8.0</p>
-                            <a href="https://www.youtube.com/embed/LxpTh8GKAL4?enablejsapi=1&wmode=opaque&autoplay=1"
-                                class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
-                        </div>
-                    </div>
-                    <div class="rounded-xl shadow-lg">
-                        <div class="p-5 flex flex-col">
-                            <div class="rounded-xl overflow-hidden">
-                                <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
-                            </div>
-                            <h5 class="text-2xl md:text-3xl font-medium mt-3">Hataraku Maou-sama!!</h5>
-                            <p class="text-slate-500 text-lg mt-3 mb-2">Second season of Hataraku Maou-sama!</p>
-                            <p class="text-slate-500 text-sm mt-3 mb-2">Score: 8.0</p>
-                            <a href="https://www.youtube.com/embed/LxpTh8GKAL4?enablejsapi=1&wmode=opaque&autoplay=1"
-                                class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
-                        </div>
-                    </div>
-                    <div class="rounded-xl shadow-lg">
-                        <div class="p-5 flex flex-col">
-                            <div class="rounded-xl overflow-hidden">
-                                <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
-                            </div>
-                            <h5 class="text-2xl md:text-3xl font-medium mt-3">Hataraku Maou-sama!!</h5>
-                            <p class="text-slate-500 text-lg mt-3 mb-2">Second season of Hataraku Maou-sama!</p>
-                            <p class="text-slate-500 text-sm mt-3 mb-2">Score: 8.0</p>
-                            <a href="https://www.youtube.com/embed/LxpTh8GKAL4?enablejsapi=1&wmode=opaque&autoplay=1"
-                                class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
-                        </div>
-                    </div>
+                    <CardAnime v-for="(anime, i) in animes" key="i" :anime="anime" />
                 </div>
             </div>
 
@@ -250,5 +153,9 @@ form input {
 
 .button:hover {
     background-position: right;
+}
+
+.text-anime{
+font-family: 'Kdam Thmor Pro', sans-serif
 }
 </style>

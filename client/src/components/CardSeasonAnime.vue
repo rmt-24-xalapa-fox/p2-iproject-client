@@ -8,17 +8,17 @@
 
             </div>
             <div class="h-20 items-center align-middle">
-                <h5 class="text-2xl md:text-3xl font-medium mt-3 h-full items-center">{{ anime.title }}</h5>
+                <h5 class="text-2xl md:text-3xl font-medium mt-3 h-full items-center text-anime">{{ anime.title }}</h5>
                 
             </div>
-            <div class="h-30 items-center">
-                <p class="text-slate-500 text-lg mt-3 mb-2">{{anime.synopsis}}</p>
+            <div class="h-20 items-center">
+                <p class="text-slate-500 text-lg mt-3 mb-2 ">{{anime.synopsis}}</p>
 
             </div>
 
-            <div class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">
+            <div class="text-center bg-red-400 text-red-800 rounded h-7 align-middle ">
                 
-                <a :href="anime.trailer" alt="#" >Watch Trailer</a>
+                <a :href="anime.trailer" alt="#" class="text-anime" >Watch Trailer</a>
             </div>
         </div>
     </div>

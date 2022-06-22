@@ -10,27 +10,72 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: LoginPage
+      component: LoginPage,
+      beforeEnter: (to, from, next) => {
+        
+        if(localStorage.getItem("access_token")){
+          next({name: "home"})
+        }
+        else{
+          next()
+        }
+      }
     },
     {
       path: '/register',
       name: 'register',
-      component: RegisterPage
+      component: RegisterPage,
+      beforeEnter: (to, from, next) => {
+        
+        if(localStorage.getItem("access_token")){
+          next({name: "home"})
+        }
+        else{
+          next()
+        }
+      }
     },
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      beforeEnter: (to, from, next) => {
+        
+        if(!localStorage.getItem("access_token")){
+          next({name: "login"})
+        }
+        else{
+          next()
+        }
+      }
     },
     {
       path: '/seasonAnime',
       name: 'season',
-      component: SeasonAnime
+      component: SeasonAnime,
+      beforeEnter: (to, from, next) => {
+        
+        if(!localStorage.getItem("access_token")){
+          next({name: "login"})
+        }
+        else{
+          next()
+        }
+      }
     },
     {
       path: '/Watchlist',
       name: 'watchlist',
-      component: Watchlist
+      component: Watchlist,
+      beforeEnter: (to, from, next) => {
+        
+        if(!localStorage.getItem("access_token")){
+          next({name: "login"})
+        }
+        else{
+          next()
+        }
+      }
     }
   ]
 })

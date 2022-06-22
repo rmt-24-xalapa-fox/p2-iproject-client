@@ -1,23 +1,68 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import LandingPage from '../views/LandingPage.vue'
+import SignupPage from '../views/SignupPage.vue'
+import LoginPage from '../views/LoginPage.vue'
+import HomePage from '../views/HomePage.vue'
+import RadioPage from '../views/RadioPage.vue'
+import SongPage from '../views/SongPage.vue'
+import PremiumPage from '../views/PremiumPage.vue'
+
+
+
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      name: 'LandingPage',
+      component: LandingPage
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      path: '/signup',
+      name: 'SignupPage',
+      component: SignupPage
+    },
+    {
+      path: '/login',
+      name: 'LoginPage',
+      component: LoginPage
+    },
+    {
+      path: '/home',
+      name: 'HomePage',
+      component: HomePage
+    },
+    {
+      path: '/home/radio',
+      name: 'RadioPage',
+      component: RadioPage
+    },
+    {
+      path: '/home/song',
+      name: 'SongPage',
+      component: SongPage
+    },
+    {
+      path: '/home/premium',
+      name: 'PremiumPage',
+      component: PremiumPage
     }
   ]
+})
+
+function authen() {
+  if (!localStorage.getItem("access_token")) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+router.beforeEach((to)=>{
+  if( to.name === "HomePage" && !authen() ) {
+      return {name: "LandingPage"}
+  } 
 })
 
 export default router

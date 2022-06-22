@@ -1,9 +1,13 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import { useCounterStore } from '../stores/counter';
+import CurrencyChanger from '../components/CurrencyChanger.vue';
 
 export default {
     name: "HomePage",
+    components: {
+        CurrencyChanger
+    },
     computed: {
         ...mapState(useCounterStore, ["gameNews", "rentalans"])
     },
@@ -21,6 +25,8 @@ export default {
 </script>
 
 <template>
+
+    <CurrencyChanger />
 
     <div class="container">
         <div class="row image">
@@ -101,7 +107,6 @@ export default {
 
 <style scoped>
 template {
-    margin-left: 10px;
     display: flex;
     flex-direction: row;
 }

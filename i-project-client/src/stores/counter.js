@@ -8,7 +8,8 @@ export const useMusicYuhu = defineStore({
   state: () => ({
     counter: 0,
     userloged: {},
-    url: "http://localhost:3000/"
+    url: "http://localhost:3000/",
+    userlogin: {}
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -32,7 +33,35 @@ export const useMusicYuhu = defineStore({
         });
       } catch (error) {
         console.log(error);
+        swal({
+          title: "ERROR",
+          text: error.response.data.message,
+          icon: "error",
+        });
       }
     },
+    async loginprocess(){
+      try {
+        const { data } = await axios.post(this.url + "login", {
+          email: this.userlogin.email,
+          password: this.userlogin.password,
+        });
+        localStorage.setItem("access_token", data.access_token);
+        swal({
+          title: "Success",
+          text: `Welcome to MUSIC YUHU!`,
+          icon: "success",
+        });
+        router.push("/home");
+      } catch (error) {
+        console.log(error);
+        swal({
+          title: "ERROR",
+          text: error.response.data.message,
+          icon: "error",
+        });
+        
+      }
+    }
   },
 });

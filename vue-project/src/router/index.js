@@ -18,4 +18,11 @@ const router = createRouter({
   ],
 });
 
+router.beforeEach((to, from) => {
+  let isLogin = localStorage.getItem("access_token");
+  if (isLogin && to.name == "login") {
+    return { name: "home" };
+  }
+});
+
 export default router;

@@ -48,7 +48,7 @@ body {
   min-width: 600px;
   min-height: 400px;
   box-sizing: border-box;
-  border: green 10px solid;
+  /* border: green 10px solid; */
 }
 
 * {  

@@ -13,16 +13,26 @@ export default {
         hp: 129,
         currenthp: 49,        
       },
+
+      round: 0,
+      endArea: false,
+      nextStop: "",
     }
   },
   methods: {
 
   },
   computed:{
+    showNextStop(){
+      if(!this.endArea) return false
+      // swap next stop
+      this.nextStop = this.nextStop==='center' ? 'shop' : 'center'
+      return this.nextStop
+    },
 
   },
   created(){
-    
+    // fetch progress if continue
   }
 }
 </script>
@@ -41,9 +51,23 @@ export default {
     </div> -->
     <!-- select map -->
     <div class="battle-map-select-container">
-      <div class="map-selector-card">Map 1</div>
-      <div class="map-selector-card">Map 2</div>
-      <div class="map-selector-card">Map 3</div>
+      <div class="map-selector-card">
+        <span class="invent-item-title">Map 1</span>
+        <div class="map-image-container">
+          <img src="https://pokemongohub.net/wp-content/uploads/2019/12/jvy42zwoit741.jpg" alt="">
+        </div>
+      </div>
+      <div class="map-selector-card" >
+      <!-- <div class="map-selector-card" v-if="showNextStop" > -->
+        <span class="invent-item-title">PokeCenter</span>
+        <div class="map-image-container">
+          <img src="https://pokemongohub.net/wp-content/uploads/2019/12/jvy42zwoit741.jpg" alt="">
+        </div>
+      </div>
+      <div class="map-selector-card">
+        <span class="invent-item-title">Map 2</span>
+        <img src="https://cdn.betterttv.net/emote/5fa84e3deca18f6455c2a71c/3x" alt="">
+      </div>
     </div>
     <!-- right column -->
     <div class="battle-info-container">
@@ -59,6 +83,7 @@ export default {
           <span class="text-health">HP: {{mypokemon.currenthp}}/{{mypokemon.hp}}</span>
         </div>
       </div>
+      <div class="invent-item-title"><span>Round: {{round}} </span></div>
       <div class="info-inventory">
         <div class="info-invent-container">
           <div class="invent-item-title"><span>Consumables</span></div>
@@ -117,7 +142,6 @@ export default {
   justify-content: flex-end;
   align-items: stretch;
   align-content: center;
-  border: yellow 10px solid;
 }
 
 .battle-combat-container {
@@ -125,7 +149,6 @@ export default {
   width: 100%;
   min-width: 400px;
   min-height: 400px;
-  border: red 5px solid;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -138,6 +161,7 @@ export default {
   min-height: 400px;
   height: 100%;
   width: 33%;
+  background-color: #424242;
 }
 
 .battle-sprite {
@@ -234,7 +258,6 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  box-shadow: 0 0 2px 2px aquamarine;
 }
 
 .invent-item-container {  
@@ -276,16 +299,41 @@ export default {
   min-height: 400px;
   border: red 5px solid;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   align-content: center;
 }
+
+.map-selector-card {
+  width: 100%;
+  height: 100%;
+  min-width: 100px;
+  max-width: 400px;
+  border: green 5px solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+.map-image-container {
+  min-width: 100px;
+  min-height: 200px;
+}
+
+.map-image-container img {
+  width: 100%;
+  height: 100%;  
+  object-fit: cover;
+}
+
 
 </style>
 
 <style scoped>
 span {
   font-weight: bold;
-  margin-left: 5%;  
+  padding: 5%;  
 }
 </style>

@@ -11,23 +11,25 @@
         <button
           id="dropdownButton"
           @click.prevent="toggleDropdown"
-          class="border-2 rounded-full hover:border-rose-500"
+          class="justify-center py-2 px-4 border-transparent rounded-md shadow-sm font-medium text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
         >
-          <img
-            src="https://avatars.dicebear.com/api/identicon/user.png"
-            class="w-9 border rounded-full"
-            alt=""
-          />
+          Menu
         </button>
 
         <div
-          class="-ml-18 absolute hidden flex-col rounded bg-white px-4 py-4 gap-4 shadow-lg w-28"
+          class="-ml-9 absolute hidden flex-col rounded bg-white px-4 py-4 gap-4 shadow-lg w-28"
           id="dropdown"
         >
           <router-link to="/profile/edit" class="hover:font-medium"
             >Edit profile</router-link
           >
-          <a href="" class="hover:font-medium">Upgrade</a>
+          <a
+            v-if="user.plan === 'Free'"
+            href=""
+            @click.prevent="upgradePlan"
+            class="hover:font-medium"
+            >Upgrade</a
+          >
           <a href="#" @click.prevent="logoutHandler" class="hover:font-medium"
             >Logout</a
           >
@@ -46,13 +48,14 @@
 </template>
 
 <script>
-import { mapWritableState } from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import { useMainStore } from "../stores/main";
 
 export default {
   name: "Navbar",
   computed: {
     ...mapWritableState(useMainStore, ["isLogin"]),
+    ...mapState(useMainStore, ["user"]),
     CTAAuth() {
       const currentPageName = this.$route.name;
       let CTAAuth = "";
@@ -65,6 +68,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(useMainStore, ["upgradePlan"]),
     logoutHandler() {
       this.isLogin = false;
       localStorage.clear();

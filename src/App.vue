@@ -4,18 +4,24 @@
 </template>
 
 <script>
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 import Navbar from "./components/Navbar.vue";
 import { useMainStore } from "./stores/main";
 export default {
   components: {
     Navbar,
   },
+  computed: {
+    ...mapState(useMainStore, ["isLogin"]),
+  },
   methods: {
-    ...mapActions(useMainStore, ["checkIsLogin"]),
+    ...mapActions(useMainStore, ["checkIsLogin", "readUser"]),
   },
   created() {
     this.checkIsLogin();
+    if (this.isLogin) {
+      this.readUser();
+    }
   },
 };
 </script>

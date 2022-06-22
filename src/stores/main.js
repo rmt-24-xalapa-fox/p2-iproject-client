@@ -6,6 +6,7 @@ export const useMainStore = defineStore("main", {
     isLogin: false,
     colorPalette: [],
     colorPalettes: [],
+    user: {},
   }),
   actions: {
     checkIsLogin() {
@@ -49,7 +50,47 @@ export const useMainStore = defineStore("main", {
           { name, colors },
           { headers }
         );
-        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async readUser() {
+      try {
+        const headers = {
+          access_token: localStorage.getItem("access_token"),
+        };
+        const res = await axiosInstance.get("/profile", { headers });
+        this.user = res.data.user;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async upgradePlan() {
+      try {
+        const headers = {
+          access_token: localStorage.getItem("access_token"),
+        };
+        const res = await axiosInstance.post(
+          "/profile/tokenUpgrade",
+          {},
+          { headers }
+        );
+        window.snap.pay(res.data.token, {
+          onSuccess: async function (result) {
+            console.log("masuk success");
+            await axiosInstance.patch(
+              "/profile/upgradePlan",
+              {},
+              {
+                headers: {
+                  access_token: localStorage.getItem("access_token"),
+                },
+              }
+            );
+            this.router.push("/");
+          },
+        });
+        this.readUser();
       } catch (err) {
         console.log(err);
       }

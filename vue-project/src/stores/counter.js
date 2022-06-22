@@ -6,6 +6,7 @@ export const useCounterStore = defineStore({
   state: () => ({
     counter: 0,
     map: [],
+    tour: [],
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -33,8 +34,18 @@ export const useCounterStore = defineStore({
           },
         };
         let response = await axios.request(options);
-        // console.log(response.data);
+        console.log(response.data);
         return response.data.candidates[0].geometry;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async allTour() {
+      try {
+        let response = await axios.get(
+          "https://triplocator.net/api/rest/get/tours"
+        );
+        console.log(response);
       } catch (err) {
         console.log(err);
       }

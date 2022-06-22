@@ -11,12 +11,7 @@ export default {
 
 <template>
   <div :class="theClass">
-    <Card
-      v-for="book in theBooks"
-      :key="book.id"
-      :book="book"
-      :inOrderPage="true"
-    />
+    <Card v-for="book in theBooks" :key="book.id" :book="book" />
   </div>
 </template>
 

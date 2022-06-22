@@ -34,7 +34,7 @@ export default {
     <Navbar />
     <HeroSection title="My Cart" />
     <div
-      v-if="productsInCarts"
+      v-if="productsInCarts.length !== 0"
       @click="moveToRoute('Order Review')"
       class="checkout-container"
     >

@@ -1,5 +1,5 @@
 <script>
-import { mapState, mapActions } from "pinia";
+import { mapState, mapActions, mapWritableState } from "pinia";
 import { useStore } from "@/stores/store";
 import Navbar from "../components/Navbar.vue";
 import HeroSection from "../components/HeroSection.vue";
@@ -83,9 +83,12 @@ export default {
           </tr>
           <tr>
             <td>Estimated Arrival</td>
-            <td>
+            <td v-if="order.receivedDateMin !== order.receivedDateMax">
               {{ formatDate(order.receivedDateMin) }} -
               {{ formatDate(order.receivedDateMax) }}
+            </td>
+            <td v-if="order.receivedDateMin === order.receivedDateMax">
+              {{ formatDate(order.receivedDateMin) }}
             </td>
           </tr>
           <tr>

@@ -1,5 +1,5 @@
 <script>
-import { mapState, mapActions } from "pinia";
+import { mapState, mapActions, mapWritableState } from "pinia";
 import { useStore } from "@/stores/store";
 import Navbar from "../components/Navbar.vue";
 import HeroSection from "../components/HeroSection.vue";
@@ -17,8 +17,13 @@ export default {
         weight: 0,
         courier: 0,
       },
-      indexShippingOption: 0,
       isAlreadyChooseCity: false,
+      orderObj: {
+        books: [],
+        price: 0,
+        receivedDateMin: new Date(),
+        receivedDateMax: new Date(),
+      },
     };
   },
   methods: {
@@ -67,6 +72,7 @@ export default {
       "shippingOption",
       "isAlreadyChooseCourier",
     ]),
+    ...mapWritableState(useStore, ["indexShippingOption"]),
     totalPrice() {
       let sum = 0;
       this.carts.forEach((el) => {
@@ -83,15 +89,64 @@ export default {
         const totalCost =
           this.shippingOption[this.indexShippingOption].cost[0].value +
           bookPrice;
+        this.orderObj.price = totalCost;
         return totalCost;
+      }
+    },
+    DateMin() {
+      if (this.shippingOption[this.indexShippingOption]) {
+        let num = this.shippingOption[
+          this.indexShippingOption
+        ].cost[0].etd.split(" ")[1]
+          ? this.shippingOption[this.indexShippingOption].cost[0].etd.split(
+              " "
+            )[0]
+          : this.shippingOption[this.indexShippingOption].cost[0].etd.split(
+              "-"
+            )[0];
+        Date.prototype.addDays = function (days) {
+          this.setDate(this.getDate() + parseInt(days));
+          return this;
+        };
+        let now = new Date();
+        this.orderObj.receivedDateMin = now.addDays(num);
+        return this.receivedDateMin;
+      }
+    },
+    DateMax() {
+      if (this.shippingOption[this.indexShippingOption]) {
+        let num2 = this.shippingOption[
+          this.indexShippingOption
+        ].cost[0].etd.split(" ")[1]
+          ? this.shippingOption[this.indexShippingOption].cost[0].etd.split(
+              " "
+            )[0]
+          : this.shippingOption[this.indexShippingOption].cost[0].etd.split(
+              "-"
+            )[1];
+
+        if (!num2) {
+          num2 = this.shippingOption[this.indexShippingOption].cost[0].etd;
+        }
+        Date.prototype.addDays = function (days) {
+          this.setDate(this.getDate() + parseInt(days));
+          return this;
+        };
+        let now = new Date();
+        this.orderObj.receivedDateMax = now.addDays(num2);
+        return this.receivedDateMax;
       }
     },
   },
   created() {
-    this.fetchCarts().then(
-      () => (this.shippingObj.weight = this.carts.length * 200)
-    );
+    this.fetchCarts().then(() => {
+      this.shippingObj.weight = this.carts.length * 200;
+      this.carts.forEach((el) => {
+        this.orderObj.books.push(el.BookId);
+      });
+    });
     this.fetchCities();
+    this.isAlreadyChooseCity = false;
   },
 };
 </script>
@@ -171,7 +226,11 @@ export default {
         <select
           v-model="indexShippingOption"
           class="input-box"
-          v-if="shippingOption.length !== 0"
+          v-if="
+            shippingOption.length !== 0 &&
+            isAlreadyChooseCourier &&
+            isAlreadyChooseCity
+          "
           placeholder="Choose shipping option"
         >
           <option disabled selected value="">Choose shipping option</option>
@@ -181,7 +240,10 @@ export default {
         </select>
         <input
           v-if="
-            shippingOption.length !== 0 && shippingOption[indexShippingOption]
+            shippingOption.length !== 0 &&
+            shippingOption[indexShippingOption] &&
+            isAlreadyChooseCourier &&
+            isAlreadyChooseCity
           "
           class="input-box"
           type="text"
@@ -193,24 +255,30 @@ export default {
 
         <input
           v-if="
-            shippingOption.length !== 0 && shippingOption[indexShippingOption]
+            shippingOption.length !== 0 &&
+            shippingOption[indexShippingOption] &&
+            isAlreadyChooseCourier &&
+            isAlreadyChooseCity
           "
           class="input-box"
           type="text"
           disabled
-          :value="`Estimated Time of Delivery: ${formatToRupiah(
+          :value="`Estimated Time of Delivery: ${
             shippingOption[indexShippingOption].cost[0].etd.split(' ')[1]
               ? shippingOption[indexShippingOption].cost[0].etd.split(' ')[0]
               : shippingOption[indexShippingOption].cost[0].etd
-          )} days`"
+          } days`"
         />
         <h4 v-if="shippingOption.length === 0 && isAlreadyChooseCourier">
           This shipping option is not available
         </h4>
         <button
-          @click.prevent="this.callMidtrans(totalPriceAndCost)"
+          @click.prevent="this.callMidtrans(totalPriceAndCost, orderObj)"
           v-if="
-            shippingOption.length !== 0 && shippingOption[indexShippingOption]
+            shippingOption.length !== 0 &&
+            shippingOption[indexShippingOption] &&
+            isAlreadyChooseCourier &&
+            isAlreadyChooseCity
           "
           type="submit"
           class="btn"

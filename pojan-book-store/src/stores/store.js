@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import swal from "sweetalert";
 import axios from "axios";
+import { nextTick } from "vue";
 
 export const useStore = defineStore({
   id: "store",
@@ -18,6 +19,7 @@ export const useStore = defineStore({
     book: null,
     shippingOption: [],
     isAlreadyChooseCourier: false,
+    indexShippingOption: 0,
   }),
   getters: {},
   actions: {
@@ -261,8 +263,9 @@ export const useStore = defineStore({
         this.showError(err);
       }
     },
-    async callMidtrans(price) {
+    async callMidtrans(price, obj) {
       try {
+        console.log(obj);
         const response = await axios.post(
           `${this.baseUrl}/pay`,
           { price },
@@ -275,20 +278,22 @@ export const useStore = defineStore({
         var self = this;
         window.snap.pay(response.data.token, {
           onSuccess(result) {
+            self.addOrders(obj);
             self.router.push({
               name: "Order History",
             });
             swal({
-              title: "Success!",
+              title: "Order Success!",
               icon: "success",
             });
           },
           onPending(result) {
+            self.addOrders(obj);
             self.router.push({
               name: "Order History",
             });
             swal({
-              title: "Success! (padahal pending)",
+              title: "Order Success!",
               icon: "success",
             });
           },
@@ -316,6 +321,30 @@ export const useStore = defineStore({
         this.orders = response.data;
       } catch (err) {
         this.showError(err);
+      }
+    },
+    async addOrders(obj) {
+      try {
+        await axios.post(`${this.baseUrl}/orders`, obj, {
+          headers: {
+            access_token: this.accessToken,
+          },
+        });
+        this.clearCarts();
+        this.isAlreadyChooseCourier = false;
+      } catch (err) {
+        this.showError(err);
+      }
+    },
+    async clearCarts() {
+      try {
+        await axios.delete(`${this.baseUrl}/clearCarts`, {
+          headers: {
+            access_token: this.accessToken,
+          },
+        });
+      } catch (err) {
+        nextTick(err);
       }
     },
   },

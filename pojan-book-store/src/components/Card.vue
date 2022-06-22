@@ -65,6 +65,11 @@ export default {
           </div>
 
           <div class="label-container">
+            <h3 class="label">Author</h3>
+            <p class="content">{{ book.author }}</p>
+          </div>
+
+          <div class="label-container">
             <h3 class="label">Category</h3>
             <p class="content">{{ book.Category.name }}</p>
           </div>

@@ -32,7 +32,7 @@ export default {
     </form>
   </div>
   <div style="justify-content: center">
-    <iframe width="500" height="300" :src="data"></iframe>
+    <iframe width="1500" height="1300" :src="data"></iframe>
   </div>
 </template>
 

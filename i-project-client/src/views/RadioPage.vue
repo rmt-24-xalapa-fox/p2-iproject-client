@@ -1,10 +1,21 @@
 <script>
 import NavbarPageVue from '../components/NavbarPage.vue'
+import {mapActions, mapWritableState} from 'pinia'
+import {useMusicYuhu} from '../stores/counter.js'
 
 export default {
   name: "RadioPage",
   components:{
     NavbarPageVue
+  },
+  methods: {
+    ...mapActions(useMusicYuhu, ["getallradio"])
+  },
+  computed: {
+    ...mapWritableState(useMusicYuhu, ["allradio"])
+  },
+  created(){
+    this.getallradio()
   }
 }
 </script>
@@ -35,150 +46,6 @@ export default {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">MANGORADIO</th>
-                  <td>Germany</td>
-                  <td>526651</td>
-                  <td>
-                    <a href="http://stream.mangoradio.de/" class="btn btn-success">Link 1</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.stream.laut.fm/mangoradio?t302=2022-06-21_12-56-05&uuid=5317fab7-4a16-4f9e-873d-22a5e4b25f57"
-                      class="btn btn-success">Link 2</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.de/" class="btn btn-success">Website</a>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">MANGORADIO</th>
-                  <td>Germany</td>
-                  <td>526651</td>
-                  <td>
-                    <a href="http://stream.mangoradio.de/" class="btn btn-success">Link 1</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.stream.laut.fm/mangoradio?t302=2022-06-21_12-56-05&uuid=5317fab7-4a16-4f9e-873d-22a5e4b25f57"
-                      class="btn btn-success">Link 2</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.de/" class="btn btn-success">Website</a>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">MANGORADIO</th>
-                  <td>Germany</td>
-                  <td>526651</td>
-                  <td>
-                    <a href="http://stream.mangoradio.de/" class="btn btn-success">Link 1</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.stream.laut.fm/mangoradio?t302=2022-06-21_12-56-05&uuid=5317fab7-4a16-4f9e-873d-22a5e4b25f57"
-                      class="btn btn-success">Link 2</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.de/" class="btn btn-success">Website</a>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">MANGORADIO</th>
-                  <td>Germany</td>
-                  <td>526651</td>
-                  <td>
-                    <a href="http://stream.mangoradio.de/" class="btn btn-success">Link 1</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.stream.laut.fm/mangoradio?t302=2022-06-21_12-56-05&uuid=5317fab7-4a16-4f9e-873d-22a5e4b25f57"
-                      class="btn btn-success">Link 2</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.de/" class="btn btn-success">Website</a>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">MANGORADIO</th>
-                  <td>Germany</td>
-                  <td>526651</td>
-                  <td>
-                    <a href="http://stream.mangoradio.de/" class="btn btn-success">Link 1</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.stream.laut.fm/mangoradio?t302=2022-06-21_12-56-05&uuid=5317fab7-4a16-4f9e-873d-22a5e4b25f57"
-                      class="btn btn-success">Link 2</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.de/" class="btn btn-success">Website</a>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">MANGORADIO</th>
-                  <td>Germany</td>
-                  <td>526651</td>
-                  <td>
-                    <a href="http://stream.mangoradio.de/" class="btn btn-success">Link 1</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.stream.laut.fm/mangoradio?t302=2022-06-21_12-56-05&uuid=5317fab7-4a16-4f9e-873d-22a5e4b25f57"
-                      class="btn btn-success">Link 2</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.de/" class="btn btn-success">Website</a>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">MANGORADIO</th>
-                  <td>Germany</td>
-                  <td>526651</td>
-                  <td>
-                    <a href="http://stream.mangoradio.de/" class="btn btn-success">Link 1</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.stream.laut.fm/mangoradio?t302=2022-06-21_12-56-05&uuid=5317fab7-4a16-4f9e-873d-22a5e4b25f57"
-                      class="btn btn-success">Link 2</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.de/" class="btn btn-success">Website</a>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">MANGORADIO</th>
-                  <td>Germany</td>
-                  <td>526651</td>
-                  <td>
-                    <a href="http://stream.mangoradio.de/" class="btn btn-success">Link 1</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.stream.laut.fm/mangoradio?t302=2022-06-21_12-56-05&uuid=5317fab7-4a16-4f9e-873d-22a5e4b25f57"
-                      class="btn btn-success">Link 2</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.de/" class="btn btn-success">Website</a>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">MANGORADIO</th>
-                  <td>Germany</td>
-                  <td>526651</td>
-                  <td>
-                    <a href="http://stream.mangoradio.de/" class="btn btn-success">Link 1</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.stream.laut.fm/mangoradio?t302=2022-06-21_12-56-05&uuid=5317fab7-4a16-4f9e-873d-22a5e4b25f57"
-                      class="btn btn-success">Link 2</a>
-                  </td>
-                  <td>
-                    <a href="https://mangoradio.de/" class="btn btn-success">Website</a>
-                  </td>
-                </tr>
-
                 <tr>
                   <th scope="row">MANGORADIO</th>
                   <td>Germany</td>

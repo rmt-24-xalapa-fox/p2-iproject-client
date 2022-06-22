@@ -9,7 +9,9 @@ export const useMusicYuhu = defineStore({
     counter: 0,
     userloged: {},
     url: "http://localhost:3000/",
-    userlogin: {}
+    userlogin: {},
+    allsong: [],
+    allradio: []
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -65,6 +67,30 @@ export const useMusicYuhu = defineStore({
     logoutprocess(){
       router.push('/')
       localStorage.clear()
+    },
+    async getallSong(){
+      try {
+        const { data } = await axios.get(this.url + `getsong`, {
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        this.allsong = data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getallradio(){
+      try {
+        const { data } = await axios.get(this.url + `top10radio`, {
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        this.allradio = data
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
 });

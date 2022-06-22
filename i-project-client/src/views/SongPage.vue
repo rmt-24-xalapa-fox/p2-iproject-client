@@ -1,59 +1,43 @@
 <script>
 import NavbarPageVue from '../components/NavbarPage.vue'
+import {mapActions, mapWritableState} from 'pinia'
+import {useMusicYuhu} from '../stores/counter.js'
 
 export default {
   name: "SongPage",
   components:{
     NavbarPageVue
+  },
+  methods: {
+    ...mapActions(useMusicYuhu, ["getallSong"])
+  },
+  computed: {
+    ...mapWritableState(useMusicYuhu, ["allsong"])
+  },
+  created(){
+    this.getallSong()
   }
 }
 </script>
 
 <template>
 <NavbarPageVue/>
+<br><br><br>
   <div class="team-boxed">
     <div class="container">
       <div class="intro">
         <h2 class="text-center">TOP 10 CHART TRACKS</h2>
       </div>
       <div class="row people">
-        <div class="col-md-6 col-lg-4 item">
+        <div class="col-md-6 col-lg-4 item" v-for="(el, i) in allsong" v:bind-key="i">
           <div class="box">
-            <h3 class="name">Ben Johnson</h3>
-            <h4 class="title">Running up That Hill (A Deal with God) [2018 Remaster]</h4>
-            <p class="description">RATING : 100</p>
-            <p class="description">ALBUM : Hounds of Love (2018 Remaster)</p>
-            <div class="social"><a href="#">SEE MORE</a></div>
+            <h3 class="name">{{el.artistName}}</h3>
+            <h4 class="title">{{el.title}}</h4>
+            <p class="description">RATING : {{el.rating}}</p>
+            <p class="description">ALBUM : {{el.album}}</p>
+            <div class="social"><a :href="el.songUrl">SEE MORE</a></div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-4 item">
-          <div class="box">
-            <h3 class="name">Ben Johnson</h3>
-            <p class="title">Running up That Hill (A Deal with God) [2018 Remaster]</p>
-            <p class="description">RATING : 100</p>
-            <p class="description">ALBUM : Hounds of Love (2018 Remaster)</p>
-            <div class="social"><a href="#">SEE MORE</a></div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4 item">
-          <div class="box">
-            <h3 class="name">Ben Johnson</h3>
-            <p class="title">Running up That Hill (A Deal with God) [2018 Remaster]</p>
-            <p class="description">RATING : 100</p>
-            <p class="description">ALBUM : Hounds of Love (2018 Remaster)</p>
-            <div class="social"><a href="#">SEE MORE</a></div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4 item">
-          <div class="box">
-            <h3 class="name">Ben Johnson</h3>
-            <p class="title">Running up That Hill (A Deal with God) [2018 Remaster]</p>
-            <p class="description">RATING : 100</p>
-            <p class="description">ALBUM : Hounds of Love (2018 Remaster)</p>
-            <div class="social"><a href="#">SEE MORE</a></div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>

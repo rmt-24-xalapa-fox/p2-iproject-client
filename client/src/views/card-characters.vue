@@ -1,5 +1,4 @@
 <script>
-import { PUBLIC_KEY } from "../API/marvel-api-keys";
 import axios from "axios";
 import { mapState } from "pinia";
 import { useMaarvelStore } from "../stores/marvel";
@@ -14,29 +13,61 @@ export default {
       urlCharacters: "",
       size: "standard_large.jpg",
       totalCharacters: 0,
+      alphabet: "A",
+      page: 1,
+      totalPage: 0,
     };
   },
   methods: {
     async fetchCharacters() {
       try {
-        const response = await axios.get(
-          `${this.url}/characters?limit=40&apikey=${PUBLIC_KEY}`
-        );
-
-        console.log(response);
-        let data = response.data;
-        // console.log(data);
+        const { data } = await axios.get(`${this.url}/characters`);
         this.totalCharacters = data.data.total;
+        this.totalPage = Math.ceil(this.totalCharacters / 77);
+
         const result = data.data.results;
         result.forEach((el) => {
           this.characters.push(el);
           el.url = `${el.thumbnail.path}/${this.size}`;
         });
-
-        // console.log(this.urlCharacters);
       } catch (error) {
         console.log(error);
       }
+    },
+
+    async seachByAlphabet() {
+      try {
+        this.characters = [];
+        this.totalCharacters = 0;
+        const { data } = await axios.get(
+          `${this.url}/characters?page=${this.page}&name=${this.alphabet}`
+        );
+
+        this.totalCharacters = data.data.total;
+        this.totalPage = Math.ceil(this.totalCharacters / 77);
+        const result = data.data.results;
+        result.forEach((el) => {
+          this.characters.push(el);
+          el.url = `${el.thumbnail.path}/${this.size}`;
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    changeAlphabet(alphabet) {
+      this.alphabet = alphabet;
+      this.seachByAlphabet();
+    },
+
+    previousPage() {
+      this.page = this.page - 1;
+      this.seachByAlphabet();
+    },
+
+    nextPage() {
+      this.page = this.page + 1;
+      this.seachByAlphabet();
     },
   },
   computed: {
@@ -50,6 +81,39 @@ export default {
 </script>
 
 <template>
+  <!-- SEARCH BY ALPHABET  -->
+  <div class="pagination">
+    <a href="#" v-if="this.page > 1" v-on:click.prevent="previousPage">&laquo;</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('A')">A</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('B')">B</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('C')">C</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('D')">D</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('E')">E</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('F')">F</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('G')">G</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('H')">H</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('I')">I</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('J')">J</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('K')">K</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('L')">L</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('M')">M</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('N')">N</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('O')">O</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('P')">P</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('Q')">Q</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('R')">R</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('S')">S</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('T')">T</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('U')">U</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('V')">V</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('W')">W</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('X')">X</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('Y')">Y</a>
+    <a href="#" v-on:click.prevent="changeAlphabet('Z')">Z</a>
+    <a href="#" v-if="this.page < this.totalPage" v-on:click.prevent="nextPage"
+      >&raquo;</a
+    >
+  </div>
   <!-- DISPLAY CHARACTERS CARD  -->
   <h2>
     <strong
@@ -67,6 +131,19 @@ export default {
 </template>
 
 <style>
+.pagination {
+  display: inline-block;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination a {
+  color: red;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
 .abs,
 h2:after,
 .cards .card figcaption,

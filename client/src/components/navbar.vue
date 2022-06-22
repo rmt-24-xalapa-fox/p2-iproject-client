@@ -33,7 +33,7 @@ export default {
         <ul>
           <li class="active"><router-link to="/" class="active">RED MARVEL</router-link></li>
           <li><router-link to="/characters">Characters</router-link></li>
-          <li><router-link to="/comics">Comics</router-link></li>
+          <li><router-link to="/comics">All Comics</router-link></li>
           <li><a href="#">Favourite</a></li>
           <li><a href="#">Memes</a></li>
           <!-- <li><a href="#">Trailer</a></li> -->

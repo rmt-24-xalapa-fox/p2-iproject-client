@@ -1,5 +1,4 @@
 <script>
-import { PUBLIC_KEY } from "../API/marvel-api-keys";
 import axios from "axios";
 import { mapState } from "pinia";
 import { useMaarvelStore } from "../stores/marvel";
@@ -9,7 +8,7 @@ export default {
   data() {
     return {
       comics: [],
-      urlComics: "",
+      // urlComics: "",
       size: "portrait_xlarge.jpg",
       totalComics: 0,
     };
@@ -21,22 +20,15 @@ export default {
   methods: {
     async fetchComics() {
       try {
-        // console.log("haloooo");
-        const { data } = await axios.get(
-          `${this.url}/comics?startYear=2020&apikey=${PUBLIC_KEY}`
-        );
+        const { data } = await axios.get(`${this.url}/comics`);
 
-        // console.log(data);
         this.totalComics = data.data.total;
         const result = data.data.results;
 
         result.forEach((el) => {
-          // console.log(el);
           this.comics.push(el);
           el.url = `${el.thumbnail.path}/${this.size}`;
         });
-
-        console.log(this.comics);
       } catch (error) {
         console.log(error);
       }
@@ -51,7 +43,7 @@ export default {
 
 <template>
   <!-- DISPLAY COMMICS  -->
-  
+
   <div class="container">
     <div class="component">
       <ul class="align">
@@ -61,13 +53,6 @@ export default {
             <ul class="hardcover_front">
               <li>
                 <img :src="comic.url" alt="" />
-                <!-- <img src="https://mrreiha.keybase.pub/codepen/hover-fx/2.jpg" /> -->
-               <!-- <img
-                    src="https://i.imgur.com/NVRNzyf.jpg"
-                    alt=""
-                    width="100%"
-                    height="100%"
-                  /> -->
               </li>
               <li></li>
             </ul>
@@ -256,12 +241,12 @@ Table of Contents
 /* reverse */
 .hardcover_back li:last-child {
   background: #fffbec;
-    /* background: #333; */
+  /* background: #333; */
 }
 
 .book_spine li:first-child {
   background: #eee;
-    /* background: #333; */
+  /* background: #333; */
 }
 .book_spine li:last-child {
   background: #333;
@@ -282,7 +267,7 @@ Table of Contents
 .book_spine li:last-child:after,
 .book_spine li:last-child:before {
   background: #999;
-    /* background: #333; */
+  /* background: #333; */
 }
 
 /* page */

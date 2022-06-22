@@ -18,7 +18,7 @@
         <button
           @click="clickGachaDigimon"
           style="width: 110px"
-          class="btn btn-primary"
+          class="btn btn-warning"
         >
           100 Koin
         </button>

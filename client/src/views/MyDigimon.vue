@@ -30,6 +30,12 @@
           <h5 class="card-title retrofont" style="font-size: 0.7em">
             {{ digimon.name }}
           </h5>
+          <h6
+            class="card-title retrofont"
+            style="font-size: 0.6em; color: green"
+          >
+            {{ digimon.level }}
+          </h6>
           <a href="#" style="margin-top: 10px" class="btn btn-danger">Sell</a>
         </div>
       </div>

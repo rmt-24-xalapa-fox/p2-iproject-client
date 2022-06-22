@@ -2,7 +2,7 @@
   <section>
     <div
       class="container text-center page-heading align-items-center d-flex justify-content-center bg-dark rounded"
-      style="margin-top: 40px; margin-bottom: 40px; width: 30%; height: 100px"
+      style="margin-top: 250px; margin-bottom: 40px; width: 30%; height: 100px"
     >
       <div class="page-title">
         <div class="row">

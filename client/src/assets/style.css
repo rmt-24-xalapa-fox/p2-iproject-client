@@ -1,0 +1,59 @@
+.img-category:hover {
+  transform: scale(1.2);
+}
+
+.card-product:hover {
+  box-shadow: 5px 5px 5px 5px grey;
+}
+
+.card-product {
+  background-color: rgba(253, 231, 253, 0.84);
+  border: none;
+}
+
+.row-product {
+  background-color: rgba(253, 242, 231, 0.84);
+  margin: 0;
+  padding: 5px;
+  padding-top: 16px;
+}
+
+.navbar .nav-item .dropdown-menu {
+  display: none;
+}
+.navbar .nav-item:hover .dropdown-menu {
+  display: block;
+}
+.navbar .nav-item .dropdown-menu {
+  margin-top: 0;
+}
+
+.btn.btn-search {
+  border-radius: 8px;
+  color: white;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.product_section .product .colour_section .color {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin: 4px;
+}
+
+.rating-wrapper {
+  align-self: center;
+  box-shadow: 7px 7px 25px rgba(198, 206, 237, 0.7),
+    -7px -7px 35px rgba(255, 255, 255, 0.7),
+    inset 0px 0px 4px rgba(255, 255, 255, 0.9),
+    inset 7px 7px 15px rgba(198, 206, 237, 0.8);
+  border-radius: 5rem;
+  display: inline-flex;
+  direction: rtl !important;
+  padding: 1.5rem 2.5rem;
+  margin-left: auto;
+}

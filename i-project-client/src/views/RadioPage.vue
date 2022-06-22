@@ -1,12 +1,17 @@
 <script>
+import NavbarPageVue from '../components/NavbarPage.vue'
 
 export default {
-  name: "RadioPage"
+  name: "RadioPage",
+  components:{
+    NavbarPageVue
+  }
 }
 </script>
 
 <template>
-<br><br>
+<NavbarPageVue/>
+<br><br><br><br>
   <section class="ftco-section">
     <div class="container">
       <div class="row justify-content-center">

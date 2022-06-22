@@ -1,11 +1,15 @@
 <script>
-
+import NavbarPageVue from '../components/NavbarPage.vue'
 export default {
-  name: "HomePage"
+  name: "HomePage",
+  components:{
+    NavbarPageVue
+  }
 }
 </script>
 
 <template>
+<NavbarPageVue/>
   <section class="dark">
     <div class="container py-2">
       <article class="postcard dark red">
@@ -15,7 +19,7 @@ export default {
             alt="Image Title" />
         </div>
         <div class="postcard__text">
-          <h1 class="postcard__title red"><a href="#">TOP 10 CHART MUSIC</a></h1>
+          <h1 class="postcard__title red"><router-link to="/home/song">TOP 10 CHART MUSIC</router-link></h1>
           <div class="postcard__bar"></div>
           <div class="postcard__preview-txt">Musik. Musik terdiri dari beberapa unsur, yaitu melodi, harmoni, ritme, dan
             timbre. Musik termasuk sejenis fenomena intuisi, untuk mencipta, memperbaiki, dan mempersembahkannya adalah
@@ -30,7 +34,7 @@ export default {
             alt="Image Title" />
         </div>
         <div class="postcard__text">
-          <h1 class="postcard__title red"><a href="#">TOP 10 RADIO STATION</a></h1>
+          <h1 class="postcard__title red"><router-link to="/home/radio">TOP 10 RADIO STATION</router-link></h1>
           <div class="postcard__bar"></div>
           <div class="postcard__preview-txt">Radio adalah teknologi yang digunakan untuk pengiriman sinyal dengan cara
             modulasi dan radiasi elektromagnetik. Gelombang ini melintas, dan merambat lewat udara, dan bisa juga

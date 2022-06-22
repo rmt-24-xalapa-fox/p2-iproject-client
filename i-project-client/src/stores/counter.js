@@ -60,8 +60,11 @@ export const useMusicYuhu = defineStore({
           text: error.response.data.message,
           icon: "error",
         });
-        
       }
+    },
+    logoutprocess(){
+      router.push('/')
+      localStorage.clear()
     }
   },
 });

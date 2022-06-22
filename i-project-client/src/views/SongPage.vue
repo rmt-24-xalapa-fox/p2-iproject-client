@@ -1,11 +1,16 @@
 <script>
+import NavbarPageVue from '../components/NavbarPage.vue'
 
 export default {
-  name: "SongPage"
+  name: "SongPage",
+  components:{
+    NavbarPageVue
+  }
 }
 </script>
 
 <template>
+<NavbarPageVue/>
   <div class="team-boxed">
     <div class="container">
       <div class="intro">

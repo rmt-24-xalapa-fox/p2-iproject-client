@@ -7,14 +7,14 @@
                 <div class="header-top-inner">
                     <div class="cnt-account">
                         <ul class="list-unstyled">
-                            <li class="myaccount"><a href="#"><span>My Account</span></a></li>
-                            <li class="wishlist"><a href="#"><span>Wishlist</span></a></li>
-                            <li class="header_cart hidden-xs"><a href="#"><span>My Cart</span></a></li>
+                            <li class="header_cart hidden-xs"><RouterLink to="/cart"><span>My Cart</span></RouterLink></li>
                             <li class="check"><a href="#"><span>Checkout</span></a></li>
                             <li class="login">
                                 <RouterLink to="/login" v-if="!userLogin"><span>Login</span></RouterLink>
-                                <RouterLink to="/login" v-if="userLogin"><span>Logout</span></RouterLink>
+                                <RouterLink to="/login" v-if="userLogin" @click.prevent="logout"><span>Logout</span>
+                                </RouterLink>
                             </li>
+
                         </ul>
                     </div>
                     <!-- /.cnt-account -->
@@ -34,7 +34,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
                         <!-- ============================================================= LOGO ============================================================= -->
-                        <div class="logo"> <a href="home.html"> <img src="../assets/images/logo.png" alt="logo"> </a>
+                        <div class="logo"> <RouterLink to="/"> <img src="../assets/images/logo.png" alt="logo"> </RouterLink>
                         </div>
                         <!-- /.logo -->
                         <!-- ============================================================= LOGO : END ============================================================= -->
@@ -151,7 +151,7 @@
                         <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
                             <div class="nav-outer">
                                 <ul class="nav navbar-nav">
-                                    <li class="active dropdown"> <a href="home.html">Home</a> </li>
+                                    <li class="active dropdown"> <RouterLink to="/">Home</RouterLink> </li>
                                     <li class="dropdown  navbar-right special-menu"> <a href="#">Get 30% off on selected
                                             items</a> </li>
                                 </ul>
@@ -186,6 +186,7 @@ export default {
     },
     methods: {
         logout: function () {
+            this.userLogin = true
             localStorage.clear()
             this.$router.push("/login")
         }

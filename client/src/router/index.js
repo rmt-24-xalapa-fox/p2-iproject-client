@@ -5,6 +5,7 @@ import Register from "../views/Register.vue";
 import DetailProduct from "../views/DetailProduct.vue";
 import Cart from "../views/Cart.vue";
 import Dashboard from "../views/Dashboard.vue";
+import HandleFav from "../views/HandleFav.vue";
 import NotFound from "../views/NotFound.vue";
 
 
@@ -27,12 +28,17 @@ const router = createRouter({
           component: DetailProduct,
         },
         {
+          path: "/harusLogin",
+          name: "handle-cart",
+          component: HandleFav,
+        },
+        {
           path: "/cart",
           name: "cart",
           component: Cart,
           beforeEnter: (to, from, next) => {
             if (!localStorage.getItem("access_token")) {
-              next({ name: "handle-fav" });
+              next({ name: "handle-cart" });
             } else {
               next();
             }

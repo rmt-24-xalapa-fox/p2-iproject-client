@@ -5,7 +5,8 @@
                 <div class="col-md-3" v-for="product in products" :key="product.id">
                     <div class="wsk-cp-product">
                         <div class="wsk-cp-img">
-                            <img :src="product.images_list[0]" alt="Product" class="img-responsive" style="height: 150px;" />
+                            <img :src="product.images_list[0]" alt="Product" class="img-responsive"
+                                style="height: 150px;" />
                         </div>
                         <div class="wsk-cp-text" style="margin-top: -120px">
                             <div class="category">
@@ -18,27 +19,151 @@
                                 <p>{{ product.product_details }}</p>
                             </div>
                             <div class="card-footer">
-                                <div class="wcf-left"><span class="price">{{ product.price }}</span></div>
-                                <div class="wcf-right"><a href="#" class="buy-btn"><i
-                                            class="fa fa-shopping-cart"></i></a></div>
+                                <div class="wcf-left"><span class="price">Rp. {{
+                                Number(product.price).toLocaleString('de-DE', {minimumFractionDigits: 2 })
+                                }}</span></div>
+                                <div class="wcf-right"><button @click.prevent="btnFav(product.id)" class="buy-btn"><i
+                                            class="fa fa-shopping-cart"></i></button></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div style="margin-top: 30px; margin-left: 550px;" class="justify-content-center">
+            <ul class="nav nav-tabs d-flex " data-aos="fade-up" data-aos-delay="200">
+
+                <li class="nav-item">
+                    <a class="nav-link show" data-bs-toggle="tab">
+                        <h4>1</h4>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link show" data-bs-toggle="tab">
+                        <h4>2</h4>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link show" data-bs-toggle="tab">
+                        <h4>3</h4>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link show" data-bs-toggle="tab">
+                        <h4>4</h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
+
+
 
 </template>
 
 <script>
+import { mapActions, mapState } from 'pinia';
+import { useIndexStore } from "../stores";
     export default {
         props: ['products'],
+        methods: {
+            ...mapActions(useIndexStore, ["addCart"]),
+
+            btnFav(id) {
+                this.addCart(id)
+                    .then(() => { 
+                        Swal.fire({
+                            icon: "success",
+                            title: "Success!",
+                            text: `Success add product to cart!`,
+                        });
+                    })
+                    .catch((err) => {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: `Anda Harus Login Terlebih Dahulu!`,
+                        });
+                    })
+            },
+        }
     }
 </script>
 
 <style scoped>
 
+/*--------------------------------------------------------------
+# Menu Section
+--------------------------------------------------------------*/
+ .nav-tabs {
+    border: 0;
+}
+
+ .nav-link {
+    margin: 0 10px;
+    padding: 10px 5px;
+    transition: 0.3s;
+    color: var(--color-secondary);
+    border-radius: 0;
+    cursor: pointer;
+    height: 100%;
+    border: 0;
+    border-bottom: 2px solid #b6b6bf;
+}
+
+@media (max-width: 575px) {
+     .nav-link {
+        margin: 0 10px;
+        padding: 10px 0;
+    }
+}
+
+ .nav-link i {
+    padding-right: 15px;
+    font-size: 48px;
+}
+
+ .nav-link h4 {
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0;
+    font-family: var(--font-secondary);
+}
+
+@media (max-width: 575px) {
+     .nav-link h4 {
+        font-size: 16px;
+    }
+}
+
+ .nav-link:hover {
+    color: var(--color-primary);
+}
+
+ .nav-link.active {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+ .tab-content .tab-header {
+    padding: 30px 0;
+}
+
+ .tab-content .tab-header p {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #676775;
+    margin-bottom: 0;
+}
+
+ .tab-content .tab-header h3 {
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+
+/* Card */
 .shell {
     padding-bottom: 80px;
 }
@@ -201,9 +326,7 @@ a.buy-btn {
     transition: all 0.2s ease-in-out;
 }
 
-a.buy-btn:hover,
-a.buy-btn:active,
-a.buy-btn:focus {
+a.buy-btn:hover {
     border-color: #FF9800;
     background: #FF9800;
     color: #fff;

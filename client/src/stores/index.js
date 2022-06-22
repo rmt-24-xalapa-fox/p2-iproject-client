@@ -6,6 +6,7 @@ export const useIndexStore = defineStore({
   state: () => ({
     url: "http://localhost:3001",
     products: [],
+    carts: [],
   }),
   getters: {},
   actions: {
@@ -65,7 +66,7 @@ export const useIndexStore = defineStore({
     /*--------------------------------------------------------------
     # REGISTER
     --------------------------------------------------------------*/
-    async isRegis( email, password, phoneNumber) {
+    async isRegis(email, password, phoneNumber) {
       return new Promise(async (resolve, reject) => {
         try {
           const result = await axios({
@@ -83,6 +84,44 @@ export const useIndexStore = defineStore({
           reject(err);
         }
       });
+    },
+
+    /*--------------------------------------------------------------
+    # ADD PRODUCT TO CART
+    --------------------------------------------------------------*/
+    async addCart(id) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const result = await axios({
+            method: "POST",
+            url: `${this.url}/products/${id}`,
+            headers: { access_token: localStorage.getItem("access_token") },
+          });
+          console.log(result, "<<<< add product to cart");
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
+      });
+    },
+
+    /*--------------------------------------------------------------
+    # FETCH cART
+    --------------------------------------------------------------*/
+    async readCart() {
+      try {
+        const result = await axios({
+          method: "GET",
+          url: `${this.url}/cart`,
+          headers: { access_token: localStorage.getItem("access_token") },
+        });
+
+        this.carts = result.data.Products;
+        console.log(result, "<<<<< get Cart");
+        this.router.push(`/cart`);
+      } catch (err) {
+        console.log(err.message, "<<< error");
+      }
     },
   },
 });

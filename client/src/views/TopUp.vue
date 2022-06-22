@@ -46,9 +46,12 @@
         <div class="col-12">
           <label style="color: blue">{{ userReferralLink }}</label>
           <button
-            style="margin-left: 10px; height: 20px"
-            class="btn btn-primary"
-          ></button>
+            @click="clickCopyClipboard"
+            style="margin-left: 10px; height: 30px; width: 30px"
+            class="btn btn-primary align-items-center text-center justify-content-center"
+          >
+            ©
+          </button>
         </div>
         <div class="col-12">
           <h6>or with QRCODE</h6>
@@ -68,6 +71,16 @@ import { useMainStore } from "../stores";
 export default {
   methods: {
     ...mapActions(useMainStore, ["fetchReferralData"]),
+    clickCopyClipboard: function () {
+      // console.log("masok");
+      // console.log(this.userReferralLink);
+      var copyText = this.userReferralLink;
+      // copyText.select();
+      // copyText.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(copyText);
+
+      Swal.fire("Link copied to clipboard");
+    },
   },
   computed: {
     ...mapState(useMainStore, ["userReferralLink", "userQrCode"]),

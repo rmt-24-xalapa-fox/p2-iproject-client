@@ -7,7 +7,6 @@ import WishlistsView from "../views/WishlistsView.vue";
 import CartsView from "../views/CartsView.vue";
 import ProductDetails from "../views/ProductDetails.vue";
 import OrderReview from "../views/OrderReview.vue";
-import OrderSuccess from "../views/OrderSuccess.vue";
 import OrderHistory from "../views/OrderHistory.vue";
 
 const router = createRouter({
@@ -47,11 +46,6 @@ const router = createRouter({
       path: "/order-review",
       name: "Order Review",
       component: OrderReview,
-    },
-    {
-      path: "/order-success",
-      name: "Order Success",
-      component: OrderSuccess,
     },
     {
       path: "/order",

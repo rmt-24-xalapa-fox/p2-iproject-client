@@ -3,7 +3,7 @@ import { mapState, mapActions } from "pinia";
 import { useStore } from "../stores/store";
 export default {
   name: "Card",
-  props: ["book"],
+  props: ["book", "inOrderPage"],
 
   methods: {
     ...mapActions(useStore, [
@@ -76,7 +76,7 @@ export default {
         </div>
       </div>
     </div>
-    <div class="after-card">
+    <div class="after-card" v-if="!inOrderPage">
       <button @click="fetchOneBook(book.id)" class="btn btn-card">
         See Details
       </button>

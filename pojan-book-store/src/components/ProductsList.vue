@@ -5,13 +5,18 @@ export default {
   components: {
     Card,
   },
-  props: ["theBooks", "theClass"],
+  props: ["theBooks", "theClass", "inOrderPage"],
 };
 </script>
 
 <template>
   <div :class="theClass">
-    <Card v-for="book in theBooks" :key="book.id" :book="book" />
+    <Card
+      v-for="book in theBooks"
+      :key="book.id"
+      :book="book"
+      :inOrderPage="true"
+    />
   </div>
 </template>
 

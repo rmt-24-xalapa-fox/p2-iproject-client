@@ -11,6 +11,7 @@ export const useStore = defineStore({
     booksObj: {},
     wishlists: [],
     carts: [],
+    orders: [],
     categories: [],
     cities: [],
     accessToken: "",
@@ -271,16 +272,23 @@ export const useStore = defineStore({
             },
           }
         );
+        var self = this;
         window.snap.pay(response.data.token, {
           onSuccess(result) {
+            self.router.push({
+              name: "Order History",
+            });
             swal({
               title: "Success!",
               icon: "success",
             });
           },
           onPending(result) {
+            self.router.push({
+              name: "Order History",
+            });
             swal({
-              title: "Pending!",
+              title: "Success! (padahal pending)",
               icon: "success",
             });
           },
@@ -291,10 +299,7 @@ export const useStore = defineStore({
             });
           },
           onClose(result) {
-            swal({
-              title: "Close!",
-              icon: "success",
-            });
+            console.log(result);
           },
         });
       } catch (err) {
@@ -308,7 +313,7 @@ export const useStore = defineStore({
             access_token: this.accessToken,
           },
         });
-        console.log(response.data);
+        this.orders = response.data;
       } catch (err) {
         this.showError(err);
       }

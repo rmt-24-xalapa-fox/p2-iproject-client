@@ -656,3 +656,73 @@ body {
   background-color: #ffff;
   color: #484644;
 }
+
+/* ********************** */
+/* ORDER HISTORY */
+/* ********************** */
+
+.order-history-container {
+  background-color: #debc9f;
+  min-height: 100px;
+  max-width: 1000px;
+
+  padding: 4rem;
+  margin: 6rem auto;
+  border-radius: 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  color: rgb(19, 19, 19);
+}
+
+.order-history-container h2 {
+  font-size: 2rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  /* align-self: flex-start; */
+}
+
+.order-history-container table {
+  font-size: 2rem;
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 0 1px #484644;
+  border-collapse: collapse;
+  border-style: hidden;
+  width: 80%;
+}
+
+.order-history-container table th {
+  font-size: 2rem;
+  border: #484644 solid 1px;
+  padding: 1rem;
+  border-radius: 1.5rem;
+}
+
+.order-history-container table td {
+  font-size: 2rem;
+  border: #484644 solid 1px;
+  padding: 1rem;
+  border-radius: 1.5rem;
+}
+
+.order-history-container table td.center {
+  text-align: center;
+}
+
+.order-card-container {
+  /* background-color: blue; */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  padding: 1rem;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  transition: 1s;
+}
+
+.order-card-container .flip-card {
+  transform: scale(0.9);
+}

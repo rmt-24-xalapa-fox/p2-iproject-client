@@ -18,6 +18,7 @@ export default {
         courier: 0,
       },
       indexShippingOption: 0,
+      isAlreadyChooseCity: false,
     };
   },
   methods: {
@@ -55,6 +56,7 @@ export default {
         if (this.shippingObj.courier !== 0) {
           this.submitRajaOngkir(this.shippingObj);
         }
+        this.isAlreadyChooseCity = true;
       });
     },
   },
@@ -127,6 +129,13 @@ export default {
       <h2>Shipping Information</h2>
       <form action="">
         <input
+          class="input-box"
+          type="text"
+          name=""
+          id=""
+          placeholder="Your Address"
+        />
+        <input
           @change.prevent="changeLocation()"
           list="cities"
           autocomplete="off"
@@ -147,14 +156,8 @@ export default {
           </option>
         </datalist>
 
-        <input
-          class="input-box"
-          type="text"
-          name=""
-          id=""
-          placeholder="Your Address"
-        />
         <select
+          v-if="isAlreadyChooseCity"
           @change.prevent="submitRajaOngkir(shippingObj)"
           v-model="shippingObj.courier"
           class="input-box"

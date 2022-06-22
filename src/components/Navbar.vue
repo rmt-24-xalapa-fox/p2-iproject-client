@@ -1,17 +1,62 @@
 <template>
 <div class="topnav">
-  <router-link :to="{ name: 'home' }" :class="$route.name==='home'?'active':''" ><span>Home</span></router-link>
-  <router-link :to="{ path: '/statistic' }" :class="$route.path==='/statistic'?'active':''" ><span>Statistic</span></router-link>
-  <router-link :to="{ path: '/leaderboard' }" :class="$route.path==='/leaderboard'?'active':''" ><span>Leaderboard</span></router-link>  
-  <router-link :to="{ path: '/login' }" :class="$route.path==='/login'?'active':''" ><span>Login</span></router-link>
+  <div class="nav-menu">
+    <router-link :to="{ name: 'home' }" :class="$route.name==='home'?'active':''" ><span>Home</span></router-link>    
+    <router-link :to="{ path: '/statistic' }" :class="$route.path==='/statistic'?'active':''" ><span>Statistic</span></router-link>
+    <router-link :to="{ path: '/leaderboard' }" :class="$route.path==='/leaderboard'?'active':''" ><span>Leaderboard</span></router-link>  
+  </div>
+  <div class="nav-login">
+    <router-link :to="{ path: '#' }" @click.prevent="logout" v-show="logedIn"><span>Log Out!</span></router-link>
+    <div v-show="!logedIn"
+      id="g_id_onload"
+      data-client_id="627408864298-atkg2vi3r33rqtd0k701h7hmol8q05k2.apps.googleusercontent.com"
+      data-context="use"
+      data-ux_mode="popup"
+      data-auto_prompt="false"
+    >
+    </div>
+  </div>  
 </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'pinia';
+import { useMainStore } from '../stores'
+
 export default {
   name: "Navbar",
   methods: {
+    ...mapActions(useMainStore, ["LoginHandler", "setLogin"]),
 
+    logout(){
+      localStorage.removeItem('access_token'),
+      this.setLogin(false)
+    },
+
+    async handleCredentialResponse(response) {
+      // console.log("Encoded JWT ID token: " + response.credential);
+      await this.LoginHandler({ credential: response.credential });
+      google.accounts.id.disableAutoSelect();
+    },
+  },
+  // end methods
+
+  computed: {
+    ...mapState(useMainStore, ["logedIn"])
+  },
+
+  mounted() {
+    google.accounts.id.initialize({
+      client_id:
+        "627408864298-atkg2vi3r33rqtd0k701h7hmol8q05k2.apps.googleusercontent.com",
+      callback: this.handleCredentialResponse,
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("g_id_onload"),
+      { theme: "filled_black", size: "large" } // customization attributes
+    );
+    google.accounts.id.disableAutoSelect();
   },
 }
 </script>
@@ -19,6 +64,8 @@ export default {
 <style>
 /* Add a black background color to the top navigation */
 .topnav {
+  display: flex;
+  justify-content: space-between;
   background-color: #333;
   overflow: hidden;
 }
@@ -43,5 +90,9 @@ export default {
 .topnav a.active span {
   background-color: #04AA6D;
   color: white;
+}
+
+.nav-login {
+  margin: auto 5px;
 }
 </style>

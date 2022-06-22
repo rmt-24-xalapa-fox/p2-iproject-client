@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import axios from 'axios'
 
 export const useMainStore = defineStore({
   id: "main",
@@ -14,11 +15,37 @@ export const useMainStore = defineStore({
     money: 0,
     enemies: [],
     rounds: 0,
+    logedIn: false,
   }),
-  getters: {
-    doubleCount: (state) => state.counter * 2,
-  },
   actions: {
+    getPath(path){
+      const root = 'http://localhost:3000'
+      return root+path
+    },
+
+    setLogin(stat){
+      this.logedIn = stat
+    },
+
+    async LoginHandler(data){
+      try {        
+        const { data: recv } = await axios.post(this.getPath("/login"), {}, {
+          headers: { credential: data.credential },
+        });
+
+        // console.log("datarecv",recv);
+
+        if (recv) {          
+          localStorage.setItem("access_token", recv.access_token);
+          this.isLogin = true;
+        }
+
+        this.logedIn = true
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     getMaps(){
       // random map to select
       // include rounds for bonus map

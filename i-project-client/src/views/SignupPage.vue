@@ -1,12 +1,21 @@
 <script>
 
+import {mapActions, mapWritableState} from 'pinia'
+import {useMusicYuhu} from '../stores/counter.js'
+
 export default {
-  name: "SignupPage"
+  name: "SignupPage",
+  methods: {
+    ...mapActions(useMusicYuhu, ["signupprocess"])
+  },
+  computed: {
+    ...mapWritableState(useMusicYuhu, ["userloged"])
+  }
 }
 </script>
 
 <template>
-  <div class="container">
+  <div class="container" id="headerPage">
     <div id="kotak">
       <div class="row content">
         <div class="col-md-6">
@@ -17,27 +26,19 @@ export default {
           <h3 class="signin-text mb-3">Sign Up</h3>
           <form action="" class="signUpform">
             <div class="form-group">
-              <label for="username">Username</label>
-              <input type="text" name="username" v-model="username" placeholder="" class="form-control" />
+              <label for="email">Email</label>
+              <input type="email" name="email" v-model="userloged.email" placeholder="" class="form-control" />
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" name="email" v-model="email" placeholder="" class="form-control" />
+              <label for="username">Name</label>
+              <input type="text" name="name" v-model="userloged.name" placeholder="" class="form-control" />
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" name="password" v-model="password" placeholder="" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label for="address">Address</label>
-              <input type="text" name="address" v-model="address" placeholder="" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label for="address">Phone Number</label>
-              <input type="number" name="phoneNumber" v-model="phoneNumber" placeholder="" class="form-control" />
+              <input type="password" name="password" v-model="userloged.password" placeholder="" class="form-control" />
             </div>
             <div class="mb-3">
-              <button @click.prevent="completeSignUp" class="btn btn-block text-uppercase">
+              <button @click.prevent="signupprocess" class="btn btn-block text-uppercase">
                 Sign Up
               </button>
             </div>
@@ -47,9 +48,9 @@ export default {
 
           <div class="text-center mb-2">
             have an account?
-            <a href="#" @click.prevent="toLogin" class="register-link">
+            <router-link to="/login" class="register-link">
               Log in here
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
@@ -58,9 +59,12 @@ export default {
 </template>
 
 <style scoped>
-body {
+#headerPage {
   background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
     url("https://vtara36.com/wp-content/uploads/2021/11/radio-music1.jpg");
+
+  height: 100%;
+  width: 100%
 }
 
 .content {
@@ -80,7 +84,7 @@ body {
 
 #imageInput {
   position: relative;
-  top: 120px;
+  top: 10px;
 }
 
 

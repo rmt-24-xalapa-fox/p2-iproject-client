@@ -7,6 +7,7 @@ import CardCharacters from "../components/cardCharacters.vue";
 export default {
   name: "card",
   components: { CardCharacters },
+
   data() {
     return {
       characters: [],
@@ -27,6 +28,7 @@ export default {
 
         const result = data.data.results;
         result.forEach((el) => {
+          // console.log(el);
           this.characters.push(el);
           el.url = `${el.thumbnail.path}/${this.size}`;
         });
@@ -122,7 +124,6 @@ export default {
   </h2>
 
   <div class="cards">
-  
     <CardCharacters
       v-for="(character, i) in characters"
       :key="i"
@@ -139,7 +140,7 @@ export default {
   justify-content: center;
 }
 
-.total-char{
+.total-char {
   color: whitesmoke;
   font-size: 20px;
 }

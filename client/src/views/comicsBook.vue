@@ -110,7 +110,7 @@ export default {
             <ul class="page">
               <li></li>
               <li>
-                <a class="btn" href="#">Download</a>
+                <a class="btn-comics" href="#">Download</a>
               </li>
               <li></li>
               <li></li>
@@ -126,12 +126,8 @@ export default {
               <li></li>
             </ul>
             <figcaption>
-              <h1>{{ comic.title }}</h1>
+              <h1 class="comic-title">{{ comic.title }}</h1>
               <span class="author-comics">By Marvel</span>
-              <!-- <p>
-                Fennel bamboo shoot pea sprouts rutabaga parsnip green bean gram wattle
-                seed lentil horseradish nori. Grape lettuce turnip greens.
-              </p> -->
             </figcaption>
           </figure>
         </li>
@@ -151,6 +147,10 @@ export default {
 .total-comics {
   color: whitesmoke;
   font-size: 20px;
+}
+
+.comic-title {
+  font-size: 30px;
 }
 
 h2 {
@@ -174,6 +174,7 @@ h2 {
 
 .author-comics {
   color: #d83c3c;
+  font-size: 20px;
 }
 
 /* a :hofer {
@@ -369,12 +370,12 @@ a {
   text-decoration: none;
 }
 
-.btn {
+.btn-comics {
   display: inline-block;
   text-transform: uppercase;
   border: 2px solid #2c3e50;
   margin-top: 100px;
-  font-size: 0.7em;
+  font-size: 2em;
   font-weight: 700;
   padding: 0.1em 0.4em;
   text-align: center;
@@ -383,19 +384,15 @@ a {
   transition: color 0.3s, border-color 0.3s;
 }
 
-.btn:hover {
+.btn-comics:hover {
   border-color: #d83c3c;
-  /* color: #16a085; */
   color: #d83c3c;
 }
-
-/* basic grid, only for this demo */
 
 .align {
   clear: both;
   margin: auto;
   width: 100%;
-  /* max-width: 1170px; */
   text-align: center;
 }
 
@@ -407,24 +404,6 @@ a {
   padding: 0 0 0 60px;
   vertical-align: top;
 }
-
-/* ///////////////////////////////////////////////////
-
-HARDCOVER
-Table of Contents
-
-1. container
-2. background & color
-3. opening cover, back cover and pages
-4. position, transform y transition
-5. events
-6. Bonus
-	- Cover design
-	- Ribbon
-	- Figcaption
-7. mini-reset
-
-/////////////////////////////////////////////////////*/
 
 /*
 	1. container
@@ -463,19 +442,15 @@ Table of Contents
 /* HARDCOVER BACK */
 .hardcover_back li:first-child {
   background: #fffbec;
-  /* background: #333; */
-  /* background: red; */
 }
 
 /* reverse */
 .hardcover_back li:last-child {
   background: #fffbec;
-  /* background: #333; */
 }
 
 .book_spine li:first-child {
   background: #eee;
-  /* background: #333; */
 }
 .book_spine li:last-child {
   background: #333;
@@ -496,7 +471,6 @@ Table of Contents
 .book_spine li:last-child:after,
 .book_spine li:last-child:before {
   background: #999;
-  /* background: #333; */
 }
 
 /* page */

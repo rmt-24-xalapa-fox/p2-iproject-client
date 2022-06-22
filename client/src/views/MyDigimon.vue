@@ -36,7 +36,13 @@
           >
             {{ digimon.level }}
           </h6>
-          <a href="#" style="margin-top: 10px" class="btn btn-danger">Sell</a>
+          <a
+            @click="clickSellDigimon(digimon.id)"
+            href="#"
+            style="margin-top: 10px"
+            class="btn btn-danger"
+            >Sell</a
+          >
         </div>
       </div>
     </div>
@@ -47,7 +53,11 @@ import { mapState, mapActions } from "pinia";
 import { useMainStore } from "../stores";
 export default {
   methods: {
-    ...mapActions(useMainStore, ["fetchListMyDigimon"]),
+    ...mapActions(useMainStore, ["fetchListMyDigimon", "piniaSellDigimon"]),
+    clickSellDigimon: function (myDigimonId) {
+      // console.log("masok 1", myDigimonId);
+      this.piniaSellDigimon(myDigimonId);
+    },
   },
   computed: {
     ...mapState(useMainStore, ["listMyDigimon"]),

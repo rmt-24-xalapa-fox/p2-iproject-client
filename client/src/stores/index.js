@@ -143,7 +143,28 @@ export const useMainStore = defineStore({
         // console.log("masok3");
         this.listMyDigimon = response.data;
         // console.log(this.listMyDigimon);
-        console.log(response.data);
+        // console.log(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    piniaSellDigimon: async function (myDigimonId) {
+      try {
+        const response = await axios({
+          method: "put",
+          url: `http://localhost:3000/user/sellDigimon/${myDigimonId}`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        Swal.fire({
+          icon: "success",
+          title: "Digimon has been sold ! You got 50 Coins !",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        this.fetchListMyDigimon();
+        this.fetchGachaCoin();
       } catch (err) {
         console.log(err);
       }

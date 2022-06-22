@@ -1,9 +1,14 @@
 <script>
+import { mapState } from "pinia";
+import { useHeroStore } from "../stores/heroes";
 import Cards from "../components/Card.vue";
 export default {
   name: "Home",
   components: {
     Cards,
+  },
+  computed: {
+    ...mapState(useHeroStore, ["heroes"]),
   },
 };
 </script>

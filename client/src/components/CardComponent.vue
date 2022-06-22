@@ -19,12 +19,12 @@
     </div>
     <a
       @click.prevent="funcAdd(player.id)"
-      v-if="!player.Users[0]"
+      v-if="!infor"
       href="#"
       class="ms-3 mb-2"
       ><ion-icon style="color: black" name="cart-outline"></ion-icon
     ></a>
-    <p v-else class="ms-3" style="color: red">Sold</p>
+    <p v-if="infor" class="ms-3" style="color: red">Sold</p>
   </div>
 </template>
 
@@ -35,6 +35,11 @@ import { useProductStore } from "../stores/product";
 export default {
   name: `CardComponent`,
   props: ["player"],
+  data() {
+    return {
+      infor: false,
+    };
+  },
   methods: {
     ...mapActions(useProductStore, ["addToList", "getProducts"]),
     async funcAdd(id) {
@@ -58,6 +63,19 @@ export default {
         });
       }
     },
+    splitData() {
+      if (this.player.Users.length < 1) {
+        return (this.infor = false);
+      } else if (this.player.Users[0].CardUser.status == `unpaid`) {
+        return (this.infor = false);
+      }
+      this.infor = true;
+    },
+  },
+  created() {
+    console.log(`blok`);
+    this.splitData();
+    console.log(this.infor, `goblok`);
   },
 };
 </script>

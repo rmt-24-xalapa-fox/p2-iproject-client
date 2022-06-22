@@ -157,6 +157,7 @@ export const useMainStore = defineStore({
             access_token: localStorage.getItem("access_token"),
           },
         });
+        //
         Swal.fire({
           icon: "success",
           title: "Digimon has been sold ! You got 50 Coins !",

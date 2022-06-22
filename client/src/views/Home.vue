@@ -89,13 +89,15 @@ export default {
     <main id="Home-page">
 
         <form @submit.prevent="searchAnime">
-            <input type="text" placeholder="Search for an anime..." v-model="query" />
+            <input type="text" placeholder="voice with 'looking for...' or type here" v-model="query" />
             <button type="submit" class="button">Search</button>
             <a href="#" @click.prevent="ToggleMic">
                 <span class="material-icons mt-2 ml-2 ">settings_voice</span>
             </a>
+            <br>
 
         </form>
+
 
         <div class="bg-white rounded">
    

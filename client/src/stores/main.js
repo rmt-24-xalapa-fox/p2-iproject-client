@@ -5,7 +5,7 @@ export const useMainStore = defineStore({
   id: 'main',
   state: () => ({
     islogin: false,
-    baseUrl: "http://localhost:3000",
+    baseUrl: "https://animewatchlist666.herokuapp.com",
     seasonAnime: [],
     currentPage: 1,
     sizePage: 16,

@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
+import axios from 'axios'
+import router from '../router/index.js'
 
-export const useCounterStore = defineStore({
+export const useMusicYuhu = defineStore({
   id: 'counter',
   state: () => ({
     counter: 0

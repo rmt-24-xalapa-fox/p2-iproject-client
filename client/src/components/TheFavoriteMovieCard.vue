@@ -2,30 +2,32 @@
 import { mapState, mapWritableState, mapActions } from "pinia";
 import { moviesStore } from "../stores/movies";
 import { RouterLink } from "vue-router";
+import axios from "axios";
+const baseUrl = "http://localhost:3000";
 
 export default {
-  name: "ThePopularMoviesCard",
-  props: ["movie", "genres"],
+  name: "TheFavoriteMovieCard",
+  props: ["el2"],
   computed: {
     ...mapState(moviesStore, [""]),
     ...mapWritableState(moviesStore, [""]),
-    posterPath() {
-      return "https://image.tmdb.org/t/p/w500/" + this.movie.poster_path;
-    },
   },
   methods: {
     ...mapActions(moviesStore, [""]),
-    genreTypeName(genreId, index) {
-      for (const item of this.genres) {
-        if (item.id == genreId) {
-          if (this.movie.genre_ids.length - 1 == index) {
-            return item.name;
-          } else {
-            return item.name + ", ";
-          }
-        }
+    async hapus() {
+      try {
+        const response = await axios.delete(`${baseUrl}/favourite/delete`, {
+          id: this.el2.id
+        }, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        })
+        console.log(response);
+      } catch (error) {
+        console.log(error);
       }
-    },
+    }
   },
   created() {},
 };
@@ -34,14 +36,22 @@ export default {
 <template>
   <div>
     <!-- IMAGE -->
-    <RouterLink :to="`/movie/${movie.id}`">
+    <div class="flex justify-end pr-0 pt-2">
+      <button
+        v-on:click.prevent="hapus"
+        class="text-3xl leading-none hover:text-gray-300"
+      >
+        &times;
+      </button>
+    </div>
+    <RouterLink :to="`/movie/${el2.movieId}`">
       <img
-        :src="posterPath"
+        :src="el2.imageUrl"
         class="hover:opacity-75 tansition easy-in-out duration-150"
       />
     </RouterLink>
     <!-- TITLES -->
-    <h3>{{ movie.title }}</h3>
+    <h3>{{ el2.title }}</h3>
 
     <div class="flex">
       <!-- LOGO BINTANG -->
@@ -57,16 +67,14 @@ export default {
         </g>
       </svg>
       <!-- RATING -->
-      <span class="ml-2"
-        >{{ movie.vote_average * 10 }}% | {{ movie.release_date }}
-      </span>
+      <span class="ml-2"> {{ el2.vote }}% | {{ el2.release }} </span>
       <br />
     </div>
 
     <!-- GENRE -->
     <span class="text-sm text-gray-500">
-      <span :key="genre" v-for="(genre, index) in movie.genre_ids">
-        {{ genreTypeName(genre, index) }}
+      <span>
+        {{ el2.genre }}
       </span>
     </span>
   </div>

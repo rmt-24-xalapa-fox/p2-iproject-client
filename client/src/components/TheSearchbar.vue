@@ -109,6 +109,7 @@ export default {
       
     </div>
 
+  <!-- INI UNTUK PROFILE USER -->
    <TheSearchbarDropdown />
 
   </div>

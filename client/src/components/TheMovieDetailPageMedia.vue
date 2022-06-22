@@ -1,11 +1,25 @@
 <script>
 export default {
-  props: ["value", "mediaURL", "isVideo"],
+  // props: ["value", "mediaURL", "isVideo"],
+  props: {
+    value: {
+      required: true,
+    },
+    mediaURL: {
+      required: true,
+    },
+    isVideo: {
+      required: true
+    }
+  },
   methods: {
     close() {
-      this.$emit(this.value === false);
+      this.$emit("tutup", !this.value);
     },
   },
+  created() {
+    this.value
+  }
 };
 </script>
 

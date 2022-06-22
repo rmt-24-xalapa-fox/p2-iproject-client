@@ -49,14 +49,6 @@ export default {
       v-if="isOpen"
       class="absolute bg-white py-2 rounded-lg w-48 right-0 mr-3 shadow-xl"
       >
-      <!-- PROFILE -->
-      <a
-        class="text-gray-500 block px-4 py-2 hover:bg-indigo-500 hover:text-white"
-        v-if="isLogin"
-        v-on:click.prevent="this.$router.push('/profile/:id')"
-        >Profile
-      </a>
-
       <!-- FAVORITE -->
       <a
         class="text-gray-500 block px-4 py-2 hover:bg-indigo-500 hover:text-white"

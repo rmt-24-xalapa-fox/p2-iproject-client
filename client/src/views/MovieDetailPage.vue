@@ -3,6 +3,8 @@ import axios from "axios";
 import { RouterLink } from "vue-router";
 import TheMovieDetailPageCast from "../components/TheMovieDetailPageCast.vue";
 import TheMovieDetailPageMedia from "../components/TheMovieDetailPageMedia.vue";
+import { mapState, mapWritableState, mapActions } from "pinia";
+import { userStore } from "../stores/user";
 
 const baseUrl = "http://localhost:3000";
 
@@ -58,6 +60,31 @@ export default {
         "https://www.youtube.com/embed/" + this.movie.videos.results[0].key
       );
     },
+
+    tutup() {
+      this.modelOpen = false
+      this.isVideo = false
+    },
+
+    async buttonFavourite(title, image, vote, release, genre, movieId) {
+      try {
+        const response = await axios.post(`${baseUrl}/favourite/add`, {
+          title: title,
+          imageUrl: image,
+          vote: vote,
+          release: release,
+          genre: genre,
+          movieId: movieId
+        }, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        console.log(response, "ini tess");
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
 
    mounted() {
@@ -65,6 +92,7 @@ export default {
   },
 
   computed: {
+    ...mapState(userStore, ["isLogin"]),
     posterPath() {
       return "https://image.tmdb.org/t/p/w500/" + this.movie.poster_path;
     },
@@ -146,7 +174,9 @@ export default {
 
           <!-- FAVORITE -->
           <a
+            v-if="isLogin === true"
             href="#"
+            @click.prevent="buttonFavourite(this.movie.title, posterPath, this.movie.vote_average * 10, movie.release_date, movie.genres[0].name, movie.id )"
             class="rounded bg-yellow-500 px-5 py-3 inline-flex text-black ml-5"
           >
             <img src="../assets/heart-white.png" alt="" />
@@ -158,9 +188,10 @@ export default {
 
     <TheMovieDetailPageCast :casts="movie.credits.cast" />
     <TheMovieDetailPageMedia
-      v-model:value="modelOpen"
+      :value="modelOpen"
       :mediaURL="mediaURL"
-      :isVideo="this.isVideo"
+      :isVideo="isVideo"
+      v-on:tutup="tutup"
     />
   </div>
 </template>

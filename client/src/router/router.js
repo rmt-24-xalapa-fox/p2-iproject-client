@@ -6,7 +6,6 @@ import MovieDetailPage from "../views/MovieDetailPage.vue"
 import ActorDetailPage from "../views/ActorDetailPage.vue"
 import LoginForm from "../views/LoginForm.vue"
 import RegisterForm from "../views/RegisterForm.vue"
-import ProfileForm from "../views/ProfileForm.vue"
 import FavoritePage from "../views/FavoritePage.vue"
 import NotFound from "../views/NotFound.vue"
 
@@ -45,11 +44,6 @@ const router = createRouter({
       component: RegisterForm,
     },
     {
-      path: "/profile/:id",
-      name: "ProfileForm",
-      component: ProfileForm,
-    },
-    {
       path: "/favourite",
       name: "FavoritePage",
       component: FavoritePage,
@@ -60,6 +54,20 @@ const router = createRouter({
       component: NotFound,
     },
   ],
+});
+
+// NAVIGATION GUARD
+router.beforeEach(async (to, from, next) => {
+  if (localStorage.getItem("access_token") && to.path === "/login") {
+    next({ path: "/" });
+  } 
+  else if (localStorage.getItem("access_token") && to.path === "/register") {
+    next({ path: "/" });
+  }
+  else if (!localStorage.getItem("access_token") && to.path === "/favourite") {
+    next({ path: "/" });
+  } 
+  next()
 });
 
 export default router;

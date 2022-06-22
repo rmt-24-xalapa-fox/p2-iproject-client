@@ -9,6 +9,7 @@ export const userStore = defineStore("user", {
     return {
       isLogin: false,
     };
+    
   },
 
   actions: {
@@ -24,7 +25,7 @@ export const userStore = defineStore("user", {
         this.router.push("/login");
         Swal.fire({
           icon: "success",
-          text: "Register Success, now Please Login",
+          text: "Register Success, please check your email",
         });
       } catch (err) {
         console.log(err);

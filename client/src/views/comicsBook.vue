@@ -1,7 +1,48 @@
 <script>
+import { PUBLIC_KEY } from "../API/marvel-api-keys";
+import axios from "axios";
+import { mapState } from "pinia";
+import { useMaarvelStore } from "../stores/marvel";
 
 export default {
   name: "Comics",
+  data() {
+    return {
+      comics: [],
+      urlComics: "",
+      size: "standard_fantastic.jpg",
+      totalComics: 0,
+    };
+  },
+  computed: {
+    ...mapState(useMaarvelStore, ["url"]),
+  },
+
+  methods: {
+    async fetchComics() {
+      try {
+        // console.log("haloooo");
+        const { data } = await axios.get(`${this.url}/comics?apikey=${PUBLIC_KEY}`);
+
+        this.totalComics = data.data.total;
+        const result = data.data.results;
+
+        result.forEach((el) => {
+          // console.log(el);
+          this.comics.push(el);
+          el.url = `${el.thumbnail.path}/${this.size}`;
+        });
+
+        console.log(this.comics);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+
+  mounted() {
+    this.fetchComics();
+  },
 };
 </script>
 
@@ -10,17 +51,12 @@ export default {
   <div class="container">
     <div class="component">
       <ul class="align">
-        <li>
+        <li v-for="(comic, i) in comics" :key="i" :comic="comic">
           <figure class="book">
             <!-- Front -->
             <ul class="hardcover_front">
               <li>
-                <img
-                  src="https://i.imgur.com/NVRNzyf.jpg"
-                  alt=""
-                  width="100%"
-                  height="100%"
-                />
+                <!-- <img :src="comic.url" alt="" width="100%" height="100%" /> -->
               </li>
               <li></li>
             </ul>
@@ -44,156 +80,12 @@ export default {
               <li></li>
             </ul>
             <figcaption>
-              <h1>Avengers & X-men : AXIS</h1>
+              <h1>{{ comic.title }}</h1>
               <span>By Marvel</span>
-              <p>
+              <!-- <p>
                 Fennel bamboo shoot pea sprouts rutabaga parsnip green bean gram wattle
                 seed lentil horseradish nori. Grape lettuce turnip greens.
-              </p>
-            </figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="book">
-            <!-- Front -->
-
-            <ul class="hardcover_front">
-              <li>
-                <img
-                  src="https://i.imgur.com/jvt90wz.jpg"
-                  alt=""
-                  width="100%"
-                  height="100%"
-                />
-              </li>
-              <li></li>
-            </ul>
-
-            <!-- Pages -->
-
-            <ul class="page">
-              <li></li>
-              <li>
-                <a class="btn" href="#">Download</a>
-              </li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
-
-            <!-- Back -->
-
-            <ul class="hardcover_back">
-              <li></li>
-              <li></li>
-            </ul>
-            <ul class="book_spine">
-              <li></li>
-              <li></li>
-            </ul>
-            <figcaption>
-              <h1>Injustice Gods Among Us</h1>
-              <span>By DC</span>
-              <p>
-                Fennel bamboo shoot pea sprouts rutabaga parsnip green bean gram wattle
-                seed lentil horseradish nori. Grape lettuce turnip greens.
-              </p>
-            </figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="book">
-            <!-- Front -->
-
-            <ul class="hardcover_front">
-              <li>
-                <img
-                  src="https://i.imgur.com/Roh0TPZ.jpg"
-                  alt=""
-                  width="100%"
-                  height="100%"
-                />
-              </li>
-              <li></li>
-            </ul>
-
-            <!-- Pages -->
-
-            <ul class="page">
-              <li></li>
-              <li>
-                <a class="btn" href="#">Download</a>
-              </li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
-
-            <!-- Back -->
-
-            <ul class="hardcover_back">
-              <li></li>
-              <li></li>
-            </ul>
-            <ul class="book_spine">
-              <li></li>
-              <li></li>
-            </ul>
-            <figcaption>
-              <h1>WATCHMEN</h1>
-              <span>By DC</span>
-              <p>
-                Fennel bamboo shoot pea sprouts rutabaga parsnip green bean gram wattle
-                seed lentil horseradish nori. Grape lettuce turnip greens.
-              </p>
-            </figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="book">
-            <!-- Front -->
-
-            <ul class="hardcover_front">
-              <li>
-                <img
-                  src="https://i.imgur.com/l2oYo8z.jpg"
-                  alt=""
-                  width="100%"
-                  height="100%"
-                />
-              </li>
-              <li></li>
-            </ul>
-
-            <!-- Pages -->
-
-            <ul class="page">
-              <li></li>
-              <li>
-                <a class="btn" href="#">Download</a>
-              </li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
-
-            <!-- Back -->
-
-            <ul class="hardcover_back">
-              <li></li>
-              <li></li>
-            </ul>
-            <ul class="book_spine">
-              <li></li>
-              <li></li>
-            </ul>
-            <figcaption>
-              <h1>Annhilation Wars</h1>
-              <span>By Marvel</span>
-              <p>
-                Fennel bamboo shoot pea sprouts rutabaga parsnip green bean gram wattle
-                seed lentil horseradish nori. Grape lettuce turnip greens.
-              </p>
+              </p> -->
             </figcaption>
           </figure>
         </li>
@@ -542,19 +434,19 @@ Table of Contents
 }
 
 .hardcover_front li:last-child:after {
-  -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(80px)
-    translateX(-2px) translateY(-78px);
-  -moz-transform: rotateX(90deg) rotateZ(90deg) translateZ(80px)
-    translateX(-2px) translateY(-78px);
+  -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(80px) translateX(-2px)
+    translateY(-78px);
+  -moz-transform: rotateX(90deg) rotateZ(90deg) translateZ(80px) translateX(-2px)
+    translateY(-78px);
   transform: rotateX(90deg) rotateZ(90deg) translateZ(80px) translateX(-2px)
     translateY(-78px);
 }
 .hardcover_front li:last-child:before {
   box-shadow: 0px 0px 30px 5px #333;
-  -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(-140px)
-    translateX(-2px) translateY(-78px);
-  -moz-transform: rotateX(90deg) rotateZ(90deg) translateZ(-140px)
-    translateX(-2px) translateY(-78px);
+  -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(-140px) translateX(-2px)
+    translateY(-78px);
+  -moz-transform: rotateX(90deg) rotateZ(90deg) translateZ(-140px) translateX(-2px)
+    translateY(-78px);
   transform: rotateX(90deg) rotateZ(90deg) translateZ(-140px) translateX(-2px)
     translateY(-78px);
 }
@@ -585,8 +477,8 @@ Table of Contents
 }
 
 .hardcover_back li:last-child:after {
-  -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(80px)
-    translateX(2px) translateY(-78px);
+  -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(80px) translateX(2px)
+    translateY(-78px);
   -moz-transform: rotateX(90deg) rotateZ(90deg) translateZ(80px) translateX(2px)
     translateY(-78px);
   transform: rotateX(90deg) rotateZ(90deg) translateZ(80px) translateX(2px)
@@ -595,10 +487,10 @@ Table of Contents
 
 .hardcover_back li:last-child:before {
   box-shadow: 10px -1px 80px 20px #666;
-  -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(-140px)
-    translateX(2px) translateY(-78px);
-  -moz-transform: rotateX(90deg) rotateZ(90deg) translateZ(-140px)
-    translateX(2px) translateY(-78px);
+  -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(-140px) translateX(2px)
+    translateY(-78px);
+  -moz-transform: rotateX(90deg) rotateZ(90deg) translateZ(-140px) translateX(2px)
+    translateY(-78px);
   transform: rotateX(90deg) rotateZ(90deg) translateZ(-140px) translateX(2px)
     translateY(-78px);
 }
@@ -650,8 +542,8 @@ Table of Contents
 }
 
 .book_spine li:last-child:after {
-  -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(8px)
-    translateX(2px) translateY(-6px);
+  -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(8px) translateX(2px)
+    translateY(-6px);
   -moz-transform: rotateX(90deg) rotateZ(90deg) translateZ(8px) translateX(2px)
     translateY(-6px);
   transform: rotateX(90deg) rotateZ(90deg) translateZ(8px) translateX(2px)
@@ -660,10 +552,10 @@ Table of Contents
 
 .book_spine li:last-child:before {
   box-shadow: 5px -1px 100px 40px rgba(0, 0, 0, 0.2);
-  -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(-210px)
-    translateX(2px) translateY(-6px);
-  -moz-transform: rotateX(90deg) rotateZ(90deg) translateZ(-210px)
-    translateX(2px) translateY(-6px);
+  -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(-210px) translateX(2px)
+    translateY(-6px);
+  -moz-transform: rotateX(90deg) rotateZ(90deg) translateZ(-210px) translateX(2px)
+    translateY(-6px);
   transform: rotateX(90deg) rotateZ(90deg) translateZ(-210px) translateX(2px)
     translateY(-6px);
 }
@@ -793,108 +685,120 @@ Table of Contents
 /* cover CSS */
 
 .coverDesign {
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	overflow: hidden;
-	z-index: 1;
-	-webkit-backface-visibility: hidden;
-	-moz-backface-visibility: hidden;
-	backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+  z-index: 1;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .coverDesign::after {
-	background-image: -webkit-linear-gradient( -135deg, rgba(255, 255, 255, 0.45) 0%, transparent 100%);
-	background-image: -moz-linear-gradient( -135deg, rgba(255, 255, 255, 0.45) 0%, transparent 100%);
-	background-image: linear-gradient( -135deg, rgba(255, 255, 255, 0.45) 0%, transparent 100%);
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
+  background-image: -webkit-linear-gradient(
+    -135deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    transparent 100%
+  );
+  background-image: -moz-linear-gradient(
+    -135deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    transparent 100%
+  );
+  background-image: linear-gradient(
+    -135deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    transparent 100%
+  );
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 .coverDesign h1 {
-	color: #fff;
-	font-size: 2.2em;
-	letter-spacing: 0.05em;
-	text-align: center;
-	margin: 54% 0 0 0;
-	text-shadow: -1px -1px 0 rgba(0,0,0,0.1);
+  color: #fff;
+  font-size: 2.2em;
+  letter-spacing: 0.05em;
+  text-align: center;
+  margin: 54% 0 0 0;
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 .coverDesign p {
-	color: #f8f8f8;
-	font-size: 1em;
-	text-align: center;
-	text-shadow: -1px -1px 0 rgba(0,0,0,0.1);
+  color: #f8f8f8;
+  font-size: 1em;
+  text-align: center;
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 .yellow {
-	background-color: #f1c40f;
-	background-image: -webkit-linear-gradient(top, #f1c40f 58%, #e7ba07 0%);
-	background-image: -moz-linear-gradient(top, #f1c40f 58%, #e7ba07 0%);
-	background-image: linear-gradient(top, #f1c40f 58%, #e7ba07 0%);
+  background-color: #f1c40f;
+  background-image: -webkit-linear-gradient(top, #f1c40f 58%, #e7ba07 0%);
+  background-image: -moz-linear-gradient(top, #f1c40f 58%, #e7ba07 0%);
+  background-image: linear-gradient(top, #f1c40f 58%, #e7ba07 0%);
 }
 
 .blue {
-	background-color: #3498db;
-	background-image: -webkit-linear-gradient(top, #3498db 58%, #2a90d4 0%);
-	background-image: -moz-linear-gradient(top, #3498db 58%, #2a90d4 0%);
-	background-image: linear-gradient(top, #3498db 58%, #2a90d4 0%);
+  background-color: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db 58%, #2a90d4 0%);
+  background-image: -moz-linear-gradient(top, #3498db 58%, #2a90d4 0%);
+  background-image: linear-gradient(top, #3498db 58%, #2a90d4 0%);
 }
 
 .grey {
-	background-color: #f8e9d1;
-	background-image: -webkit-linear-gradient(top, #f8e9d1 58%, #e7d5b7 0%);
-	background-image: -moz-linear-gradient(top, #f8e9d1 58%, #e7d5b7 0%);
-	background-image: linear-gradient(top, #f8e9d1 58%, #e7d5b7 0%);
+  background-color: #f8e9d1;
+  background-image: -webkit-linear-gradient(top, #f8e9d1 58%, #e7d5b7 0%);
+  background-image: -moz-linear-gradient(top, #f8e9d1 58%, #e7d5b7 0%);
+  background-image: linear-gradient(top, #f8e9d1 58%, #e7d5b7 0%);
 }
 
 /* Basic ribbon */
 
 .ribbon {
-	background: #c0392b;
-	color: #fff;
-	display: block;
-	font-size: 0.7em;
-	position: absolute;
-	top: 11px;
-	right: 1px;
-	width: 40px;
-	height: 20px;
-	line-height: 20px;
-	letter-spacing: 0.15em; 
-	text-align: center;
-	-webkit-transform: rotateZ(45deg) translateZ(1px);
-	-moz-transform: rotateZ(45deg) translateZ(1px);
-	transform: rotateZ(45deg) translateZ(1px);
-	-webkit-backface-visibility: hidden;
-	-moz-backface-visibility: hidden;
-	backface-visibility: hidden;
-	z-index: 10;
+  background: #c0392b;
+  color: #fff;
+  display: block;
+  font-size: 0.7em;
+  position: absolute;
+  top: 11px;
+  right: 1px;
+  width: 40px;
+  height: 20px;
+  line-height: 20px;
+  letter-spacing: 0.15em;
+  text-align: center;
+  -webkit-transform: rotateZ(45deg) translateZ(1px);
+  -moz-transform: rotateZ(45deg) translateZ(1px);
+  transform: rotateZ(45deg) translateZ(1px);
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+  z-index: 10;
 }
 
 .ribbon::before,
-.ribbon::after{
-	position: absolute;
-	top: -20px;
-	width: 0;
-	height: 0;
-	border-bottom: 20px solid #c0392b;
-	border-top: 20px solid transparent;
+.ribbon::after {
+  position: absolute;
+  top: -20px;
+  width: 0;
+  height: 0;
+  border-bottom: 20px solid #c0392b;
+  border-top: 20px solid transparent;
 }
 
-.ribbon::before{
-	left: -20px;
-	border-left: 20px solid transparent;
+.ribbon::before {
+  left: -20px;
+  border-left: 20px solid transparent;
 }
 
-.ribbon::after{
-	right: -20px;
-	border-right: 20px solid transparent;
+.ribbon::after {
+  right: -20px;
+  border-right: 20px solid transparent;
 }
 
 /* figcaption */
@@ -947,5 +851,4 @@ figcaption p {
     font-size: 90%;
   }
 }
-
 </style>

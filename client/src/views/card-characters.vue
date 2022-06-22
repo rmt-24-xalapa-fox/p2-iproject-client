@@ -21,6 +21,7 @@ export default {
       try {
         const { data } = await axios.get(`${this.url}/characters?apikey=${PUBLIC_KEY}`);
 
+        console.log(data);
         this.totalCharacters = data.data.total;
         const result = data.data.results;
         result.forEach((el) => {
@@ -28,7 +29,7 @@ export default {
           el.url = `${el.thumbnail.path}/${this.size}`;
         });
 
-        console.log(this.urlCharacters);
+        // console.log(this.urlCharacters);
       } catch (error) {
         console.log(error);
       }
@@ -58,7 +59,6 @@ export default {
       :key="i"
       :character="character"
     />
-
   </div>
 </template>
 

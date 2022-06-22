@@ -2,22 +2,26 @@
 import { mapState, mapActions } from "pinia";
 import { useCounter } from "../stores/store";
 import Card from "../components/Card.vue";
-import Buttons from "../components/Buttons.vue"
-import ProductForm from "../components/ProductForm.vue"
+import Buttons from "../components/Buttons.vue";
+import ProductForm from "../components/ProductForm.vue";
 
 export default {
   name: "Products",
   components: {
     Card,
     Buttons,
-    ProductForm
+    ProductForm,
   },
   methods: {
-    ...mapActions(useCounter, ["fetchProducts", "fetchAllCategories", "formDisplay"]),
+    ...mapActions(useCounter, [
+      "fetchProducts",
+      "fetchAllCategories",
+      "formDisplay",
+    ]),
   },
   created() {
     this.fetchProducts();
-    this.fetchAllCategories()
+    this.fetchAllCategories();
   },
   computed: {
     ...mapState(useCounter, ["products", "categories"]),
@@ -27,12 +31,16 @@ export default {
 
 <template>
   <div id="products-list">
-    <br>
+    <br />
     <div id="buttons" class="container-fluid col-12">
-        <Buttons button-name="Add New Product" @click="formDisplay"/>
+      <Buttons button-name="Add New Product" @click="formDisplay" />
     </div>
     <div>
-        <ProductForm class="container-fluid col-12 form-popup" id="form" :categories="categories"/>
+      <ProductForm
+        class="container-fluid col-12 form-popup"
+        id="form"
+        :categories="categories"
+      />
     </div>
     <div class="container-fluid row">
       <Card v-for="product in products" :key="product.id" :products="product" />
@@ -48,7 +56,7 @@ export default {
 }
 
 #buttons {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .form-popup {

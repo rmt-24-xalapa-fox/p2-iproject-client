@@ -1,16 +1,20 @@
 <script>
 import { mapState, mapActions } from "pinia";
 import { useCounter } from "../stores/store";
-import Buttons from "../components/Buttons.vue"
+import Buttons from "../components/Buttons.vue";
 
 export default {
   name: "Card",
   props: ["products"],
   components: {
-    Buttons
+    Buttons,
   },
   methods: {
-    ...mapActions(useCounter, ['deleteProduct', 'fetchOneProduct','clickDetail']),
+    ...mapActions(useCounter, [
+      "deleteProduct",
+      "fetchOneProduct",
+      "clickDetail",
+    ]),
     rupiahConverter(value) {
       const formatter = new Intl.NumberFormat("en-ID", {
         style: "currency",
@@ -57,18 +61,24 @@ export default {
       </div>
     </div>
     <div class="row">
-        <div class="row" style="margin-top:10px; margin-left: 255px;">
+      <div class="row" style="margin-top: 10px; margin-left: 255px">
         <div class="col-4">
-          <Buttons button-name="Edit" class="btn-warning" @click="clickDetail(products.id)"/>
+          <Buttons
+            button-name="Edit"
+            class="btn-warning"
+            @click="clickDetail(products.id)"
+          />
         </div>
         <div class="col-4">
-          <Buttons button-name="Delete" class="btn-danger" @click="deleteProduct(products.id)"/>
+          <Buttons
+            button-name="Delete"
+            class="btn-danger"
+            @click="deleteProduct(products.id)"
+          />
         </div>
-        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

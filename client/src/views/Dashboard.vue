@@ -12,30 +12,29 @@ export default {
   },
   data() {
     return {
-      income: this.todaySales
-    }
+      income: this.todaySales,
+    };
   },
   methods: {
     ...mapActions(useCounter, ["createChart", "fetchAllSales"]),
-
   },
   computed: {
     ...mapState(useCounter, ["chart", "sales", "todaySales", "todayExpense"]),
     rupiahConverter(value) {
-    const formatter = new Intl.NumberFormat("en-ID", {
+      const formatter = new Intl.NumberFormat("en-ID", {
         style: "currency",
         currency: "IDR",
-    })
+      })
         .format(value)
         .replace(/[IDR]/gi, "")
         .trimStart();
-    return `Rp ${formatter}`;
+      return `Rp ${formatter}`;
     },
   },
   created() {
-    this.fetchAllSales()
-    this.createChart()
-  }
+    this.fetchAllSales();
+    this.createChart();
+  },
 };
 </script>
 
@@ -67,11 +66,10 @@ export default {
                     Today Income
                   </div>
                   <div class="h5 mb-0 font-weight-bold text-gray-800">
-                    {{todaySales}}
+                    {{ todaySales }}
                   </div>
                 </div>
-                <div class="col-auto">
-                </div>
+                <div class="col-auto"></div>
               </div>
             </div>
           </div>
@@ -89,7 +87,7 @@ export default {
                     Today Expense
                   </div>
                   <div class="h5 mb-0 font-weight-bold text-gray-800">
-                    {{todayExpense}}
+                    {{ todayExpense }}
                   </div>
                 </div>
                 <div class="col-auto">
@@ -152,8 +150,7 @@ export default {
                   </div>
                   <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                 </div>
-                <div class="col-auto">
-                </div>
+                <div class="col-auto"></div>
               </div>
             </div>
           </div>
@@ -177,7 +174,7 @@ export default {
             <!-- Card Body -->
             <div class="card-body">
               <div class="chart-area">
-                <img :src="chart">
+                <img :src="chart" />
               </div>
             </div>
           </div>
@@ -189,7 +186,6 @@ export default {
   </div>
 
   <!-- Footer -->
-
 </template>
 
 <style scoped>

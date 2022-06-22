@@ -1,15 +1,14 @@
 <script>
-    export default {
-        name: "Buttons",
-        props: ["button-name"]
-    }
+export default {
+  name: "Buttons",
+  props: ["button-name"],
+};
 </script>
 
 <template>
-    <button class="btn btn-info">
-        {{buttonName}}
-    </button>
+  <button class="btn btn-info">
+    {{ buttonName }}
+  </button>
 </template>
 
-<style>
-</style>
+<style></style>

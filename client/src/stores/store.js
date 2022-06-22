@@ -14,47 +14,51 @@ export const useCounter = defineStore({
       categories: [],
       parameter: 0,
       todaySales: 0,
-      todayExpense: 0
+      todayExpense: 0,
     };
   },
-  getters: {
-  },
+  getters: {},
   actions: {
     clickHome() {
       this.router.push({
-        name: "Home"
-      })
+        name: "Home",
+      });
     },
     clickProducts() {
       this.router.push({
-        name: "Products"
-      })
-      this.fetchProducts()
+        name: "Products",
+      });
+      this.fetchProducts();
     },
     formDisplay() {
       if (document.getElementById("form").style.display === "block") {
-          document.getElementById("form").style.display = "none"              
+        document.getElementById("form").style.display = "none";
       } else {
-          document.getElementById("form").style.display = "block"
+        document.getElementById("form").style.display = "block";
       }
     },
     clickSales() {
       this.router.push({
-        name: "Sales"
-      })
+        name: "Sales",
+      });
 
-      this.fetchAllSales()
+      this.fetchAllSales();
     },
     clickDetail(id) {
-        this.router.push({
-            name: "ProductDetail",
-            params: {
-                id
-            }
-        })
+      this.router.push({
+        name: "ProductDetail",
+        params: {
+          id,
+        },
+      });
 
-        this.parameter = id
-        this.fetchOneProduct(this.parameter)    
+      this.parameter = id;
+      this.fetchOneProduct(this.parameter);
+    },
+    clickIngredients() {
+      this.router.push({
+        name: "Ingredients",
+      });
     },
     async fetchProducts() {
       try {
@@ -69,11 +73,11 @@ export const useCounter = defineStore({
       try {
         const response = await axios.get(`${this.baseURL}/products/${id}`, {
           params: {
-            id: +id
-          }
-        })
+            id: +id,
+          },
+        });
 
-        this.products = response.data[0]
+        this.products = response.data[0];
       } catch (err) {
         console.log(err);
       }
@@ -88,124 +92,124 @@ export const useCounter = defineStore({
           description: obj.description,
           imgUrl: this.imageURL,
           price: obj.price,
-          CategoryId: obj.CategoryId
-        })
+          CategoryId: obj.CategoryId,
+        });
 
         this.router.push({
-          name: "Products"
-        })
+          name: "Products",
+        });
       } catch (err) {
         console.log(err);
       }
     },
     async deleteProduct(id) {
       try {
-        await axios.delete(`${this.baseURL}/products/${id}`)
+        await axios.delete(`${this.baseURL}/products/${id}`);
 
-        this.clickProducts()
+        this.clickProducts();
       } catch (err) {
         console.log(err);
       }
     },
     async fetchAllSales() {
       try {
-        const response = await axios.get(`${this.baseURL}/sales`, {})
+        const response = await axios.get(`${this.baseURL}/sales`, {});
 
-        this.sales = response.data
+        this.sales = response.data;
       } catch (err) {
         console.log(err);
       }
     },
     async fetchAllCategories() {
       try {
-        const response = await axios.get(`${this.baseURL}/categories`, {})
+        const response = await axios.get(`${this.baseURL}/categories`, {});
 
-        this.categories = response.data
+        this.categories = response.data;
       } catch (err) {
         console.log(err);
       }
     },
     async createChart() {
       try {
-        let data  = {
-          "backgroundColor": "#fff",
-          "width": 720,
-          "height": 432,
-          "devicePixelRatio": 1.0,
-          "chart": {
-            "type": "bar",
-            "data": {
-              "labels": [],
-              "datasets": [
+        let data = {
+          backgroundColor: "#fff",
+          width: 720,
+          height: 432,
+          devicePixelRatio: 1.0,
+          chart: {
+            type: "bar",
+            data: {
+              labels: [],
+              datasets: [
                 {
-                  "label": "Daily Sales",
-                  "data": [120, 60, 50, 180, 120]
+                  label: "Daily Sales",
+                  data: [120, 60, 50, 180, 120],
                 },
                 {
-                  "label": "Daily Expense",
-                  "data": [120000, 60000, 50000]
-                }
-              ]
-            }
-          }
-        }
+                  label: "Daily Expense",
+                  data: [120000, 60000, 50000],
+                },
+              ],
+            },
+          },
+        };
 
-        const sales = await axios.get(`${this.baseURL}/sales`, {})
+        const sales = await axios.get(`${this.baseURL}/sales`, {});
 
-        let daily = []
-        let days = []
+        let daily = [];
+        let days = [];
 
-        sales.data.forEach(el => {
-          let date = new Date(el.createdAt)
-          let day = date.getDay()
+        sales.data.forEach((el) => {
+          let date = new Date(el.createdAt);
+          let day = date.getDay();
           let obj = {
             dataSales: el.sales,
             dataExpense: el.cost,
-            dataDate: date.getDate()
-          }
-          daily.push(obj)
-          
+            dataDate: date.getDate(),
+          };
+          daily.push(obj);
+
           switch (day) {
             case 0:
-              day = "Sunday"
+              day = "Sunday";
               break;
             case 1:
-              day = "Monday"
+              day = "Monday";
               break;
             case 2:
-              day = "Tuesday"
+              day = "Tuesday";
               break;
             case 3:
-              day = "Wednesday"
+              day = "Wednesday";
               break;
             case 4:
-              day = "Thursday"
+              day = "Thursday";
               break;
             case 5:
-              day = "Friday"
+              day = "Friday";
               break;
             case 6:
-              day = "Saturday"
+              day = "Saturday";
               break;
-              
+
             default:
               break;
           }
 
-          days.push(day)
+          days.push(day);
         });
 
         //Group Sales by date
-        let groupBy = function(xs, key) {
-          return xs.reduce(function(rv, x) {
+        let groupBy = function (xs, key) {
+          return xs.reduce(function (rv, x) {
             (rv[x[key]] = rv[x[key]] || []).push(x.dataSales);
             return rv;
           }, {});
         };
-        
-        let groupedDailySales = groupBy(daily, 'dataDate');
-        let chartDailySalesData = []
-        let chartDailyExpenseData = []
+
+        let groupedDailySales = groupBy(daily, "dataDate");
+        let chartDailySalesData = [];
+        let chartDailyExpenseData = [];
 
         //Sum total Sales by date
         for (const key in groupedDailySales) {
@@ -213,82 +217,82 @@ export const useCounter = defineStore({
             const el = groupedDailySales[key];
 
             const start = 0;
-            const sumWithInitial = el.reduce(
-              (a, b) => a + b,
-              start
-            );
+            const sumWithInitial = el.reduce((a, b) => a + b, start);
 
-            chartDailySalesData.push(sumWithInitial)
+            chartDailySalesData.push(sumWithInitial);
           }
         }
 
-        let groupCost = function(xs, key) {
-          return xs.reduce(function(rv, x) {
+        let groupCost = function (xs, key) {
+          return xs.reduce(function (rv, x) {
             (rv[x[key]] = rv[x[key]] || []).push(x.dataExpense);
             return rv;
           }, {});
         };
 
-        let groupedDailyExpense = groupCost(daily, 'dataDate');
+        let groupedDailyExpense = groupCost(daily, "dataDate");
 
         for (const key in groupedDailyExpense) {
           if (Object.hasOwnProperty.call(groupedDailyExpense, key)) {
             const el = groupedDailyExpense[key];
 
             const start = 0;
-            const sumWithInitial = el.reduce(
-              (a, b) => a + b,
-              start
-            );
+            const sumWithInitial = el.reduce((a, b) => a + b, start);
 
-            chartDailyExpenseData.push(sumWithInitial)
+            chartDailyExpenseData.push(sumWithInitial);
           }
         }
-        
+
         //Label of days
-        let arranged = days.reverse()
+        let arranged = days.reverse();
         let newDays = arranged.filter((element, index) => {
           return arranged.indexOf(element) === index;
         });
-        data.chart.data.labels = newDays
-        data.chart.data.datasets[0].data = chartDailySalesData.reverse()
-        let lastData = chartDailySalesData.reverse()
-        data.chart.data.datasets[1].data = chartDailyExpenseData.reverse()
-        let latestExpense = chartDailyExpenseData.reverse()
+        data.chart.data.labels = newDays;
+        data.chart.data.datasets[0].data = chartDailySalesData.reverse();
+        let lastData = chartDailySalesData.reverse();
+        data.chart.data.datasets[1].data = chartDailyExpenseData.reverse();
+        let latestExpense = chartDailyExpenseData.reverse();
 
-        this.todaySales = lastData[0]
-        this.todayExpense = latestExpense[0]
+        this.todaySales = lastData[0];
+        this.todayExpense = latestExpense[0];
 
-        let response = await axios.post(`https://quickchart.io/chart/create`, data)
-        
-        this.chart = response.data.url
+        let response = await axios.post(
+          `https://quickchart.io/chart/create`,
+          data
+        );
+
+        this.chart = response.data.url;
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
     async createImgURL(file) {
       try {
         // console.log(file);
         const formData = new FormData();
-        formData.append( "image", file )
+        formData.append("image", file);
 
-        const key = `23b2a23b6becf408c71ae7d552032734`
-        const response = await axios.post(`https://api.imgbb.com/1/upload?key=${key}`, formData)
-        
-        this.imageURL = response.data.data.display_url
+        const key = `23b2a23b6becf408c71ae7d552032734`;
+        const response = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${key}`,
+          formData
+        );
+
+        this.imageURL = response.data.data.display_url;
         console.log(this.imageURL);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
     async addSales(obj) {
       try {
         await axios.post(`${this.baseURL}/sales`, {
           ProductId: obj.ProductId,
-          qty: +obj.qty
-        })
+          qty: +obj.qty,
+        });
 
-        this.fetchAllSales()
+        this.fetchAllSales();
       } catch (err) {
         console.log(err);
       }
@@ -300,18 +304,18 @@ export const useCounter = defineStore({
           description: obj.description,
           imgUrl: this.imageURL,
           price: +obj.price,
-          CategoryId: +obj.CategoryId
-        })
+          CategoryId: +obj.CategoryId,
+        });
 
         this.router.push({
-          name: "Products"
-        })
+          name: "Products",
+        });
 
-        this.formDisplay()
-        this.fetchProducts()
+        this.formDisplay();
+        this.fetchProducts();
       } catch (err) {
         console.log(err);
       }
-    }
+    },
   },
 });

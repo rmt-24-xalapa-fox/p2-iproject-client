@@ -50,7 +50,7 @@ export const useMainStore = defineStore({
     setIsLogin: function (status) {
       this.isLogin = status;
     },
-    piniaRegister: async function (username, email, password) {
+    piniaRegister: async function (username, email, password, referral) {
       try {
         const response = await axios({
           method: "post",
@@ -59,6 +59,9 @@ export const useMainStore = defineStore({
             username,
             email,
             password,
+          },
+          params: {
+            referral: referral,
           },
         });
         this.router.push("/login");

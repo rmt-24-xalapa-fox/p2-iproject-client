@@ -78,7 +78,8 @@ export default {
   methods: {
     ...mapActions(useMainStore, ["piniaRegister"]),
     clickRegister: function () {
-      this.piniaRegister(this.username, this.email, this.password);
+      let referral = this.$route.query.referral;
+      this.piniaRegister(this.username, this.email, this.password, referral);
     },
   },
 };

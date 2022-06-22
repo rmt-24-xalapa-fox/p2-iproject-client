@@ -2,19 +2,19 @@
 import { mapActions } from "pinia";
 import { useMainStore } from "../stores/main";
 export default {
-    data(){
-        return{
+    data() {
+        return {
             email: "",
             password: "",
             hasLoggedIn: false,
             error: ""
         }
     },
-    methods:{
+    methods: {
         ...mapActions(useMainStore, ["loginAction", "loginWithGoogle"]),
-        loginForm: function(){
+        loginForm: function () {
             this.loginAction(this.email, this.password)
-                .then(()=>{
+                .then(() => {
                     this.hasLoggedIn = true
                 })
                 .catch((err) => {
@@ -24,8 +24,8 @@ export default {
         }
     },
     watch: {
-        email(value){
-            if(value === ""){
+        email(value) {
+            if (value === "") {
                 this.error = ""
             }
         }
@@ -49,11 +49,12 @@ export default {
                                         alt="Sample image">
                                 </div>
                                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                                    <p style="color: red;">{{error}}</p>
+                                    <p style="color: red;">{{ error }}</p>
                                     <form @submit.prevent="loginForm" v-show="!hasLoggedIn">
                                         <!-- Email input -->
                                         <div class="form-outline mb-4">
-                                            <input type="email" v-model="email" id="form3Example3" class="form-control form-control-lg"
+                                            <input type="email" v-model="email" id="form3Example3"
+                                                class="form-control form-control-lg"
                                                 placeholder="Enter a valid email address" />
                                             <label class="form-label" for="form3Example3">Email address</label>
                                         </div>
@@ -68,7 +69,7 @@ export default {
                                         <div class="text-center text-lg-start mt-4 pt-2">
                                             <button type="submit" class="btn btn-lg"
                                                 style="padding-left: 2.5rem; padding-right: 2.5rem;background-color: rgba(231, 253, 253, 1);">Login</button>
-                                            
+
                                         </div>
 
                                     </form>

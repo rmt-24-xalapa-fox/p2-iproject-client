@@ -8,12 +8,17 @@ export default {
         this.getOneProduct(ProductId)
     },
     methods: {
-        ...mapActions(useMainStore, ["getOneProduct"]),
-        addWishlist: function(){
-            
+        ...mapActions(useMainStore, ["getOneProduct", "addingWishlist", 'addToCart']),
+        addWishlist: function () {
+            const data = this.product
+            this.addingWishlist(data)
         },
-        changeImage: function(){
+        changeImage: function () {
             this.product.image_link = "https://cdn-icons-png.flaticon.com/512/5856/5856842.png"
+        },
+        addCart: function(){
+            const data = this.product
+            this.addToCart(data)
         }
 
     },
@@ -22,21 +27,21 @@ export default {
     },
     components: {
         ColourPallette
-    }
+    },
 }
 </script>
 <template>
     <div class="container mt-5">
-        <div class="row row-product">
-            <div class="col-lg-5">
+        <div class="row row-product d-flex justify-content-center">
+            <div class="col-lg-5" style="size: cover;">
                 <figure class="figure">
                     <img :src="product.image_link" class="figure-img img-fluid rounded" alt="..."
-                        style="border-radius: 5px; width: 450px" v-on:error="changeImage" />
+                        style="border-radius: 5px; max-width: 450px;max-height: 450px;min-height: 300px;min-width: 300px;" v-on:error="changeImage" />
                     <figcaption class="figure-caption text-end">
-                        <button class="btn btn-orange-100 d-inline-flex">
+                        <button class="btn btn-orange-100 d-inline-flex" @click.prevent="addWishlist">
                             <img src="http://cdn.onlinewebfonts.com/svg/img_316433.png" style="width: 50px" alt="" />
                         </button>
-                        <button class="btn btn-orange-100 d-inline-flex">
+                        <button class="btn btn-orange-100 d-inline-flex" @click.prevent="addCart">
                             <img src="https://cdn.icon-icons.com/icons2/2645/PNG/512/cart_plus_icon_160300.png"
                                 style="width: 50px" alt="" />
                         </button>
@@ -45,7 +50,7 @@ export default {
             </div>
             <div class="col-lg-7">
                 <h4>{{ product.name }}</h4>
-                <small class="text-muted">{{ product.product_type }} {{ product.category }} By {{ product.brand
+                <small class="text-muted">{{ product.product_type }} {{ product.category }} by {{ product.brand
                 }}</small>
                 <hr>
                 <p>
@@ -61,19 +66,8 @@ export default {
                         style="margin:4px">{{ tag }}</span>
                 </div>
                 <hr>
-                <h5>Price: {{ convertPrice }}</h5>
+                <h5>Price: Rp {{ product.price }}</h5>
                 <hr>
-                <div class="container-wrapper">
-                    <div class="d-flex align-items-center justify-content-center">
-                        <div class="row justify-content-center">
-                            <!-- star rating -->
-                            <div class="rating-wrapper">
-                                <i v-for="i in product.rating" class="fa-solid fa-star"></i>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

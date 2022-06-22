@@ -7,6 +7,8 @@ export const useIndexStore = defineStore({
     url: "http://localhost:3001",
     products: [],
     carts: [],
+    totalPrice: 0,
+    totalItem: 0
   }),
   getters: {},
   actions: {
@@ -116,12 +118,34 @@ export const useIndexStore = defineStore({
           headers: { access_token: localStorage.getItem("access_token") },
         });
 
-        this.carts = result.data.Products;
-        console.log(result, "<<<<< get Cart");
+        this.carts = result.data.data.Products;
+        this.totalPrice = result.data.totalPrice;
+        this.totalItem = result.data.totalItem;
+        console.log(result.data, "<<<<< get Cart");
         this.router.push(`/cart`);
       } catch (err) {
         console.log(err.message, "<<< error");
       }
+    },
+
+    /*--------------------------------------------------------------
+    # DELETE cART
+    --------------------------------------------------------------*/
+    async deleteCart(id) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const result = await axios({
+            method: "DELETE",
+            url: `${this.url}/cart/${id}`,
+            headers: { access_token: localStorage.getItem("access_token") },
+          });
+          console.log(result, "<<<< DELETE cart");
+          resolve();
+        } catch (err) {
+          console.log(err, "<<<< error delete");
+          reject(err);
+        }
+      });
     },
   },
 });

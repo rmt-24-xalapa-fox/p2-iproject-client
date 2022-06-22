@@ -7,7 +7,9 @@
                 <div class="header-top-inner">
                     <div class="cnt-account">
                         <ul class="list-unstyled">
-                            <li class="header_cart hidden-xs"><RouterLink to="/cart"><span>My Cart</span></RouterLink></li>
+                            <li class="header_cart hidden-xs">
+                                <RouterLink to="/cart"><span>My Cart</span></RouterLink>
+                            </li>
                             <li class="check"><a href="#"><span>Checkout</span></a></li>
                             <li class="login">
                                 <RouterLink to="/login" v-if="!userLogin"><span>Login</span></RouterLink>
@@ -34,7 +36,8 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
                         <!-- ============================================================= LOGO ============================================================= -->
-                        <div class="logo"> <RouterLink to="/"> <img src="../assets/images/logo.png" alt="logo"> </RouterLink>
+                        <div class="logo">
+                            <RouterLink to="/"> <img src="../assets/images/logo.png" alt="logo"> </RouterLink>
                         </div>
                         <!-- /.logo -->
                         <!-- ============================================================= LOGO : END ============================================================= -->
@@ -82,27 +85,34 @@
                                 data-toggle="dropdown">
                                 <div class="items-cart-inner">
                                     <div class="basket">
-                                        <div class="basket-item-count"><span class="count">2</span></div>
+                                        <div class="basket-item-count"><span class="count">{{totalItem}}</span></div>
                                         <div class="total-price-basket"> <span class="lbl">Shopping Cart</span> <span
-                                                class="value">Rp. 100.000</span> </div>
+                                                class="value" style="font-size: 16px">Rp. {{
+                                                totalPrice.toLocaleString('de-DE',
+                                                { minimumFractionDigits: 2 })
+                                                }}</span> </div>
                                     </div>
                                 </div>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <div class="cart-item product-summary">
-                                        <div class="row">
+                                        <div class="row" v-for="cart in carts" :key="cart.id">
                                             <div class="col-xs-4">
-                                                <div class="image"> <a href="detail.html"><img
-                                                            src="../assets/images/products/p4.jpg" alt=""></a>
+                                                <div class="image"> <a href="#"><img :src="cart.images_list[0]"
+                                                            alt=""></a>
                                                 </div>
                                             </div>
                                             <div class="col-xs-7">
-                                                <h3 class="name"><a href="index8a95.html?page-detail">Simple Product</a>
+                                                <h3 class="name"><a href="#">{{cart.title}}</a>
                                                 </h3>
-                                                <div class="price">$600.00</div>
+                                                <div class="price">Rp. {{
+                                                    Number(cart.price).toLocaleString('de-DE',
+                                                    {minimumFractionDigits: 2 })}}</div>
                                             </div>
-                                            <div class="col-xs-1 action"> <a href="#"><i class="fa fa-trash"></i></a>
+                                            <div class="col-xs-1 action"> <a href="#"
+                                                    @click.prevent="btnDelete(cart.Cart.ProductId)"><i
+                                                        class="fa fa-trash"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -111,7 +121,9 @@
                                     <hr>
                                     <div class="clearfix cart-total">
                                         <div class="pull-right"> <span class="text">Sub Total :</span><span
-                                                class='price'>$600.00</span>
+                                                class='price'>Rp. {{ totalPrice.toLocaleString('de-DE',
+                                                { minimumFractionDigits: 2 })
+                                                }}</span>
                                         </div>
                                         <div class="clearfix"></div>
                                         <a href="checkout.html"
@@ -151,7 +163,9 @@
                         <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
                             <div class="nav-outer">
                                 <ul class="nav navbar-nav">
-                                    <li class="active dropdown"> <RouterLink to="/">Home</RouterLink> </li>
+                                    <li class="active dropdown">
+                                        <RouterLink to="/">Home</RouterLink>
+                                    </li>
                                     <li class="dropdown  navbar-right special-menu"> <a href="#">Get 30% off on selected
                                             items</a> </li>
                                 </ul>
@@ -177,19 +191,43 @@
 </template>
 
 <script>
-import { mapState } from "pinia"
+import { mapActions, mapState } from "pinia"
 import { useIndexStore } from "../stores"
 
 export default {
     computed: {
-        ...mapState(useIndexStore, ["userLogin"])
+        ...mapState(useIndexStore, ["userLogin", "totalPrice", "carts", "totalItem"])
     },
     methods: {
+        ...mapActions(useIndexStore, ["readCart", "deleteCart"]),
         logout: function () {
             this.userLogin = true
             localStorage.clear()
             this.$router.push("/login")
-        }
+        },
+        btnDelete(id) {
+            this.deleteCart(id)
+                .then(() => {
+                    this.readCart()
+                    Swal.fire({
+                        icon: "success",
+                        title: "Success!",
+                        text: `Success deleted product from cart!`,
+                    });
+                })
+                .catch((err) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: `Failed deleted product from cart!`,
+                    });
+                })
+        },
+    },
+    created() {
+        this.totalItem
+        this.totalPrice
+        this.readCart()
     }
 }
 </script>

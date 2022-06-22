@@ -22,8 +22,8 @@
                                 <div class="wcf-left"><span class="price">Rp. {{
                                 Number(product.price).toLocaleString('de-DE', {minimumFractionDigits: 2 })
                                 }}</span></div>
-                                <div class="wcf-right"><button @click.prevent="btnFav(product.id)" class="buy-btn"><i
-                                            class="fa fa-shopping-cart"></i></button></div>
+                                <div class="wcf-right"><a href="#" @click.prevent="btnFav(product.id)" class="buy-btn"><i
+                                            class="fa fa-shopping-cart"></i></a></div>
                             </div>
                         </div>
                     </div>
@@ -82,11 +82,14 @@ import { useIndexStore } from "../stores";
                         Swal.fire({
                             icon: "error",
                             title: "Oops...",
-                            text: `Anda Harus Login Terlebih Dahulu!`,
+                            text: `Failed add product to cart!!`,
                         });
                     })
             },
-        }
+
+            
+        },
+        
     }
 </script>
 

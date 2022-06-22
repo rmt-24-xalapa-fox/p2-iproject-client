@@ -1,64 +1,63 @@
 <script>
 import { mapActions } from 'pinia';
-import {useMainStore} from '../stores/main'
-export default {
-    methods:{
-        ...mapActions(useMainStore, ["getSeasonAnime"])
-    },
-    created: function(){
-        this.getSeasonAnime()
-    }
-}
-</script>
-<script setup>
-import { ref, onMounted } from 'vue'
-const transcript = ref('')
-const isRecording = ref(false)
-
+import { useMainStore } from '../stores/main'
 const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition
 const sr = new Recognition()
-onMounted(() => {
-    sr.continuous = true
-    sr.interimResults = true
-    sr.onstart = () => {
-        console.log('SR Started')
-        isRecording.value = true
-    }
-    sr.onend = () => {
-        console.log('SR Stopped')
-        isRecording.value = false
-    }
-    sr.onresult = (evt) => {
-        for (let i = 0; i < evt.results.length; i++) {
-            const result = evt.results[i]
-            if (result.isFinal) CheckForCommand(result)
+export default {
+    methods: {
+        ...mapActions(useMainStore, ["getSeasonAnime"]),
+        CheckForCommand(result) {
+            const t = result[0].transcript;
+            if (t.includes('stop recording')) {
+                sr.stop();
+            } else if (t.includes('what is the time') ||
+                t.includes('what\'s the time')) {
+                sr.stop();
+                alert(new Date().toLocaleTimeString());
+                setTimeout(() => sr.start(), 100);
+            }
+        },
+        ToggleMic() {
+            if (this.isRecording) {
+                sr.stop();
+            } else {
+                sr.start();
+            }
         }
-        const t = Array.from(evt.results)
-            .map(result => result[0])
-            .map(result => result.transcript)
-            .join('')
 
-        transcript.value = t
-    }
-})
-const CheckForCommand = (result) => {
-    const t = result[0].transcript;
-    if (t.includes('stop recording')) {
-        sr.stop()
-    } else if (
-        t.includes('what is the time') ||
-        t.includes('what\'s the time')
-    ) {
-        sr.stop()
-        alert(new Date().toLocaleTimeString())
-        setTimeout(() => sr.start(), 100)
-    }
-}
-const ToggleMic = () => {
-    if (isRecording.value) {
-        sr.stop()
-    } else {
-        sr.start()
+    },
+    created: function () {
+        this.getSeasonAnime()
+    },
+    data() {
+        return {
+            query: "",
+            isRecording: false
+        }
+    },
+    mounted: function () {
+        sr.continuous = true
+        sr.interimResults = true
+        sr.onstart = () => {
+            console.log('SR Started')
+            this.isRecording = true
+        }
+        sr.onend = () => {
+            console.log('SR Stopped')
+            this.isRecording = false
+        }
+        sr.onresult = (evt) => {
+            for (let i = 0; i < evt.results.length; i++) {
+                const result = evt.results[i]
+                if (result.isFinal) this.CheckForCommand(result)
+            }
+            const t = Array.from(evt.results)
+                .map(result => result[0])
+                .map(result => result.transcript)
+                .join('')
+
+            this.query = t
+        }
     }
 }
 </script>
@@ -68,7 +67,7 @@ const ToggleMic = () => {
     <main id="Home-page">
 
         <form>
-            <input type="text" placeholder="Search for an anime..." :value='transcript' />
+            <input type="text" placeholder="Search for an anime..." v-model="query" />
             <button type="submit" class="button">Search</button>
             <a href="#" @click.prevent="ToggleMic">
                 <span class="material-icons mt-2 ml-2 ">settings_voice</span>
@@ -89,11 +88,12 @@ const ToggleMic = () => {
                             <h5 class="text-2xl md:text-3xl font-medium mt-3">Hataraku Maou-sama!!</h5>
                             <p class="text-slate-500 text-lg mt-3 mb-2">Second season of Hataraku Maou-sama!</p>
                             <p class="text-slate-500 text-sm mt-3 mb-2">Score: 8.0</p>
-                            <a href="https://www.youtube.com/embed/LxpTh8GKAL4?enablejsapi=1&wmode=opaque&autoplay=1" alt="#"
-                                class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
+                            <a href="https://www.youtube.com/embed/LxpTh8GKAL4?enablejsapi=1&wmode=opaque&autoplay=1"
+                                alt="#" class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch
+                                Trailer</a>
                         </div>
                     </div>
-                                        <div class="rounded-xl shadow-lg">
+                    <div class="rounded-xl shadow-lg">
                         <div class="p-5 flex flex-col">
                             <div class="rounded-xl overflow-hidden">
                                 <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
@@ -105,7 +105,7 @@ const ToggleMic = () => {
                                 class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
                         </div>
                     </div>
-                                        <div class="rounded-xl shadow-lg">
+                    <div class="rounded-xl shadow-lg">
                         <div class="p-5 flex flex-col">
                             <div class="rounded-xl overflow-hidden">
                                 <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
@@ -117,7 +117,7 @@ const ToggleMic = () => {
                                 class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
                         </div>
                     </div>
-                                        <div class="rounded-xl shadow-lg">
+                    <div class="rounded-xl shadow-lg">
                         <div class="p-5 flex flex-col">
                             <div class="rounded-xl overflow-hidden">
                                 <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
@@ -129,7 +129,7 @@ const ToggleMic = () => {
                                 class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
                         </div>
                     </div>
-                                        <div class="rounded-xl shadow-lg">
+                    <div class="rounded-xl shadow-lg">
                         <div class="p-5 flex flex-col">
                             <div class="rounded-xl overflow-hidden">
                                 <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
@@ -141,7 +141,7 @@ const ToggleMic = () => {
                                 class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
                         </div>
                     </div>
-                                        <div class="rounded-xl shadow-lg">
+                    <div class="rounded-xl shadow-lg">
                         <div class="p-5 flex flex-col">
                             <div class="rounded-xl overflow-hidden">
                                 <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
@@ -153,7 +153,7 @@ const ToggleMic = () => {
                                 class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
                         </div>
                     </div>
-                                        <div class="rounded-xl shadow-lg">
+                    <div class="rounded-xl shadow-lg">
                         <div class="p-5 flex flex-col">
                             <div class="rounded-xl overflow-hidden">
                                 <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
@@ -165,7 +165,7 @@ const ToggleMic = () => {
                                 class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
                         </div>
                     </div>
-                                        <div class="rounded-xl shadow-lg">
+                    <div class="rounded-xl shadow-lg">
                         <div class="p-5 flex flex-col">
                             <div class="rounded-xl overflow-hidden">
                                 <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
@@ -177,7 +177,7 @@ const ToggleMic = () => {
                                 class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
                         </div>
                     </div>
-                                        <div class="rounded-xl shadow-lg">
+                    <div class="rounded-xl shadow-lg">
                         <div class="p-5 flex flex-col">
                             <div class="rounded-xl overflow-hidden">
                                 <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
@@ -189,7 +189,7 @@ const ToggleMic = () => {
                                 class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
                         </div>
                     </div>
-                                        <div class="rounded-xl shadow-lg">
+                    <div class="rounded-xl shadow-lg">
                         <div class="p-5 flex flex-col">
                             <div class="rounded-xl overflow-hidden">
                                 <img src="https://cdn.myanimelist.net/images/anime/1502/124354.jpg" alt="" />
@@ -200,7 +200,7 @@ const ToggleMic = () => {
                             <a href="https://www.youtube.com/embed/LxpTh8GKAL4?enablejsapi=1&wmode=opaque&autoplay=1"
                                 class="text-center bg-red-400 text-red-800 rounded h-7 align-middle">Watch Trailer</a>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
 

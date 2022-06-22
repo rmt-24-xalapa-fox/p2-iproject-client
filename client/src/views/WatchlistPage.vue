@@ -60,12 +60,12 @@ onMounted(() => {
 
 <template>
 	<main>
-		<h1>My Anime Watchlist</h1>
-
-		<form @submit.prevent="searchAnime">
-			<input type="text" placeholder="Search for an anime..." v-model="query" @input="handleInput" />
-			<button type="submit" class="button">Search</button>
-		</form>
+        <div class="mt-10">
+            <form @submit.prevent="searchAnime">
+                <input type="text" placeholder="Search for an anime..." v-model="query" @input="handleInput" />
+                <button type="submit" class="button">Search</button>
+            </form>
+        </div>
 
 		<div class="results" v-if="search_results.length > 0">
 			<div v-for="anime in search_results" class="result">
@@ -80,7 +80,7 @@ onMounted(() => {
 		</div>
 
 		<div class="myanime" v-if="my_anime.length > 0">
-			<h2>My Anime</h2>
+			<h2 class="text-xl">My Anime</h2>
 
 			<div v-for="anime in my_anime_asc" class="anime">
 				<img :src="anime.image" />
@@ -149,7 +149,7 @@ form input {
 
 	display: block;
 	padding: 0.5rem 1rem;
-	background-image: linear-gradient(to left, rgb(50, 221, 255) 50%, rgb(31, 40, 90) 50%);
+    background-image: linear-gradient(to left, rgb(165, 4, 42) 50%, rgb(90, 31, 31) 50%);
 	background-size: 200%;
 	color: white;
 	font-size: 1.125rem;

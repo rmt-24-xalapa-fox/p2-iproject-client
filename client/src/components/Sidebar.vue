@@ -20,7 +20,7 @@
                 <span class="material-icons">calendar_month</span>
                 <span class="text">Season Anime</span>
             </router-link>
-            <router-link to="/team" class="button">
+            <router-link to="/Watchlist" class="button">
                 <span class="material-icons">watch_later</span>
                 <span class="text">Watchlist</span>
             </router-link>

@@ -75,6 +75,9 @@ export const useMainStore = defineStore({
       catch(err){
         console.log(response)
       }
+    },
+    async getAnime(){
+      
     }
   }
 })

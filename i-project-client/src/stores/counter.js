@@ -92,6 +92,7 @@ export const useMusicYuhu = defineStore({
         console.log(data)
         this.allradio = data
       } catch (error) {
+        router.push("/home")
         swal({
           title: "ERROR",
           text: error.response.data.message,

@@ -37,7 +37,7 @@ export default {
           </div>
           <div class="form-group">
             <label for="password">Phone Number</label>
-            <input type="password" name="password" v-model="userpremium.phoneNumber" placeholder="" class="form-control">
+            <input type="text" name="phoneNumber" v-model="userpremium.phoneNumber" placeholder="" class="form-control">
           </div>
           <div class="mb-3">
             <button type="submit" @click.prevent="premiumpurchase" class="btn btn-block text-uppercase">

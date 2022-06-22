@@ -27,6 +27,10 @@ export default {
         </div>
       </article>
 
+      <div>
+        <audio src="../assets/lagu.mp3"></audio>
+      </div>
+
       <article class="postcard dark red">
         <div>
           <img class="postcard__img"

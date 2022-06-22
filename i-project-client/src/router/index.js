@@ -5,6 +5,7 @@ import LoginPage from '../views/LoginPage.vue'
 import HomePage from '../views/HomePage.vue'
 import RadioPage from '../views/RadioPage.vue'
 import SongPage from '../views/SongPage.vue'
+import PremiumPage from '../views/PremiumPage.vue'
 
 
 
@@ -41,6 +42,11 @@ const router = createRouter({
       path: '/home/song',
       name: 'SongPage',
       component: SongPage
+    },
+    {
+      path: '/home/premium',
+      name: 'PremiumPage',
+      component: PremiumPage
     }
   ]
 })

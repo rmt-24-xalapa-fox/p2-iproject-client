@@ -45,20 +45,20 @@ export default {
                   <th>Official Web</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">MANGORADIO</th>
-                  <td>Germany</td>
-                  <td>526651</td>
+              <tbody v-for="(el, i) in allradio" v-bind:key="i">
+                <tr >
+                  <th scope="row">{{el.Name}}</th>
+                  <td>{{el.Country}}</td>
+                  <td>{{el.TotalVotes}}</td>
                   <td>
-                    <a href="http://stream.mangoradio.de/" class="btn btn-success">Link 1</a>
+                    <a :href="el.url1" class="btn btn-success">Link 1</a>
                   </td>
                   <td>
-                    <a href="https://mangoradio.stream.laut.fm/mangoradio?t302=2022-06-21_12-56-05&uuid=5317fab7-4a16-4f9e-873d-22a5e4b25f57"
+                    <a :href="el.url2"
                       class="btn btn-success">Link 2</a>
                   </td>
                   <td>
-                    <a href="https://mangoradio.de/" class="btn btn-success">Website</a>
+                    <a :href="el.official_website" class="btn btn-success">Website</a>
                   </td>
                 </tr>
               </tbody>

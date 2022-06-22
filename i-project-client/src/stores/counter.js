@@ -11,7 +11,8 @@ export const useMusicYuhu = defineStore({
     url: "http://localhost:3000/",
     userlogin: {},
     allsong: [],
-    allradio: []
+    allradio: [],
+    userpremium: []
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -87,6 +88,7 @@ export const useMusicYuhu = defineStore({
             access_token: localStorage.access_token,
           },
         });
+        console.log(data)
         this.allradio = data
       } catch (error) {
         console.log(error)

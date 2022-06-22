@@ -1,14 +1,28 @@
 <script>
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useHeroStore } from "../stores/heroes";
+import { RouterLink } from "vue-router";
 import Cards from "../components/Card.vue";
+import SortCard from "../components/SortCard.vue";
 export default {
   name: "Home",
   components: {
     Cards,
+    SortCard,
+    RouterLink,
   },
   computed: {
-    ...mapState(useHeroStore, ["heroes"]),
+    ...mapState(useHeroStore, ["roles", "sortByRole"]),
+  },
+  methods: {
+    ...mapActions(useHeroStore, ["fetchByRoles", "fetchHeroes"]),
+    toHome() {
+      this.fetchHeroes();
+    },
+  },
+  created() {
+    this.fetchHeroes();
+    this.fetchByRoles();
   },
 };
 </script>
@@ -19,18 +33,13 @@ export default {
     <div class="container">
       <div class="row justify-content-center">
         <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-outline-dark fw-bold active" aria-current="page">All</button>
-          <button type="button" class="btn btn-outline-dark fw-bold">Tank</button>
-          <button type="button" class="btn btn-outline-dark fw-bold">Fighter</button>
-          <button type="button" class="btn btn-outline-dark fw-bold">Assassin</button>
-          <button type="button" class="btn btn-outline-dark fw-bold">Mage</button>
-          <button type="button" class="btn btn-outline-dark fw-bold">Marksman</button>
-          <button type="button" class="btn btn-outline-dark fw-bold">Support</button>
+          <button type="button" class="btn btn-outline-dark fw-bold" v-for="role in roles" :key="role.id" :role="role" @click.prevent="fetchByRoles(role.label)">{{ role.label }}</button>
         </div>
       </div>
     </div>
 
-    <Cards />
+    <Cards v-if="sortByRole.length === 0" />
+    <SortCard />
   </section>
 
   <!-- Footer-->

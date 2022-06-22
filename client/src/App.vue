@@ -9,10 +9,11 @@ export default {
     RouterView,
   },
   methods: {
-    ...mapActions(useHeroStore, ["fetchHeroes"]),
+    ...mapActions(useHeroStore, ["fetchHeroes", "getRoles"]),
   },
   async created() {
     await this.fetchHeroes();
+    await this.getRoles();
   },
 };
 </script>

@@ -49,15 +49,6 @@ export default {
             >Sales</a
           >
         </li>
-        <li class="nav-item">
-          <a
-            class="nav-link text-white"
-            aria-current="page"
-            href="#"
-            @click="clickIngredients"
-            >Ingredients</a
-          >
-        </li>
       </ul>
     </div>
   </nav>

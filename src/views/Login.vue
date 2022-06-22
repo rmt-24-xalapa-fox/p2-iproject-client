@@ -1,6 +1,51 @@
 <script>
+import {db, app} from "../../config/firebaseconfig"
+import {setDoc, doc, collection, getDocs, addDoc, where ,query} from "firebase/firestore"
+import {signInWithEmailAndPassword, getAuth} from "firebase/auth"
+import swal from 'sweetalert';
 export default {
-    name: "Login"
+    name: "Login",
+    data() {
+        return {
+            email: "",
+            password: "",
+        }
+    },
+    methods: {
+        login() {
+            let auth = getAuth(app);
+            signInWithEmailAndPassword(auth, this.email, this.password)
+            .then(async res => {
+                if (res.user) {
+                    const q = query(collection(db, "Users"), where("id", "==", res.user.uid));
+                    const querySnapshot = await getDocs(q);
+                    querySnapshot.forEach((doc) => {
+                        console.log(doc.id, "=>", doc.data());
+                        let userData = doc.data();
+                        localStorage.setItem("id", userData.id);
+                        localStorage.setItem("name", userData.name);
+                        localStorage.setItem("email", userData.email);
+                        localStorage.setItem("imageUrl", userData.imageUrl);
+                        localStorage.setItem("status", userData.status);
+                        localStorage.setItem("FirebaseDocId", doc.id);
+                    })
+                    this.email= "";
+                    this.password= "";
+                    this.$router.push("/")
+                }
+            })
+            .catch(err => {
+                let errorMessage = err.message;
+                console.log(err, err.name);
+                swal(errorMessage)
+            })
+        }
+    },
+    created() {
+        if (localStorage.getItem("id")) {
+            this.$router.push("/")
+        }
+    }
 }
 </script>
 <template>
@@ -24,16 +69,16 @@ export default {
         <div class="col-lg-6 mb-5 mb-lg-0">
           <div class="card">
             <div class="card-body py-5 px-md-5">
-              <form>
+              <form @submit.prevent="login">
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                  <input type="email" id="form3Example3" class="form-control" />
+                  <input type="email" id="form3Example3" class="form-control" v-model="email"/>
                   <label class="form-label" for="form3Example3">Email address</label>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4" class="form-control" />
+                  <input type="password" id="form3Example4" class="form-control" v-model="password"/>
                   <label class="form-label" for="form3Example4">Password</label>
                 </div>
 

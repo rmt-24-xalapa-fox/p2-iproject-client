@@ -19,7 +19,7 @@ export default {
             createUserWithEmailAndPassword(auth, this.email, this.password)
             .then(async res => {
                 console.log(res);
-                await addDoc(collection(db, "Users"), {
+                const newDoc = await addDoc(collection(db, "Users"), {
                     id: res.user.uid || null,
                     name: `${this.firstName} ${this.lastName}` || null,
                     email: this.email || null,
@@ -27,6 +27,16 @@ export default {
                     imageUrl: "",
                     status: ""
                 });
+                localStorage.setItem("id", res.user.uid);
+                localStorage.setItem("name", `${this.firstName} ${this.lastName}`);
+                localStorage.setItem("email", this.email);
+                localStorage.setItem("imageUrl", "");
+                localStorage.setItem("status", "");
+                localStorage.setItem("FirebaseDocId", newDoc.id);
+                this.firstName= "";
+                this.lastName= "";
+                this.email= "";
+                this.password= "";
                 this.$router.push("/");
             })
             .catch(err => {

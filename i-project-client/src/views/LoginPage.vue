@@ -2,14 +2,55 @@
 
 import { mapActions, mapWritableState } from 'pinia'
 import { useMusicYuhu } from '../stores/counter.js'
+import router from '../router/index.js'
+import axios from 'axios'
 
 export default {
   name: "LoginPage",
   methods: {
-    ...mapActions(useMusicYuhu, ["loginprocess"])
+    ...mapActions(useMusicYuhu, ["loginprocess"]),
+    handleCredentialResponse(response) {
+      axios({
+        method: 'POST',
+        url: `http://localhost:3000/loginGoogle`,
+        data: {
+          credential: response.credential
+        }
+      })
+        .then(resp => {
+          const { access_token, nameSocialMedia } = resp.data
+
+          localStorage.access_token = access_token
+
+          swal({
+            title: "Success",
+            text: `Welcome!`,
+            icon: "success",
+          });
+
+          router.push("/home")
+
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
   },
   computed: {
     ...mapWritableState(useMusicYuhu, ["userlogin"])
+  },
+  mounted() {
+    const cb = this.handleCredentialResponse
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id: "930840140219-huh4nev0nnjlb55hh73o5ummovpp4ds4.apps.googleusercontent.com",
+        callback: cb
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("google-button"),
+        { theme: "outline", size: "large" }  // customization attributes
+      );
+    }
   }
 }
 </script>
@@ -46,6 +87,11 @@ export default {
         </div>
         <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with"
           data-shape="rectangular" data-logo_alignment="left">
+        </div>
+        
+        <div id="google-button">
+          <p>Welcome! {{ email }}</p>
+          <button @click.prevent="googleSignOut">Sign In</button>
         </div>
 
         <hr class="my-4">
@@ -85,6 +131,13 @@ body {
 #imageInput {
   position: relative;
   top: 10px;
+}
+
+#google-button {
+    position: relative;
+    display: flex;
+    left: 28%;
+    
 }
 
 

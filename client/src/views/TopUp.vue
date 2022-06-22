@@ -77,6 +77,7 @@ export default {
       var copyText = this.userReferralLink;
       // copyText.select();
       // copyText.setSelectionRange(0, 99999);
+      //
       navigator.clipboard.writeText(copyText);
 
       Swal.fire("Link copied to clipboard");

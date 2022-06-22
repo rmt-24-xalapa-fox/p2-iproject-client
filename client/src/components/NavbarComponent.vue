@@ -44,8 +44,12 @@
                 ><ion-icon name="cart-outline"></ion-icon> Cart</router-link
               >
               <div class="dropdown-divider"></div>
-              <a style="text-decoration: none; color: black" class="ms-1"
-                ><ion-icon name="card-outline"></ion-icon> Purchase</a
+              <router-link
+                to="/collection"
+                style="text-decoration: none; color: black"
+                class="ms-1"
+                ><ion-icon name="card-outline"></ion-icon>
+                Collection</router-link
               >
               <div class="dropdown-divider"></div>
               <a

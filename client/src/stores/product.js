@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export const useProductStore = defineStore('product', {
     state() {
@@ -7,8 +8,10 @@ export const useProductStore = defineStore('product', {
             baseUrl: `http://localhost:4000`,
             card: [],
             favorites: [],
+            history: [],
             favTotalPrice: 0,
-            shipmentPrice: 0
+            shipmentPrice: 0,
+            detailCard: {}
         }
     },
     actions: {
@@ -59,6 +62,22 @@ export const useProductStore = defineStore('product', {
                 }
             })
         },
+        getHistory() {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const response = await axios.get(`${this.baseUrl}/history`, {
+                        headers: {
+                            access_token: localStorage.getItem("access_token")
+                        }
+                    })
+                    this.history = response.data.data
+                    resolve()
+                }
+                catch (err) {
+                    reject(err)
+                }
+            })
+        },
         deleteFavorites(id) {
             return new Promise(async (resolve, reject) => {
                 try {
@@ -88,6 +107,35 @@ export const useProductStore = defineStore('product', {
                 }
             })
         },
+        async getProductId(id) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const response = await axios.get(`${this.baseUrl}/player/${id}`)
+                    this.detailCard = response.data.data
+                    // console.log(this.detailCard);
+                    resolve()
+                }
+                catch (err) {
+                    reject(err)
+                }
+            })
+        },
+        async updateStatus() {
+            try {
+                const response = await axios.patch(`${this.baseUrl}/update`, {}, {
+                    headers: {
+                        access_token: localStorage.getItem("access_token")
+                    }
+                })
+            }
+            catch (err) {
+                Swal.fire({
+                    icon: "error",
+                    title: `Error - ${err.response.data.statusCode}`,
+                    text: err.response.data.error.message,
+                });
+            }
+        },
         async purchase() {
             try {
                 const response = await axios.post(`${this.baseUrl}/payment`, {
@@ -96,21 +144,52 @@ export const useProductStore = defineStore('product', {
 
                 // console.log(response.data);
                 window.snap.pay(response.data.token, {
-                    onSuccess: function (result) {
+                    onSuccess: async (result) => {
+                        await axios.patch(`${this.baseUrl}/update`, {}, {
+                            headers: {
+                                access_token: localStorage.getItem("access_token")
+                            }
+                        })
                         console.log(result);
+                        this.router.push('/collection')
                         console.log(`sukses`);
+                        Swal.fire({
+                            icon: "success",
+                            title: `Success`,
+                            text: `Success buy a card`,
+                        });
                     },
-                    onPending: function (result) {
+                    onPending: async (result) => {
                         console.log(result);
-                        console.log(`pending`);
+                        await axios.patch(`${this.baseUrl}/update`, {}, {
+                            headers: {
+                                access_token: localStorage.getItem("access_token")
+                            }
+                        })
+                        this.router.push('/collection')
+                        console.log(`anggap masuk`);
+                        this.updateStatus()
+                        Swal.fire({
+                            icon: "success",
+                            title: `Success`,
+                            text: `Success buy a card`,
+                        });
                     },
                     onError: function (result) {
-                        console.log(result);
-                        console.log(`error`);
+                        Swal.fire({
+                            icon: "error",
+                            title: `Error - Transaction`,
+                            text: `please check the transaction`,
+                        });
                     },
                     onClose: function (result) {
                         console.log(result);
                         console.log(`close`);
+                        wal.fire({
+                            icon: "error",
+                            title: `Error - Transaction`,
+                            text: `please check the transaction`,
+                        });
                     },
                 })
             }

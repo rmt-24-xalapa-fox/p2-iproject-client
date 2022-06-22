@@ -1,12 +1,14 @@
 <template>
   <div class="card ms-3 m-2" style="width: 18rem">
     <img
+      @click.prevent="detailCard(player.id)"
       :src="player.imgUrl1"
       class="card-img-top"
       style="cursor: pointer"
       alt="image"
     />
-    <div class="card-body">
+
+    <div class="card-body" @click.prevent="detailCard(player.id)">
       <h5 class="card-title" style="cursor: pointer">{{ player.name }}</h5>
 
       <button
@@ -21,10 +23,10 @@
       @click.prevent="funcAdd(player.id)"
       v-if="!infor"
       href="#"
-      class="ms-3 mb-2"
+      class="btn btn-warning btn-sm ms-3 mb-2"
       ><ion-icon style="color: black" name="cart-outline"></ion-icon
     ></a>
-    <p v-if="infor" class="ms-3" style="color: red">Sold</p>
+    <p v-if="infor" class="ms-3" style="color: red; font-weight: 600">Sold</p>
   </div>
 </template>
 
@@ -54,7 +56,7 @@ export default {
           timer: 1000,
         });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
         this.$swal.fire({
           icon: "error",
           title: `Error - ${err.response.data.statusCode}`,
@@ -71,11 +73,12 @@ export default {
       }
       this.infor = true;
     },
+    detailCard(id) {
+      this.$router.push(`/detail/${id}`);
+    },
   },
   created() {
-    console.log(`blok`);
     this.splitData();
-    console.log(this.infor, `goblok`);
   },
 };
 </script>
@@ -87,5 +90,8 @@ export default {
 }
 ion-icon {
   font-size: 2vw;
+}
+.btn-sm {
+  background-color: #f7fcca;
 }
 </style>

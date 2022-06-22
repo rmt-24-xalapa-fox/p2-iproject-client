@@ -4,7 +4,7 @@ import { useCounter } from "../stores/store";
 export default {
   name: "Home",
   methods: {
-    ...mapActions(useCounter, ['clickHome', 'clickProducts', "clickSales"])
+    ...mapActions(useCounter, ['clickHome', 'clickProducts', "clickSales", "createChart"])
   }
 };
 </script>
@@ -32,6 +32,13 @@ export default {
       </ul>
     </div>
   </nav>
+    <footer class="footer fixed-bottom" style="background-color: #ffb703">
+          <div class="my-auto">
+            <div class="copyright text-center my-auto">
+              <span style="color:white">Footer</span>
+            </div>
+          </div>
+        </footer>
 </template>
 
 <style scoped>

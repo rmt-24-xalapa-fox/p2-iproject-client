@@ -23,7 +23,7 @@ export default {
 <template>
   <div class="col-4 mb-3">
     <div class="card p-3 rounded-3">
-      <div class="row align-items-center" style="height: 150px">
+      <div class="row align-items-center" style="height: 125px">
         <div class="col-3">
           <img
             :src="products.imgUrl"

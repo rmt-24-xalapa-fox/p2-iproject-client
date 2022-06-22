@@ -1,7 +1,8 @@
 <script>
+import { mapState, mapActions } from "pinia";
+import { useCounter } from "../stores/store";
 import Background from "../components/Background.vue";
 import Navbar from "../components/Navbar.vue";
-import Sidebar from "../components/SideBar.vue";
 
 export default {
   name: "Home",
@@ -9,15 +10,19 @@ export default {
     Navbar,
     Background,
   },
+  methods: {
+    ...mapActions(useCounter, ["createChart"])
+  },
+  computed: {
+    ...mapState(useCounter, ["chart"])
+  },
+  created() {
+    this.createChart()
+  }
 };
 </script>
 
 <template>
-  <!-- Page Wrapper -->
-  <!-- <div id="wrapper" style=""> -->
-  <!-- Content Wrapper -->
-  <!-- <div id="content-wrapper" class="d-flex flex-column"> -->
-  <!-- Main Content -->
   <div id="content">
     <!-- Begin Page Content -->
     <div class="container-fluid">
@@ -144,7 +149,7 @@ export default {
 
       <div class="row">
         <!-- Area Chart -->
-        <div class="col-xl-8 col-lg-7">
+        <div class="col-xl-12 col-lg-7">
           <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div
@@ -180,75 +185,25 @@ export default {
             <!-- Card Body -->
             <div class="card-body">
               <div class="chart-area">
-                <canvas id="myAreaChart"></canvas>
+                <img :src="chart">
               </div>
             </div>
           </div>
         </div>
 
         <!-- Pie Chart -->
-        <div class="col-xl-4 col-lg-5">
-          <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
-            <div
-              class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
-            >
-              <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-              <div class="dropdown no-arrow">
-                <a
-                  class="dropdown-toggle"
-                  href="#"
-                  role="button"
-                  id="dropdownMenuLink"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                </a>
-                <div
-                  class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                  aria-labelledby="dropdownMenuLink"
-                >
-                  <div class="dropdown-header">Dropdown Header:</div>
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </div>
-            </div>
-            <!-- Card Body -->
-            <div class="card-body">
-              <div class="chart-pie pt-4 pb-2">
-                <canvas id="myPieChart"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 
   <!-- Footer -->
-  <!-- <footer class="sticky-footer" style="background-color: #ffb703">
-          <div class="my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Footer</span>
-            </div>
-          </div>
-        </footer> -->
-  <!-- End of Footer -->
-  <!-- </div> -->
-  <!-- End of Content Wrapper -->
-  <!-- </div> -->
-  <!-- End of Page Wrapper -->
+
 </template>
 
 <style scoped>
 #content {
   background-color: #023047;
-  width: 100vw;
-  height: 100vh;
+  width: auto;
+  height: auto;
 }
 </style>

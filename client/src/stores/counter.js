@@ -1,12 +1,11 @@
+import axios from 'axios'
 import { defineStore } from 'pinia'
-import serviceInstance from "../apis/MovieAPI"
 
 export const useCounterStore = defineStore({
   id: 'counter',
   state: () => ({
     counter: 0,
-    apiKey: "38f2cc376208d37fec1e1dbaa6c3ae29",
-    baseUrl: "http://localhost:4000/",
+    baseUrl: "http://localhost:4000",
     moviesData: [],
     trendingMovies: []
   }),
@@ -18,14 +17,14 @@ export const useCounterStore = defineStore({
       this.counter++
     },
 
-    getPopularMovies() {
-      this.moviesData = serviceInstance.get(`/movie/popular?api_key=${this.apiKey}`)
+    async getPopularMovies() {
+      try {
+        let response = await axios.get(`${this.baseUrl}/movies`)
+        console.log(response.data.results, "ini data movies");
+        this.moviesData = response.data.results
+      } catch (err) {
+        console.log(err, "ini err");
+      }
     },
-    getTrendingMovies() {
-      return serviceInstance.get(`/trending/movie/week?api_key=${this.apiKey}`);
-    },
-    getTopMovies() {
-      return serviceInstance.get(`/movie/top_rated?api_key=${this.apiKey}`);
-    }
   }
 })

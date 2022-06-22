@@ -18,20 +18,12 @@ export default {
             Home
           </router-link>
         </li>
-        <li>
+        <li class="flex-1">
           <router-link
-            to="/popularmovies"
+            to="/movies"
             class="font-bold text-sm lg:text-base text-white hover:text-app-green-1 transition ease-in-out duration-300"
           >
             Popular Movie
-          </router-link>
-        </li>
-        <li class="flex-1">
-          <router-link
-            to="/series"
-            class="font-bold text-sm lg:text-base text-white hover:text-app-green-1 transition ease-in-out duration-300"
-          >
-            Movie Series
           </router-link>
         </li>
         <li>

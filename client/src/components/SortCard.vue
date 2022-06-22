@@ -1,10 +1,17 @@
 <script>
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useHeroStore } from "../stores/heroes";
 export default {
   name: "SortCard",
   computed: {
     ...mapState(useHeroStore, ["sortByRole"]),
+  },
+  methods: {
+    ...mapActions(useHeroStore, ["detailHero"]),
+    toDetail(id) {
+      this.$router.push(`/detail/${id}`);
+      this.detailHero(id);
+    },
   },
 };
 </script>
@@ -14,7 +21,7 @@ export default {
       <div class="col-3 mb-3" v-for="sort in sortByRole" :key="sort.id" :sort="sort">
         <div class="h-40">
           <!-- Product image-->
-          <a href="">
+          <a href="" @click.prevent="toDetail(sort.heroid)">
             <img class="card-img-top border border-5 border-dark rounded-circle" :src="sort.key" alt="..." />
           </a>
         </div>

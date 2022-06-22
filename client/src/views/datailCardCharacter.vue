@@ -20,8 +20,7 @@ export default {
 
 <template>
   <section class="tv-content">
-    <button>BACK</button>
-    <div class="bg">
+    <!-- <div class="bg"> -->
       <div class="content">
         <div class="image">
           <img :src="imageUrl" />
@@ -41,7 +40,7 @@ export default {
           </div>
         </div>
       </div>
-    </div>
+    <!-- </div> -->
   </section>
 </template>
 
@@ -77,7 +76,7 @@ a {
 
 .content {
   display: flex;
-  margin: 200px auto auto 450px;
+  margin: 200px auto auto 545px;
   width: 100rem;
   height: 55rem;
 }

@@ -67,17 +67,7 @@ export default {
 </script>
 
 <template>
-  <!-- SEARCH  -->
-  <form class="form-wrapper cf" v-on:submit.prevent="searchLocalHandler">
-    <input
-      name="year"
-      type="number"
-      placeholder="Search by year..."
-      required
-      v-model="this.year"
-    />
-    <button type="submit">Search</button>
-  </form>
+
   <div class="byline"></div>
 
   <!-- PAGINATION  -->
@@ -138,6 +128,7 @@ export default {
 
 <style>
 .pagination-comics {
+  margin-top: 450px;
   display: inline-block;
   align-items: center;
   display: flex;
@@ -207,7 +198,7 @@ a {
   width: 500px;
   height: 70px;
   padding: 15px;
-  margin: 30px auto 70px auto;
+  margin: 30px auto 20px auto;
   /* justify-content: center; */
   /* align-items: center; */
   background: #444;

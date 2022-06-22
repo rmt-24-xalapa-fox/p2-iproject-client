@@ -83,39 +83,7 @@ export default {
 </script>
 
 <template>
-  <!-- SEARCH BY ALPHABET  -->
-  <div class="pagination">
-    <a href="#" v-if="this.page > 1" v-on:click.prevent="previousPage">&laquo;</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('A')">A</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('B')">B</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('C')">C</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('D')">D</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('E')">E</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('F')">F</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('G')">G</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('H')">H</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('I')">I</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('J')">J</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('K')">K</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('L')">L</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('M')">M</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('N')">N</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('O')">O</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('P')">P</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('Q')">Q</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('R')">R</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('S')">S</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('T')">T</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('U')">U</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('V')">V</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('W')">W</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('X')">X</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('Y')">Y</a>
-    <a href="#" v-on:click.prevent="changeAlphabet('Z')">Z</a>
-    <a href="#" v-if="this.page < this.totalPage" v-on:click.prevent="nextPage"
-      >&raquo;</a
-    >
-  </div>
+ 
   <!-- DISPLAY CHARACTERS CARD  -->
   <h2>
     <strong
@@ -134,6 +102,7 @@ export default {
 
 <style>
 .pagination {
+  margin-top: 2px;
   display: inline-block;
   align-items: center;
   display: flex;

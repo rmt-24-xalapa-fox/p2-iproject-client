@@ -47,19 +47,17 @@ export default {
   <section>
     <div class="container">
       <div class="component">
-        <h2><strong>New Comics</strong></h2>
+   <h2>
+    <strong
+      >All Comics<span class="total-comics">( {{ 10 }} )</span></strong
+    >
+  </h2>
         <ul class="align">
           <li v-for="(comic, i) in newComics" :key="i" :comic="comic">
             <figure class="book">
               <!-- Front -->
               <ul class="hardcover_front">
                 <li>
-                  <!-- <img
-                    src="https://i.imgur.com/NVRNzyf.jpg"
-                    alt=""
-                    width="100%"
-                    height="100%"
-                  /> -->
                   <img :src="comic.url" alt="" />
                 </li>
                 <li></li>
@@ -68,7 +66,7 @@ export default {
               <ul class="page">
                 <li></li>
                 <li>
-                  <a class="btn" href="#">Download</a>
+                  <a class="btn-comics" href="#">Download</a>
                 </li>
                 <li></li>
                 <li></li>
@@ -84,8 +82,8 @@ export default {
                 <li></li>
               </ul>
               <figcaption>
-                 <h1>{{ comic.title }}</h1>
-                <span>By Marvel</span>
+                 <h1 class="comic-title">{{ comic.title }}</h1>
+                <span  class="author-comics">By Marvel</span>
                 <!-- <p>
                   Fennel bamboo shoot pea sprouts rutabaga parsnip green bean gram wattle
                   seed lentil horseradish nori. Grape lettuce turnip greens.

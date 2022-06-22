@@ -1,5 +1,5 @@
 <script>
-import { mapState, mapActions } from "pinia";
+import { mapState, mapActions, mapWritableState } from "pinia";
 import { useCounter } from "../stores/store";
 import Background from "../components/Background.vue";
 import Navbar from "../components/Navbar.vue";
@@ -10,13 +10,26 @@ export default {
     Navbar,
     Background,
   },
+  data() {
+    return {
+      // dailySales: {
+      //   totalSales: 0,
+      //   totalExpense: 0,
+      //   date: ""
+      // }
+    }
+  },
   methods: {
-    ...mapActions(useCounter, ["createChart"])
+    ...mapActions(useCounter, ["createChart", "fetchDailySales", "fetchAllSales"]),
+
   },
   computed: {
-    ...mapState(useCounter, ["chart"])
+    ...mapState(useCounter, ["chart", "sales"]),
+    ...mapWritableState(useCounter, ["dailySales"])
   },
   created() {
+    this.fetchAllSales()
+    this.fetchDailySales()
     this.createChart()
   }
 };

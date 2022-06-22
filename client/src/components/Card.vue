@@ -1,11 +1,16 @@
 <script>
 import { mapState, mapActions } from "pinia";
 import { useCounter } from "../stores/store";
+import Buttons from "../components/Buttons.vue"
 
 export default {
   name: "Card",
   props: ["products"],
+  components: {
+    Buttons
+  },
   methods: {
+    ...mapActions(useCounter, ['deleteProduct', 'fetchOneProduct']),
     rupiahConverter(value) {
       const formatter = new Intl.NumberFormat("en-ID", {
         style: "currency",
@@ -22,14 +27,14 @@ export default {
 
 <template>
   <div class="col-4 mb-3">
-    <div class="card p-3 rounded-3">
+    <div class="card p-3 rounded-3" @click="fetchOneProduct(products.id)">
       <div class="row align-items-center" style="height: 125px">
         <div class="col-3">
           <img
             :src="products.imgUrl"
             alt="product-image"
             class="mx-auto d-block"
-            style="width: 70px"
+            style="width: 75px"
           />
         </div>
         <div class="col-9">
@@ -51,5 +56,8 @@ export default {
         </div>
       </div>
     </div>
+        <div class="col-4" style="margin-top:10px; margin-left: 300px;">
+            <Buttons button-name="Delete" class="btn-danger" @click="deleteProduct(products.id)"/>
+        </div>
   </div>
 </template>

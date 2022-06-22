@@ -6,15 +6,20 @@ export default {
     name: "ProductForm",
     data() {
         return {
-            image: {},
+            newProduct: {
+                name : "",
+                description: "",
+                price: 0,
+                CategoryId: 0
+            },
         }
     },
-    props: ["products"],
+    props: ["products", "categories"],
     computed: {
         ...mapWritableState(useCounter, ["imageFile"])
     },
     methods: {
-       ...mapActions(useCounter, ["createImgURL"]),
+       ...mapActions(useCounter, ["createImgURL", "addProduct"]),
        onFileChange(e) {
         let files = e.target.files || e.dataTransfer.files;
         const reader = new FileReader()
@@ -31,18 +36,16 @@ export default {
         <form @submit.prevent="createImgURL(this.image)">
             <div class="row">         
                 <div class="col-6">
-                    <div class="form-group row">
+                    <div class="form-group row"  >
                         <label for="name" class="col-4 col-form-label" style="color:white">Product Name</label> 
-                        <div class="col-6">
-                        <select id="name" name="name" required="required" class="custom-select">
-                            <option value="1">Bananaster</option>
-                        </select>
+                        <div class="col-6">                       
+                            <input id="name" name="name" type="text" class="form-control" required="required" v-model="newProduct.name"> 
                         </div>
                     </div>
                     <div class="form-group row">
                     <label for="description" class="col-4 col-form-label" style="color:white">Description</label> 
                     <div class="col-6">
-                    <textarea id="description" name="description" cols="40" rows="5" required="required" class="form-control"></textarea>
+                    <textarea id="description" name="description" cols="40" rows="5" required="required" class="form-control" v-model="newProduct.description"></textarea>
                     </div>
                     </div>
                 </div>
@@ -68,7 +71,7 @@ export default {
                             <div class="input-group-prepend">
                             <div class="input-group-text">Rp.</div>
                             </div> 
-                            <input id="price" name="price" type="text" class="form-control" required="required"> 
+                            <input id="price" name="price" type="text" class="form-control" required="required" v-model="newProduct.price"> 
                             <div class="input-group-append">
                             <div class="input-group-text">,00</div>
                             </div>
@@ -78,17 +81,14 @@ export default {
                     <div class="form-group row">
                         <label for="CategoryId" class="col-4 col-form-label" style="color:white">Category</label> 
                         <div class="col-6">
-                        <select id="CategoryId" name="CategoryId" class="custom-select" required="required">
-                            <option value="1">Milkshakes</option>
-                            <option value="2">Smoothies</option>
-                            <option value="3">Mocktails</option>
-                            <option value="4">Coffee</option>
+                        <select id="CategoryId" name="CategoryId" class="custom-select" required="required" v-model="newProduct.CategoryId">
+                            <option :value="category.id" v-for="category in categories" :key="category.id">{{category.name}}</option>
                         </select>
                         </div>
                     </div> 
                 </div>
                 <div class="col-11">
-                    <button name="submit" type="submit" class="btn btn-primary float-right">Submit</button>
+                    <button name="submit" type="button" class="btn btn-primary float-right" @click.prevent="addProduct(newProduct)">Submit</button>
                 </div>
             </div>
         </form>

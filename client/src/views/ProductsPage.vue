@@ -13,20 +13,14 @@ export default {
     ProductForm
   },
   methods: {
-    ...mapActions(useCounter, ["fetchProducts", 'fetchOneProduct']),
-    formDisplay() {
-    if (document.getElementById("form").style.display === "block") {
-        document.getElementById("form").style.display = "none"              
-    } else {
-        document.getElementById("form").style.display = "block"
-    }
-}
+    ...mapActions(useCounter, ["fetchProducts", "fetchAllCategories", "formDisplay"]),
   },
   created() {
     this.fetchProducts();
+    this.fetchAllCategories()
   },
   computed: {
-    ...mapState(useCounter, ["products"]),
+    ...mapState(useCounter, ["products", "categories"]),
   },
 };
 </script>
@@ -38,10 +32,10 @@ export default {
         <Buttons button-name="Add New Product" @click="formDisplay"/>
     </div>
     <div>
-        <ProductForm class="container-fluid col-12 form-popup" id="form"/>
+        <ProductForm class="container-fluid col-12 form-popup" id="form" :categories="categories"/>
     </div>
     <div class="container-fluid row">
-      <Card v-for="product in products" :key="product.id" :products="product" @click="fetchOneProduct(product.id)"/>
+      <Card v-for="product in products" :key="product.id" :products="product" />
     </div>
   </div>
 </template>
@@ -51,12 +45,6 @@ export default {
   background-color: #023047;
   width: 100vw;
   height: auto;
-}
-
-.container {
-  margin: 0px 5%;
-  padding: 10px 0px;
-  display: inline-flex;
 }
 
 #buttons {

@@ -11,7 +11,13 @@ export const useCounter = defineStore({
       sales: [],
       chart: "",
       imageFile: [],
-      imageURL: ""
+      imageURL: "",
+      categories: [],
+      dailySales: {
+        totalSales: [],
+        totalExpense: [],
+        date: []
+      }
     };
   },
   getters: {},
@@ -27,12 +33,28 @@ export const useCounter = defineStore({
       })
       this.fetchProducts()
     },
+    formDisplay() {
+      if (document.getElementById("form").style.display === "block") {
+          document.getElementById("form").style.display = "none"              
+      } else {
+          document.getElementById("form").style.display = "block"
+      }
+    },
     clickSales() {
       this.router.push({
         name: "Sales"
       })
 
       this.fetchAllSales()
+    },
+    async createWeek() {
+      try {
+
+          
+            
+      } catch (err) {
+        console.log(err);
+      }
     },
     async fetchProducts() {
       try {
@@ -61,11 +83,80 @@ export const useCounter = defineStore({
         console.log(err);
       }
     },
+    async deleteProduct(id) {
+      try {
+        await axios.delete(`${this.baseURL}/products/${id}`)
+
+        this.clickProducts()
+      } catch (err) {
+        console.log(err);
+      }
+    },
     async fetchAllSales() {
       try {
         const response = await axios.get(`${this.baseURL}/sales`, {})
 
         this.sales = response.data
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async fetchDailySales() {
+      try {
+        // const response = await axios.get(`${this.baseURL}/sales`, {})
+
+        // let days = []
+    
+        // response.data.forEach(el => {
+        //   let date = new Date(el.createdAt)
+        //   let day = date.getDay()
+          
+        //   switch (day) {
+        //     case 0:
+        //       day = "Sunday"
+        //       break;
+        //     case 1:
+        //       day = "Monday"
+        //       break;
+        //     case 2:
+        //       day = "Tuesday"
+        //       break;
+        //     case 3:
+        //       day = "Wednesday"
+        //       break;
+        //     case 4:
+        //       day = "Thursday"
+        //       break;
+        //     case 5:
+        //       day = "Friday"
+        //       break;
+        //     case 6:
+        //       day = "Saturday"
+        //       break;
+              
+        //     default:
+        //       break;
+        //   }
+
+        //   days.push(day)
+        // });
+        
+        // let arranged = days.reverse()
+
+        // let newDays = arranged.filter((element, index) => {
+        //   return arranged.indexOf(element) === index;
+        // });
+
+        // this.dailySales.date = newDays
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async fetchAllCategories() {
+      try {
+        const response = await axios.get(`${this.baseURL}/categories`, {})
+
+        this.categories = response.data
       } catch (err) {
         console.log(err);
       }
@@ -80,10 +171,10 @@ export const useCounter = defineStore({
           "chart": {
             "type": "line",
             "data": {
-              "labels": [2012, 2013, 2014, 2015, 2016],
+              "labels": [],
               "datasets": [
                 {
-                  "label": "Users",
+                  "label": "Daily Sales",
                   "data": [120, 60, 50, 180, 120]
                 }
               ]
@@ -91,10 +182,83 @@ export const useCounter = defineStore({
           }
         }
 
+        const sales = await axios.get(`${this.baseURL}/sales`, {})
+
+        let daily = []
+        let days = []
+
+        sales.data.forEach(el => {
+          let date = new Date(el.createdAt)
+          let day = date.getDay()
+          let obj = {
+            dataSales: el.sales, 
+            dataDate: date.getDate()
+          }
+          daily.push(obj)
+          
+          switch (day) {
+            case 0:
+              day = "Sunday"
+              break;
+            case 1:
+              day = "Monday"
+              break;
+            case 2:
+              day = "Tuesday"
+              break;
+            case 3:
+              day = "Wednesday"
+              break;
+            case 4:
+              day = "Thursday"
+              break;
+            case 5:
+              day = "Friday"
+              break;
+            case 6:
+              day = "Saturday"
+              break;
+              
+            default:
+              break;
+          }
+
+          days.push(day)
+        });
+
+        let groupBy = function(xs, key) {
+          return xs.reduce(function(rv, x) {
+            (rv[x[key]] = rv[x[key]] || []).push(x.dataSales);
+            return rv;
+          }, {});
+        };
+        
+        let groupedDailySales = groupBy(daily, 'dataDate');
+        let chartDailySalesData = []
+
+        for (const key in groupedDailySales) {
+          if (Object.hasOwnProperty.call(groupedDailySales, key)) {
+            const el = groupedDailySales[key];
+
+            const start = 0;
+            const sumWithInitial = el.reduce(
+              (a, b) => a + b,
+              start
+            );
+
+            chartDailySalesData.push(sumWithInitial)
+          }
+        }
+        
+        let arranged = days.reverse()
+        let newDays = arranged.filter((element, index) => {
+          return arranged.indexOf(element) === index;
+        });
+        data.chart.data.labels = newDays
+        data.chart.data.datasets[0].data = chartDailySalesData
+
         let response = await axios.post(`https://quickchart.io/chart/create`, data)
         
-        console.log(response.data.url)
-
         this.chart = response.data.url
       } catch (err) {
         console.log(err)
@@ -123,6 +287,26 @@ export const useCounter = defineStore({
         })
 
         this.fetchAllSales()
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async addProduct(obj) {
+      try {
+        await axios.post(`${this.baseURL}/products`, {
+          name: obj.name,
+          description: obj.description,
+          imgUrl: this.imageURL,
+          price: +obj.price,
+          CategoryId: +obj.CategoryId
+        })
+
+        this.router.push({
+          name: "Products"
+        })
+
+        this.formDisplay()
+        this.fetchProducts()
       } catch (err) {
         console.log(err);
       }

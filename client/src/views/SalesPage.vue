@@ -13,14 +13,7 @@ export default {
         Form
     },
     methods: {
-        ...mapActions(useCounter, ["fetchAllSales", "fetchProducts"]),
-        formDisplay() {
-            if (document.getElementById("form").style.display === "block") {
-                document.getElementById("form").style.display = "none"              
-            } else {
-                document.getElementById("form").style.display = "block"
-            }
-        }
+        ...mapActions(useCounter, ["fetchAllSales", "fetchProducts", "formDisplay"]),
     },
     computed: {
         ...mapState(useCounter, ['sales', "products"])

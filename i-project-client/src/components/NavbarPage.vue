@@ -19,7 +19,7 @@ export default {
         <RouterLink to="/home" style="cursor: pointer" class="navbar-brand">Home</RouterLink>
         <RouterLink to="/home/song" style="cursor: pointer" class="navbar-brand">Music</RouterLink>
         <RouterLink to="/home/radio" style="cursor: pointer" class="navbar-brand">Radio</RouterLink>
-        <RouterLink to="/" style="cursor: pointer" class="navbar-brand">Premium</RouterLink>
+        <RouterLink to="/home/premium" style="cursor: pointer" class="navbar-brand">Premium</RouterLink>
 
 
         <div class="collapse navbar-collapse" id="navbarNav">

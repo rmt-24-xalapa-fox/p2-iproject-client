@@ -12,7 +12,8 @@ export const useMusicYuhu = defineStore({
     userlogin: {},
     allsong: [],
     allradio: [],
-    userpremium: []
+    userpremium: [],
+    status: ""
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -91,7 +92,56 @@ export const useMusicYuhu = defineStore({
         console.log(data)
         this.allradio = data
       } catch (error) {
-        console.log(error)
+        swal({
+          title: "ERROR",
+          text: error.response.data.message,
+          icon: "error",
+        });
+      }
+    },
+    async premiumpurchase(){
+      try {
+        const {data} = await axios.post(this.url + "tokenpayment",{
+          username: this.userpremium.name,
+          phoneNumber: this.userpremium.phoneNumber
+        },{
+          headers: {
+            access_token: localStorage.access_token,
+          }
+        })
+
+        const status = "Premium"
+
+        window.snap.pay(data.TokenPayment, {
+          onSuccess: function (result) {
+            console.log(result)
+            console.log("BERHASIL")
+          },
+          onPending: async (result) => {
+            await axios.patch(this.url + "userstatus",{
+              status: status
+            }, {
+              headers: {
+                access_token: localStorage.access_token,
+              }
+            })
+            router.push("/home/radio")
+          },
+          onError: function (result){
+            console.log(result)
+            console.log("masuk error")
+          },
+          onClose: function (result){
+            console.log(result)
+            console.log("masuk close")
+          }
+        })
+      } catch (error) {
+        swal({
+          title: "ERROR",
+          text: error.response.data.message,
+          icon: "error",
+        });
       }
     }
   },

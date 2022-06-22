@@ -1,20 +1,27 @@
 <script>
-
+import NavbarPageVue from '../components/NavbarPage.vue'
 import { mapActions, mapWritableState } from 'pinia'
 import { useMusicYuhu } from '../stores/counter.js'
 
 export default {
   name: "PremiumPage",
+  components:{
+    NavbarPageVue
+  },
   methods: {
-    ...mapActions(useMusicYuhu, ["loginprocess"])
+    ...mapActions(useMusicYuhu, ["premiumpurchase"])
   },
   computed: {
-    ...mapWritableState(useMusicYuhu, ["userlogin"])
+    ...mapWritableState(useMusicYuhu, ["userpremium"])
+  },
+  created(){
+    
   }
 }
 </script>
 
 <template>
+<NavbarPageVue/>
   <div class="container">
     <div class="row content">
       <div class="col-md-6">
@@ -22,40 +29,27 @@ export default {
           id="imageInput">
       </div>
       <div class="col-md-6">
-        <h3 class="signin-text mb-3"> Sign In</h3>
+        <h3 class="signin-text mb-3">PREMIUM PURCHASING</h3>
         <form action="" class="loginForm">
           <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" v-model="userlogin.email" placeholder="" class="form-control">
+            <label for="email">Name</label>
+            <input type="email" name="name" v-model="userpremium.name" placeholder="" class="form-control">
           </div>
           <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" v-model="userlogin.password" placeholder="" class="form-control">
+            <label for="password">Phone Number</label>
+            <input type="password" name="password" v-model="userpremium.phoneNumber" placeholder="" class="form-control">
           </div>
           <div class="mb-3">
-            <button type="submit" @click.prevent="loginprocess" class="btn btn-block text-uppercase">
-              Login
+            <button type="submit" @click.prevent="premiumpurchase" class="btn btn-block text-uppercase">
+              Continue
             </button>
           </div>
         </form>
-        <div class="text-center mb-3">
-          or login with
-        </div>
-        <div id="btn-login-gugel" data-client_id="YOUR_GOOGLE_CLIENT_ID"
-          data-login_uri="https://your.domain/your_login_endpoint" data-auto_prompt="false">
-        </div>
-        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with"
-          data-shape="rectangular" data-logo_alignment="left">
-        </div>
+        
+        
 
         <hr class="my-4">
 
-        <div class="text-center mb-2">
-          Don't have an account?
-          <a href="signUp.html" class="register-link">
-            Register here
-          </a>
-        </div>
       </div>
     </div>
   </div>

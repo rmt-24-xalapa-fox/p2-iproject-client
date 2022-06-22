@@ -3,7 +3,7 @@
 
   <div
     class="container text-center page-heading align-items-center justify-content-center border border-dark border-4 rounded"
-    style="width: 40%; background-color: white; margin-top: 40px"
+    style="width: 40%; background-color: white; margin-top: 150px"
   >
     <div
       class="container text-center page-heading align-items-center justify-content-center"
@@ -13,7 +13,7 @@
           <label>TopUp</label>
         </div>
         <div class="col-4">
-          <label>1000 Koin</label>
+          <label>1000 Coins</label>
         </div>
         <div class="col-4">
           <button class="btn btn-dark" style="height: 35px">Xendit</button>
@@ -22,7 +22,7 @@
           <label>TopUp</label>
         </div>
         <div class="col-4">
-          <label>2000 Koin</label>
+          <label>2000 Coins</label>
         </div>
         <div class="col-4">
           <button class="btn btn-dark" style="height: 35px">Xendit</button>
@@ -41,7 +41,7 @@
     >
       <div class="row" style="margin-top: 30px; margin-bottom: 30px">
         <div class="col-12">
-          <h6>Or invite your friend with this link</h6>
+          <h6>Or invite your friend with this link for 1000 Coins</h6>
         </div>
         <div class="col-12">
           <label style="color: blue">{{ userReferralLink }}</label>

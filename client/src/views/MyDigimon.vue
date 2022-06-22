@@ -12,7 +12,18 @@
       </div>
     </div>
   </div>
-
+  <div
+    class="container-xl text-center page-heading align-items-left justify-content-center rounded"
+    style="height: 40px; background-color: green; opacity: 80%"
+  >
+    <div class="row">
+      <div style="color: black; margin-top: 10px; opacity: 100%" class="col-12">
+        <h1 class="retrofont" style="font-size: 15px">
+          You can sell your unwanted digimon for <b>50</b> coins
+        </h1>
+      </div>
+    </div>
+  </div>
   <div
     class="container-xl text-center page-heading align-items-center d-flex justify-content-start border border-dark border-4 rounded"
     style="background-color: white"

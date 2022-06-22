@@ -72,7 +72,7 @@
           class="retrofont"
           style="color: gold; margin-right: 20px; font-size: 11px"
         >
-          Koin
+          Coins
         </h6>
         <!-- <button class="btn btn-primary" style="margin-right: 30px">
             Topup

@@ -1,19 +1,14 @@
 <script>
 import { mapActions } from 'pinia'
 import { useIndexStore } from "../stores"
-import Button from "../components/Button.vue"
 import axios from "axios"
 
 export default {
     name: "login",
-    components: {
-        Button
-    },
     data() {
         return {
             email: "",
             password: "",
-            btn: "login",
         }
     },
     methods: {
@@ -33,19 +28,17 @@ export default {
         handleCredentialResponse(response) {
             axios({
                 method: 'POST',
-                url: `https://cms-nurma.herokuapp.com/pub/google-sign`,
+                url: `http://localhost:3001/google-sign`,
                 data: {
                     credential: response.credential
                 }
             })
                 .then(resp => {
                     console.log(resp);
-                    const { access_token, username, id, role } = resp.data.data
+                    const { access_token, id } = resp.data.data
                     localStorage.access_token = access_token
                     localStorage.setItem("access_token", access_token);
                     localStorage.setItem("UserId", id);
-                    localStorage.setItem("username", username);
-                    localStorage.setItem("role", role);
                     this.setIsLogin(true)
                     this.$router.push('/')
                 })
@@ -72,156 +65,181 @@ export default {
 </script>
 
 <template>
-    <div class="container-fluid home-content px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto" id="login">
-        <div class="card card0 border-0">
-            <div class="row d-flex">
-                <div class="col-lg-6">
-                    <div class="card1 pb-5">
-                        <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
-                            <img src="https://cdn.dribbble.com/users/1355613/screenshots/15799226/media/942dbcf92162c70a6659dc0117a8cb3f.jpg?compress=1&resize=1200x900&vertical=top"
-                                class="image">
-                        </div>
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6 login-section-wrapper">
+                    <div class="brand-wrapper">
+                        <img src="../assets/images/logo.png" alt="logo" class="logo">
+                    </div>
+                    <div class="login-wrapper my-auto">
+                        <h1 class="login-title">Log in</h1>
+                        <form @submit.prevent="login">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" v-model="email" id="email" class="form-control"
+                                    placeholder="email@example.com">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="password">Password</label>
+                                <input type="password" v-model="password" id="password" class="form-control"
+                                    placeholder="enter your passsword">
+                            </div>
+                            <input name="login" id="login" class="btn btn-block login-btn" type="submit" value="Login">
+                        </form>
+                        <p class="login-wrapper-footer-text">Don't have an account? <RouterLink to="/register"
+                                class="text-reset">Register here</RouterLink>
+                        </p>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="card2 card border-0 px-4 py-5">
-                        <h1 class="mb-5">Login Form</h1>
-                        <form @submit.prevent="login">
-                            <div class="row px-3">
-                                <label class="mb-1">
-                                    <h6 class="mb-0 text-sm">Email Address</h6>
-                                </label>
-                                <input class="mb-4" type="text" v-model="email" id="email"
-                                    placeholder="Enter a valid email address">
-                            </div>
-                            <div class="row px-3 mb-4">
-                                <label class="mb-1">
-                                    <h6 class="mb-0 text-sm">Password</h6>
-                                </label>
-                                <input type="password" v-model="password" id="password" placeholder="Enter password">
-                            </div>
-                            <Button :page="btn"></Button>
-                            <div id="google-button-login" class="mb-4"></div>
-                            <div class="row mb-4 px-3">
-                                <small class="font-weight-bold">Don't have an account?
-                                    <RouterLink to="/register" class="text-danger">Register</RouterLink>
-                                </small>
-                            </div>
-                        </form>
-                    </div>
+                <div class="col-sm-6 px-0 d-none d-sm-block">
+                    <img src="../assets/images/login.jpg" alt="login image" class="login-img">
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 </template>
 
 <style scoped>
-.card0 {
-    box-shadow: 0px 4px 8px 0px #757575;
-    border-radius: 0px;
+
+main {
+    background-color: #ebebeb;
 }
 
-.card2 {
-    margin: 0px 40px;
+.brand-wrapper {
+    padding-top: 7px;
+    padding-bottom: 8px;
 }
 
-.image {
-    width: 560px;
-    height: 400px;
+.brand-wrapper .logo {
+    height: 25px;
 }
 
-.border-line {
-    border-right: 1px solid #EEEEEE;
+.login-section-wrapper {
+    height: 100vh;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    padding: 68px 100px;
+    
 }
 
-.text-sm {
-    font-size: 14px !important;
+@media (max-width: 991px) {
+    .login-section-wrapper {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
 }
 
-::placeholder {
-    color: #BDBDBD;
-    opacity: 1;
-    font-weight: 300
+@media (max-width: 575px) {
+    .login-section-wrapper {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        min-height: 100vh;
+    }
 }
 
-:-ms-input-placeholder {
-    color: #BDBDBD;
-    font-weight: 300
+.login-wrapper {
+    width: 300px;
+    max-width: 100%;
+    padding-top: 24px;
+    padding-bottom: 24px;
 }
 
-::-ms-input-placeholder {
-    color: #BDBDBD;
-    font-weight: 300
+@media (max-width: 575px) {
+    .login-wrapper {
+        width: 100%;
+    }
 }
 
-input,
-textarea {
-    padding: 10px 12px 10px 12px;
-    border: 1px solid lightgrey;
-    border-radius: 2px;
-    margin-bottom: 5px;
-    margin-top: 2px;
-    width: 100%;
-    box-sizing: border-box;
-    color: #2C3E50;
+.login-wrapper label {
     font-size: 14px;
-    letter-spacing: 1px;
+    font-weight: bold;
+    color: #b0adad;
 }
 
-input:focus,
-textarea:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 1px solid #304FFE;
-    outline-width: 0;
+.login-wrapper .form-control {
+    border: none;
+    border-bottom: 1px solid #e7e7e7;
+    border-radius: 0;
+    padding: 9px 5px;
+    min-height: 40px;
+    font-size: 18px;
+    font-weight: normal;
 }
 
-button:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    outline-width: 0;
+.login-wrapper .form-control::-webkit-input-placeholder {
+    color: #b0adad;
 }
 
-a {
-    color: inherit;
-    cursor: pointer;
+.login-wrapper .form-control::-moz-placeholder {
+    color: #b0adad;
 }
 
-.btn-blue {
-    background-color: #1A237E;
-    width: 150px;
+.login-wrapper .form-control:-ms-input-placeholder {
+    color: #b0adad;
+}
+
+.login-wrapper .form-control::-ms-input-placeholder {
+    color: #b0adad;
+}
+
+.login-wrapper .form-control::placeholder {
+    color: #b0adad;
+}
+
+.login-wrapper .login-btn {
+    padding: 13px 20px;
+    background-color: #fdbb28;
+    border-radius: 0;
+    font-size: 20px;
+    font-weight: bold;
     color: #fff;
-    border-radius: 2px;
+    margin-bottom: 14px;
 }
 
-.btn-blue:hover {
-    background-color: #3d76e0;
-    color: white;
-    cursor: pointer;
+.login-wrapper .login-btn:hover {
+    border: 1px solid #fdbb28;
+    background-color: #fff;
+    color: #fdbb28;
 }
 
-.bg-blue {
-    color: #fff;
-    background-color: #1A237E;
+.login-wrapper a.forgot-password-link {
+    color: #080808;
+    font-size: 14px;
+    text-decoration: underline;
+    display: inline-block;
+    margin-bottom: 54px;
 }
 
-
-@media screen and (max-width: 991px) {
-
-    .image {
-        width: 300px;
-        height: 220px;
-    }
-
-    .border-line {
-        border-right: none;
-    }
-
-    .card2 {
-        border-top: 1px solid #EEEEEE !important;
-        margin: 0px 15px;
+@media (max-width: 575px) {
+    .login-wrapper a.forgot-password-link {
+        margin-bottom: 16px;
     }
 }
+
+.login-wrapper-footer-text {
+    font-size: 16px;
+    color: #000;
+    margin-bottom: 0;
+}
+
+.login-title {
+    font-size: 30px;
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.login-img {
+    width: 100%;
+    height: 100vh;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: left;
+    object-position: left;
+}
+
 </style>

@@ -11,7 +11,10 @@
                             <li class="wishlist"><a href="#"><span>Wishlist</span></a></li>
                             <li class="header_cart hidden-xs"><a href="#"><span>My Cart</span></a></li>
                             <li class="check"><a href="#"><span>Checkout</span></a></li>
-                            <li class="login"><a href="#"><span>Login</span></a></li>
+                            <li class="login">
+                                <RouterLink to="/login" v-if="!userLogin"><span>Login</span></RouterLink>
+                                <RouterLink to="/login" v-if="userLogin"><span>Logout</span></RouterLink>
+                            </li>
                         </ul>
                     </div>
                     <!-- /.cnt-account -->
@@ -174,9 +177,20 @@
 </template>
 
 <script>
-    export default {
-        
+import { mapState } from "pinia"
+import { useIndexStore } from "../stores"
+
+export default {
+    computed: {
+        ...mapState(useIndexStore, ["userLogin"])
+    },
+    methods: {
+        logout: function () {
+            localStorage.clear()
+            this.$router.push("/login")
+        }
     }
+}
 </script>
 
 <style scoped>

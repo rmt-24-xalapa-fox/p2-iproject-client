@@ -5,20 +5,20 @@
                 <div class="col-md-3" v-for="product in products" :key="product.id">
                     <div class="wsk-cp-product">
                         <div class="wsk-cp-img">
-                            <img :src="product.image" alt="Product" class="img-responsive" />
+                            <img :src="product.images_list[0]" alt="Product" class="img-responsive" style="height: 150px;" />
                         </div>
-                        <div class="wsk-cp-text">
+                        <div class="wsk-cp-text" style="margin-top: -120px">
                             <div class="category">
-                                <span>{{product.category}}</span>
+                                <span>{{product.brand}}</span>
                             </div>
                             <div class="title-product">
                                 <h3>{{product.title}}</h3>
                             </div>
                             <div class="description-prod">
-                                <p>{{ product.description }}</p>
+                                <p>{{ product.product_details }}</p>
                             </div>
                             <div class="card-footer">
-                                <div class="wcf-left"><span class="price">$ {{ product.price }}</span></div>
+                                <div class="wcf-left"><span class="price">{{ product.price }}</span></div>
                                 <div class="wcf-right"><a href="#" class="buy-btn"><i
                                             class="fa fa-shopping-cart"></i></a></div>
                             </div>

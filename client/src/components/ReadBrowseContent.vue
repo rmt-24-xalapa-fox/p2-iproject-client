@@ -1,21 +1,22 @@
 <script>
+import ReadBrowseContentCard from "./ReadBrowseContentCard.vue";
 export default {
   name: "ReadBrowseContent",
   components: {
-    ReadContentCard
+    ReadBrowseContentCard,
   },
 };
 </script>
 <template>
   <div class="content">
-    test
+    <ReadBrowseContentCard />
   </div>
 </template>
 
 <style scoped>
 .content {
   height: 85vh;
-  background-color: gray;
+  /* background-color: gray; */
   width: 100%;
   padding: 20px;
   /* flex-wrap: wrap;

@@ -1,6 +1,11 @@
 <script>
 export default {
   name: "AddCard",
+  methods: {
+    changePage(page) {
+      this.$router.push(`${page}`)
+    },
+  }
 };
 </script>
 <template>
@@ -10,7 +15,7 @@ export default {
         <div class="card-body">
           <h3 class="card-title mb-3 text-center">Create Your Poem</h3>
           <div>
-            <button class="button">Create</button>
+            <button @click.prevent="changePage('/create')" class="button">Create</button>
           </div>
         </div>
       </div>

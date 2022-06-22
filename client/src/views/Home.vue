@@ -74,7 +74,6 @@ export default {
             let scrollTop = document.documentElement.scrollTop;
             let scrollHeight = document.documentElement.scrollHeight;
             let clientHeight = document.documentElement.clientHeight;
-
             if (scrollTop + clientHeight >= scrollHeight - 20) {
                 this.sizePage += 16
                 this.getAnime(this.query)

@@ -39,6 +39,10 @@ body {
   background-color: #222;
 }
 
+a:link, a:visited, a:hover, a:active {
+  color: transparent;
+}
+
 .content-container {
   display: flex;
   align-content: center;

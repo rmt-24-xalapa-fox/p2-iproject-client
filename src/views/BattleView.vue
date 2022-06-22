@@ -32,7 +32,10 @@ export default {
 
   },
   created(){
-    // fetch progress if continue
+    if(this.$route.query.continue){
+      // fetch progress if continue
+      console.log("continue");
+    }
   }
 }
 </script>

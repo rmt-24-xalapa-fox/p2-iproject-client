@@ -1,9 +1,9 @@
 <template>
 <div class="topnav">
-  <router-link :to="{ name: 'home' }" :class="$route.name==='home'?'active':''" >Home</router-link>
-  <router-link :to="{ path: '/statistic' }" :class="$route.path==='/statistic'?'active':''" >Statistic</router-link>
-  <router-link :to="{ path: '/leaderboard' }" :class="$route.path==='/leaderboard'?'active':''" >Leaderboard</router-link>  
-  <router-link :to="{ path: '/login' }" :class="$route.path==='/login'?'active':''" >Login</router-link>
+  <router-link :to="{ name: 'home' }" :class="$route.name==='home'?'active':''" ><span>Home</span></router-link>
+  <router-link :to="{ path: '/statistic' }" :class="$route.path==='/statistic'?'active':''" ><span>Statistic</span></router-link>
+  <router-link :to="{ path: '/leaderboard' }" :class="$route.path==='/leaderboard'?'active':''" ><span>Leaderboard</span></router-link>  
+  <router-link :to="{ path: '/login' }" :class="$route.path==='/login'?'active':''" ><span>Login</span></router-link>
 </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
 }
 
 /* Style the links inside the navigation bar */
-.topnav a {
+.topnav a span {
   float: left;
   color: #f2f2f2;
   text-align: center;
@@ -34,13 +34,13 @@ export default {
 }
 
 /* Change the color of links on hover */
-.topnav a:hover {
+.topnav a:hover span {
   background-color: #ddd;
   color: black;
 }
 
 /* Add a color to the active/current link */
-.topnav a.active {
+.topnav a.active span {
   background-color: #04AA6D;
   color: white;
 }

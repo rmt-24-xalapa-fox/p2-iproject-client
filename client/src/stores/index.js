@@ -66,6 +66,11 @@ export const useMainStore = defineStore({
         });
         this.router.push("/login");
       } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
         console.log(err);
       }
     },
@@ -86,6 +91,11 @@ export const useMainStore = defineStore({
         // console.log(this.isLogin);
         this.router.push("/");
       } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.message,
+        });
         console.log(err);
       }
     },

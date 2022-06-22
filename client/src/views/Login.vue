@@ -70,7 +70,7 @@ export default {
   methods: {
     ...mapActions(useMainStore, ["piniaLogin"]),
     clickLogin: function () {
-      console.log("masok");
+      // console.log("masok");
       this.piniaLogin(this.email, this.password);
     },
   },

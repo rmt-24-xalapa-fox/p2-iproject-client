@@ -27,12 +27,27 @@
       >
         <img class="card-img-top" :src="digimon.img" alt="Card image cap" />
         <div class="card-body">
-          <h5 class="card-title retrofont" style="font-size: 0.7em">
+          <h5 class="card-title retrofont" style="font-size: 0.65em">
             {{ digimon.name }}
           </h5>
           <h6
+            v-if="digimon.level == 'Fresh'"
+            class="card-title retrofont"
+            style="font-size: 0.6em; color: orange"
+          >
+            {{ digimon.level }}
+          </h6>
+          <h6
+            v-if="digimon.level == 'In Training'"
             class="card-title retrofont"
             style="font-size: 0.6em; color: green"
+          >
+            {{ digimon.level }}
+          </h6>
+          <h6
+            v-if="digimon.level == 'Rookie'"
+            class="card-title retrofont"
+            style="font-size: 0.6em; color: blue"
           >
             {{ digimon.level }}
           </h6>

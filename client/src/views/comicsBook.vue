@@ -12,6 +12,7 @@ export default {
       totalComics: 0,
       page: 1,
       year: "",
+      totalPage: 0,
     };
   },
 
@@ -20,15 +21,17 @@ export default {
   },
 
   methods: {
-    async fetchComics(req, res) {
+    async fetchComics() {
       try {
-        console.log(this.page, this.year, "<><><><><><><>");
+        this.comics = [];
         const { data } = await axios.get(
           `${this.url}/comics?page=${this.page}&year=${Number(this.year)}`
         );
+        this.totalComics = data.data.total;
+        this.totalPage = Math.ceil(this.totalComics / 20);
 
         console.log(data);
-        this.totalComics = data.data.total;
+        console.log(this.totalPage);
         const result = data.data.results;
 
         result.forEach((el) => {
@@ -45,6 +48,16 @@ export default {
       this.comics = [];
       this.fetchComics();
     },
+
+    previous() {
+      this.page = this.page - 1;
+      this.fetchComics();
+    },
+
+    next() {
+      this.page = this.page + 1;
+      this.fetchComics();
+    },
   },
 
   mounted() {
@@ -58,7 +71,7 @@ export default {
   <form class="form-wrapper cf" v-on:submit.prevent="searchLocalHandler">
     <input
       name="year"
-      type="text"
+      type="number"
       placeholder="Search by year..."
       required
       v-model="this.year"
@@ -67,7 +80,20 @@ export default {
   </form>
   <div class="byline"></div>
 
+  <!-- PAGINATION  -->
+  <div class="pagination-comics">
+    <a href="#" v-if="this.page > 1 && this.page !== 0" v-on:click.prevent="previous"
+      >&laquo;</a
+    >
+    <a href="#">{{ this.page }}</a>
+    <a href="#" v-if="this.page < this.totalPage" v-on:click.prevent="next">&raquo;</a>
+  </div>
   <!-- DISPLAY COMMICS  -->
+  <h2>
+    <strong
+      >All Comics<span class="total-comics">( {{ totalComics }} )</span></strong
+    >
+  </h2>
   <div class="container">
     <div class="component">
       <ul class="align">
@@ -101,7 +127,7 @@ export default {
             </ul>
             <figcaption>
               <h1>{{ comic.title }}</h1>
-              <span>By Marvel</span>
+              <span class="author-comics">By Marvel</span>
               <!-- <p>
                 Fennel bamboo shoot pea sprouts rutabaga parsnip green bean gram wattle
                 seed lentil horseradish nori. Grape lettuce turnip greens.
@@ -115,6 +141,44 @@ export default {
 </template>
 
 <style>
+.pagination-comics {
+  display: inline-block;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.total-comics {
+  color: whitesmoke;
+  font-size: 20px;
+}
+
+h2 {
+  color: whitesmoke;
+  font-size: 25px;
+}
+
+.pagination-comics a {
+  color: whitesmoke;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  margin-top: -40px;
+  margin-bottom: 10px;
+}
+
+.author-comics {
+  color: #d83c3c;
+}
+
+/* a :hofer {
+  color: #d83c3c;
+} */
 /* 
 a {
   color: #ccc;
@@ -320,8 +384,9 @@ a {
 }
 
 .btn:hover {
-  border-color: #16a085;
-  color: #16a085;
+  border-color: #d83c3c;
+  /* color: #16a085; */
+  color: #d83c3c;
 }
 
 /* basic grid, only for this demo */

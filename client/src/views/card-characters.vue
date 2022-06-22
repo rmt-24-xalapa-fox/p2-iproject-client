@@ -117,11 +117,12 @@ export default {
   <!-- DISPLAY CHARACTERS CARD  -->
   <h2>
     <strong
-      >All Characters<span>( {{ totalCharacters }} )</span></strong
+      >All Characters<span class="total-char">( {{ totalCharacters }} )</span></strong
     >
   </h2>
 
   <div class="cards">
+  
     <CardCharacters
       v-for="(character, i) in characters"
       :key="i"
@@ -138,11 +139,16 @@ export default {
   justify-content: center;
 }
 
+.total-char{
+  color: whitesmoke;
+  font-size: 20px;
+}
 .pagination a {
-  color: red;
+  color: whitesmoke;
   float: left;
   padding: 8px 16px;
   text-decoration: none;
+  font-size: 20px;
 }
 .abs,
 h2:after,

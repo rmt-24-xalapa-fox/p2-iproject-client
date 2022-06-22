@@ -50,13 +50,21 @@ export default {
             corporis eaque adipisci fugiat sint ullam nesciunt, aliquid molestiae inventore aliquam explicabo id labore
             reiciendis a voluptatum quis.</p>
           <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5 justify-between">
-            <p class="font-medium" style="color:#f37021">
-
-            </p>
 
           </div>
-          <div class="flex mt-10 justify-center">
-            <img src="" alt="">
+          <div class="">
+            <p class="leading-relaxed text-justify mb-2">
+              Ability : {{ heroById.hero_overview.hero_ability }}
+            </p>
+            <p class="leading-relaxed text-justify mb-2">
+              Difficulty : {{ heroById.hero_overview.hero_difficulty }}
+            </p>
+            <p class="leading-relaxed text-justify mb-2">
+              durability : {{ heroById.hero_overview.hero_durability }}
+            </p>
+            <p class="leading-relaxed text-justify mb-2">
+              offense : {{ heroById.hero_overview.hero_offence }}
+            </p>
           </div>
         </div>
       </div>

@@ -1,5 +1,11 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
+import { createClient } from '@supabase/supabase-js'
+
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtsYXB5c3NiZXplY3NjeXpyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTU4NjYyOTMsImV4cCI6MTk3MTQ0MjI5M30.Xu8VZ7py66loGQAhKWCdyt6nciQlqpzJJ1aNej5P_Iw'
+const SUPABASE_URL = "https://klapyssbezecscyzrajq.supabase.co"
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const baseUrl = 'http://localhost:3000'
 
@@ -55,5 +61,16 @@ export const useMainStore = defineStore({
         console.log(err);
       }
     },
+
+    async loginHandler(email) {
+      try {
+        const user = await supabase.auth.signIn({
+          email
+        })
+        console.log(user);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   }
 })

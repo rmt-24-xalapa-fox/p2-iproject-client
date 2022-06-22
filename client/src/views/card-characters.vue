@@ -19,7 +19,9 @@ export default {
   methods: {
     async fetchCharacters() {
       try {
-        const { data } = await axios.get(`${this.url}/characters?apikey=${PUBLIC_KEY}`);
+        const { data } = await axios.get(
+          `${this.url}/characters?limit=40&apikey=${PUBLIC_KEY}`
+        );
 
         console.log(data);
         this.totalCharacters = data.data.total;
@@ -99,6 +101,7 @@ h2 strong,
 .cards,
 .news {
   display: flex;
+  /* text-align: center; */
 }
 .dif {
   display: inline-flex;
@@ -151,6 +154,7 @@ h2:after {
 .cards,
 .news {
   flex-flow: row wrap;
+  /* text-align: center; */
 }
 .cards .card,
 .news .card {
@@ -163,11 +167,13 @@ h2:after {
   transform-style: preserve-3d;
   transform: translateZ(0);
   transition: 0.3s;
+  /* text-align: center; */
 }
 .cards .card img,
 .news .card img {
   width: 100%;
   min-height: 100%;
+  /* text-align: center; */
 }
 .cards .card figcaption,
 .news .card figcaption {
@@ -180,8 +186,11 @@ h2:after {
   background: none;
   /* color: #fff; */
   color: red;
-  transform: translateY(100%);
+  /* transform: translateY(100%); */
   transition: 0.3s;
+  /* text-align: center; */
+  text-align: left;
+  /* justify-content: center; */
 }
 .cards .card:after,
 .news .card:after {

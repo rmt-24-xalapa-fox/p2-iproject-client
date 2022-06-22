@@ -10,7 +10,7 @@ export default {
     return {
       comics: [],
       urlComics: "",
-      size: "standard_fantastic.jpg",
+      size: "portrait_xlarge.jpg",
       totalComics: 0,
     };
   },
@@ -22,8 +22,11 @@ export default {
     async fetchComics() {
       try {
         // console.log("haloooo");
-        const { data } = await axios.get(`${this.url}/comics?apikey=${PUBLIC_KEY}`);
+        const { data } = await axios.get(
+          `${this.url}/comics?startYear=2020&apikey=${PUBLIC_KEY}`
+        );
 
+        // console.log(data);
         this.totalComics = data.data.total;
         const result = data.data.results;
 
@@ -56,7 +59,14 @@ export default {
             <!-- Front -->
             <ul class="hardcover_front">
               <li>
-                <!-- <img :src="comic.url" alt="" width="100%" height="100%" /> -->
+                <img :src="comic.url" alt="" />
+                <!-- <img src="https://mrreiha.keybase.pub/codepen/hover-fx/2.jpg" /> -->
+               <!-- <img
+                    src="https://i.imgur.com/NVRNzyf.jpg"
+                    alt=""
+                    width="100%"
+                    height="100%"
+                  /> -->
               </li>
               <li></li>
             </ul>
@@ -171,7 +181,7 @@ a {
   margin: auto;
   width: 100%;
   /* max-width: 1170px; */
-  /* text-align: center; */
+  text-align: center;
 }
 
 .align > li {
@@ -232,20 +242,25 @@ Table of Contents
 /* reverse */
 .hardcover_front li:last-child {
   background: #fffbec;
+  /* background: #333; */
 }
 
 /* HARDCOVER BACK */
 .hardcover_back li:first-child {
   background: #fffbec;
+  /* background: #333; */
+  /* background: red; */
 }
 
 /* reverse */
 .hardcover_back li:last-child {
   background: #fffbec;
+    /* background: #333; */
 }
 
 .book_spine li:first-child {
   background: #eee;
+    /* background: #333; */
 }
 .book_spine li:last-child {
   background: #333;
@@ -266,6 +281,7 @@ Table of Contents
 .book_spine li:last-child:after,
 .book_spine li:last-child:before {
   background: #999;
+    /* background: #333; */
 }
 
 /* page */

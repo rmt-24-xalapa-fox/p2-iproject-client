@@ -1,6 +1,6 @@
 <script>
 import ThePopularMovies from "../components/ThePopularMovies.vue";
-import TheUpcomingMovies from "../components/TheUpcomingMovies.vue";
+// import TheUpcomingMovies from "../components/TheUpcomingMovies.vue";
 
 import { mapState, mapWritableState, mapActions } from "pinia";
 import { moviesStore } from "../stores/movies";
@@ -10,7 +10,7 @@ export default {
   name: "HomePage",
   components: {
     ThePopularMovies,
-    TheUpcomingMovies
+    // TheUpcomingMovies
 },
   computed: {
     ...mapState(moviesStore, [""]),
@@ -26,7 +26,7 @@ export default {
 <template>
   <div class="container mx-auto">
     <ThePopularMovies />
-    <TheUpcomingMovies />
+    <!-- <TheUpcomingMovies /> -->
   </div>
 </template>
 

@@ -17,11 +17,11 @@ const router = createRouter({
       path: "/home",
       name: "home",
       component: HomePage,
-      children: {
-        path: "/rentlan",
-        name: "rentalan",
-        component: RentalanInfo
-      }
+    },
+    {
+      path: "/rentalan/:id",
+      name: "rentalan",
+      component: RentalanInfo
     },
     {
       path: "/login",

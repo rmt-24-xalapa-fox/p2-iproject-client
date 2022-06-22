@@ -8,7 +8,10 @@ export default {
         ...mapState(useCounterStore, ["gameNews", "rentalans"])
     },
     methods: {
-        ...mapActions(useCounterStore, ["fetchGame", "fetchRentalan"])
+        ...mapActions(useCounterStore, ["fetchGame", "fetchRentalan"]),
+        toDetail(id) {
+            this.$router.push(`/rentalan/${id}`)
+        }
     },
     created() {
         this.fetchGame()
@@ -77,11 +80,11 @@ export default {
                                             {{ rentalan.address }}
                                         </p>
                                         <p class="card-text">
-                                            <small class="text-muted">{{ rentalan.phone }}</small>
+                                            <small class="text-muted">Phone: {{ rentalan.phone }}</small>
                                         </p>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-secondary">Info</button>
+                                <button @click="toDetail(rentalan.id)" class="btn btn-secondary">Info</button>
                                 
                             </div>
                         </div>

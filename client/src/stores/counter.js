@@ -7,7 +7,8 @@ export const useCounterStore = defineStore({
   state: () => ({
     baseUrl: 'http://localhost:3000',
     gameNews: [],
-    rentalans: []
+    rentalans: [],
+    perRentalan: ""
     // counter: 0,
   }),
   getters: {
@@ -68,6 +69,16 @@ export const useCounterStore = defineStore({
         Swal.fire(
           'Cant fetch rentalan',
         )
+      }
+    },
+
+    async fetchRentalanById(id) {
+      try {
+        const response = await axios.get(this.baseUrl + `/rentalan/${id}`)
+        console.log(response);
+        this.perRentalan = response.data.perRentalan
+      } catch (err) {
+        console.log(err);
       }
     }
 

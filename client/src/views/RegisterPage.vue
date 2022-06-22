@@ -49,8 +49,8 @@ export default {
     <div class="max-w-md w-full space-y-8">
       <div>
         <img
-          class="mx-auto h-[250px] w-[300px]"
-          src="../assets/LOGO.png"
+          class="mx-auto h-[250px] w-[380px]"
+          src="../assets/LOGO3.png"
           alt="logo"
         />
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">

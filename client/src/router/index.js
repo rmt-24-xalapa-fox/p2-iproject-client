@@ -3,10 +3,24 @@ import LoginPageVue from "../views/LoginPage.vue";
 import RegisterPageVue from "../views/RegisterPage.vue";
 import NotFoundVue from "../views/NotFound.vue";
 import swal from "sweetalert";
+import HomePageVue from "../views/HomePage.vue";
+import ProfileVue from "../views/Profile.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: "/",
+      name: "home",
+      component: HomePageVue,
+      beforeEnter(to, from, next) {
+        if (!localStorage.getItem("access_token")) {
+          next("/login");
+        } else {
+          next();
+        }
+      },
+    },
     {
       path: "/register",
       name: "register",
@@ -30,6 +44,18 @@ const router = createRouter({
             icon: "success",
           });
           next("/");
+        } else {
+          next();
+        }
+      },
+    },
+    {
+      path: "/profile/:id",
+      name: "profile",
+      component: ProfileVue,
+      beforeEnter(to, from, next) {
+        if (!localStorage.getItem("access_token")) {
+          next("/login");
         } else {
           next();
         }

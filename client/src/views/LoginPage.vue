@@ -20,6 +20,12 @@ export default {
           },
         });
         localStorage.setItem("access_token", res.data.access_token);
+        localStorage.setItem("id", res.data.id);
+        localStorage.setItem("email", res.data.email);
+        localStorage.setItem("username", res.data.username);
+        localStorage.setItem("address", res.data.address);
+        localStorage.setItem("moto", res.data.moto);
+        localStorage.setItem("avatar", res.data.avatar);
         swal({
           text: "You are logged in",
           icon: "success",
@@ -91,13 +97,22 @@ export default {
             </span>
             Login
           </button>
-          <button
+          <!-- <button
             type="button"
             class="btn btn-primary btn-floating mx-[85px] mt-10"
             id="login-google"
           >
             <i class="fab fa-facebook-f"></i>
-          </button>
+          </button> -->
+          <div class="flex flex-col mt-5 justify-center items-center gap-2">
+            <p>Don't have an account?</p>
+            <router-link
+              to="/register"
+              class="inline-block px-6 py-2.5 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+            >
+              Register
+            </router-link>
+          </div>
         </div>
       </form>
     </div>

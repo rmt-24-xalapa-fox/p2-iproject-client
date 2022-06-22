@@ -7,10 +7,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
   <header>
     <div class="wrapper">
 
-      <nav>
+      <!-- <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-      </nav>
+      </nav> -->
     </div>
   </header>
 

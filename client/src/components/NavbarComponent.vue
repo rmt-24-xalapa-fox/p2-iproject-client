@@ -37,8 +37,11 @@
               Hi, Fellas
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a style="text-decoration: none; color: black" class="ms-1"
-                ><ion-icon name="cart-outline"></ion-icon> Cart</a
+              <router-link
+                to="/cart"
+                style="text-decoration: none; color: black"
+                class="ms-1"
+                ><ion-icon name="cart-outline"></ion-icon> Cart</router-link
               >
               <div class="dropdown-divider"></div>
               <a style="text-decoration: none; color: black" class="ms-1"
@@ -106,7 +109,7 @@ export default {
 }
 .navbar-cust {
   box-shadow: 1px 1px #b3b3b3;
-  background-color: #f0fcfc !important;
+  background-color: #ffff !important;
 }
 .butlog {
 }

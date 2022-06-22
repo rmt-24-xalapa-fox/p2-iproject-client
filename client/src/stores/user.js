@@ -7,7 +7,8 @@ export const useUserStore = defineStore('user', {
       baseUrl: `http://localhost:4000`,
       province: [],
       city: [],
-      isLogin: false
+      isLogin: false,
+      userData: {}
     }
   },
   getters: {
@@ -17,12 +18,30 @@ export const useUserStore = defineStore('user', {
     setIsLogin(status = false) {
       this.isLogin = status
     },
+    getUser() {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await axios.get(`${this.baseUrl}/userdata`, {
+            headers: {
+              access_token: localStorage.getItem("access_token")
+            }
+          })
+          this.userData = response.data.data
+          // console.log(this.userData);
+          resolve()
+        }
+        catch (err) {
+          reject(err)
+        }
+      })
+    },
     getProvince() {
       return new Promise(async (resolve, reject) => {
         try {
           const response = await axios.get(`${this.baseUrl}/province`)
           this.province = response.data
-          // console.log(response.data);
+          console.log(this.province, `info`);
+
           resolve()
         }
         catch (err) {
@@ -35,7 +54,7 @@ export const useUserStore = defineStore('user', {
         try {
           const response = await axios.get(`${this.baseUrl}/city/${id}`)
           this.city = response.data
-
+          // console.log(response.data, `pinia city`);
           resolve()
         }
         catch (err) {
@@ -78,6 +97,28 @@ export const useUserStore = defineStore('user', {
           reject(err)
         }
       })
-    }
+    },
+    updateUser(data) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          console.log(data);
+          const response = await axios.put(`${this.baseUrl}/updateuser`, {
+            username: data.username,
+            phoneNumber: data.phoneNumber,
+            address: data.address,
+            province: data.province,
+            city: data.city
+          }, {
+            headers: {
+              access_token: localStorage.getItem("access_token")
+            }
+          })
+          resolve()
+        }
+        catch (err) {
+          reject(err)
+        }
+      })
+    },
   },
 });

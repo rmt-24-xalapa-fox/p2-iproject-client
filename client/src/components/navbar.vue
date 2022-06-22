@@ -1,6 +1,29 @@
 <script>
+import { mapState, mapActions, mapWritableState } from "pinia";
+import { useIndexStore } from "../stores";
 export default {
   name: "navbar",
+  methods: {
+    ...mapActions(useIndexStore, ["logoutStore"]),
+    logoutPage() {
+      this.logoutStore();
+      this.$router.push("/login");
+    },
+    toHomePage() {
+      this.$router.push("/");
+    },
+  },
+  computed: {
+    ...mapState(useIndexStore, ["isLogin"]),
+    ...mapWritableState(useIndexStore, ["isLogin"]),
+  },
+  created() {
+    if (localStorage.getItem("access_token")) {
+      this.isLogin = true;
+    } else {
+      this.isLogin = false;
+    }
+  },
 };
 </script>
 
@@ -9,13 +32,35 @@ export default {
   <nav class="col-12">
     <div class="header">
       <div class="judul">
-        <h1>Integrasi Simaksi Online</h1>
+        <h1 @click.prevent="toHomePage">Integrasi Simaksi Online</h1>
       </div>
       <div class="menu">
-        <a class="pointer" style="text-decoration: none">List Gunung</a>
-        <a class="pointer" style="text-decoration: none">My License</a>
-        <a class="pointer" style="text-decoration: none">Logout</a>
-        <a class="pointer" style="text-decoration: none">Login</a>
+        <router-link
+          to="/mountains"
+          class="pointer"
+          style="text-decoration: none"
+          >List Gunung</router-link
+        >
+        <router-link
+          to="/licenses"
+          class="pointer"
+          style="text-decoration: none"
+          >My License</router-link
+        >
+        <a
+          @click.prevent="logoutPage"
+          v-if="isLogin"
+          class="pointer"
+          style="text-decoration: none"
+          >Logout</a
+        >
+        <router-link
+          to="/login"
+          v-if="!isLogin"
+          class="pointer"
+          style="text-decoration: none"
+          >Login</router-link
+        >
       </div>
     </div>
   </nav>

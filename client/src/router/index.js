@@ -38,7 +38,7 @@ const router = createRouter({
       name: "",
     },
     {
-      path: "/licenses/:MountainId",
+      path: "/licenses/:MountainId/:QuotaId",
       name: "postLicense",
       component: postLicense,
     },

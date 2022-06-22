@@ -1,6 +1,20 @@
 <script>
+import { mapActions, mapState } from "pinia";
+import { useIndexStore } from "../stores";
 export default {
   name: "gunungById",
+  methods: {
+    ...mapActions(useIndexStore, ["fetchMountainsById"]),
+    toPostLicensePage(MountainId, QuotaId) {
+      this.$router.push(`/licenses/${MountainId}/${QuotaId}`);
+    },
+  },
+  computed: {
+    ...mapState(useIndexStore, ["mountainsById"]),
+  },
+  created() {
+    this.fetchMountainsById(this.$route.params.MountainId);
+  },
 };
 </script>
 
@@ -8,59 +22,45 @@ export default {
   <div class="row">
     <div class="page">
       <div class="col-12 picture">
-        <img
-          class="entity-id"
-          src="https://img.inews.co.id/media/822/files/inews_new/2022/04/10/10_hal_menarik_tentang_gunung_gede_pangrango.jpg"
-          alt="img"
-        />
+        <img class="entity-id" :src="mountainsById.imageUrl" alt="img" />
       </div>
 
       <div class="col-6">
         <!-- <h6 style="padding: 10px">
             <span>Created By: </span>{{ displayNewsById.User.email }}
           </h6> -->
-        <h1 style="padding: 10px">Gunung Gede</h1>
+        <h1 style="padding: 10px">{{ mountainsById.name }}</h1>
+        <p style="padding: 10px">Height: {{ mountainsById.height }}</p>
         <p style="padding: 10px">
-          Gunung Gede-Pangrango merupakan dua gunung yang terdiri dari gunung
-          Gede dan Gunung Pangrango. Walaupun seperti menyatu, ketinggian gunung
-          Gede Pangrango berbeda. Ketinggian Gunung Gede adalah 2.958 m dpl
-          (diatas permukaan laut). Sedangkan ketinggian gunung Pangrango adalah
-          3.019 m dpl. Kedua gunung ini dihubungkan oleh gigir gunung serupa
-          sadel pada ketinggian +_ 2.400 m dpl, yang kita kenal saat ini sebagai
-          daerah Kandang Badak. Gunung Pangrango yang lebih tinggi , memiliki
-          puncak berbentuk kerucut yang relatif mulus. Ini menandakan tipe
-          gunung yang usianya relatif masih muda dan belum pernah meletus. Untuk
-          Gunung Gede walau ketinggiannya lebih rendah, namun masih aktif. Ini
-          daapat kita lihat dari keberadaan kawah-kawah aktif antara lain Kawah
-          Wadon, Kawah Ratu, Kawah Baru, dan Kawah Lanang.Titik puncak Gunung
-          Gede terletak di atas tebing atau gigir kawah yang baru, namun gigir
-          ini tak lagi utuh karena telah dihancurkan oleh letusan volkanik yang
-          terjadi berulang kali. Gigir yang lebih tua adalah punggung gunung
-          yang dikenal sebagai Gunung Gumuruh (2.929 m dpl); kawah-kawah dan
-          puncak Gunung Gede yang sekarang terletak pada bekas kawah Gunung
-          Gumuruh lama yang telah punah. Di antara gigir Gunung Gede dan gigir
-          Gunung Gumuruh itulah terletak lembah dataran tinggi bernama Alun-alun
-          Suryakancana (2.750 m dpl), yang penuh tertutupi oleh rumpun edelweis
-          jawa yang cantik.
+          License Cost: Rp. {{ mountainsById.licenseCost }}
         </p>
+        <p style="padding: 10px">{{ mountainsById.description }}</p>
       </div>
-      <div class="col-6 barcode">
-        <h1 style="padding: 10px">Quota Gunung Gede</h1>
-        <table>
-          <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Quota Tersisa</th>
-            <th>Action</th>
-          </tr>
-          <tr>
-            <td>Gunung Gede</td>
-            <td>2022-06-23</td>
-            <td>30/60</td>
-            <td>
-              <button>Buy License</button>
-            </td>
-          </tr>
+      <div class="col-6">
+        <h1 style="padding: 10px">Quota {{ mountainsById.name }}</h1>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Date</th>
+              <th scope="col">Quota Tersisa</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(el, i) in mountainsById.Quota" :key="el.id">
+              <td>{{ i + 1 }}</td>
+              <td>{{ el.date }}</td>
+              <td>{{ el.quotaUse }}/{{ el.quotaMax }}</td>
+              <td>
+                <button
+                  @click.prevent="toPostLicensePage(mountainsById.id, el.id)"
+                >
+                  Get License
+                </button>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
@@ -81,11 +81,8 @@ export default {
   height: 100%;
   width: 100%;
 }
-.barcode {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10px;
+h1 {
+  text-align: center;
 }
 /* global */
 .middle {

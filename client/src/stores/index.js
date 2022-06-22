@@ -6,6 +6,8 @@ export const useIndexStore = defineStore({
     urlBase: "http://localhost:3000",
     isLogin: false,
     weather: [],
+    mountains: [],
+    mountainsById: [],
   }),
   getters: {},
   actions: {
@@ -43,11 +45,47 @@ export const useIndexStore = defineStore({
       });
     },
 
+    logoutStore: function () {
+      localStorage.clear();
+      this.isLogin = false;
+    },
+
     fetchWeather: function () {
       return new Promise(async (resolve, reject) => {
         try {
           const response = await axios.get(this.urlBase + "/weather");
           this.weather = response.data;
+          resolve();
+        } catch (err) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `Fetching Database Weather`,
+          });
+          reject(err);
+        }
+      });
+    },
+
+    fetchMountains: function () {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await axios.get(this.urlBase + "/mountains");
+          this.mountains = response.data;
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
+      });
+    },
+
+    fetchMountainsById: function (MountainId) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await axios.get(
+            this.urlBase + "/mountains/" + MountainId
+          );
+          this.mountainsById = response.data;
           resolve();
         } catch (err) {
           reject(err);

@@ -17,24 +17,63 @@ export default {
       endArea: false,
       combat: false,
       nextStop: "",
+      dittoimg: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png",
+      enemyimg: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/1026px-Pok%C3%A9_Ball_icon.svg.png",
+      // shinyRates: 1 / 4096,
+      shinyRates: 1 / 100,
     };
   },
   methods: {
-    ...mapActions(useMainStore, ["newgamehandler", "useInventItem", "combatRound", "transforms"]),
+    ...mapActions(useMainStore, ["newgamehandler", "useInventItem", "enemySelected", "transforms", "setTypes"]),
     
-    initFight(pokemon){      
-      this.combat=true
-      this.combatRound(pokemon)
-    }
+    initFight(active){
+      this.combat = true
+      this.transforms(active)
+    },
+
+    async fetchsrpiteimgNType(){
+      try {
+        const {data:recv} = await axios.request({
+          method: 'GET',
+          url: 'https://pokeapi.co/api/v2/pokemon/'+this.enemy.id
+        })
+        // console.log(recv.sprites);        
+        if(this.isShiny){
+          this.enemyimg = recv.sprites.front_shiny
+        } else {
+          this.enemyimg = recv.sprites.front_default
+        }
+        
+        const {data:recv_ditto} = await axios.request({
+          method: 'GET',
+          url: 'https://pokeapi.co/api/v2/pokemon/'+this.ditto.transforms[this.ditto.active].id
+        })
+
+        this.dittoimg = recv_ditto.sprites.back_default
+
+        let dittotype = recv_ditto.types[0].type.name
+        let enemytype = recv.types[0].type.name
+
+        // capitalize first char
+        this.setTypes(dittotype.replace(dittotype[0], dittotype[0].toUpperCase()), enemytype.replace(enemytype[0], enemytype[0].toUpperCase()))
+
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   computed: {
-    ...mapState(useMainStore, ["inventory", "rounds", "ditto", "enemy", "enemies", "ditto", "getMaxHp", "itemlog"]),
+    ...mapState(useMainStore, ["inventory", "money", "rounds", "ditto", "enemy", "enemies", "ditto", "getMaxHp", "itemlog"]),
 
     showNextStop() {
       if (!this.endArea) return false;
       // swap next stop
       this.nextStop = this.nextStop === "center" ? "shop" : "center";
       return this.nextStop;
+    },
+
+    isShiny(){
+      return (Math.random()<this.shinyRates)
     },
   },
   created() {
@@ -47,6 +86,21 @@ export default {
     }
     
   },
+
+  watch: {
+    combat(newval, oldval) {
+      if (newval) {
+        this.fetchsrpiteimgNType()
+      }
+    },
+
+    enemy(newval, oldval) {
+      if (!newval) {
+        this.combat = false
+      }
+    },
+  },
+
 };
 </script>
 
@@ -54,27 +108,27 @@ export default {
   <div class="battle-container">
     <!-- left column -->
     <!-- Starter -->
-    <div class="battle-map-area-container" v-show="rounds===0 && !combat">
+    <div class="battle-map-area-container" v-show="rounds===0 && !enemy">
     <h1>SELECT ENEMY TO FIGHT</h1>
     <div class="battle-map-select-container">
-      <StarterCard class="map-selector-card" v-for="pokemon in enemies" :pokemon="pokemon" :key="pokemon.id" @click="initFight(pokemon)" />
+      <StarterCard class="map-selector-card" v-for="pokemon in enemies" :pokemon="pokemon" :key="pokemon.id" @click="enemySelected(pokemon)" />
     </div>
     </div>
     <!-- transform -->
-    <div class="battle-map-area-container" v-show="ditto.active<1 && combat">
+    <div class="battle-map-area-container" v-show="ditto.active<1 && enemy">
     <h1>SELECT YOUR TRANSFORMATION</h1>
     <div class="battle-map-select-container">
-      <StarterCard class="map-selector-card" v-for="(pokemon, i) in ditto.transforms.slice(1)" :pokemon="pokemon" :key="pokemon.id" @click="transforms(i)" />
+      <StarterCard class="map-selector-card" v-for="(pokemon, i) in ditto.transforms.slice(1)" :pokemon="pokemon" :key="pokemon.id" @click="initFight(i)" />
     </div>
     </div>
     <!-- combat -->
     <div class="battle-combat-container" v-show="combat && ditto.active>0">
       <div class="battle-sprite">
         <div class="battle-sprite-ditto">
-          <img src="" alt="">
+          <img :src="dittoimg" alt="">
         </div>
         <div class="battle-sprite-enemy">
-          <img src="" alt="">
+          <img :src="enemyimg" alt="">
         </div>
       </div>
       <div class="battle-move-set">
@@ -148,6 +202,7 @@ export default {
       </div>
       <div class="invent-item-title">
         <span>Round: {{ rounds }} </span>
+        <span>Money: {{ money }} </span>
       </div>
       <div class="info-inventory">
         <div class="info-invent-container" v-show="inventory.Medicine.length">
@@ -444,10 +499,9 @@ export default {
 .battle-sprite-enemy {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-content: flex-start;
-  align-items: flex-start;
+  max-width: 400px;
+  max-height: 400px;
+  margin: auto;
 }
 
 .battle-sprite-enemy img{
@@ -459,10 +513,9 @@ export default {
 .battle-sprite-ditto {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-content: flex-end;
-  align-items: flex-end;
+  max-width: 400px;
+  max-height: 400px;
+  margin: auto;
 }
 
 .battle-sprite-ditto img{

@@ -15,9 +15,7 @@ import axios from 'axios';
 export default {
   name: "StarterCard",
   data(){
-    return {
-      // shinyRates: 1 / 4096,
-      shinyRates: 1 / 100,
+    return {            
       sprite: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/1026px-Pok%C3%A9_Ball_icon.svg.png"
     }
   },

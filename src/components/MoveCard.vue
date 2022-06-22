@@ -1,5 +1,5 @@
 <template>
-<div class="battle-move-card">
+<div class="battle-move-card" @click.prevent="moveUsed">
   <div :class="`move-type type-${move.type.toLowerCase()}`">{{move.type}}</div>
   <div class="move-name">{{move.name}}</div>
   <div class="move-power">Power: {{move.power}}</div>
@@ -7,11 +7,18 @@
 </template>
 
 <script>
+import { mapActions } from 'pinia'
+import { useMainStore } from '../stores'
+
 export default {
   name: "MoveCard",
   props: ["move"],
   methods: {
+    ...mapActions(useMainStore, ["dmgEnemy"]),
 
+    moveUsed(){
+      this.dmgEnemy(this.move)
+    }
   },
 }
 </script>

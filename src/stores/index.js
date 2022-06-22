@@ -6,10 +6,10 @@ export const useMainStore = defineStore({
   state: () => ({    
     pokedex: [], // id/tag of pokemon encounter
     inventory: {
-      Medicine: [],
-      Berries: [],
-      Valuable: [],
-      Utils: [],
+      Medicine: {},
+      Berries: {},
+      Valuable: {},
+      Utils: {},
     }, 
     items: [],
     ditto: {
@@ -26,13 +26,15 @@ export const useMainStore = defineStore({
       active: 0,
     },
     money: 0,
-    enemy: {},
+    enemy: false,
     enemies: [],
     maps: [],
     rounds: 0,
+    runends: false,
     logedIn: false,
     newrun: true,
     itemlog: '',
+    typematchup: {},
   }),
   getters: {
     getMaxHp(){
@@ -61,19 +63,113 @@ export const useMainStore = defineStore({
       this.logedIn = stat
     },
 
-    combatRound(pokemon){      
-      this.rounds++
+    enemySelected(pokemon){
       this.enemy=pokemon
       // console.log(this.rounds);
     },
 
     transforms(i){
+      this.rounds++
       this.ditto.active = i+1
       // console.log(this.ditto.transforms[this.ditto.active].moves);
     },
 
-    dmgEnemy(){
-      
+    calcDmg(move, levelatk, attacker, leveldef, defender){      
+      // dmg = (0.5 * power * (atk/deff) * mod) + 1
+      const reduc = (((attacker.attack+15) * levelatk) / ((defender.defense+15) * leveldef) )
+      const mod = this.typematchup[move.type][defender.type]
+      const dmg = Math.floor( 0.5 * move.power * reduc * mod ) + 1
+      return dmg
+
+    },
+
+    dmgEnemy(move){
+      // attack enemy
+      let enemylvl
+      if(this.rounds<21){
+        enemylvl = (this.rounds*2)+5
+      }
+      else {
+        enemylvl = this.rounds+25 < 100 ? this.rounds+25 : 100
+      }
+
+      const dmg1 = this.calcDmg(move, 
+        this.ditto.level, this.ditto.transforms[this.ditto.active], 
+        enemylvl, this.enemy
+      )
+      // check enemy hp
+      if(!this.enemy.currenthp){
+        this.enemy.currenthp = (this.enemy.hp + 15) * (0.02*(enemylvl))
+      }
+
+      console.log("ENEMY HP",this.enemy.currenthp, dmg1);
+      this.enemy.currenthp -= dmg1
+      console.log("ENEMY HP AFTER",this.enemy.currenthp);
+
+      if(this.enemy.currenthp<0){
+        this.enemy = false
+
+        if(this.rounds<21){
+          this.ditto.level += 2
+        } else if (this.ditto.level<100) {
+          this.ditto.level++
+        }
+
+        // chance loot
+        const rng = Math.random()
+        let loot
+
+        if(rng < 0.01) {
+          // rare candy
+          if(!this.inventory.Utils["Rare Candy"]){
+            this.inventory.Utils["Rare Candy"] = { stock: 0 }
+          }
+          this.inventory.Utils["Rare Candy"].stock++
+        } else if (rng < 0.25 ) {
+          // valuable
+          // check what valuable to get
+          loot = 'Valuable'
+        } else if (rng < 0.45 ) {
+          // berry
+          loot = 'Berries'
+        } else if (rng < 0.5) {
+          // pot
+          loot = 'Medicine'
+        }
+
+        if(loot){
+          const val = Math.floor(Math.random() * this.items[Berries].length)
+          if(!this.inventory[Berries][this.items[Berries][val].name]){
+            this.inventory[Berries][this.items[Berries][val].name] = { stock: 0 }
+          }
+          this.inventory[Berries][this.items[Berries][val].name].stock++
+        }
+
+        // incr money
+        this.money += this.rounds < 20 ? 200 : 150
+
+        return
+      }
+      // enemy attack
+
+      let enemymove = Math.random() < 0.37 ? this.enemy.moves[0] : this.enemy.moves[1]
+
+      const dmg2 = this.calcDmg(enemymove, 
+        enemylvl, this.enemy,
+        this.ditto.level, this.ditto.transforms[this.ditto.active]
+      )
+
+      // cehck hp
+      console.log("DITOTOT HP before",this.ditto.hp, dmg2);
+      this.ditto.hp = (( this.ditto.hp * this.getMaxHp * 0.01 ) - dmg2) * 100 / this.getMaxHp
+      console.log("DITOTOT HP",this.ditto.hp);
+
+      if(this.ditto.hp<0){
+        // end run        
+        this.saveRun()
+        this.runends = true
+      }
+
     },
 
     useInventItem(invent, idx){
@@ -122,10 +218,9 @@ export const useMainStore = defineStore({
     },
 
     async saveRun(){
+      const access_token = localStorage.getItem('access_token')
+      if(!access_token) return
       try {
-        const access_token = localStorage.getItem('access_token')
-        if(!access_token) return
-
         const data = {
           newrun:this.newrun,
           rounds:this.rounds,
@@ -166,9 +261,7 @@ export const useMainStore = defineStore({
         this.inventory.Medicine = [potion]
         this.inventory.Utils = [rope]
 
-        // char reset
-        this.ditto.hp = 50
-        this.ditto.level = 50
+        this.initState()
 
       } catch (error) {
         console.log(error);
@@ -194,10 +287,40 @@ export const useMainStore = defineStore({
 
     },
 
+    setTypes(p1, p2){
+      this.ditto.transforms[this.ditto.active].type = p1
+      this.enemy.type = p2
+    },
+
     initState(){
       // check if login or not
       // if login get from db for state
       // if no login check local storage again for "saved"
+      // char reset
+      this.ditto.hp = 100
+      this.ditto.level = 5
+      this.money = 1200
+      this.runends = false
+      
+      this.gettypematchup()
+      
+    },
+
+    async gettypematchup(){
+      try {
+        const options = {
+          method: 'GET',
+          url: 'https://pokemon-go1.p.rapidapi.com/type_effectiveness.json',
+          headers: {
+            'X-RapidAPI-Key': '3324562bf3msh5e00b52221ecad6p149f0cjsn5a09fb4f9622',
+            'X-RapidAPI-Host': 'pokemon-go1.p.rapidapi.com'
+          }
+        };
+        const recv = await axios.request(options)
+        this.typematchup = recv.data        
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     async fetchItemsList(){
@@ -209,5 +332,4 @@ export const useMainStore = defineStore({
     }
 
   },
-
 });

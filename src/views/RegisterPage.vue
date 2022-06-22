@@ -4,7 +4,12 @@
       <h2 class="mt-4 mb-8 text-center text-3xl font-bold text-rose-600">
         Register
       </h2>
-      <form action="" class="space-y-6">
+      <form
+        action=""
+        class="space-y-6"
+        id="registerForm"
+        @submit.prevent="registerHandler"
+      >
         <div>
           <label for="name" class="text-sm font-medium text-gray-700">
             Name
@@ -13,8 +18,9 @@
             <input
               type="text"
               id="name"
-              name="email"
+              name="name"
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500"
+              v-model="name"
             />
           </div>
         </div>
@@ -29,6 +35,7 @@
               id="email"
               name="email"
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500"
+              v-model="email"
             />
           </div>
         </div>
@@ -43,6 +50,7 @@
               id="password"
               name="password"
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500"
+              v-model="password"
             />
           </div>
         </div>
@@ -80,6 +88,7 @@
                     name="file-upload"
                     type="file"
                     class="sr-only"
+                    @change="onFileChange"
                   />
                 </label>
               </div>
@@ -100,8 +109,37 @@
 </template>
 
 <script>
+import axiosInstance from "../axiosInstance";
+
 export default {
   name: "RegisterPage",
+  data() {
+    return {
+      name: "",
+      email: "",
+      password: "",
+      profilePicture: "",
+    };
+  },
+  methods: {
+    onFileChange(event) {
+      this.profilePicture = event.target.files[0];
+    },
+    async registerHandler() {
+      const formField = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        profilePicture: this.profilePicture,
+      };
+      let formData = new FormData();
+      for (let key in formField) {
+        formData.append(key, formField[key]);
+      }
+      await axiosInstance.post("/register", formData);
+      this.$router.push("/login");
+    },
+  },
 };
 </script>
 

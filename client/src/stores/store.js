@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import swal from "sweetalert2"
 
 export const useCounter = defineStore({
   id: "counter",
@@ -15,6 +16,8 @@ export const useCounter = defineStore({
       parameter: 0,
       todaySales: 0,
       todayExpense: 0,
+      todaySold: 0,
+      mostSold: ""
     };
   },
   getters: {},
@@ -84,9 +87,6 @@ export const useCounter = defineStore({
     },
     async editProduct(obj) {
       try {
-        console.log(`masuk`);
-        console.log(obj);
-
         await axios.put(`${this.baseURL}/products/${this.products.id}`, {
           name: obj.name,
           description: obj.description,
@@ -165,6 +165,8 @@ export const useCounter = defineStore({
           let obj = {
             dataSales: el.sales,
             dataExpense: el.cost,
+            totalSold: el.quantity,
+            productName: el.Product.name,
             dataDate: date.getDate(),
           };
           daily.push(obj);
@@ -209,8 +211,7 @@ export const useCounter = defineStore({
 
         let groupedDailySales = groupBy(daily, "dataDate");
         let chartDailySalesData = [];
-        let chartDailyExpenseData = [];
-
+        
         //Sum total Sales by date
         for (const key in groupedDailySales) {
           if (Object.hasOwnProperty.call(groupedDailySales, key)) {
@@ -223,6 +224,7 @@ export const useCounter = defineStore({
           }
         }
 
+        //Group Expense by date
         let groupCost = function (xs, key) {
           return xs.reduce(function (rv, x) {
             (rv[x[key]] = rv[x[key]] || []).push(x.dataExpense);
@@ -231,7 +233,9 @@ export const useCounter = defineStore({
         };
 
         let groupedDailyExpense = groupCost(daily, "dataDate");
+        let chartDailyExpenseData = [];
 
+        //Sum total Expense by date
         for (const key in groupedDailyExpense) {
           if (Object.hasOwnProperty.call(groupedDailyExpense, key)) {
             const el = groupedDailyExpense[key];
@@ -243,20 +247,75 @@ export const useCounter = defineStore({
           }
         }
 
+        //Group quantities by date
+        let groupQuantity = function (xs, key) {
+          return xs.reduce(function (rv, x) {
+            (rv[x[key]] = rv[x[key]] || []).push(x.totalSold);
+            return rv;
+          }, {});
+        };
+
+        let groupedTotalSold = groupQuantity(daily, "dataDate");
+        let arrSoldData = [];
+
+        for (const key in groupedTotalSold) {
+          if (Object.hasOwnProperty.call(groupedTotalSold, key)) {
+            const el = groupedTotalSold[key];
+
+            const start = 0;
+            const sumWithInitial = el.reduce((a, b) => a + b, start);
+
+            arrSoldData.push(sumWithInitial);
+          }
+        }
+
+        let groupByProduct = function (xs, key) {
+          return xs.reduce(function (rv, x) {
+            (rv[x[key]] = rv[x[key]] || []).push(x.totalSold);
+            return rv;
+          }, {});
+        };
+
+        let groupedProduct = groupByProduct(daily, "productName");
+
+        let arrProduct = [];
+        
+        //Sum total Sales by date
+        for (const key in groupedProduct) {
+          if (Object.hasOwnProperty.call(groupedProduct, key)) {
+            const el = groupedProduct[key];
+
+            const start = 0;
+            const sumWithInitial = el.reduce((a, b) => a + b, start);
+
+            arrProduct.push(sumWithInitial, key);
+          }
+        }
+
         //Label of days
         let arranged = days.reverse();
         let newDays = arranged.filter((element, index) => {
           return arranged.indexOf(element) === index;
         });
         data.chart.data.labels = newDays;
-        data.chart.data.datasets[0].data = chartDailySalesData.reverse();
+
+        //fetch Daily sales
         let lastData = chartDailySalesData.reverse();
-        data.chart.data.datasets[1].data = chartDailyExpenseData.reverse();
-        let latestExpense = chartDailyExpenseData.reverse();
-
+        
         this.todaySales = lastData[0];
+      
+        //fetch Daily expense
+        let latestExpense = chartDailyExpenseData.reverse();
         this.todayExpense = latestExpense[0];
+        
+        let todaySoldArr = arrSoldData.reverse();
+        this.todaySold = todaySoldArr[0];
 
+        this.mostSold = arrProduct[1]
+
+        data.chart.data.datasets[0].data = chartDailySalesData.reverse()
+        data.chart.data.datasets[1].data = chartDailyExpenseData.reverse()
+        
         let response = await axios.post(
           `https://quickchart.io/chart/create`,
           data
@@ -269,7 +328,6 @@ export const useCounter = defineStore({
     },
     async createImgURL(file) {
       try {
-        // console.log(file);
         const formData = new FormData();
         formData.append("image", file);
 
@@ -280,7 +338,6 @@ export const useCounter = defineStore({
         );
 
         this.imageURL = response.data.data.display_url;
-        console.log(this.imageURL);
       } catch (err) {
         console.log(err);
       }
@@ -314,7 +371,7 @@ export const useCounter = defineStore({
         this.formDisplay();
         this.fetchProducts();
       } catch (err) {
-        console.log(err);
+        swal.fire(err);
       }
     },
   },

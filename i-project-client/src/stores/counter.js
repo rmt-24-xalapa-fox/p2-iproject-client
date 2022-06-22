@@ -8,7 +8,7 @@ export const useMusicYuhu = defineStore({
   state: () => ({
     counter: 0,
     userloged: {},
-    url: "http://localhost:3000/",
+    url: "https://i-project-p2.herokuapp.com/",
     userlogin: {},
     allsong: [],
     allradio: [],

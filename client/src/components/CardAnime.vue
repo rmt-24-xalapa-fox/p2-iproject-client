@@ -11,7 +11,7 @@
                 <h5 class="text-xl md:text-2xl font-medium mt-3 h-full items-center text-anime">{{ anime.title }}</h5>
 
             </div>
-            <div class="h-30 items-center">
+            <div class="h-32 items-center">
                 <p class="text-slate-500 text-lg mt-3 mb-1 ">{{ anime.synopsis }}</p>
 
             </div>

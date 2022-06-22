@@ -95,6 +95,7 @@ onMounted(() => {
 					@click="decreaseWatch(anime)" class="button">-</button>
 			</div>
 		</div>
+		
 	</main>
 </template>
 

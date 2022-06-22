@@ -8,8 +8,9 @@ export const useMainStore = defineStore({
     baseUrl: "http://localhost:3000",
     seasonAnime: [],
     currentPage: 1,
-    sizePage: 20,
-    animes: []
+    sizePage: 16,
+    animes: [],
+    totalPage: 0
   }),
   getters: {
 
@@ -90,6 +91,7 @@ export const useMainStore = defineStore({
               size: this.sizePage
             }
           })
+          this.totalPage = response.data.totalPage
         this.animes = response.data.Anime.rows
         }
         catch(err){

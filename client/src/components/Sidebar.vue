@@ -26,7 +26,7 @@
             </router-link>
         </div>
 
-        <div class="flex"></div>
+        <div class="flex fixed"></div>
 
         <div class="menu">
             <a href="#" @click.prevent="logout" class="button">

@@ -16,8 +16,8 @@ export default {
         ...mapActions(useMainStore, ["getSeasonAnime", "getAnime"]),
         CheckForCommand(result) {
             const t = result[0].transcript;
-            if (t.includes('search')) {
-                this.getAnime(this.query.replace('search', ''))
+            if (t.includes('looking for ')) {
+                this.getAnime(this.query.slice(12))
                 sr.stop()
             }
         },
@@ -30,13 +30,14 @@ export default {
         },
         searchAnime: function () {
             this.getAnime(this.query)
-            this.sizePage = 20
+            this.sizePage = 16
         }
 
     },
     created: function () {
         this.getSeasonAnime()
         this.getAnime(this.query)
+        this.sizePage = 16
     },
     data() {
         return {
@@ -74,8 +75,8 @@ export default {
             let scrollHeight = document.documentElement.scrollHeight;
             let clientHeight = document.documentElement.clientHeight;
 
-            if (scrollTop + clientHeight >= scrollHeight - 10) {
-                this.sizePage += 20
+            if (scrollTop + clientHeight >= scrollHeight - 20) {
+                this.sizePage += 16
                 this.getAnime(this.query)
             }
         })
@@ -98,6 +99,7 @@ export default {
         </form>
 
         <div class="bg-white rounded">
+   
             <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
                 <div>
                     <p class="text-5xl mb-10 text-red-900 text-center text-anime">Anime Database</p>

@@ -19,7 +19,7 @@ export default {
 </script>
 
 <template>
-    <div class="bg-white rounded w-full">
+    <div class="bg-white w-full">
         <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
             <div>
                 <p class="text-5xl mb-20 text-red-900 text-center text-anime">Anime This Season (Summer-2022)</p>
@@ -30,7 +30,10 @@ export default {
                 
             </div>
         </div>
-
+        <div class="mb-1">
+            
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3vlflkqHUKtVpLI8sDQG7i?utm_source=generator&theme=0" width="100%" height="80" frameBorder="10" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+        </div>
     </div>
 </template>
 

@@ -99,7 +99,7 @@
       </form>
     </div>
     <div class="col-md-5">
-      <div class="card text-bg-light mt-5" style="max-width: 18rem">
+      <div class="card text-bg-light mt-3" style="max-width: 30rem">
         <div class="card-header">Total Cart</div>
         <div class="card-body">
           <div class="row">
@@ -121,15 +121,14 @@
             <div class="col">
               {{ formatRupiah(this.favTotalPrice + this.shipmentPrice) }}
             </div>
-            <div class="col-12">
-              <button
-                @click.prevent="purchase"
-                type="button"
-                class="btn btn-primary"
-              >
-                Buy
-              </button>
-            </div>
+
+            <button
+              @click.prevent="purchase"
+              type="button"
+              class="btn btn-primary mt-2"
+            >
+              Buy
+            </button>
           </div>
         </div>
       </div>
@@ -139,6 +138,7 @@
 </template>
 
 <script>
+//element loading buat nutupin.. di show dan hide mainnya
 import { mapActions, mapWritableState, mapState } from "pinia";
 import { useUserStore } from "@/stores/user";
 import { useProductStore } from "../stores/product";

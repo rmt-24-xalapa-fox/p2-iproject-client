@@ -23,7 +23,7 @@ export default {
       try {
         const { data } = await axios.get(`${this.url}/characters`);
         this.totalCharacters = data.data.total;
-        this.totalPage = Math.ceil(this.totalCharacters / 77);
+        this.totalPage = Math.ceil(this.totalCharacters / 50);
 
         const result = data.data.results;
         result.forEach((el) => {
@@ -44,7 +44,7 @@ export default {
         );
 
         this.totalCharacters = data.data.total;
-        this.totalPage = Math.ceil(this.totalCharacters / 77);
+        this.totalPage = Math.ceil(this.totalCharacters / 50);
         const result = data.data.results;
         result.forEach((el) => {
           this.characters.push(el);
@@ -265,7 +265,7 @@ h2:after {
   background: none;
   /* color: #fff; */
   color: red;
-  /* transform: translateY(100%); */
+  transform: translateY(100%);
   transition: 0.3s;
   /* text-align: center; */
   text-align: left;

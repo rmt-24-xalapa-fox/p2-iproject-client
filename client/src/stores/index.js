@@ -8,6 +8,7 @@ export const useIndexStore = defineStore({
     weather: [],
     mountains: [],
     mountainsById: [],
+    licenses: [],
   }),
   getters: {},
   actions: {
@@ -91,6 +92,49 @@ export const useIndexStore = defineStore({
           reject(err);
         }
       });
+    },
+
+    postLicenseStore: function (
+      MountainId,
+      QuotaId,
+      numberOfClimbers,
+      totalPrice
+    ) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const data = {
+            numberOfClimbers,
+            totalPrice,
+          };
+          await axios.post(
+            this.urlBase + `/licenses/${MountainId}/${QuotaId}`,
+            data,
+            {
+              headers: {
+                access_token: localStorage.getItem("access_token"),
+              },
+            }
+          );
+          await axios.patch(
+            this.urlBase + "/quota/" + QuotaId,
+            {
+              quotaUse: numberOfClimbers,
+            },
+            {
+              headers: {
+                access_token: localStorage.getItem("access_token"),
+              },
+            }
+          );
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
+      });
+    },
+
+    fetchLicensesStore: function () {
+      return;
     },
   },
 });

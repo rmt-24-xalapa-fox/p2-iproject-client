@@ -54,6 +54,7 @@ export default {
               <td>{{ el.quotaUse }}/{{ el.quotaMax }}</td>
               <td>
                 <button
+                  v-if="el.quotaMax - el.quotaUse > 0"
                   @click.prevent="toPostLicensePage(mountainsById.id, el.id)"
                 >
                   Get License

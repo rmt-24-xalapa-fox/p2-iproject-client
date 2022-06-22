@@ -5,6 +5,7 @@ import login from "../views/login.vue";
 import listGunung from "../views/listGunung.vue";
 import gunungById from "../views/gunungById.vue";
 import postLicense from "../views/postLicense.vue";
+import license from "../views/license.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -35,7 +36,8 @@ const router = createRouter({
     },
     {
       path: "/licenses",
-      name: "",
+      name: "lincenses",
+      component: license,
     },
     {
       path: "/licenses/:MountainId/:QuotaId",

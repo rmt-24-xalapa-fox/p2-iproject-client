@@ -62,12 +62,7 @@ export const useCounterStore = defineStore({
             credential,
           },
         });
-        console.log(res, "<<<<< store");
-        localStorage.setItem("authorId", res.data.user.id);
-        localStorage.setItem("email", res.data.user.email);
         localStorage.setItem("access_token", res.data.data.access_token);
-        this.authorId = res.data.user.id;
-        this.email = res.data.user.email;
         return true;
       } catch (err) {
         console.log(err, "store");
@@ -84,8 +79,29 @@ export const useCounterStore = defineStore({
             password,
           },
         });
+        localStorage.setItem("access_token", response.data.access_token);
         return true;
       } catch (err) {
+        return false;
+      }
+    },
+    async registerHandler(obj) {
+      try {
+        const { username, email, password, phoneNumber, address } = obj;
+        await axios({
+          method: "POST",
+          url: this.baseUrl + "/register",
+          data: {
+            username,
+            email,
+            password,
+            phoneNumber,
+            address,
+          },
+        });
+        return true;
+      } catch (err) {
+        console.log(err);
         return false;
       }
     },

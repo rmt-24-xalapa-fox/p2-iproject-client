@@ -1,4 +1,7 @@
 <script>
+import { mapActions, mapState } from "pinia"
+import { useMainStore } from "../stores"
+
 export default {
   name: "HomeView",
   components: {
@@ -10,9 +13,7 @@ export default {
     }
   },
   methods: {
-    newgamehandler(){
-      console.log("INIT NEW GAME");
-    },
+    ...mapActions(useMainStore, ["newgamehandler"]),
 
 
   },
@@ -22,7 +23,7 @@ export default {
     },
   },
   created(){
-    
+    // check if last run
   }
 }
 </script>
@@ -30,7 +31,7 @@ export default {
 <template>
   <div class="home-container">
     <div class="home-menu">
-      <router-link :to="{ path: '/battle' }"><span>New Game</span></router-link>
+      <router-link :to="{ path: '/battle' }" @click.prevent="newgamehandler" ><span>New Game</span></router-link>
       <router-link :to="{ path: '/battle' , query: { continue: 'true' } }" v-if="isLoadAvail"><span>Continue</span></router-link>
       <router-link :to="{ path: '/statistic' }"><span>Statistic</span></router-link>
       <router-link :to="{ path: '/leaderboard' }"><span>Leaderboard</span></router-link>

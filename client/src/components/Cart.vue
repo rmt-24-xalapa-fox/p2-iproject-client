@@ -7,9 +7,23 @@ export default {
         this.getCart()
     },
     methods: {
-        ...mapActions(useMainStore, ['getProductsInCart']),
+        ...mapActions(useMainStore, ['getProductsInCart', 'paymentByMidtrans']),
         getCart: function () {
             this.getProductsInCart()
+        },
+        toPricing: function(totalPrice){
+            // console.log(totalPrice)
+            this.megaTotalPrice += totalPrice
+            console.log(this.megaTotalPrice)
+        },
+        converTotalPrice: function(){
+            return new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+            }).format(this.megaTotalPrice);
+        },
+        checkingOut: function(){
+            this.paymentByMidtrans(this.megaTotalPrice)
         }
     },
     computed: {
@@ -17,6 +31,11 @@ export default {
     },
     components: {
         TableItem
+    },
+    data(){
+        return{
+            megaTotalPrice: 0
+        }
     }
 }
 </script>
@@ -39,10 +58,11 @@ export default {
                                         <th scope="col-4">Product</th>
                                         <th scope="col-3">Quantity</th>
                                         <th scope="col-2">Sub Total Price</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody class="align-middle">
-                                    <TableItem v-for="(product, i) in cartProducts" :key="i" :product="product" />
+                                    <TableItem v-for="(product, i) in cartProducts" :key="i" :product="product" @toPricing="toPricing" />
 
                                 </tbody>
                             </table>
@@ -51,7 +71,7 @@ export default {
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Checkout</button>
+                <button type="button" class="btn btn-primary" @click.prevent="checkingOut">Checkout for {{converTotalPrice()}}</button>
             </div>
         </div>
     </div>

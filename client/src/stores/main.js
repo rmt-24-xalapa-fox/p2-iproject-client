@@ -167,6 +167,26 @@ export const useMainStore = defineStore({
       }catch(err){
         console.log(err)
       }
+    },
+    paymentByMidtrans: async function(megaTotalPrice){
+      try{
+        console.log(megaTotalPrice)
+        const response = await axios({
+          method: 'POST',
+          url: `${this.baseUrl}/user/transaction`,
+          data:{
+            megaTotalPrice
+          },
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
+        })
+        // console.log(response.data)
+        const transactionToken = response.data
+        window.snap.pay(transactionToken)
+      }catch(err){
+        console.log(err)
+      }
     }
   },
 });

@@ -89,6 +89,9 @@ export const useMainStore = defineStore({
               page: this.currentPage,
               name: query,
               size: this.sizePage
+            },
+            headers: {
+              access_token: localStorage.getItem("access_token")
             }
           })
           this.totalPage = response.data.totalPage
@@ -97,6 +100,14 @@ export const useMainStore = defineStore({
         catch(err){
           console.log(err)
         }
+    },
+    async addFavoriteAnime(){
+      try{
+        
+      }
+      catch(err){
+
+      }
     }
   }
 })

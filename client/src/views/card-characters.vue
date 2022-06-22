@@ -19,11 +19,13 @@ export default {
   methods: {
     async fetchCharacters() {
       try {
-        const { data } = await axios.get(
+        const response = await axios.get(
           `${this.url}/characters?limit=40&apikey=${PUBLIC_KEY}`
         );
 
-        console.log(data);
+        console.log(response);
+        let data = response.data;
+        // console.log(data);
         this.totalCharacters = data.data.total;
         const result = data.data.results;
         result.forEach((el) => {

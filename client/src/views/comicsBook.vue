@@ -51,6 +51,7 @@ export default {
 
 <template>
   <!-- DISPLAY COMMICS  -->
+  
   <div class="container">
     <div class="component">
       <ul class="align">

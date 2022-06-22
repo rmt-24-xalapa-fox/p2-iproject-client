@@ -3,9 +3,9 @@ export default {
   name: "BrowseContentCard",
   props: ["poem"],
   methods: {
-    selectedPoem(id) {
-      localStorage.setItem("selected", id);
-      // this.$router.push("/readmore")
+    selectedPoem(title) {
+      localStorage.setItem("selected", title);
+      this.$router.push("/browse/readmore")
     },
   },
 };
@@ -21,7 +21,7 @@ export default {
     <div class="div card-footer d-flex justify-content-end border-1 bg-footer">
       <div>
         <button
-          @click.prevent="selectedPoem(`${this.$.vnode.key + 1}`)"
+          @click.prevent="selectedPoem(poem.title)"
           class="button"
           style="width: 150px"
         >

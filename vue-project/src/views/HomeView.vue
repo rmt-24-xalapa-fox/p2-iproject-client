@@ -1,5 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
+import navbarVue from "../components/navbar.vue";
 import { useCounterStore } from "../stores/counter";
 
 export default {
@@ -8,6 +9,9 @@ export default {
       location: "",
       data: "",
     };
+  },
+  components: {
+    navbarVue,
   },
   computed: {
     ...mapState(useCounterStore, ["map"]),
@@ -24,6 +28,7 @@ export default {
 </script>
 
 <template>
+  <navbarVue />
   <div>
     <form action="" @submit.prevent="find">
       <label for="">Location</label>
@@ -32,7 +37,7 @@ export default {
     </form>
   </div>
   <div style="justify-content: center">
-    <iframe width="1500" height="1300" :src="data"></iframe>
+    <iframe width="500" height="500" :src="data"></iframe>
   </div>
 </template>
 

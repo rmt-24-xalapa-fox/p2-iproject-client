@@ -35,12 +35,26 @@ export default {
       });
     },
     getCityId() {
-      const cityName = document.getElementById("city").value;
+      return new Promise(async (resolve, reject) => {
+        try {
+          const cityName = document.getElementById("city").value;
 
-      const cityId = document.querySelector(
-        "#cities option[value='" + cityName + "']"
-      ).dataset.value;
-      this.shippingObj.destination = Number(cityId);
+          const cityId = document.querySelector(
+            "#cities option[value='" + cityName + "']"
+          ).dataset.value;
+          this.shippingObj.destination = Number(cityId);
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
+      });
+    },
+    changeLocation() {
+      this.getCityId().then(() => {
+        if (this.shippingObj.courier !== 0) {
+          this.submitRajaOngkir(this.shippingObj);
+        }
+      });
     },
   },
   computed: {
@@ -112,7 +126,7 @@ export default {
       <h2>Shipping Information</h2>
       <form action="">
         <input
-          @change.prevent="getCityId()"
+          @change.prevent="changeLocation()"
           list="cities"
           autocomplete="off"
           class="input-box"

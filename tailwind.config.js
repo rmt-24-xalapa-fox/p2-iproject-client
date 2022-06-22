@@ -9,6 +9,9 @@ module.exports = {
       height: {
         168: "41.2rem",
       },
+      margin: {
+        18: "4.5rem",
+      },
     },
   },
   plugins: [],

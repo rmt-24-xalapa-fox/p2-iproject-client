@@ -4,7 +4,7 @@
       <h2 class="mt-4 mb-8 text-center text-3xl font-bold text-rose-600">
         Sign in
       </h2>
-      <form action="" class="space-y-6">
+      <form action="" class="space-y-6" @submit.prevent="loginHandler()">
         <div>
           <label for="email" class="text-sm font-medium text-gray-700">
             Email address
@@ -16,6 +16,7 @@
               name="email"
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500"
               autofocus
+              v-model="email"
             />
           </div>
         </div>
@@ -30,6 +31,7 @@
               id="password"
               name="password"
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500"
+              v-model="password"
             />
           </div>
         </div>
@@ -72,8 +74,36 @@
 </template>
 
 <script>
+import { mapWritableState } from "pinia";
+import axiosInstance from "../axiosInstance";
+import { useMainStore } from "../stores/main";
 export default {
   name: "LoginPage",
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  computed: {
+    ...mapWritableState(useMainStore, ["isLogin"]),
+  },
+  methods: {
+    async loginHandler() {
+      try {
+        const loginInput = {
+          email: this.email,
+          password: this.password,
+        };
+        let { data } = await axiosInstance.post(`/login`, loginInput);
+        localStorage.setItem("access_token", data.access_token);
+        this.isLogin = true;
+        this.$router.push("/");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
 };
 </script>
 

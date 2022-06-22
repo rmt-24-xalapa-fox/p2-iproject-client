@@ -64,6 +64,7 @@ export default {
   },
   created() {
     // console.log("masok");
+    //
     this.fetchListMyDigimon();
   },
 };

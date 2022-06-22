@@ -26,6 +26,7 @@ export default {
       "moveToRoute",
       "fetchCities",
       "submitRajaOngkir",
+      "callMidtrans",
     ]),
     formatToRupiah(val) {
       return val.toLocaleString("id-ID", {
@@ -204,6 +205,7 @@ export default {
           This shipping option is not available
         </h4>
         <button
+          @click.prevent="this.callMidtrans(totalPriceAndCost)"
           v-if="
             shippingOption.length !== 0 && shippingOption[indexShippingOption]
           "

@@ -260,5 +260,46 @@ export const useStore = defineStore({
         this.showError(err);
       }
     },
+    async callMidtrans(price) {
+      try {
+        const response = await axios.post(
+          `${this.baseUrl}/pay`,
+          { price },
+          {
+            headers: {
+              access_token: this.accessToken,
+            },
+          }
+        );
+        window.snap.pay(response.data.token, {
+          onSuccess(result) {
+            swal({
+              title: "Success!",
+              icon: "success",
+            });
+          },
+          onPending(result) {
+            swal({
+              title: "Pending!",
+              icon: "success",
+            });
+          },
+          onError(result) {
+            swal({
+              title: "Error!",
+              icon: "success",
+            });
+          },
+          onClose(result) {
+            swal({
+              title: "Close!",
+              icon: "success",
+            });
+          },
+        });
+      } catch (err) {
+        this.showError(err);
+      }
+    },
   },
 });

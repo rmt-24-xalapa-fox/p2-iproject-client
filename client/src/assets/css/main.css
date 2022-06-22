@@ -2924,7 +2924,7 @@ font-family: FontAwesome;
 }
 
 .homebanner-holder {
-    width: calc(100% - 290px);
+    width: 100%;
 }
 .cart .action.lnk {
   margin: 10px 0px;

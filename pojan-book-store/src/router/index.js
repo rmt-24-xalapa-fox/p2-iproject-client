@@ -8,6 +8,7 @@ import CartsView from "../views/CartsView.vue";
 import ProductDetails from "../views/ProductDetails.vue";
 import OrderReview from "../views/OrderReview.vue";
 import OrderHistory from "../views/OrderHistory.vue";
+import BookClub from "../views/BookClub.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,6 +52,11 @@ const router = createRouter({
       path: "/order",
       name: "Order History",
       component: OrderHistory,
+    },
+    {
+      path: "/book-club",
+      name: "Book Club",
+      component: BookClub,
     },
     {
       path: "/:pathMatch(.*)*",

@@ -218,11 +218,12 @@ export const useStore = defineStore({
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("UserId", id);
       localStorage.setItem("UserEmail", email);
+      localStorage.setItem("Username", username);
       this.isLogin = true;
       this.accessToken = accessToken;
       this.moveToRoute("Home");
       swal({
-        title: username,
+        title: `Welcome, ${username}!`,
         icon: "success",
       });
     },

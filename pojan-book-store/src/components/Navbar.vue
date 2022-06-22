@@ -56,6 +56,14 @@ export default {
               >Order</a
             >
           </li>
+          <li v-if="isLogin" @click="moveToRoute('Book Club')">
+            <a
+              class="main-nav-link"
+              :class="{ active: path === '/book-club' }"
+              href="#"
+              >Book Club</a
+            >
+          </li>
           <li v-if="isLogin" @click="logoutHandler">
             <a class="main-nav-link nav-cta" href="#">Logout</a>
           </li>

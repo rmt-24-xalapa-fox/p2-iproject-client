@@ -726,3 +726,74 @@ body {
 .order-card-container .flip-card {
   transform: scale(0.9);
 }
+
+/* ********************** */
+/* BOOK CLUB CONTAINER */
+/* ********************** */
+
+.book-club-container {
+  background-color: #debc9f;
+  min-height: 100px;
+  max-width: 1000px;
+
+  padding: 4rem;
+  margin: 6rem auto;
+  border-radius: 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  color: rgb(19, 19, 19);
+}
+
+.book-club-container form {
+  display: flex;
+  gap: 3rem;
+}
+
+.book-club-container form input {
+  width: 80%;
+  font-size: 1.6rem;
+  padding: 1.6rem;
+  border-radius: 1.2rem;
+  border: none;
+  border: 1px solid transparent;
+}
+
+.book-club-container form input:focus {
+  outline: none;
+  border: 1px solid #cf711f;
+}
+
+.book-club-container form button {
+  width: 20%;
+}
+
+.chat-window {
+  background: #fafafa;
+  padding: 3rem 2rem;
+  border-radius: 1rem;
+  font-size: 1.6rem;
+}
+.single {
+  margin: 1.5rem 0;
+}
+.created-at {
+  display: block;
+  color: #999;
+  margin-bottom: 0.8rem;
+  font-size: 1.4rem;
+}
+.name {
+  font-weight: bold;
+  margin-right: 0.9rem;
+  background-color: #f1cca8;
+  padding: 0.8rem;
+  border-radius: 0.7rem;
+}
+.messages {
+  max-height: 40rem;
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}

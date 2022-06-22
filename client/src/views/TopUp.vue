@@ -41,19 +41,16 @@
     >
       <div class="row" style="margin-top: 30px; margin-bottom: 30px">
         <div class="col-12">
-          <label>Or invite your friend with this link</label>
+          <h6>Or invite your friend with this link</h6>
         </div>
         <div class="col-12">
-          <label>http://gachamon.com/register?referal=1</label>
+          <label style="color: blue">{{ userReferralLink }}</label>
         </div>
         <div class="col-12">
-          <label>or with QRCODE</label>
+          <h6>or with QRCODE</h6>
         </div>
         <div class="col-12">
-          <img
-            style="height: 200px; width: 200px"
-            src="https://cdn1.vectorstock.com/i/1000x1000/00/10/qr-code-sample-with-text-i-love-you-vector-26810010.jpg"
-          />
+          <img style="height: 200px; width: 200px" :src="userQrCode" />
         </div>
       </div>
     </div>
@@ -62,5 +59,17 @@
   </div>
 </template>
 <script>
-export default {};
+import { mapState, mapActions } from "pinia";
+import { useMainStore } from "../stores";
+export default {
+  methods: {
+    ...mapActions(useMainStore, ["fetchReferralData"]),
+  },
+  computed: {
+    ...mapState(useMainStore, ["userReferralLink", "userQrCode"]),
+  },
+  created() {
+    this.fetchReferralData();
+  },
+};
 </script>

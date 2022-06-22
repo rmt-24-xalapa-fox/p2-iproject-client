@@ -45,6 +45,10 @@
         </div>
         <div class="col-12">
           <label style="color: blue">{{ userReferralLink }}</label>
+          <button
+            style="margin-left: 10px; height: 20px"
+            class="btn btn-primary"
+          ></button>
         </div>
         <div class="col-12">
           <h6>or with QRCODE</h6>

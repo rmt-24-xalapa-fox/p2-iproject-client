@@ -2,11 +2,13 @@
 import { mapActions, mapState } from 'pinia';
 import { useCounterStore } from '../stores/counter';
 import { StripeCheckout } from '@vue-stripe/vue-stripe'
+import TableRowUnit from '../components/TableRowUnit.vue';
 
 export default {
     name: "RentalanInfo",
     components: {
-        StripeCheckout
+        StripeCheckout,
+        TableRowUnit
     },
     data() {
         this.publishableKey = "pk_test_51LD3zSGsdBMqOjdKIb4BRSiGTvU83wzJtWzk6XgbMSsiihtxfS1wovHiyicDl3Q9qWqLvnbN2Fpj6NsGn6fLovfI00Aq3CB98E"
@@ -23,10 +25,11 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useCounterStore, ["fetchRentalanById", "hitStripe"]),
+        ...mapActions(useCounterStore, ["fetchRentalanById", "hitStripe", "bookedUnit"]),
 
-        submit() {
+        submit(id) {
             this.hitStripe()
+            this.bookedUnit(id)
         }
     },
     computed: {
@@ -56,18 +59,16 @@ export default {
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(unit, i) in perRentalan.Units" :key="unit.id">
+                <TableRowUnit v-for="(unit, i) in perRentalan.Units" :key="unit.id" :unit="unit, i" />
+                <!-- <tr v-for="(unit, i) in perRentalan.Units" :key="unit.id">
                     <th scope="row">{{ i + 1 }}</th>
                     <td>{{ unit.psType }}</td>
                     <td class="btn-outline-success">{{ unit.status }}</td>
-                    <!-- <Stripe-checkout ref="checkoutRef" mode="payment" :pk="publishableKey" :line-items="lineItems"
-                        :success-url="successURL" :cancel-url="cancelURL" @loading="v => loading = v" /> -->
                     <td>
-                        <button class="btn btn-success" @click="submit" type="submit">Booked</button>
+                        <button v-if="unit.status==='available'" class="btn btn-success" @click="submit(unit.id)" type="submit">Booked</button>
                     </td>
 
-                    <!-- <button @click="submit" type="button" class="btn btn-success">Book</button> -->
-                </tr>
+                </tr> -->
 
             </tbody>
         </table>

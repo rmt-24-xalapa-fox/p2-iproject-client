@@ -5,7 +5,7 @@ import axios from 'axios'
 export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
-    isLogin: false,
+    isLogin: localStorage.getItem("access_token"),
     baseUrl: 'http://localhost:3000',
     gameNews: [],
     rentalans: [],
@@ -96,14 +96,16 @@ export const useCounterStore = defineStore({
       } catch (err) {
         console.log(err);
       }
+    },
+
+    async bookedUnit(id) {
+      try {
+        const response = await axios.patch(this.baseUrl + `/rentalan/${id}`)
+        console.log(response);
+      } catch {
+        console.log(err);
+      }
     }
-    // async payment() {
-    //   try {
-    //     const response = await axios.get('https://buy.stripe.com/test_4gw4ih9En5013EQ8ww')
-    //   } catch(err) {
-    //     console.log(err);
-    //   }
-    // }
 
   },
 });

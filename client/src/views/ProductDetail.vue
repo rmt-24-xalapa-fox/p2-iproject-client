@@ -7,22 +7,20 @@ export default {
   name: "ProductDetail",
     data() {
         return {
-            productId: this.productId
+            productId: this.parameter
         }
   },
   components: {
     DetailCard
   },
   methods: {
-    ...mapActions(useCounter, ["fetchOneProduct"]),
+    ...mapActions(useCounter, ["fetchOneProduct", "clickDetail"]),
   },
-  created() {
-    if (!this.products) {
-        this.fetchOneProduct(this.productId)
-    }
-  },
-  computed: {
-    ...mapState(useCounter, ["products", "productId"]),
+    computed: {
+      ...mapState(useCounter, ["products", "parameter"]),
+    },
+  created() {    
+    this.fetchOneProduct(this.productId)
   },
 };
 </script>

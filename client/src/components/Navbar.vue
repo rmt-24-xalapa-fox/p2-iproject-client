@@ -35,7 +35,7 @@ export default {
     <footer class="footer fixed-bottom" style="background-color: #ffb703">
           <div class="my-auto">
             <div class="copyright text-center my-auto">
-              <span style="color:white">Footer</span>
+              <span>Copyright GalihSadhira</span>
             </div>
           </div>
         </footer>

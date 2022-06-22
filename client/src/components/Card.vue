@@ -10,7 +10,7 @@ export default {
     Buttons
   },
   methods: {
-    ...mapActions(useCounter, ['deleteProduct', 'fetchOneProduct']),
+    ...mapActions(useCounter, ['deleteProduct', 'fetchOneProduct','clickDetail']),
     rupiahConverter(value) {
       const formatter = new Intl.NumberFormat("en-ID", {
         style: "currency",
@@ -27,7 +27,7 @@ export default {
 
 <template>
   <div class="col-4 mb-3">
-    <div class="card p-3 rounded-3" @click="fetchOneProduct(products.id)">
+    <div class="card p-3 rounded-3">
       <div class="row align-items-center" style="height: 125px">
         <div class="col-3">
           <img
@@ -56,8 +56,19 @@ export default {
         </div>
       </div>
     </div>
-        <div class="col-4" style="margin-top:10px; margin-left: 300px;">
-            <Buttons button-name="Delete" class="btn-danger" @click="deleteProduct(products.id)"/>
+    <div class="row">
+        <div class="row" style="margin-top:10px; margin-left: 255px;">
+        <div class="col-4">
+          <Buttons button-name="Edit" class="btn-warning" @click="clickDetail(products.id)"/>
         </div>
+        <div class="col-4">
+          <Buttons button-name="Delete" class="btn-danger" @click="deleteProduct(products.id)"/>
+        </div>
+        </div>
+    </div>
   </div>
 </template>
+
+<style scoped>
+
+</style>

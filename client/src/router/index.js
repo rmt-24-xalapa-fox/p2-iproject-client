@@ -27,6 +27,11 @@ const router = createRouter({
       name: "Sales",
       component: Sales,
     },
+    {
+      path: "/inge",
+      name: "Sales",
+      component: Sales,
+    },
   ],
 });
 

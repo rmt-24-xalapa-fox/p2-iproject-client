@@ -12,24 +12,28 @@ export default {
   },
   data() {
     return {
-      // dailySales: {
-      //   totalSales: 0,
-      //   totalExpense: 0,
-      //   date: ""
-      // }
+      income: this.todaySales
     }
   },
   methods: {
-    ...mapActions(useCounter, ["createChart", "fetchDailySales", "fetchAllSales"]),
+    ...mapActions(useCounter, ["createChart", "fetchAllSales"]),
 
   },
   computed: {
-    ...mapState(useCounter, ["chart", "sales"]),
-    ...mapWritableState(useCounter, ["dailySales"])
+    ...mapState(useCounter, ["chart", "sales", "todaySales", "todayExpense"]),
+    rupiahConverter(value) {
+    const formatter = new Intl.NumberFormat("en-ID", {
+        style: "currency",
+        currency: "IDR",
+    })
+        .format(value)
+        .replace(/[IDR]/gi, "")
+        .trimStart();
+    return `Rp ${formatter}`;
+    },
   },
   created() {
     this.fetchAllSales()
-    this.fetchDailySales()
     this.createChart()
   }
 };
@@ -60,14 +64,13 @@ export default {
                   <div
                     class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                   >
-                    Earnings
+                    Today Income
                   </div>
                   <div class="h5 mb-0 font-weight-bold text-gray-800">
-                    $40,000
+                    {{todaySales}}
                   </div>
                 </div>
                 <div class="col-auto">
-                  <i class="fas fa-calendar fa-2x text-gray-300"></i>
                 </div>
               </div>
             </div>
@@ -83,10 +86,10 @@ export default {
                   <div
                     class="text-xs font-weight-bold text-success text-uppercase mb-1"
                   >
-                    Expense
+                    Today Expense
                   </div>
                   <div class="h5 mb-0 font-weight-bold text-gray-800">
-                    $215,000
+                    {{todayExpense}}
                   </div>
                 </div>
                 <div class="col-auto">
@@ -106,15 +109,15 @@ export default {
                   <div
                     class="text-xs font-weight-bold text-info text-uppercase mb-1"
                   >
-                    Tasks
+                    Most Sold
                   </div>
                   <div class="row no-gutters align-items-center">
                     <div class="col-auto">
                       <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                        50%
+                        Bloody Mary
                       </div>
                     </div>
-                    <div class="col">
+                    <!-- <div class="col">
                       <div class="progress progress-sm mr-2">
                         <div
                           class="progress-bar bg-info"
@@ -125,7 +128,7 @@ export default {
                           aria-valuemax="100"
                         ></div>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
                 <div class="col-auto">
@@ -145,12 +148,11 @@ export default {
                   <div
                     class="text-xs font-weight-bold text-warning text-uppercase mb-1"
                   >
-                    Pending Requests
+                    Product Sold
                   </div>
                   <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                 </div>
                 <div class="col-auto">
-                  <i class="fas fa-comments fa-2x text-gray-300"></i>
                 </div>
               </div>
             </div>
@@ -171,29 +173,6 @@ export default {
               <h6 class="m-0 font-weight-bold text-primary">
                 Earnings Overview
               </h6>
-              <div class="dropdown no-arrow">
-                <a
-                  class="dropdown-toggle"
-                  href="#"
-                  role="button"
-                  id="dropdownMenuLink"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                </a>
-                <div
-                  class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                  aria-labelledby="dropdownMenuLink"
-                >
-                  <div class="dropdown-header">Dropdown Header:</div>
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </div>
             </div>
             <!-- Card Body -->
             <div class="card-body">

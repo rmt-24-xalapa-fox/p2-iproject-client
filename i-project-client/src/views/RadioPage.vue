@@ -6,6 +6,7 @@ export default {
 </script>
 
 <template>
+<br><br>
   <section class="ftco-section">
     <div class="container">
       <div class="row justify-content-center">
@@ -515,7 +516,7 @@ output {
 #title {
   position: relative;
   display: flex;
-  left: 300px;
+  left: 50px;
 }
 summary {
   display: list-item;

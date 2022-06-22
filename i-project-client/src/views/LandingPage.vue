@@ -11,10 +11,10 @@ export default {
     <p>see the top 10 music and radio station in the world</p>
     <div class="allBtN">
       <div id="signupHome">
-        <a href="signUp.html" class="button">Sign Up</a>
+        <router-link to="/signup" class="button">Sign Up</router-link>
       </div>
       <div id="signinHome">
-        <a href="loginForm.html" class="button">log In</a>
+        <router-link to="/login" class="button">log In</router-link>
       </div>
     </div>
   </div>

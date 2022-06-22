@@ -82,9 +82,11 @@ export default {
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-secondary">Info</button>
+                                
                             </div>
                         </div>
                     </div>
+                    
                     <!-- Card -->
 
                 </div>

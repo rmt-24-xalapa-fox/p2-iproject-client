@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../views/HomePage.vue"
 import LoginPage from "../views/LoginPage.vue"
 import RegiterPage from "../views/RegisterPage.vue"
-// import HomeView from "../views/HomeView.vue";
+import RentalanInfo from "../views/RentalanInfo.vue"
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +17,11 @@ const router = createRouter({
       path: "/home",
       name: "home",
       component: HomePage,
+      children: {
+        path: "/rentlan",
+        name: "rentalan",
+        component: RentalanInfo
+      }
     },
     {
       path: "/login",
@@ -27,6 +33,7 @@ const router = createRouter({
       name: "register",
       component: RegiterPage,
     },
+
     // {
     //   path: "/about",
     //   name: "about",

@@ -1,15 +1,13 @@
 <script>
-import { mapActions, mapState } from 'pinia';
+import { mapActions, mapState, mapWritableState } from 'pinia';
 import { useCounterStore } from '../stores/counter';
-import CurrencyChanger from '../components/CurrencyChanger.vue';
 
 export default {
     name: "HomePage",
-    components: {
-        CurrencyChanger
-    },
+   
     computed: {
-        ...mapState(useCounterStore, ["gameNews", "rentalans"])
+        ...mapState(useCounterStore, ["gameNews", "rentalans"]),
+        ...mapWritableState(useCounterStore, ["isLogin"])
     },
     methods: {
         ...mapActions(useCounterStore, ["fetchGame", "fetchRentalan"]),
@@ -20,15 +18,15 @@ export default {
     created() {
         this.fetchGame()
         this.fetchRentalan()
+        if(localStorage.getItem("access_token")) {
+            this.isLogin = true
+        }
     }
 }
 </script>
 
 <template>
-
-    <CurrencyChanger />
-
-    <div class="container">
+    <div class="container top">
         <div class="row image">
             <div class="col-2">
                 <img src="../assets/img/Aliens-vs-Predator.jpg">
@@ -76,7 +74,7 @@ export default {
                         <div class="card mb-3" style="max-width: 540px;">
                             <div class="row g-0">
                                 <div class="col-md-4">
-                                    <img src="https://mdbcdn.b-cdn.net/wp-content/uploads/2020/06/vertical.webp"
+                                    <img :src="rentalan.iconImage"
                                         alt="Trendy Pants and Shoes" class="img-fluid rounded-start" />
                                 </div>
                                 <div class="col-md-8">
@@ -90,7 +88,8 @@ export default {
                                         </p>
                                     </div>
                                 </div>
-                                <button @click="toDetail(rentalan.id)" class="btn btn-secondary">Info</button>
+                                <p v-if="!isLogin" class="btn btn-secondary">Login to see availability Unit</p>
+                                <button v-if="isLogin" @click="toDetail(rentalan.id)" class="btn btn-dark-moon">Info</button>
                                 
                             </div>
                         </div>
@@ -115,5 +114,15 @@ img {
     height: 150px;
     widows: 100px;
     margin: 10px
+}
+.top {
+    margin-top: 80px;
+}
+.btn-dark-moon {
+    background: #141E30;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: #fff;
+    border: 3px solid #eee;
 }
 </style>

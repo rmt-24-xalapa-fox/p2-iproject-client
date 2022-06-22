@@ -5,6 +5,7 @@ import axios from 'axios'
 export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
+    isLogin: false,
     baseUrl: 'http://localhost:3000',
     gameNews: [],
     rentalans: [],
@@ -80,22 +81,22 @@ export const useCounterStore = defineStore({
       } catch (err) {
         console.log(err);
       }
+    },
+
+    logoutHandler() {
+      localStorage.clear()
+      this.router.push('/')
+    },
+
+    async hitStripe() {
+      try {
+        const response = await axios.post(this.baseUrl + '/create-checkout-session')
+        console.log(response);
+        window.location.href = response.data.url
+      } catch (err) {
+        console.log(err);
+      }
     }
-
-    // async convertCurrency() {
-    //   try {
-    //     const currency = await axios.get('https://currency-converter5.p.rapidapi.com/currency/convert', {
-    //       params: { format: 'json', from: 'AUD', to: 'CAD', amount: '1' },
-    //       headers: {
-    //         'X-RapidAPI-Key': 'dac08d7ad1msh7e736e04a8067eep1ee851jsn280ef9cbb278',
-    //         'X-RapidAPI-Host': 'currency-converter5.p.rapidapi.com'
-    //       }
-    //     })
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // },
-
     // async payment() {
     //   try {
     //     const response = await axios.get('https://buy.stripe.com/test_4gw4ih9En5013EQ8ww')

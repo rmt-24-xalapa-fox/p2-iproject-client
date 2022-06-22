@@ -1,7 +1,7 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import { useCounterStore } from '../stores/counter';
-import {StripeCheckout} from '@vue-stripe/vue-stripe'
+import { StripeCheckout } from '@vue-stripe/vue-stripe'
 
 export default {
     name: "RentalanInfo",
@@ -9,9 +9,9 @@ export default {
         StripeCheckout
     },
     data() {
-        this.publihableKey = "pk_test_51LD3zSGsdBMqOjdKIb4BRSiGTvU83wzJtWzk6XgbMSsiihtxfS1wovHiyicDl3Q9qWqLvnbN2Fpj6NsGn6fLovfI00Aq3CB98E"
+        this.publishableKey = "pk_test_51LD3zSGsdBMqOjdKIb4BRSiGTvU83wzJtWzk6XgbMSsiihtxfS1wovHiyicDl3Q9qWqLvnbN2Fpj6NsGn6fLovfI00Aq3CB98E"
         return {
-            loading:false,
+            loading: false,
             lineItems: [
                 {
                     price: 'price_1LD42KGsdBMqOjdK8Bn5wP92',
@@ -23,11 +23,10 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useCounterStore, ["fetchRentalanById"]),
+        ...mapActions(useCounterStore, ["fetchRentalanById", "hitStripe"]),
 
         submit() {
-            // stripe checkout
-            this.$refs.checkoutRef.redirectToCheckout()
+            this.hitStripe()
         }
     },
     computed: {
@@ -40,12 +39,13 @@ export default {
 </script>
 
 <template>
-    <div>
-        <h2>{{perRentalan.name}}</h2>
-        <p>Address : {{perRentalan.address}}</p>
-        <p>Phone: {{perRentalan.phone}}</p>
+    <div class="atas">
+        <h2>{{ perRentalan.name }}</h2>
+        <p>Address : {{ perRentalan.address }}</p>
+        <p>Phone: {{ perRentalan.phone }}</p>
     </div>
     <div>
+      <h5>List unit of PS you can booked everywhere</h5>
         <table class="table">
             <thead>
                 <tr>
@@ -57,29 +57,28 @@ export default {
             </thead>
             <tbody>
                 <tr v-for="(unit, i) in perRentalan.Units" :key="unit.id">
-                    <th scope="row">{{i+1}}</th>
-                    <td>{{unit.psType}}</td>
-                    <td class="btn-outline-success">{{unit.status}}</td>
-                    <Stripe-checkout
-                    ref="checkoutRef"
-                    mode="payment"
-                    :pk="PublishableKey"
-                    :line-items="lineItems"
-                    :success-url="successURL"
-                    :cancel-url="cancelURL"
-                    @loading="v => loading = v"
-                    />
-                    <td><button @click="submit" type="button" class="btn btn-success">Book</button></td>
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ unit.psType }}</td>
+                    <td class="btn-outline-success">{{ unit.status }}</td>
+                    <!-- <Stripe-checkout ref="checkoutRef" mode="payment" :pk="publishableKey" :line-items="lineItems"
+                        :success-url="successURL" :cancel-url="cancelURL" @loading="v => loading = v" /> -->
+                    <td>
+                        <button class="btn btn-success" @click="submit" type="submit">Booked</button>
+                    </td>
+
+                    <!-- <button @click="submit" type="button" class="btn btn-success">Book</button> -->
                 </tr>
-                
+
             </tbody>
         </table>
     </div>
 </template>
 
 <style scoped>
-template {
-    margin-top: 10px;
+* {
     margin-left: 20px;
+}
+.atas {
+    margin-top: 80px;
 }
 </style>

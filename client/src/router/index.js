@@ -4,15 +4,15 @@ import LoginPage from "../views/LoginPage.vue"
 import RegiterPage from "../views/RegisterPage.vue"
 import RentalanInfo from "../views/RentalanInfo.vue"
 import Success from "../views/Success.vue"
-// import ErrorPage from "../views/ErroPage.vue"
-
+import ErrorPage from "../views/ErrorPage.vue"
+import CurrencyChanger from "../components/CurrencyChanger.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      name: "home",
+      name: "index",
       component: HomePage,
     },
     {
@@ -40,11 +40,16 @@ const router = createRouter({
       name: 'success',
       component: Success
     },
-    // {
-    //   path: '/error',
-    //   name: 'error',
-    //   component: ErrorPage
-    // }
+    {
+      path: '/cancel',
+      name: 'error',
+      component: ErrorPage
+    },
+    {
+      path: '/feature',
+      name: 'feature',
+      component: CurrencyChanger
+    }
     // {
     //   path: "/about",
     //   name: "about",
@@ -56,10 +61,10 @@ const router = createRouter({
   ],
 });
 
-// router.beforeEach((to, from, next) => {
-//   const isAuthenticated = localStorage.getItem("access_token")
-//   if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' })
-//   else next()
-// })
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem("access_token")
+  if ((to.name !== 'login' && to.name !== 'register') && !isAuthenticated) next({ name: 'login' })
+  else next()
+})
 
 export default router;

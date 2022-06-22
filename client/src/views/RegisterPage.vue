@@ -19,12 +19,15 @@ export default {
 <template>
     <section class="vh-100">
         <div class="container py-5 h-100">
+            
             <div class="row d-flex align-items-center justify-content-center h-100">
+                <h3>Register</h3>
                 <div class="col-md-8 col-lg-7 col-xl-6">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                    <img src='../assets/img/stik ps.jpg'
                         class="img-fluid" alt="Phone image">
                 </div><br>
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                    <p><strong>World no.1 easiest register. Just fill the email and password!</strong></p>
                     <form>
                         <!-- Email input -->
                         <div class="form-outline mb-4">
@@ -53,9 +56,16 @@ export default {
 
                         <!-- Submit button -->
                         <button @click.prevent="registerHandler(this.email, this.password)" type="submit" class="btn btn-primary btn-lg btn-block">Sign up</button>
+                        <router-link class="btn btn-primary btn-lg btn-block" to="/login">Back to Login</router-link>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 </template>
+
+<style scoped>
+h3 {
+    text-align: center;
+}
+</style>

@@ -301,5 +301,17 @@ export const useStore = defineStore({
         this.showError(err);
       }
     },
+    async readOrders() {
+      try {
+        const response = await axios.get(`${this.baseUrl}/orders`, {
+          headers: {
+            access_token: this.accessToken,
+          },
+        });
+        console.log(response.data);
+      } catch (err) {
+        this.showError(err);
+      }
+    },
   },
 });

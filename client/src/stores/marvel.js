@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export const useMaarvelStore = defineStore({
   id: 'marvel',
   state: () => ({
-    // url: 'http://localhost:5550/marvel',
-    url: 'https://redmarvel24.herokuapp.com/marvel',
+    // url: 'https://redmarvel24.herokuapp.com/marvel',
+    url: 'http://localhost:5550/marvel',
     characterId: 0,
     character: [],
     characters: [],
@@ -24,6 +25,7 @@ export const useMaarvelStore = defineStore({
     comicSize: "portrait_xlarge.jpg",
     ID_Comic: 0,
     year: "",
+    QR_Code: "",
   }),
   getters: {
     doubleCount: (state) => state.counter * 2
@@ -47,7 +49,11 @@ export const useMaarvelStore = defineStore({
           el.url = `${el.thumbnail.path}/${this.size}`;
         });
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${error.response.data.message}`,
+        });
       }
     },
 
@@ -70,20 +76,44 @@ export const useMaarvelStore = defineStore({
         });
         this.year = "";
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${error.response.data.message}`,
+        });
       }
     },
 
     async getDetailComics(id) {
       try {
-        console.log(id, 'okeeeeeee');
+
         const { data } = await axios.get(
           `${this.url}/comics/${id}`
         );
         console.log(data);
 
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${error.response.data.message}`,
+        });
+      }
+    },
+
+    async getQRCode() {
+      try {
+        const { data } = await axios.get(
+          `https://api.happi.dev/v1/qrcode?apikey=185ab93aPadgXSlQHNyfKxq88A4RJJTEuCRBtN6fKFxLrcgEKRw41j81&data=${this.imageUrl}`
+        )
+
+        this.QR_Code = data.qrcode
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${error.response.data.message}`,
+        });
       }
     }
   }

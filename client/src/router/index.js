@@ -4,6 +4,7 @@ import CardCharacters from '../views/card-characters.vue'
 import Comics from '../views/comicsBook.vue'
 import DetailCharacter from '../views/datailCardCharacter.vue'
 import Login from '../views/login.vue'
+import Register from '../views/register.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +23,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     },
     {
       path: '/comics',

@@ -19,7 +19,6 @@ export default {
   methods: {
     async login() {
       try {
-        console.log("okeee");
         const { data } = await axios.post(`${this.url}/login`, {
           email: this.email,
           password: this.password,
@@ -57,7 +56,6 @@ export default {
         })
         .then((res) => {
           const { access_token, email } = res.data;
-
           //     //* set local storage
           localStorage.setItem("access_token", access_token);
 
@@ -128,20 +126,34 @@ export default {
         data-login_uri="https://your.domain/your_login_endpoint"
         data-auto_prompt="false"
       ></a>
-      <a
-        class="g_id_signin"
-        data-type="standard"
-        data-size="large"
-        data-theme="outline"
-        data-text="sign_in_with"
-        data-shape="rectangular"
-        data-logo_alignment="left"
-      ></a>
     </form>
+    <div class="to-register">
+      Not a member?
+      <router-link to="/register"><a>Register Here</a></router-link>
+    </div>
   </div>
 </template>
 
 <style>
+a #buttonDiv {
+  margin-top: 20px;
+  /* margin-bottom: 50px; */
+}
+
+.to-register {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  text-align: center;
+  font-size: 15px;
+  /* margin-top: -30px; */
+}
+
+.to-register a {
+  font-size: 17px;
+  margin-left: 5px;
+}
 /* html { */
 /* height: 100%; */
 /* } */
@@ -158,6 +170,7 @@ body {
   left: 50%;
   width: 400px;
   padding: 40px;
+  height: 500px;
   transform: translate(-50%, -50%);
   background: rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
@@ -225,7 +238,7 @@ justify-content: center;
   text-transform: uppercase;
   overflow: hidden;
   transition: 0.5s;
-  margin-top: 40px;
+  margin-top: 20px;
   letter-spacing: 4px;
   align-items: center;
   justify-content: center;

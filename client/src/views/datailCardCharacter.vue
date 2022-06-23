@@ -6,16 +6,17 @@ export default {
   name: "DetailCard",
 
   methods: {
-    ...mapActions(useMaarvelStore, ["getDetailCharacter"]),
+    ...mapActions(useMaarvelStore, ["getDetailCharacter", "getQRCode"]),
   },
   computed: {
-    ...mapState(useMaarvelStore, ["description", "imageUrl", "name"]),
+    ...mapState(useMaarvelStore, ["description", "imageUrl", "name", "QR_Code"]),
     ...mapWritableState(useMaarvelStore, ["isCharacters"]),
   },
 
   mounted() {
     // this.getDetailCharacter()
-    this.isCharacters = false
+    this.isCharacters = false;
+    this.getQRCode();
   },
 };
 </script>
@@ -23,25 +24,28 @@ export default {
 <template>
   <section class="tv-content">
     <!-- <div class="bg"> -->
-      <div class="content">
-        <div class="image">
-          <img :src="imageUrl" />
+    <div class="content">
+      <div class="image">
+        <img :src="imageUrl" />
+      </div>
+      <div class="info">
+        <div class="title">
+          <a href="#">
+            <h2>{{ name }}</h2>
+          </a>
+          <!-- <span>(2019)</span> -->
         </div>
-        <div class="info">
-          <div class="title">
-            <a href="#">
-              <h2>{{ name }}</h2>
-            </a>
-            <!-- <span>(2019)</span> -->
+        <div class="about">
+          <div class="overview">
+            <h3>Description</h3>
+            <p>{{ description }}.</p>
           </div>
-          <div class="about">
-            <div class="overview">
-              <h3>Description</h3>
-              <p>{{ description }}.</p>
-            </div>
-          </div>
+        </div>
+        <div class="qr-code">
+          <img :src="this.QR_Code" alt="" />
         </div>
       </div>
+    </div>
     <!-- </div> -->
   </section>
 </template>
@@ -49,6 +53,12 @@ export default {
 <style>
 html {
   font-size: 10px;
+}
+
+.qr-code img {
+  width: 20%;
+  margin-left: 440px;
+  margin-top: 10px;
 }
 
 .tv-content {
@@ -70,7 +80,7 @@ h3 {
 
 p {
   font-size: 20px;
-    margin: 3px 10px 10px 30px;
+  margin: 3px 10px 10px 30px;
 }
 a {
   color: #fff;
@@ -78,10 +88,14 @@ a {
 
 .content {
   display: flex;
-  margin: 200px auto auto 545px;
+  /* margin: 200px auto auto 545px; */
+  position: absolute;
   width: 100rem;
   height: 55rem;
+  top: 20%;
+  left: 30%;
 }
+
 .image {
   width: 40rem;
 }

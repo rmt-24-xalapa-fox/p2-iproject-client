@@ -25,7 +25,6 @@ export default {
         this.isLogin = true;
         const { data } = await axios.get(`${this.url}/new-comics`);
 
-        console.log(data);
         this.totalComics = data.data.total;
         const result = data.data.results;
 

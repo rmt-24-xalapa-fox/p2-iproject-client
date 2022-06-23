@@ -18,11 +18,11 @@ export default {
 
   computed: {
     ...mapState(useMaarvelStore, ["url", "comics"]),
-    ...mapWritableState(useMaarvelStore, ["isComics", "isCharacters", "pageComics", "totalPage"]),
+    ...mapWritableState(useMaarvelStore, ["isComics", "isCharacters", "pageComics", "totalPage", "ID_Comic"]),
   },
 
   methods: {
-    ...mapActions(useMaarvelStore, ["fetchComics"]),
+    ...mapActions(useMaarvelStore, ["fetchComics", "getDetailComics"]),
     
     previous() {
       this.pageComics = this.pageComics - 1;
@@ -76,7 +76,7 @@ export default {
             <ul class="page">
               <li></li>
               <li>
-                <a class="btn-comics" href="#">Download</a>
+                <a class="btn-comics" href="#" v-on:click.prevent="getDetailComics(comic.id)">Download</a>
               </li>
               <li></li>
               <li></li>

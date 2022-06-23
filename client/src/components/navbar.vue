@@ -74,22 +74,6 @@ export default {
 
 <template>
   <header>
-    <!-- <div class="main">
-      <div class="top half">
-        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/avengers2.jpg" />
-      </div>
-      <div class="bottom half">
-        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/avengers2.jpg" />
-      </div>
-      <button class="super-button">ENTER</button>
-      <div class="overlay"></div>
-      <div class="button-line left">
-        <div class="inner"></div>
-      </div>
-      <div class="button-line right">
-        <div class="inner"></div>
-      </div>
-    </div> -->
     <div class="nav-bar">
       <!-- <div class="hello">Welcome!</div> -->
       <nav>

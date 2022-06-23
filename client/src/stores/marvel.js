@@ -10,7 +10,7 @@ export const useMaarvelStore = defineStore({
     characters: [],
     comics: [],
     imageUrl: '',
-    name:'',
+    name: '',
     description: '',
     isComics: false,
     isCharacters: false,
@@ -20,6 +20,7 @@ export const useMaarvelStore = defineStore({
     alphabet: "A",
     pageComics: 1,
     comicSize: "portrait_xlarge.jpg",
+    ID_Comic: 0,
     year: "",
   }),
   getters: {
@@ -54,6 +55,8 @@ export const useMaarvelStore = defineStore({
         const { data } = await axios.get(
           `${this.url}/comics?page=${this.pageComics}&year=${Number(this.year)}`
         );
+
+        console.log(data);
         this.totalComics = data.data.total;
         this.totalPage = Math.ceil(this.totalComics / 20);
 
@@ -68,5 +71,18 @@ export const useMaarvelStore = defineStore({
         console.log(error);
       }
     },
+
+    async getDetailComics(id) {
+      try {
+        console.log(id, 'okeeeeeee');
+        const { data } = await axios.get(
+          `${this.url}/comics/${id}`
+        );
+        console.log(data);
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 })

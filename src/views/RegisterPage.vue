@@ -57,7 +57,7 @@
 
         <div>
           <label class="text-sm font-medium text-gray-700">
-            Profile Picture
+            Profile Picture (optional)
           </label>
           <div
             class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
@@ -126,18 +126,30 @@ export default {
       this.profilePicture = event.target.files[0];
     },
     async registerHandler() {
-      const formField = {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        profilePicture: this.profilePicture,
-      };
-      let formData = new FormData();
-      for (let key in formField) {
-        formData.append(key, formField[key]);
+      try {
+        const formField = {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          profilePicture: this.profilePicture,
+        };
+        let formData = new FormData();
+        for (let key in formField) {
+          formData.append(key, formField[key]);
+        }
+        let res = await axiosInstance.post("/register", formData);
+        res = res.data;
+        const succMsg = res.message;
+        swal("Success", succMsg, "success");
+        this.$router.push("/login");
+      } catch (err) {
+        const errType = err.response.data.statusCode;
+        let errMsg = err.response.data.error.message;
+        if (errType === 400) {
+          errMsg = errMsg.join(", ");
+        }
+        swal("Error", errMsg, "error");
       }
-      await axiosInstance.post("/register", formData);
-      this.$router.push("/login");
     },
   },
 };

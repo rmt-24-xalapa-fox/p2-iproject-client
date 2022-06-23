@@ -8,6 +8,12 @@
         ColorSrc
       </router-link>
       <div v-if="isLogin">
+        <router-link
+          class="mx-6 font-medium hover:text-rose-600"
+          to="/generate"
+        >
+          Generate
+        </router-link>
         <button
           id="dropdownButton"
           @click.prevent="toggleDropdown"
@@ -17,7 +23,7 @@
         </button>
 
         <div
-          class="-ml-9 absolute hidden flex-col rounded bg-white px-4 py-4 gap-4 shadow-lg w-28"
+          class="ml-22 absolute hidden flex-col rounded bg-white px-4 py-4 gap-4 shadow-lg w-28"
           id="dropdown"
         >
           <router-link to="/profile/edit" class="hover:font-medium"

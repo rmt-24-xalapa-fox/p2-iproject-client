@@ -20,6 +20,7 @@ export default {
 
         localStorage.setItem("id", data.id);
         localStorage.setItem("email", data.email);
+        localStorage.setItem("username", data.username);
         localStorage.setItem("access_token", data.access_token);
 
         this.$router.push("/");

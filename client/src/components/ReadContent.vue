@@ -1,15 +1,15 @@
 <script>
-import ReadContentCard from './ReadContentCard.vue';
+import ReadContentCard from "./ReadContentCard.vue";
 export default {
   name: "ReadContent",
   components: {
-    ReadContentCard
+    ReadContentCard,
   },
 };
 </script>
 <template>
   <div class="content">
-    <ReadContentCard/>
+    <ReadContentCard />
   </div>
 </template>
 

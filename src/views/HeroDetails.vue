@@ -23,7 +23,7 @@ export default {
         <div class="lg:w-1/3">
           <img :src="heroDetailImage.imageUrl" alt="">
         </div>
-        <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 pr-7 justify-evenly rounded-r-lg">
+        <div class="lg:w-1/2 w-full lg:pl-10 mt-6 lg:mt-0 pr-7 justify-evenly rounded-r-lg">
           <h2 class="text-2xl font-semibold title-font text-white tracking-widest">{{ heroById.hero_name }}</h2>
           <div class="flex mb-4 mt-2">
             <img v-if="heroById.hero_role === 'Tank'" class="w-7 h-7 mr-2"
@@ -47,25 +47,25 @@ export default {
           </div>
           <p class="leading-relaxed text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente sit
             laborum animi
-            corporis eaque adipisci fugiat sint ullam nesciunt, aliquid molestiae inventore aliquam explicabo id labore
-            reiciendis a voluptatum quis.</p>
-          <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5 justify-between">
-
+            corporis eaque adipisci fugiat sint ullam nesciunt, aliquid molestiae inventore aliquam explicabo id l
+            voluptatum quis.</p>
+          <div class="flex mt-6 items-center border-b-2 border-gray-200 mb-5">
+            <div class="">
+              <p class="leading-relaxed text-justify mb-2">
+                Ability : {{ heroById.hero_overview.hero_ability }}
+              </p>
+              <p class="leading-relaxed text-justify mb-2">
+                Difficulty : {{ heroById.hero_overview.hero_difficulty }}
+              </p>
+              <p class="leading-relaxed text-justify mb-2">
+                durability : {{ heroById.hero_overview.hero_durability }}
+              </p>
+              <p class="leading-relaxed text-justify mb-2">
+                offense : {{ heroById.hero_overview.hero_offence }}
+              </p>
+            </div>
           </div>
-          <div class="">
-            <p class="leading-relaxed text-justify mb-2">
-              Ability : {{ heroById.hero_overview.hero_ability }}
-            </p>
-            <p class="leading-relaxed text-justify mb-2">
-              Difficulty : {{ heroById.hero_overview.hero_difficulty }}
-            </p>
-            <p class="leading-relaxed text-justify mb-2">
-              durability : {{ heroById.hero_overview.hero_durability }}
-            </p>
-            <p class="leading-relaxed text-justify mb-2">
-              offense : {{ heroById.hero_overview.hero_offence }}
-            </p>
-          </div>
+          <iframe class="text-center" :src="heroDetailImage.model"> </iframe>
         </div>
       </div>
     </div>

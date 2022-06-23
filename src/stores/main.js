@@ -55,7 +55,8 @@ export const useMainStore = defineStore("main", {
         swal("Success", succMsg, "success");
         this.router.push("/");
       } catch (err) {
-        console.log(err);
+        const errMsg = err.response.data.error.message;
+        swal("Error", errMsg, "error");
       }
     },
     async readUser() {
@@ -81,7 +82,6 @@ export const useMainStore = defineStore("main", {
         );
         window.snap.pay(res.data.token, {
           onSuccess: async function (result) {
-            console.log("masuk success");
             let res = await axiosInstance.patch(
               "/profile/upgradePlan",
               {},

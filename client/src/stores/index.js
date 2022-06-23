@@ -25,7 +25,7 @@ export const useMainStore = defineStore({
           },
         });
         this.fetchGachaCoin();
-
+        //
         Swal.fire({
           title: response.data.name,
           text: response.data.message,

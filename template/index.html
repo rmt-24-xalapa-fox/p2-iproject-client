@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+    />
+    <style>
+      /* navbar */
+      .header {
+        display: flex;
+        padding: 10px;
+        background: #000000;
+        color: white;
+        font-size: 30px;
+        min-width: 100vw;
+      }
+      .header a {
+        padding-left: 30px;
+        padding-right: 30px;
+        color: white;
+      }
+      .pointer {
+        cursor: pointer;
+      }
+      .header h1 {
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+      /* end navbar */
+
+      /* SLIDESHOW */
+      * {
+        box-sizing: border-box;
+      }
+
+      /* Position the image container (needed to position the left and right arrows) */
+      .container {
+        position: relative;
+      }
+
+      /* Hide the images by default */
+      .mySlides {
+        display: none;
+      }
+
+      /* Add a pointer when hovering over the thumbnail images */
+      .cursor {
+        cursor: pointer;
+      }
+
+      /* Next & previous buttons */
+      .prev,
+      .next {
+        cursor: pointer;
+        position: absolute;
+        top: 40%;
+        width: auto;
+        padding: 16px;
+        margin-top: -50px;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
+      /* Position the "next button" to the right */
+      .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+      }
+
+      /* On hover, add a black background color with a little bit see-through */
+      .prev:hover,
+      .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+
+      /* Number text (1/3 etc) */
+      .numbertext {
+        color: #f2f2f2;
+        font-size: 12px;
+        padding: 8px 12px;
+        position: absolute;
+        top: 0;
+      }
+
+      /* Container for image text */
+      .caption-container {
+        text-align: center;
+        background-color: #222;
+        padding: 2px 16px;
+        color: white;
+      }
+
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+
+      /* Six columns side by side */
+      .column {
+        float: left;
+        width: 16.66%;
+      }
+
+      /* Add a transparency effect for thumnbail images */
+      .demo {
+        opacity: 0.6;
+      }
+
+      .active,
+      .demo:hover {
+        opacity: 1;
+      }
+      /* END SLIDESHOW */
+      .menu {
+        display: flex;
+      }
+
+      /* List Gunung */
+      .data-card {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+      }
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        width: 40%;
+        height: auto;
+        margin-top: 50px;
+        text-align: center;
+      }
+      .card img {
+        width: 100%;
+      }
+      .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      }
+      .container {
+        padding: 15px 16px;
+      }
+      .input-card {
+        padding: auto;
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        padding: 20px;
+        padding-left: 100px;
+        padding-top: 50px;
+      }
+      .pointer {
+        cursor: pointer;
+      }
+      /* end List Gunung */
+
+      /* Gunung By Id */
+      .page {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 50px;
+      }
+      .picture {
+        height: 500px;
+      }
+      .entity-id {
+        height: 100%;
+        width: 100%;
+      }
+      .barcode {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+      }
+      /* global */
+      .middle {
+        flex-direction: column;
+        justify-content: center;
+      }
+      /* end Gunung By Id */
+    </style>
+    <title>Simaksi Online</title>
+  </head>
+  <body>
+    <!-- Nabar -->
+    <nav class="col-12">
+      <div class="header">
+        <div class="judul">
+          <h1>Integrasi Simaksi Online</h1>
+        </div>
+        <div class="menu">
+          <a class="pointer" style="text-decoration: none">List Gunung</a>
+          <a class="pointer" style="text-decoration: none">My License</a>
+          <a class="pointer" style="text-decoration: none">Logout</a>
+          <a class="pointer" style="text-decoration: none">Login</a>
+        </div>
+      </div>
+    </nav>
+    <!-- End Nabar -->
+
+    <div class="menu row">
+      <!-- Sidebar -->
+      <div class="col-3 border sidebar">
+        <h1>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore, sit
+          architecto iste autem totam nulla reprehenderit sapiente quidem, quis
+          eius molestias recusandae adipisci. Tempore reprehenderit doloremque
+          ipsum asperiores earum? Ex?
+        </h1>
+      </div>
+      <!-- end Sidebar -->
+
+      <!-- SLIDESHOW -->
+      <!-- Container for the image gallery -->
+      <div class="container col-9">
+        <!-- Full-width images with number text -->
+        <div class="mySlides">
+          <div class="numbertext">1 / 6</div>
+          <img
+            src="https://img.inews.co.id/media/822/files/inews_new/2022/04/10/10_hal_menarik_tentang_gunung_gede_pangrango.jpg"
+            style="width: 100%"
+          />
+        </div>
+
+        <div class="mySlides">
+          <div class="numbertext">2 / 6</div>
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/1/12/MtmerbabuA45d.jpg"
+            style="width: 100%"
+          />
+        </div>
+
+        <div class="mySlides">
+          <div class="numbertext">3 / 6</div>
+          <img
+            src="https://asset.kompas.com/crops/mFdBEa8GySNDniLD7cudDsNhzJQ=/37x0:951x609/750x500/data/photo/2017/06/02/3529039154.jpg"
+            style="width: 100%"
+          />
+        </div>
+
+        <!-- Next and previous buttons -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        <!-- Image text -->
+        <div class="caption-container">
+          <p id="caption"></p>
+        </div>
+        <!-- Thumbnail images -->
+        <div class="row">
+          <div class="column">
+            <img
+              class="demo cursor"
+              src="https://img.inews.co.id/media/822/files/inews_new/2022/04/10/10_hal_menarik_tentang_gunung_gede_pangrango.jpg"
+              style="width: 100%"
+              onclick="currentSlide(1)"
+              alt="Gunung Gede"
+            />
+          </div>
+          <div class="column">
+            <img
+              class="demo cursor"
+              src="https://upload.wikimedia.org/wikipedia/commons/1/12/MtmerbabuA45d.jpg"
+              style="width: 100%"
+              onclick="currentSlide(2)"
+              alt="Gunung Merbabu"
+            />
+          </div>
+          <div class="column">
+            <img
+              class="demo cursor"
+              src="https://asset.kompas.com/crops/mFdBEa8GySNDniLD7cudDsNhzJQ=/37x0:951x609/750x500/data/photo/2017/06/02/3529039154.jpg"
+              style="width: 100%"
+              onclick="currentSlide(3)"
+              alt="Gunung Slamet"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- END SLIDESHOW -->
+    </div>
+
+    <div class="row">
+      <!-- list -->
+      <h1>List Gunung</h1>
+
+      <!-- card -->
+      <div class="col-12 data-card">
+        <div class="card pointer">
+          <img
+            src="https://img.inews.co.id/media/822/files/inews_new/2022/04/10/10_hal_menarik_tentang_gunung_gede_pangrango.jpg"
+          />
+          <div class="container">
+            <h4 class="middle input-card">Gunung Gede Pangrango</h4>
+            <p>
+              Gunung Gede-Pangrango merupakan dua gunung yang terdiri dari
+              gunung Gede dan Gunung Pangrango. Walaupun seperti menyatu,
+              ketinggian gunung Gede Pangrango berbeda. Ketinggian Gunung Gede
+              adalah 2.958 m dpl (diatas permukaan laut). Sedangkan ketinggian
+              gunung Pangrango adalah 3.019 m dpl. Kedua gunung ini dihubungkan
+              oleh gigir gunung serupa sadel pada ketinggian +_ 2.400 m dpl,
+              yang kita kenal saat ini sebagai daerah Kandang Badak. Gunung
+              Pangrango yang lebih tinggi , memiliki puncak berbentuk kerucut
+              yang relatif mulus. Ini menandakan tipe gunung yang usianya
+              relatif masih muda dan belum pernah meletus. Untuk Gunung Gede
+              walau ketinggiannya lebih rendah, namun masih aktif. Ini daapat
+              kita lihat dari keberadaan kawah-kawah aktif antara lain Kawah
+              Wadon, Kawah Ratu, Kawah Baru, dan Kawah Lanang.Titik puncak
+              Gunung Gede terletak di atas tebing atau gigir kawah yang baru,
+              namun gigir ini tak lagi utuh karena telah dihancurkan oleh
+              letusan volkanik yang terjadi berulang kali. Gigir yang lebih tua
+              adalah punggung gunung yang dikenal sebagai Gunung Gumuruh (2.929
+              m dpl); kawah-kawah dan puncak Gunung Gede yang sekarang terletak
+              pada bekas kawah Gunung Gumuruh lama yang telah punah. Di antara
+              gigir Gunung Gede dan gigir Gunung Gumuruh itulah terletak lembah
+              dataran tinggi bernama Alun-alun Suryakancana (2.750 m dpl), yang
+              penuh tertutupi oleh rumpun edelweis jawa yang cantik.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- card -->
+      <div class="col-12 data-card">
+        <div class="card pointer">
+          <img
+            src="https://img.inews.co.id/media/822/files/inews_new/2022/04/10/10_hal_menarik_tentang_gunung_gede_pangrango.jpg"
+          />
+          <div class="container">
+            <h4 class="middle input-card">Gunung Gede Pangrango</h4>
+            <p>
+              Gunung Gede-Pangrango merupakan dua gunung yang terdiri dari
+              gunung Gede dan Gunung Pangrango. Walaupun seperti menyatu,
+              ketinggian gunung Gede Pangrango berbeda. Ketinggian Gunung Gede
+              adalah 2.958 m dpl (diatas permukaan laut). Sedangkan ketinggian
+              gunung Pangrango adalah 3.019 m dpl. Kedua gunung ini dihubungkan
+              oleh gigir gunung serupa sadel pada ketinggian +_ 2.400 m dpl,
+              yang kita kenal saat ini sebagai daerah Kandang Badak. Gunung
+              Pangrango yang lebih tinggi , memiliki puncak berbentuk kerucut
+              yang relatif mulus. Ini menandakan tipe gunung yang usianya
+              relatif masih muda dan belum pernah meletus. Untuk Gunung Gede
+              walau ketinggiannya lebih rendah, namun masih aktif. Ini daapat
+              kita lihat dari keberadaan kawah-kawah aktif antara lain Kawah
+              Wadon, Kawah Ratu, Kawah Baru, dan Kawah Lanang.Titik puncak
+              Gunung Gede terletak di atas tebing atau gigir kawah yang baru,
+              namun gigir ini tak lagi utuh karena telah dihancurkan oleh
+              letusan volkanik yang terjadi berulang kali. Gigir yang lebih tua
+              adalah punggung gunung yang dikenal sebagai Gunung Gumuruh (2.929
+              m dpl); kawah-kawah dan puncak Gunung Gede yang sekarang terletak
+              pada bekas kawah Gunung Gumuruh lama yang telah punah. Di antara
+              gigir Gunung Gede dan gigir Gunung Gumuruh itulah terletak lembah
+              dataran tinggi bernama Alun-alun Suryakancana (2.750 m dpl), yang
+              penuh tertutupi oleh rumpun edelweis jawa yang cantik.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- card -->
+      <div class="col-12 data-card">
+        <div class="card pointer">
+          <img
+            src="https://img.inews.co.id/media/822/files/inews_new/2022/04/10/10_hal_menarik_tentang_gunung_gede_pangrango.jpg"
+          />
+          <div class="container">
+            <h4 class="middle input-card">Gunung Gede Pangrango</h4>
+            <p>
+              Gunung Gede-Pangrango merupakan dua gunung yang terdiri dari
+              gunung Gede dan Gunung Pangrango. Walaupun seperti menyatu,
+              ketinggian gunung Gede Pangrango berbeda. Ketinggian Gunung Gede
+              adalah 2.958 m dpl (diatas permukaan laut). Sedangkan ketinggian
+              gunung Pangrango adalah 3.019 m dpl. Kedua gunung ini dihubungkan
+              oleh gigir gunung serupa sadel pada ketinggian +_ 2.400 m dpl,
+              yang kita kenal saat ini sebagai daerah Kandang Badak. Gunung
+              Pangrango yang lebih tinggi , memiliki puncak berbentuk kerucut
+              yang relatif mulus. Ini menandakan tipe gunung yang usianya
+              relatif masih muda dan belum pernah meletus. Untuk Gunung Gede
+              walau ketinggiannya lebih rendah, namun masih aktif. Ini daapat
+              kita lihat dari keberadaan kawah-kawah aktif antara lain Kawah
+              Wadon, Kawah Ratu, Kawah Baru, dan Kawah Lanang.Titik puncak
+              Gunung Gede terletak di atas tebing atau gigir kawah yang baru,
+              namun gigir ini tak lagi utuh karena telah dihancurkan oleh
+              letusan volkanik yang terjadi berulang kali. Gigir yang lebih tua
+              adalah punggung gunung yang dikenal sebagai Gunung Gumuruh (2.929
+              m dpl); kawah-kawah dan puncak Gunung Gede yang sekarang terletak
+              pada bekas kawah Gunung Gumuruh lama yang telah punah. Di antara
+              gigir Gunung Gede dan gigir Gunung Gumuruh itulah terletak lembah
+              dataran tinggi bernama Alun-alun Suryakancana (2.750 m dpl), yang
+              penuh tertutupi oleh rumpun edelweis jawa yang cantik.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="page">
+        <div class="col-12 picture">
+          <img
+            class="entity-id"
+            src="https://img.inews.co.id/media/822/files/inews_new/2022/04/10/10_hal_menarik_tentang_gunung_gede_pangrango.jpg"
+            alt="img"
+          />
+        </div>
+
+        <div class="col-6">
+          <!-- <h6 style="padding: 10px">
+            <span>Created By: </span>{{ displayNewsById.User.email }}
+          </h6> -->
+          <h1 style="padding: 10px">Gunung Gede</h1>
+          <p style="padding: 10px">
+            Gunung Gede-Pangrango merupakan dua gunung yang terdiri dari gunung
+            Gede dan Gunung Pangrango. Walaupun seperti menyatu, ketinggian
+            gunung Gede Pangrango berbeda. Ketinggian Gunung Gede adalah 2.958 m
+            dpl (diatas permukaan laut). Sedangkan ketinggian gunung Pangrango
+            adalah 3.019 m dpl. Kedua gunung ini dihubungkan oleh gigir gunung
+            serupa sadel pada ketinggian +_ 2.400 m dpl, yang kita kenal saat
+            ini sebagai daerah Kandang Badak. Gunung Pangrango yang lebih tinggi
+            , memiliki puncak berbentuk kerucut yang relatif mulus. Ini
+            menandakan tipe gunung yang usianya relatif masih muda dan belum
+            pernah meletus. Untuk Gunung Gede walau ketinggiannya lebih rendah,
+            namun masih aktif. Ini daapat kita lihat dari keberadaan kawah-kawah
+            aktif antara lain Kawah Wadon, Kawah Ratu, Kawah Baru, dan Kawah
+            Lanang.Titik puncak Gunung Gede terletak di atas tebing atau gigir
+            kawah yang baru, namun gigir ini tak lagi utuh karena telah
+            dihancurkan oleh letusan volkanik yang terjadi berulang kali. Gigir
+            yang lebih tua adalah punggung gunung yang dikenal sebagai Gunung
+            Gumuruh (2.929 m dpl); kawah-kawah dan puncak Gunung Gede yang
+            sekarang terletak pada bekas kawah Gunung Gumuruh lama yang telah
+            punah. Di antara gigir Gunung Gede dan gigir Gunung Gumuruh itulah
+            terletak lembah dataran tinggi bernama Alun-alun Suryakancana (2.750
+            m dpl), yang penuh tertutupi oleh rumpun edelweis jawa yang cantik.
+          </p>
+        </div>
+        <div class="col-6 barcode">
+          <h1 style="padding: 10px">Quota Gunung Gede</h1>
+          <table>
+            <tr>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Quota Tersisa</th>
+              <th>Action</th>
+            </tr>
+            <tr>
+              <td>Gunung Gede</td>
+              <td>2022-06-23</td>
+              <td>30/60</td>
+              <td>
+                <button>Buy License</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <form action="">
+        <div>
+          <label for="">Number Of Climbers</label>
+          <input type="number" />
+        </div>
+        <div>
+          <label for="">TotalPrice</label>
+          <input type="number" />
+        </div>
+        <div>
+          <label for="">QuotaId</label>
+          <input type="number" />
+        </div>
+        <div>
+          <button type="submit">Add License</button>
+        </div>
+      </form>
+    </div>
+  </body>
+  <!-- SlIDESHOW -->
+  <script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+      showSlides((slideIndex += n));
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+      showSlides((slideIndex = n));
+    }
+
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("demo");
+      let captionText = document.getElementById("caption");
+      if (n > slides.length) {
+        slideIndex = 1;
+      }
+      if (n < 1) {
+        slideIndex = slides.length;
+      }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " active";
+      captionText.innerHTML = dots[slideIndex - 1].alt;
+    }
+  </script>
+  <!-- END SLIDESHOW -->
+</html>

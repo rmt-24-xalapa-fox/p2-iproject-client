@@ -32,8 +32,8 @@ export default {
   <div class="home-container">
     <div class="home-menu">
       <router-link :to="{ path: '/battle' }" @click.prevent="newgamehandler" ><span>New Game</span></router-link>
-      <router-link :to="{ path: '/battle' , query: { continue: 'true' } }" v-if="isLoadAvail"><span>Continue</span></router-link>
-      <router-link :to="{ path: '/statistic' }"><span>Statistic</span></router-link>
+      <!-- <router-link :to="{ path: '/battle' , query: { continue: 'true' } }" v-if="isLoadAvail"><span>Continue</span></router-link> -->
+      <!-- <router-link :to="{ path: '/statistic' }"><span>Statistic</span></router-link> -->
       <router-link :to="{ path: '/leaderboard' }"><span>Leaderboard</span></router-link>
     </div>
   </div>

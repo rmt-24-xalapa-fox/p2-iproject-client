@@ -63,7 +63,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(useMainStore, ["inventory", "money", "rounds", "ditto", "enemy", "enemies", "ditto", "getMaxHp", "itemlog"]),
+    ...mapState(useMainStore, ["inventory", "money", "rounds", "ditto", "enemy", "enemies", "ditto", "getMaxHp", "itemlog", "runends"]),
 
     showNextStop() {
       if (!this.endArea) return false;
@@ -82,6 +82,11 @@ export default {
       console.log("continue");
     } else {
       // sniped to new game
+      this.endArea = false,
+      this.combat = false,
+      this.nextStop = "",
+      this.dittoimg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png",
+      this.enemyimg = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/1026px-Pok%C3%A9_Ball_icon.svg.png",
       this.newgamehandler();
     }
     
@@ -97,6 +102,12 @@ export default {
     enemy(newval, oldval) {
       if (!newval) {
         this.combat = false
+      }
+    },
+
+    runends(newval, oldval) {
+      if(newval) {
+        this.$router.push({ name: "statistic" })
       }
     },
   },
@@ -146,15 +157,13 @@ export default {
           />
         </div>
       </div>
-      <div class="map-selector-card">
-        <div class="map-selector-card" v-if="showNextStop" >
+      <div class="map-selector-card" v-if="showNextStop" >
         <span class="invent-item-title">PokeCenter</span>
         <div class="map-image-container">
           <img
             src="https://pokemongohub.net/wp-content/uploads/2019/12/jvy42zwoit741.jpg"
             alt=""
           />
-        </div>
         </div>
       </div>
       <div class="map-selector-card">
@@ -196,7 +205,7 @@ export default {
           </div>
           <div class="healt-label">
             <span class="text-health">Lvl: {{ ditto.level }}</span>
-            <span class="text-health">HP: {{ Math.ceil(ditto.hp*getMaxHp/100) }}/ {{ getMaxHp }}</span>
+            <span class="text-health">HP: {{ Math.ceil(ditto.hp*getMaxHp*0.01) }}/ {{ getMaxHp }}</span>
           </div>
         </div>
       </div>

@@ -32,6 +32,8 @@ export default {
     <ul class="nav nav-tabs">
       <li><router-link class="nav-item nav-link text-white" to="/" >Home</router-link></li>
       <li v-if="isLogin==true"><router-link class="nav-item nav-link text-white" to="/favourite" >Favourite</router-link></li>
+      <li v-if="isLogin==true"><router-link class="nav-item nav-link text-white" to="/coin" >Buy Coin</router-link></li>
+      <li v-if="isLogin==true"><router-link class="nav-item nav-link text-white" to="/mypost" >My Post</router-link></li>
       <li v-if="isLogin==false"><router-link class="nav-item nav-link text-white" to="/login" >Login</router-link></li>
       <li v-if="isLogin==false"><router-link class="nav-item nav-link text-white" to="/register" >Register</router-link></li>
       </ul>

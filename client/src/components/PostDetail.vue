@@ -8,24 +8,27 @@ export default {
   data(){
     return{
       text:"Favourite",
-      moviedata:{},
-      comments:[]
+      postdata:{},
+      comment:''
     }
   },
   computed: {
-    ...mapWritableState(useCounterStore, ['baseUrl','basePost','baseFavourite','isLogin','movieDetail'])
+    ...mapWritableState(useCounterStore, ['baseUrl','basePost','baseFavourite','isLogin','postDetail','comments'])
   },
   created(){
     this.mountData();
+  },
+  watch(){
+
   },
   mounted(){
     this.mountData();
 
     console.log("Mounted with data:")
-    console.log(this.movieDetail);
+    console.log(this.postDetail);
   },
   methods:{
-     ...mapActions(useCounterStore, ['setError']),
+     ...mapActions(useCounterStore, ['setError','sendComment']),
     mountData() {
         let tempThis=this;
         console.log(this.$router.currentRoute._rawValue.params.id);
@@ -35,20 +38,22 @@ export default {
         .then(res => {
           console.log("DATA IS HERE")
           console.log(res.data);
-          tempThis.movieDetail=res.data.Post;
+          tempThis.postDetail=res.data.Post;
           tempThis.comments=[]
           res.data.Comments.forEach(element => {
             tempThis.comments.push(element);
           });
-          console.log(tempThis.movieDetail);
+          console.log(tempThis.postDetail);
         })
         .catch(e => {
           console.log(e.response.data);
           tempThis.setError(e.response.data.message);
         });
-      
-    
+  },
+  doAddComment(){
+    this.sendComment({comment:this.comment,id:this.postDetail.id});
   }
+
   }
 }
 </script>
@@ -58,18 +63,29 @@ export default {
         <div class="col-12 col-md-6">
             <h1>Post Details</h1>
           <div class="card mb-6">
-            <img v-if="movieDetail.media" :src="movieDetail.media" class="card-img-top" />
+            <img v-if="postDetail.media" :src="postDetail.media" class="card-img-top" />
             <!-- <div class="embed-responsive embed-responsive-16by9">
             <iframe class="embed-responsive-item" v-if="movieDetail.media" :src="movieDetail.media"></iframe> -->
             <!-- </div> -->
             <div class="card-body card-body">
-              <h1 class="card-title text-justify">{{movieDetail.title}}</h1>
-              <label><small class="text-muted"></small></label><p class="card-text">{{movieDetail.description}}</p>
+              <h1 class="card-title text-justify">{{postDetail.title}}</h1>
+              <label><small class="text-muted"></small></label><p class="card-text">{{postDetail.description}}</p>
               <!-- <p class="card-text">Rating:{{movieDetail.rating}}</p> -->
-              
+              <div class="col-12 col-md-4 mx-auto mt-3">
+      
+        <h2>Add Comment</h2>
+        <div class="card-body d-flex flex-row">
+        <form @submit.prevent="doAddComment">
+          <div class="form-group">
+          <input type="text" v-model="comment">
+          </div>
+            <button type="submit" >Add</button>
+        </form>
+        </div>
+      </div>
               <label><small class="text-muted">Comments:</small></label>
-                <p v-for="comment in comments" :key="comment.id">{{comment.Comment.comment}}</p>
-                <!-- <button class="btn btn-secondary" v-for="genre in movieDetail.MovieGenres" :key="genre.GenreId">{{genre.Genre.name}}</button> -->
+                <p v-for="comment in comments" :key="comment.id">{{comment.Comment.comment}} by {{comment.Comment.User.email}}</p>
+                
               </div>
             </div>
             

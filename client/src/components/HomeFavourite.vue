@@ -30,7 +30,7 @@ export default {
     CardItem
   },
   computed: {
-    ...mapWritableState(useCounterStore, ['movies','favourites','isLogin','baseUrl','currentPages','totalPages'])
+    ...mapWritableState(useCounterStore, ['posts','favourites','isLogin','baseUrl','currentPages','totalPages'])
   },
   created(){
     this.updatePagination();
@@ -46,9 +46,12 @@ export default {
     // console.log(this.msg + " THIS IS THE ROUTER NAME");
     
     if(this.msg=="home"){
-      console.log("This is home movies")
+      console.log("This is home page")
       this.type="Home"
-    }else{
+    }else if(this.msg=="my"){
+      this.type="My list"
+    }
+    else{
       this.type="Favourite"
       console.log("This is favourite "+this.msg)
     }
@@ -128,7 +131,7 @@ export default {
       <h1 class="text-white">{{type}}</h1>
       <button v-if="isLogin" @click="toggleSearch">Toggle Search Option</button>
       <form v-if="isLogin && toggled" @submit.prevent="applySearch">
-      <label class="form-check-label text-light">Movie Name:</label>
+      <label class="form-check-label text-light">Post Title:</label>
       <input type="text" v-model="title"/>       
       <button type="submit" >Search</button>
       </form>
@@ -140,12 +143,16 @@ export default {
         <button v-if="!paginationMoreThanLimit" @click="goToPages(totalPages)">{{totalPages}}</button>
       </div>
       <div v-if="msg=='home'" class="row justify-content-start">
-        <h1 v-if="movies.length==0">No Post Yet</h1>
-        <CardItem v-for="movie in movies" :key="movie.id" :movie="movie" :msg="msg"/>
+        <h1 v-if="posts.length==0">No Post Yet</h1>
+        <CardItem v-for="post in posts" :key="post.id" :post="post" :msg="msg"/>
+      </div>
+      <div v-else-if="msg=='my'" class="row justify-content-start">
+        <h1 v-if="favourites.length==0">No Post Yet, Add one</h1>
+        <CardItem v-for="mypost in myposts" :key="mypost.id" :post="mypost.Post" :msg="msg"/>
       </div>
       <div v-else class="row justify-content-start">
         <h1 v-if="favourites.length==0">No Favourite Yet</h1>
-        <CardItem v-for="favourite in favourites" :key="favourite.id" :movie="favourite.Post" :favourite="favourite" :msg="msg"/>
+        <CardItem v-for="favourite in favourites" :key="favourite.id" :post="favourite.Post" :favourite="favourite" :msg="msg"/>
       </div>
       <div v-if="msg=='home' && !updated" class="d-flex justify-content-center">
         <h3 class="text-white">Pages:</h3>

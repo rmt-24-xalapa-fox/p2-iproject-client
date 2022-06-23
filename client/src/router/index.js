@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
-import MovieDetail from '../components/MovieDetail.vue'
+import PostDetail from '../components/PostDetail.vue'
 import FormPost from '../components/FormPost.vue'
+import CoinPage from '../components/CoinPage.vue'
+
 import { useCounterStore } from '../stores/counter'
 
 const router = createRouter({
@@ -29,6 +31,11 @@ const router = createRouter({
       component: FormPost
     },
     {
+      path: '/coin',
+      name: 'coin',
+      component: CoinPage
+    },
+    {
       path: '/favourite',
       name: 'favourite',
       component: HomeView
@@ -36,7 +43,7 @@ const router = createRouter({
     {
       path: '/detail/:id',
       name: 'detail',
-      component: MovieDetail
+      component: PostDetail
     }
 
   ]

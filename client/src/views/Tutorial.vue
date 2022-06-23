@@ -32,7 +32,7 @@ export default {
           </div>
         </div>
       </div>
-      <div class="row justify-content-center mt-3">
+      <div class="row justify-content-center mb-3 mt-3">
         <div class="col-md-6">
           <div class="embed-responsive embed-responsive-16by9">
             <iframe
@@ -60,7 +60,7 @@ export default {
           </div>
         </div>
       </div>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center mb-3">
         <div class="col-md-6">
           <div class="embed-responsive embed-responsive-16by9">
             <iframe

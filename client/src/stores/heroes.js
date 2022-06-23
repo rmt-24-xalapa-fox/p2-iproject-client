@@ -10,7 +10,10 @@ export const useHeroStore = defineStore({
     sortByRole: [],
     detail: [],
     ytApi: [],
+    items: [],
+    buildList: [],
     baseUrl: "http://localhost:3300",
+    isLogin: localStorage.getItem("access_token"),
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -18,6 +21,38 @@ export const useHeroStore = defineStore({
   actions: {
     increment() {
       this.counter++;
+    },
+
+    async login(data) {
+      try {
+        let response = await axios({
+          method: "POST",
+          url: `${this.baseUrl}/login`,
+          data: data,
+        });
+        console.log(response.data);
+        let access_token = response.data.access_token;
+        let userId = response.data.id;
+        localStorage.setItem("access_token", access_token);
+        localStorage.setItem("id", userId);
+        await this.fetchHeroes();
+        return true;
+      } catch (err) {
+        console.log(err);
+        return false;
+      }
+    },
+
+    async register(data) {
+      try {
+        await axios({
+          method: "POST",
+          url: `${this.baseUrl}/register`,
+          data: data,
+        });
+      } catch (err) {
+        console.log(err);
+      }
     },
 
     async fetchHeroes() {
@@ -85,6 +120,53 @@ export const useHeroStore = defineStore({
         });
         console.log(data.items);
         this.ytApi = data.items;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async getItem() {
+      try {
+        let response = await axios({
+          method: "GET",
+          url: `${this.baseUrl}/items`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        console.log(response);
+        this.items = response.data.itemList;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async addBuild() {
+      try {
+        let response = await axios({
+          method: "POST",
+          url: `${this.baseUrl}/builds`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async getBuild() {
+      try {
+        let response = await axios({
+          method: "GET",
+          url: `${this.baseUrl}/builds`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        console.log(response);
+        this.buildList = response.data.buildList;
       } catch (err) {
         console.log(err);
       }

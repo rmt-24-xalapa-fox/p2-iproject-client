@@ -1,9 +1,29 @@
 <script>
+import { mapState, mapActions } from "pinia";
+import { useHeroStore } from "../stores/heroes";
 import { RouterLink } from "vue-router";
 export default {
   name: "Navbar",
   components: {
     RouterLink,
+  },
+  computed: {
+    ...mapState(useHeroStore, ["isLogin"]),
+  },
+  methods: {
+    ...mapActions(useHeroStore, ["fetchHeroes", "getItem"]),
+    toLogin() {
+      this.$router.push(`/login`);
+    },
+
+    toLogout() {
+      localStorage.clear();
+      this.fetchHeroes();
+      this.$router.push(`/`);
+    },
+  },
+  created() {
+    this.fetchHeroes();
   },
 };
 </script>
@@ -25,13 +45,13 @@ export default {
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">Build</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="">List Build Item</a></li>
-              <li><a class="dropdown-item" href="">Add Build Item</a></li>
+              <li><RouterLink to="/build" class="dropdown-item" href="">List Build Item</RouterLink></li>
+              <li><RouterLink to="/add" class="dropdown-item" href="" @click.prevent="getItem">Add Build Item</RouterLink></li>
             </ul>
           </li>
         </ul>
-        <button class="btn btn-outline-light" type="submit">Login</button>
-        <button class="btn btn-outline-light" type="submit">Logout</button>
+        <button v-if="!isLogin" class="btn btn-outline-light" type="submit" @click.prevent="toLogin">Login</button>
+        <button v-if="isLogin" class="btn btn-outline-light" type="submit" @click.prevent="toLogout">Logout</button>
       </div>
     </div>
   </nav>

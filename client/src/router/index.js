@@ -2,6 +2,10 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Detail from "../views/Detail.vue";
 import Tutorial from "../views/Tutorial.vue";
+import Login from "../views/Login.vue";
+import Register from "../views/Register.vue";
+import Add from "../views/AddBuild.vue";
+import Build from "../views/BuildItem.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,13 +21,29 @@ const router = createRouter({
       component: Detail,
     },
     {
-      path: "/build",
-      name: "build",
-    },
-    {
       path: "/tutorial",
       name: "tutorial",
       component: Tutorial,
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: Login,
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: Register,
+    },
+    {
+      path: "/add",
+      name: "add",
+      component: Add,
+    },
+    {
+      path: "/build",
+      name: "build",
+      component: Build,
     },
   ],
 });

@@ -1,13 +1,5 @@
-<script>
-import { mapActions } from 'pinia';
-import { useMainStore } from '../stores/main';
-export default {
-methods :{
-	...mapActions(useMainStore, [])
-}
-}
-</script>
 <script setup>
+import axios from 'axios';
 import { ref, onMounted, computed } from 'vue'
 
 const query = ref('')
@@ -35,6 +27,31 @@ const handleInput = (e) => {
 	}
 }
 
+async function addFav(anime) {
+try{
+const response = await axios({
+url: `https://animewatchlist666.herokuapp.com/addFavorite`,
+method: "post",
+headers: {
+access_token: localStorage.getItem("access_token")
+},
+data: {
+title: anime.title,
+currentEpisode: 1,
+totalEpisode: anime.episodes,
+imgUrl: anime.images.jpg.image_url,
+animeUrl: anime.trailer.url
+}
+});
+Swal.fire({
+          title: "Success add to Favorites",
+          icon: 'success'
+})
+}
+catch(err){
+console.log(err)
+}
+}
 const addAnime = (anime) => {
 	search_results.value = []
 	query.value = ''
@@ -83,7 +100,7 @@ onMounted(() => {
 					<h3>{{ anime.title }}</h3>
 					<p :title="anime.synopsis" v-if="anime.synopsis">{{ anime.synopsis.slice(0, 120) }}...</p>
 					<span class="flex-1"></span>
-					<button @click="addAnime(anime)" class="button">Add to My Watchlist</button>
+					<button @click="addAnime(anime); addFav(anime)" class="button">Add to My Watchlist</button>
 				</div>
 			</div>
 		</div>

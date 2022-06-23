@@ -54,7 +54,7 @@ export const useMainStore = defineStore({
           }
         })
         Swal.fire({
-          title: "Success register",
+          title: "Success register, check your email for notification",
           icon: 'success'
         })
         this.router.push('/login')
@@ -101,13 +101,13 @@ export const useMainStore = defineStore({
           console.log(err)
         }
     },
-    async addFavoriteAnime(){
-      try{
+    // async addFavoriteAnime(){
+    //   try{
         
-      }
-      catch(err){
+    //   }
+    //   catch(err){
 
-      }
-    }
+    //   }
+    // }
   }
 })

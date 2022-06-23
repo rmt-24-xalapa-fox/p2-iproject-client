@@ -18,7 +18,10 @@ export default {
         },
         goToDetailPage: function () {
             this.$router.push(`/detail/${this.product.id}`)
-        }
+        },
+        changeImage: function () {
+            this.image = "https://cdn-icons-png.flaticon.com/512/5856/5856842.png"
+        },
     },
     created: function () {
         this.convertPrice()
@@ -37,7 +40,7 @@ export default {
         <div type="button" @click.prevent="goToDetailPage">
             <div class="card h-100 card-product text-center">
                 <img :src="image" class="card-img-top rounded-circle" :alt="product.name"
-                    style="max-width: 250px;max-height:250px;margin-left: 5px;" />
+                    style="max-width: 250px;max-height:250px;margin-left: 5px;" v-on:error="changeImage" />
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
                     <h6 class="card-title"><small class="text-muted">{{ product.brand }}</small></h6>

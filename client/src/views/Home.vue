@@ -123,7 +123,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(useMainStore, ["products", "totalPages", "currentPage"])
+        ...mapState(useMainStore, ["products", "totalPages", "currentPage", "useLoader"])
     },
     watch: {
         product_type(newValue) {
@@ -366,7 +366,11 @@ export default {
             </div>
             <div class="col-9">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <Card v-for="product in products" :key="product.id" :product="product" />
+                    <!-- <Spinner v-if="useLoader" /> -->
+                    <div v-if="useLoader" style="size: cover;">
+                        <img src="https://media2.giphy.com/media/fBDHEIhKGNveDbdiHn/giphy.gif?cid=6c09b9522ud0wublok0ll1n6furz79rwqogqnknuaooyfdbw&rid=giphy.gif&ct=s" style="width: 750px;max-height:300px">
+                    </div>
+                    <Card v-if="!useLoader" v-for="product in products" :key="product.id" :product="product" />
                 </div>
             </div>
         </div>

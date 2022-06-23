@@ -33,13 +33,21 @@ export default {
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <router-link to="/wishlist" class="nav-link active" aria-current="page"><img
-                                src="http://cdn.onlinewebfonts.com/svg/img_315681.png" width="50" height="50"
-                                alt="" /></router-link>
+                        <router-link to="/wishlist" class="nav-link active" aria-current="page" v-if="hasLoggedIn"><img
+                                src="http://cdn.onlinewebfonts.com/svg/img_315681.png" width="50" height="50" alt="" />
+                        </router-link>
+                        <button type="button" class="btn nav-link active" aria-current="page" v-if="!hasLoggedIn" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            <img src="http://cdn.onlinewebfonts.com/svg/img_315681.png" width="50" height="50" alt="" />
+                        </button>
                     </li>
                     <li class="nav-item">
                         <button type="button" class="btn nav-link active" aria-current="page" data-bs-toggle="modal"
-                                    data-bs-target="#cartModal">
+                            data-bs-target="#cartModal" v-if="hasLoggedIn">
+                            <img src="http://cdn.onlinewebfonts.com/svg/img_527837.png" width="50" height="50" alt="" />
+                        </button>
+                        <button type="button" class="btn nav-link active" aria-current="page" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" v-if="!hasLoggedIn">
                             <img src="http://cdn.onlinewebfonts.com/svg/img_527837.png" width="50" height="50" alt="" />
                         </button>
                     </li>

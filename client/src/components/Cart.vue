@@ -7,14 +7,14 @@ export default {
         this.getCart()
     },
     methods: {
-        ...mapActions(useMainStore, ['getProductsInCart', 'paymentByMidtrans']),
+        ...mapActions(useMainStore, ['getProductsInCart', 'paymentByMidtrans', 'deleteCart']),
         getCart: function () {
             this.getProductsInCart()
         },
         toPricing: function(totalPrice){
             // console.log(totalPrice)
             this.megaTotalPrice += totalPrice
-            console.log(this.megaTotalPrice)
+            // console.log(this.megaTotalPrice)
         },
         converTotalPrice: function(){
             return new Intl.NumberFormat("id-ID", {
@@ -24,6 +24,12 @@ export default {
         },
         checkingOut: function(){
             this.paymentByMidtrans(this.megaTotalPrice)
+                .then(() => {
+                    this.deleteCart()
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
         }
     },
     computed: {
@@ -53,12 +59,12 @@ export default {
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col-2"></th>
+                                        <!-- <th scope="col-2"></th> -->
                                         <th scope="col-2">Brand</th>
                                         <th scope="col-4">Product</th>
                                         <th scope="col-3">Quantity</th>
                                         <th scope="col-2">Sub Total Price</th>
-                                        <th></th>
+                                        <th scope="col-2"></th>
                                     </tr>
                                 </thead>
                                 <tbody class="align-middle">

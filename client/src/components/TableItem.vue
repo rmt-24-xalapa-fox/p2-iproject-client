@@ -47,12 +47,12 @@ export default {
 </script>
 <template>
     <tr style="line-height: 35px;">
-        <td>
+        <!-- <td>
             <button class="btn btn-danger d-inline-flex">
                 <img src="https://icons-for-free.com/iconfiles/png/512/basket+remove-131983800272594389.png"
                     style="width: 30px;" alt="">
             </button>
-        </td>
+        </td> -->
         <td>{{ product.productBrand }}</td>
         <td>{{ product.productName }}</td>
         <td>

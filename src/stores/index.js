@@ -33,9 +33,11 @@ export const useMainStore = defineStore({
     runends: false,
     logedIn: false,
     newrun: true,
+    showmap: false,
     itemlog: '',
     typematchup: {},
     runlog: [],
+    roundlog: []
   }),
   getters: {
     getMaxHp(){
@@ -94,7 +96,8 @@ export const useMainStore = defineStore({
         enemylvl = this.rounds+25 < 100 ? this.rounds+25 : 100
       }
 
-      this.runlog.push(`Use move [ ${move.name} ]`)
+      // this.runlog.push(`Use move [ ${move.name} ]`)
+      this.roundlog.push(`Use move [ ${move.name} ]`)
 
       const dmg1 = this.calcDmg(move, 
         this.ditto.level, this.ditto.transforms[this.ditto.active], 
@@ -108,7 +111,8 @@ export const useMainStore = defineStore({
       this.enemy.currenthp -= dmg1
 
       if(this.enemy.currenthp<0){
-        this.runlog.push(`Enemy [ ${this.enemy.name} ] has fainted`)
+        // this.runlog.push(`Enemy [ ${this.enemy.name} ] has fainted`)
+        this.roundlog.push(`Enemy [ ${this.enemy.name} ] has fainted`)
 
         this.enemy = false
 
@@ -128,7 +132,8 @@ export const useMainStore = defineStore({
             this.inventory.Utils["Rare Candy"] = { stock: 0 }
           }
           this.inventory.Utils["Rare Candy"].stock++
-          this.runlog.push(`Obtained [ Rare Candy ]`)
+          // this.runlog.push(`Obtained [ Rare Candy ]`)
+          this.roundlog.push(`Obtained [ Rare Candy ]`)
         } else if (rng < 0.25 ) {
           // valuable
           // check what valuable to get
@@ -141,20 +146,29 @@ export const useMainStore = defineStore({
           loot = 'Medicine'
         }
 
-        if(loot){
-          console.log("THIS ITEMS", this.items);
+        if(this.items[loot]){
           const val = Math.floor(Math.random() * this.items[loot].length)
           if(!this.inventory[loot][this.items[loot][val].name]){
             this.inventory[loot][this.items[loot][val].name] = { stock: 0 }
           }
           this.inventory[loot][this.items[loot][val].name].stock++
-          this.runlog.push(`Obtained [ ${this.inventory[loot][this.items[loot][val].name]} ] `)
+          // this.runlog.push(`Obtained [ ${this.inventory[loot][this.items[loot][val].name]} ] `)
+          this.roundlog.push(`Obtained [ ${this.items[loot][val].name} ] `)
         }
 
         // incr money
         this.money += this.rounds < 20 ? 200 : 150
-        this.runlog.push(`Obtained money + ${ this.rounds < 20 ? 200 : 150 } `)
+        // this.runlog.push(`Obtained money + ${ this.rounds < 20 ? 200 : 150 } `)
+        this.roundlog.push(`Obtained money + ${ this.rounds < 20 ? 200 : 150 } `)
 
+        this.runlog.push(this.roundlog)
+        this.roundlog = []
+        this.rounds++
+        this.ditto.active = 0
+        this.enemies = []
+        this.getPokemons()
+        this.showmap = true
+        // get new pokemon enemy
         return
       }
       // enemy attack
@@ -166,7 +180,8 @@ export const useMainStore = defineStore({
         this.ditto.level, this.ditto.transforms[this.ditto.active]
       )
 
-      this.runlog.push(`Enemy use move [ ${enemymove.name} ]`)
+      // this.runlog.push(`Enemy use move [ ${enemymove.name} ]`)
+      this.roundlog.push(`Enemy use move [ ${enemymove.name} ]`)
 
       // cehck hp
       this.ditto.hp = (( this.ditto.hp * this.getMaxHp * 0.01 ) - dmg2) * 100 / this.getMaxHp
@@ -175,7 +190,11 @@ export const useMainStore = defineStore({
         // end run        
         this.saveRun()
         this.runends = true
-        this.runlog.push(`You Pokemon has fainted! Runs end!`)
+        // this.runlog.push(`You Pokemon has fainted! Runs end!`)
+        this.roundlog.push(`You Pokemon has fainted! Runs end!`)
+
+        this.runlog.push(this.roundlog)
+        this.roundlog = []
       }
 
     },
@@ -196,7 +215,8 @@ export const useMainStore = defineStore({
         }
         if(this.ditto.hp > 100 ) this.ditto.hp = 100
         this.itemlog = `[ ${this.inventory[invent.type][idx].name} ] Used! Restored ${this.inventory[invent.type][idx].heal} HP!`
-        this.runlog.push("[ ${this.inventory[invent.type][idx].name} ] Used! Restored ${this.inventory[invent.type][idx].heal} HP!")
+        // this.runlog.push("[ ${this.inventory[invent.type][idx].name} ] Used! Restored ${this.inventory[invent.type][idx].heal} HP!")
+        this.roundlog.push("[ ${this.inventory[invent.type][idx].name} ] Used! Restored ${this.inventory[invent.type][idx].heal} HP!")
         this.inventory[invent.type][idx].stock--
       }
 
@@ -210,7 +230,7 @@ export const useMainStore = defineStore({
         }
 
         this.itemlog = `[ ${this.inventory.Utils[idx].name} ] Used!`
-        this.runlog.push(`[ ${this.inventory.Utils[idx].name} ] Used!`)
+        this.roundlog.push(`[ ${this.inventory.Utils[idx].name} ] Used!`)
         this.inventory.Utils[idx].stock--
       }
       
@@ -290,24 +310,53 @@ export const useMainStore = defineStore({
         this.inventory.Medicine = [potion]
         this.inventory.Utils = [rope]
 
+        // router push here
+        this.router.push({ name: 'battle'})
+
       } catch (error) {
         console.log(error);
       }
     },
 
-    getMaps(){
-      // random map to select
-      // include rounds for bonus map
-
-      // go legendary when round meets
+    async getMaps(){
+      try {
+        const {data:enemymaps} = await axios.get(this.getPath('/battle/map'))
+        this.maps = enemymaps
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     getEnemies(){
 
     },
 
-    getPokemons(){
+    async getPokemons(){
+      try {
+        const nextenemies = this.maps[this.rounds]
 
+        console.log(nextenemies);
+
+        const { data: recv } = await axios({
+          method: 'post',
+          url: this.getPath('/battle/next'),
+          data: {
+            map: nextenemies
+          }
+        });
+
+        // const { data: recv } = await axios.get( 
+        //   this.getPath('/battle/next'), 
+        //   { map: nextenemies }
+        // )
+
+        // const recv = await axios.get('http://localhost:3000/battle/next', { prop:'46512352154' } )
+
+        // console.log(recv);
+        this.enemies = recv
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     getPokemonById(id){
@@ -328,10 +377,13 @@ export const useMainStore = defineStore({
       this.ditto.level = 5
       this.money = 1200
       this.runends = false
-      this.newrun = true,
-      this.itemlog = '',
+      this.newrun = true
+      this.itemlog = ''
+      this.showmap = false
+      this.rounds = 0
       
       this.gettypematchup()
+      this.getMaps()
       
     },
 

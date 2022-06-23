@@ -32,7 +32,9 @@ export default {
     </div>
     <!-- stat run here -->
     <div class="stat-container">
-      <span v-for="log in runlog">{{log}}</span>
+      <div v-for="log in runlog">
+        <span v-for="detail in log">{{detail}}</span>        
+      </div>
     </div>
   </div>
 </template>

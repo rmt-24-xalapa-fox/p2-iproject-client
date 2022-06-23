@@ -63,7 +63,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(useMainStore, ["inventory", "money", "rounds", "ditto", "enemy", "enemies", "ditto", "getMaxHp", "itemlog", "runends"]),
+    ...mapState(useMainStore, ["inventory", "money", "rounds", "ditto", "enemy", "enemies", "ditto", "getMaxHp", "itemlog", "runends", "showmap", "runlog"]),
 
     showNextStop() {
       if (!this.endArea) return false;
@@ -110,6 +110,12 @@ export default {
         this.$router.push({ name: "statistic" })
       }
     },
+
+    showmap(newval, oldval){
+      if(newval){
+
+      }
+    },
   },
 
 };
@@ -119,7 +125,7 @@ export default {
   <div class="battle-container">
     <!-- left column -->
     <!-- Starter -->
-    <div class="battle-map-area-container" v-show="rounds===0 && !enemy">
+    <div class="battle-map-area-container" v-show="!enemy">
     <h1>SELECT ENEMY TO FIGHT</h1>
     <div class="battle-map-select-container">
       <StarterCard class="map-selector-card" v-for="pokemon in enemies" :pokemon="pokemon" :key="pokemon.id" @click="enemySelected(pokemon)" />
@@ -147,18 +153,12 @@ export default {
       </div>
     </div>
     <!-- select map -->
-    <div class="battle-map-select-container" v-show="rounds>0 && !combat">
-      <div class="map-selector-card">
-        <span class="invent-item-title">Map 1</span>
-        <div class="map-image-container">
-          <img
-            src="https://pokemongohub.net/wp-content/uploads/2019/12/jvy42zwoit741.jpg"
-            alt=""
-          />
-        </div>
-      </div>
+    <!-- <div class="battle-map-select-container" v-show="showmap">
+      <div class="battle-map-select-container">
+        <StarterCard class="map-selector-card" v-for="(pokemon, i) in ditto.transforms.slice(1)" :pokemon="pokemon" :key="pokemon.id" @click="initFight(i)" />
+      </div>      
       <div class="map-selector-card" v-if="showNextStop" >
-        <span class="invent-item-title">PokeCenter</span>
+        <span class="span-headers invent-item-title">PokeCenter</span>
         <div class="map-image-container">
           <img
             src="https://pokemongohub.net/wp-content/uploads/2019/12/jvy42zwoit741.jpg"
@@ -166,16 +166,9 @@ export default {
           />
         </div>
       </div>
-      <div class="map-selector-card">
-        <span class="invent-item-title">Map 2</span>
-        <img
-          src="https://cdn.betterttv.net/emote/5fa84e3deca18f6455c2a71c/3x"
-          alt=""
-        />
-      </div>
-    </div>
+    </div> -->
     <!-- right column -->
-    <div class="battle-info-container">
+    <div class="battle-info-container" v-if="rounds>0">
       <div class="info-my-pokemon">
         <div class="icon-sprite">
           <img
@@ -210,51 +203,51 @@ export default {
         </div>
       </div>
       <div class="invent-item-title">
-        <span>Round: {{ rounds }} </span>
-        <span>Money: {{ money }} </span>
+        <span class="span-headers">Round: {{ rounds }} </span>
+        <span class="span-headers">Money: {{ money }} </span>
       </div>
       <div class="info-inventory">
         <div class="info-invent-container" v-show="inventory.Medicine.length">
-          <div class="invent-item-title"><span>Consumables</span></div>
+          <div class="invent-item-title"><span class="span-headers">Consumables</span></div>
           <table class="invent-item-container">
             <tr class="invent-item-row" v-for="(invent, index) in inventory.Medicine" v-show="invent.stock>0" :key="invent.id" @click="useInventItem(invent, index)">
               <td class="invent-item-name">
-                <span class="invent-item-detail">{{invent.name}}</span>
+                <span class="span-headers invent-item-detail">{{invent.name}}</span>
               </td>
               <td class="invent-item-val">
-                <span class="invent-item-detail">{{invent.stock}}</span>
+                <span class="span-headers invent-item-detail">{{invent.stock}}</span>
               </td>              
             </tr>
           </table>
         </div>
         <div class="info-invent-container" v-show="inventory.Utils.length">
-          <div class="invent-item-title"><span>Utilities</span></div>
+          <div class="invent-item-title"><span class="span-headers">Utilities</span></div>
           <table class="invent-item-container">
             <tr class="invent-item-row" v-for="(invent, index) in inventory.Utils" v-show="invent.stock>0" :key="invent.id" @click="useInventItem(invent, index)">
               <td class="invent-item-name">
-                <span class="invent-item-detail">{{invent.name}}</span>
+                <span class="span-headers invent-item-detail">{{invent.name}}</span>
               </td>
               <td class="invent-item-val">
-                <span class="invent-item-detail">{{invent.stock}}</span>
+                <span class="span-headers invent-item-detail">{{invent.stock}}</span>
               </td>
             </tr>
           </table>
         </div>
         <div class="info-invent-container" v-show="inventory.Berries.length">
-          <div class="invent-item-title"><span>Berries</span></div>
+          <div class="span-headers invent-item-title"><span class="span-headers">Berries</span></div>
           <table class="invent-item-container">
             <tr class="invent-item-row" v-for="(invent, index) in inventory.Berries" v-show="invent.stock>0" :key="invent.id" @click="useInventItem(invent, index)">
               <td class="invent-item-name">
-                <span class="invent-item-detail">{{invent.name}}</span>
+                <span class="span-headers invent-item-detail">{{invent.name}}</span>
               </td>
               <td class="invent-item-val">
-                <span class="invent-item-detail">{{invent.stock}}</span>
+                <span class="span-headers invent-item-detail">{{invent.stock}}</span>
               </td>
             </tr>
           </table>
         </div>
         <div class="info-invent-container" v-show="inventory.Valuable.length">
-          <div class="invent-item-title"><span>Valuable</span></div>
+          <div class="invent-item-title"><span class="span-headers">Valuable</span></div>
           <table class="invent-item-container">
             <tr class="invent-item-row" v-for="(invent, index) in inventory.Valuable" v-show="invent.stock>0" :key="invent.id">
               <td class="invent-item-name">
@@ -268,9 +261,16 @@ export default {
         </div>
         <div class="info-invent-container">
           <div class="invent-item-title" v-show="itemlog.length">
-            <span>{{itemlog}}</span>
+            <span class="span-headers">{{itemlog}}</span>
           </div>
         </div>
+        <div class="info-invent-container">
+          <div class="invent-item-title" v-show="runlog.length">
+            <div class="show-log-list">
+              <span class="log-detail" v-for="log in runlog[runlog.length-1]">{{log}}</span>
+            </div>
+          </div>
+        </div>        
       </div>
     </div>
   </div>
@@ -533,11 +533,23 @@ export default {
   object-fit: contain;
 }
 
-</style>
-
-<style scoped>
-span {
-  font-weight: bold;
-  padding: 5%;
+.show-log-list {  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
 }
+
+.log-detail {
+  padding: 0;
+  font-weight: bold;  
+  text-align: center;
+}
+
+.span-headers {
+  padding: 5%;
+  font-weight: bold;  
+}
+
 </style>

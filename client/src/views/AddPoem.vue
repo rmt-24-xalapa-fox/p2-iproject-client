@@ -34,6 +34,7 @@ export default {
         this.$router.push("/");
       } catch (err) {
         console.log(err);
+        swal("Warning", "Fields Must Not Be Empty", "error");
       }
     },
   },
@@ -76,10 +77,7 @@ export default {
               />
             </div>
             <div>
-              <button
-                @click.prevent="createPoem()"
-                class="button"
-              >
+              <button @click.prevent="createPoem()" class="button">
                 Create
               </button>
             </div>

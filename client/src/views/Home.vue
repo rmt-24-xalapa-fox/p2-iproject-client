@@ -2,14 +2,21 @@
 import Navbar from "../components/Navbar.vue";
 import Content from "../components/Content.vue";
 import AddCard from "../components/AddCard.vue";
-
+import { mapActions } from "pinia";
+import { usePoemStore } from "../stores/poem";
 
 export default {
   name: "Home",
   components: {
     Navbar,
     Content,
-    AddCard
+    AddCard,
+  },
+  methods: {
+    ...mapActions(usePoemStore, ["getPoem"]),
+  },
+  created() {
+    this.getPoem();
   },
 };
 </script>
@@ -17,7 +24,7 @@ export default {
 <template>
   <Navbar />
   <div class="container">
-    <AddCard/>
+    <AddCard />
     <Content />
   </div>
 </template>

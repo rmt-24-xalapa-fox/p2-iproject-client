@@ -53,10 +53,10 @@ export const usePoemStore = defineStore({
         const { data } = await axios.get(
           `https://poetrydb.org/author/${author}`
         );
-        console.log(data);
+        // console.log(data, "<<<<<");
         this.browsePoems = data;
       } catch (err) {
-        console.log(err);
+        console.log(err, "<<<<");
       }
     },
   },

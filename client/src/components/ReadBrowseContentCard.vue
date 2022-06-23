@@ -16,7 +16,7 @@ export default {
         this.poemDetail = data[0];
         // console.log(data[0]);
         console.log(this.poemDetail);
-        this.poemDetail.lines = this.poemDetail.lines.toString();
+        // this.poemDetail.lines = this.poemDetail.lines.toString();
       } catch (err) {
         console.log(err);
       }
@@ -37,7 +37,9 @@ export default {
         <i>{{ this.poemDetail.title }}</i>
       </h2>
       <p>By: {{ this.poemDetail.author }}</p>
-      <p style="font-size: 20px">{{ this.poemDetail.lines }}</p>
+      <div v-for="line in this.poemDetail.lines">
+        <p style="font-size: 20px">{{ line }}</p>
+      </div>
     </div>
   </div>
 </template>

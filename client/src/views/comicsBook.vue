@@ -1,60 +1,36 @@
 <script>
 import axios from "axios";
-import { mapState , mapWritableState} from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import { useMaarvelStore } from "../stores/marvel";
 
 export default {
   name: "Comics",
   data() {
     return {
-      comics: [],
+      // comics: [],
       size: "portrait_xlarge.jpg",
       totalComics: 0,
       page: 1,
       year: "",
-      totalPage: 0,
+      // totalPage: 0,
     };
   },
 
   computed: {
-    ...mapState(useMaarvelStore, ["url"]),
-    ...mapWritableState(useMaarvelStore, ["isComics", "isCharacters"]),
+    ...mapState(useMaarvelStore, ["url", "comics"]),
+    ...mapWritableState(useMaarvelStore, ["isComics", "isCharacters", "pageComics", "totalPage"]),
   },
 
   methods: {
-    async fetchComics() {
-      try {
-        this.comics = [];
-        const { data } = await axios.get(
-          `${this.url}/comics?page=${this.page}&year=${Number(this.year)}`
-        );
-        this.totalComics = data.data.total;
-        this.totalPage = Math.ceil(this.totalComics / 20);
-
-        const result = data.data.results;
-
-        result.forEach((el) => {
-          this.comics.push(el);
-          el.url = `${el.thumbnail.path}/${this.size}`;
-        });
-        this.year = "";
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
-    searchLocalHandler() {
-      this.comics = [];
-      this.fetchComics();
-    },
-
+    ...mapActions(useMaarvelStore, ["fetchComics"]),
+    
     previous() {
-      this.page = this.page - 1;
+      this.pageComics = this.pageComics - 1;
       this.fetchComics();
     },
 
     next() {
-      this.page = this.page + 1;
+      this.pageComics = this.pageComics + 1;
       this.fetchComics();
     },
   },
@@ -72,11 +48,11 @@ export default {
 
   <!-- PAGINATION  -->
   <div class="pagination-comics">
-    <a href="#" v-if="this.page > 1 && this.page !== 0" v-on:click.prevent="previous"
+    <a href="#" v-if="this.pageComics > 1 && this.pageComics !== 0" v-on:click.prevent="previous"
       >&laquo;</a
     >
-    <a href="#">{{ this.page }}</a>
-    <a href="#" v-if="this.page < this.totalPage" v-on:click.prevent="next">&raquo;</a>
+    <a href="#">{{ this.pageComics }}</a>
+    <a href="#" v-if="this.pageComics < this.totalPage" v-on:click.prevent="next">&raquo;</a>
   </div>
   <!-- DISPLAY COMMICS  -->
   <h2 class="h2-comics">
@@ -123,7 +99,6 @@ export default {
         </li>
       </ul>
     </div>
-
   </div>
 
   <!-- PAGINATION  -->
@@ -134,7 +109,6 @@ export default {
     <a href="#">{{ this.page }}</a>
     <a href="#" v-if="this.page < this.totalPage" v-on:click.prevent="next">&raquo;</a>
   </div>
-
 </template>
 
 <style>
@@ -153,7 +127,6 @@ export default {
   display: flex;
   justify-content: center;
 }
-
 
 .total-comics {
   color: whitesmoke;
@@ -232,7 +205,6 @@ a {
 }
 
 /*-------------------------------------*/
-
 
 .byline p {
   text-align: center;
@@ -322,7 +294,7 @@ a {
 }
 
 ul.align {
-  margin-top: 100px
+  margin-top: 100px;
 }
 
 .align > li {

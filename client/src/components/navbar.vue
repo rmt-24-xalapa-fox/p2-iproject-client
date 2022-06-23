@@ -11,11 +11,12 @@ export default {
     };
   },
   methods: {
+    ...mapActions(useMaarvelStore, ["fetchComics"]),
     async seachByAlphabet(alphabet, page) {
       try {
         // console.log(this.alphabet);
         this.alphabet = alphabet;
-        this.currentPage = page
+        this.currentPage = page;
         this.characters = [];
         this.totalCharacters = 0;
         const { data } = await axios.get(
@@ -47,6 +48,10 @@ export default {
       this.currentPage = this.currentPage + 1;
       this.seachByAlphabet();
     },
+
+    searchLocalHandler() {
+      this.fetchComics()
+    },
   },
 
   computed: {
@@ -58,6 +63,7 @@ export default {
       "url",
       "characters",
       "alphabet",
+      "year",
     ]),
   },
   // created() {
@@ -118,7 +124,11 @@ export default {
 
       <!-- SEARCH BY ALPHABET  -->
       <div class="pagination" v-if="isCharacters === true">
-        <a href="#" v-if="this.currentPage > 1" v-on:click.prevent="seachByAlphabet(alphabet, this.currentPage - 1)">
+        <a
+          href="#"
+          v-if="this.currentPage > 1"
+          v-on:click.prevent="seachByAlphabet(alphabet, this.currentPage - 1)"
+        >
           &laquo;</a
         >
         <a href="#" v-on:click.prevent="seachByAlphabet('A')">A</a>
@@ -147,7 +157,11 @@ export default {
         <a href="#" v-on:click.prevent="seachByAlphabet('X')">X</a>
         <a href="#" v-on:click.prevent="seachByAlphabet('Y')">Y</a>
         <a href="#" v-on:click.prevent="seachByAlphabet('Z')">Z</a>
-        <a href="#" v-if="this.currentPage < this.totalPage" v-on:click.prevent="seachByAlphabet(alphabet, this.currentPage + 1)">
+        <a
+          href="#"
+          v-if="this.currentPage < this.totalPage"
+          v-on:click.prevent="seachByAlphabet(alphabet, this.currentPage + 1)"
+        >
           &raquo;</a
         >
       </div>

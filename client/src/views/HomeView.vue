@@ -52,7 +52,7 @@ export default {
       <div class="component">
         <h2 class="ha-home">
           <strong
-            >All Comics<span class="total-comics">( {{ 9 }} )</span></strong
+            >New Comics<span class="total-comics">( {{ 9 }} )</span></strong
           >
         </h2>
         <ul class="align-home">

@@ -70,6 +70,27 @@
   </div>
 
   <div class="container">
+    <div class="row" style="align-items: center">
+      <div class="col-5 mt-3 ms-2">
+        <input
+          onchange=""
+          type="text"
+          class="form-control"
+          placeholder="Search Name"
+          name="searchName"
+          v-model="localSearchName"
+        />
+      </div>
+      <div class="col-5 mt-3">
+        <button
+          @click.prevent="searchData"
+          type="submit"
+          class="btn btn-outline-success submitSearch"
+        >
+          Search
+        </button>
+      </div>
+    </div>
     <div class="col-md-12 ms-lg-4 mt-1">
       <div class="row">
         <CardComponentVue v-for="dat in card" :key="dat.id" :player="dat" />
@@ -79,18 +100,34 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import { useProductStore } from "../stores/product";
 import CardComponentVue from "../components/CardComponent.vue";
 export default {
+  data() {
+    return {
+      localSearchName: this.$route.query.name,
+    };
+  },
   components: {
     CardComponentVue,
   },
   computed: {
     ...mapState(useProductStore, ["card"]),
+    ...mapWritableState(useProductStore, ["searchName"]),
   },
   methods: {
     ...mapActions(useProductStore, ["getProducts", "addToList"]),
+    searchData() {
+      this.searchName = this.localSearchName;
+      this.$router.push({
+        path: this.$route.fullPath,
+        query: {
+          name: this.localSearchName,
+        },
+      });
+      this.getProducts();
+    },
   },
   created() {
     this.getProducts();

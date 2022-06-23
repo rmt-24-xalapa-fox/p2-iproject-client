@@ -1,6 +1,6 @@
 <template>
   <div class="row container mt-3">
-    <div class="col-md-7">
+    <div class="col-md-6 ms-2">
       Complete or Update Your address
       <form>
         <div class="form-row">
@@ -98,7 +98,7 @@
         </div>
       </form>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4">
       <div class="card text-bg-light mt-3" style="max-width: 30rem">
         <div class="card-header">Total Cart</div>
         <div class="card-body">

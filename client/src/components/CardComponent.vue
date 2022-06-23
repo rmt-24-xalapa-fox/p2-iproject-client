@@ -23,7 +23,7 @@
       @click.prevent="funcAdd(player.id)"
       v-if="!infor"
       href="#"
-      class="btn btn-warning btn-sm ms-3 mb-2"
+      class="btn btn-light btn-sm ms-3 mb-2"
       ><ion-icon style="color: black" name="cart-outline"></ion-icon
     ></a>
     <p v-if="infor" class="ms-3" style="color: red; font-weight: 600">Sold</p>
@@ -92,6 +92,6 @@ ion-icon {
   font-size: 2vw;
 }
 .btn-sm {
-  background-color: #f7fcca;
+  background-color: #ebebeb;
 }
 </style>

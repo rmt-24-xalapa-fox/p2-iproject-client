@@ -113,7 +113,7 @@ export default {
 }
 .navbar-cust {
   box-shadow: 1px 1px #b3b3b3;
-  background-color: #ffff !important;
+  /* background-color: #ffff !important; */
 }
 .butlog {
 }

@@ -157,7 +157,7 @@ export default {
           text: `Success Register`,
           timer: 1000,
         });
-        this.$router.pusth("/login");
+        this.$router.push("/login");
       } catch (err) {
         this.$swal.fire({
           icon: "error",

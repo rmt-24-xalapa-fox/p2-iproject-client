@@ -5,6 +5,7 @@ export const useUserStore = defineStore('user', {
   state() {
     return {
       baseUrl: `http://localhost:4000`,
+      baseUrl: `https://cardbas.herokuapp.com`,
       province: [],
       city: [],
       isLogin: false,

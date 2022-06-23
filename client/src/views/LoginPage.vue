@@ -50,7 +50,9 @@
                 </div>
                 <p class="mt-2">
                   Don't Have Account?
-                  <router-link to="/register">Sign Up here</router-link>
+                  <router-link style="color: black" to="/register"
+                    >Sign Up here</router-link
+                  >
                 </p>
               </div>
             </form>

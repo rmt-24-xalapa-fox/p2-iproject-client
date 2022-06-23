@@ -1,15 +1,12 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-md-8 mt-3 position-relative">
+      <div class="col-md-8 mt-3">
         <p style="font-size: 19px; font-weight: 600">My Cart</p>
         <CartCard v-for="dat in favorites" :key="dat.id" :mine="dat" />
       </div>
       <div class="col-md-4 mt-3">
-        <div
-          class="card text-bg-light mt-5 position-fixed"
-          style="max-width: 20rem"
-        >
+        <div class="card text-bg-light mt-5" style="max-width: 20rem">
           <div class="card-header">Total Cart</div>
           <div class="card-body">
             <div class="row">

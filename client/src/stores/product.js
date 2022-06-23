@@ -6,22 +6,35 @@ export const useProductStore = defineStore('product', {
     state() {
         return {
             baseUrl: `http://localhost:4000`,
+            baseUrl: `https://cardbas.herokuapp.com`,
             card: [],
             favorites: [],
             history: [],
             favTotalPrice: 0,
             shipmentPrice: 0,
-            detailCard: {}
+            detailCard: {},
+            searchName: ''
         }
     },
     actions: {
         async getProducts() {
             try {
-                const response = await axios.get(`${this.baseUrl}/player`)
+                let url = this.baseUrl
+                url += `/player`
+                if (this.searchName) {
+                    url += `?searchName=${this.searchName}`
+                }
+                console.log(this.searchName);
+                console.log(url);
+                const response = await axios.get(`${url}`)
                 this.card = response.data.data.rows
 
             } catch (err) {
-                console.log(err);
+                Swal.fire({
+                    icon: "error",
+                    title: `Error - ${err.response.data.statusCode}`,
+                    text: err.response.data.error.message
+                });
             }
 
         },

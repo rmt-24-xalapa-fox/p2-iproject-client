@@ -27,7 +27,7 @@ export default {
       <div v-for="(el, i) in weather" :key="i">
         <h6>Cuaca di Kota Gunung {{ el.name }}</h6>
         <p class="middle">Cuaca: {{ el.data.suhu }}</p>
-        <p class="middle">Kondisi: {{ el.data.kelembapan }}</p>
+        <p class="middle">Kondisi/Suhu(Celcius): {{ el.data.kelembapan }}</p>
       </div>
     </div>
     <slider />

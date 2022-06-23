@@ -19,6 +19,7 @@ export default {
       )
         .then(() => {
           Swal.fire("Success!", "License Waiting For Payment", "success");
+          this.$router.push("/licenses");
         })
         .catch((err) => {
           let errMsg = err.response.data.message;
@@ -44,7 +45,7 @@ export default {
 
 <template>
   <div class="row middle">
-    <div class="col-6">
+    <div class="col-12">
       <h1>Form Add License</h1>
       <form @submit.prevent="postLicensePage">
         <div class="form-group">

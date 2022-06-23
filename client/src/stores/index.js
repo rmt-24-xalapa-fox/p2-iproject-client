@@ -9,6 +9,7 @@ export const useIndexStore = defineStore({
     mountains: [],
     mountainsById: [],
     licenses: [],
+    tokenMidtrans: "",
   }),
   getters: {},
   actions: {
@@ -134,7 +135,58 @@ export const useIndexStore = defineStore({
     },
 
     fetchLicensesStore: function () {
-      return;
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await axios.get(this.urlBase + "/licenses", {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          });
+          this.licenses = response.data;
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
+      });
+    },
+
+    hitMidTransStore: function (LicenseId) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await axios.post(
+            this.urlBase + "/midtrans/" + LicenseId,
+            undefined,
+            {
+              headers: {
+                access_token: localStorage.getItem("access_token"),
+              },
+            }
+          );
+          this.tokenMidtrans = response.data.token;
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
+      });
+    },
+
+    patchLicenseStore: function (LicenseId) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          await axios.patch(
+            this.urlBase + "/licenses/pay/" + LicenseId,
+            undefined,
+            {
+              headers: {
+                access_token: localStorage.getItem("access_token"),
+              },
+            }
+          );
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
+      });
     },
   },
 });

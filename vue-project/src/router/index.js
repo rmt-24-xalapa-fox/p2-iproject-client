@@ -32,7 +32,7 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   let isLogin = localStorage.getItem("access_token");
-  if ((isLogin && to.name == "login") || to.name == "register") {
+  if (isLogin && (to.name == "login" || to.name == "register")) {
     return { name: "home" };
   }
 });

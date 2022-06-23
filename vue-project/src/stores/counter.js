@@ -8,7 +8,7 @@ export const useCounterStore = defineStore({
     map: "",
     dataTour: [],
     oneData: [],
-    baseUrl: "http://localhost:5656/",
+    baseUrl: "https://arizal-travel.herokuapp.com/",
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,

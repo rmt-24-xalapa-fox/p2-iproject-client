@@ -36,7 +36,7 @@ export default {
           <a href="">Contact</a>
         </div>
         <div v-if="!access_token">
-          <button class="btn btn-primary">Login</button>
+          <RouterLink class="btn btn-primary">Login</RouterLink>
         </div>
       </div>
     </div>

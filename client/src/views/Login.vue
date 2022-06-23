@@ -1,6 +1,6 @@
 <script>
-import { mapActions, mapState } from "pinia";
 import { useCounterStore } from "../stores/counter";
+import { mapActions, mapState } from "pinia";
 
 export default {
   name: "userLogin",
@@ -16,6 +16,18 @@ export default {
         console.log(err);
       }
     },
+    // signInOption() {
+    //   ui.start("#firebaseui-auth-container", {
+    //     signInOptions: [
+    //       {
+    //         provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    //         signInMethod:
+    //           firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD,
+    //       },
+    //     ],
+    //     // Other config options...
+    //   });
+    // },
   },
 };
 </script>
@@ -100,10 +112,6 @@ export default {
         </form>
         <button
           class="w-full text-white bg-blue-600 hover:bg-red-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          data-client_id="YOUR_GOOGLE_CLIENT_ID"
-          data-login_uri="https://your.domain/your_login_endpoint"
-          data-auto_prompt="false"
-          id="DivGoogle"
         >
           Login with Google
         </button>

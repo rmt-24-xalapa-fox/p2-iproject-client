@@ -1,9 +1,10 @@
 <template>
-    <kanban-board :stages="stages" :blocks="blocks" @update-block="updateBlock"></kanban-board>
+    <Kanban :stages="stages" :blocks="blocks" @update-block="updateBlock"></Kanban>
 </template>
 
 <script>
     import axios from 'axios'
+    import Kanban from '../components/Kanban.vue'
     export default{
         data(){
             return {
@@ -30,15 +31,22 @@
                 }
             },
         },
+        components: {Kanban},
         async created(){
-            const blocks = await axios({
-                method: 'get',
-                url: 'https://iproject-herdi-server.herokuapp.com/task',
-                headers: {
-                    access_token: localStorage.getItem('access_token')
-                }
-            })
-            this.blocks=blocks.data.tickets
+            try{
+
+                const blocks = await axios({
+                    method: 'get',
+                    url: 'https://iproject-herdi-server.herokuapp.com/task',
+                    headers: {
+                        access_token: localStorage.getItem('access_token')
+                    }
+                })
+                this.blocks=blocks.data.tickets
+                console.log(blocks)
+            }catch(err){
+                console.log(err)
+            }
         }
     }
 </script>

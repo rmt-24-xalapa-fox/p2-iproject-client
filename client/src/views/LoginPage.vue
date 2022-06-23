@@ -50,7 +50,11 @@ import axios from 'axios'
                 })
                 localStorage.setItem('access_token', user.data.access_token)
                 localStorage.setItem('role', user.data.role)
-                this.$router.push('/tasks')
+                if(user.data.role==='admin'){
+                  this.$router.push('/tasks')
+                }else{
+                  this.$router.push('/ticketlist')
+                }
               }catch(err){
                 console.log(err)
               }

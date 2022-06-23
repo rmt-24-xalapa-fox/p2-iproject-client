@@ -9,6 +9,7 @@ import UserList from '../views/UserList.vue'
 import InviteUser from '../views/InviteUser.vue'
 import CompletedTask from '../views/CompletedTask.vue'
 import TicketList from '../views/TicketList.vue'
+import UnactiveAccount from '../views/UnactiveAccount.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,6 +48,11 @@ const router = createRouter({
           path: 'ticketlist',
           name: 'ticketlist',
           component: TicketList
+        },
+        {
+          path: 'unactive',
+          name: 'unactive',
+          component: UnactiveAccount
         }
       ],
       beforeEnter(to, from){

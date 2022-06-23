@@ -1,10 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-<<<<<<< HEAD
 import LoginView from "../views/LoginView.vue";
-=======
 import mapViewVue from "../views/mapView.vue";
->>>>>>> mapView
+import RegisterViewVue from "../views/RegisterView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,22 +13,26 @@ const router = createRouter({
       component: HomeView,
     },
     {
-<<<<<<< HEAD
       path: "/login",
       name: "login",
       component: LoginView,
-=======
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: RegisterViewVue,
+    },
+    {
       path: "/map",
       name: "map",
       component: mapViewVue,
->>>>>>> mapView
     },
   ],
 });
 
 router.beforeEach((to, from) => {
   let isLogin = localStorage.getItem("access_token");
-  if (isLogin && to.name == "login") {
+  if ((isLogin && to.name == "login") || to.name == "register") {
     return { name: "home" };
   }
 });

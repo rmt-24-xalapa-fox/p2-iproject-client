@@ -5,18 +5,10 @@ export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
     counter: 0,
-<<<<<<< HEAD
-    map: [],
-    tour: [],
-    baseUrl: "http://localhost:5656",
-    authorId: 0,
-    email: "",
-=======
     map: "",
     dataTour: [],
     oneData: [],
     baseUrl: "http://localhost:5656/",
->>>>>>> mapView
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -44,33 +36,20 @@ export const useCounterStore = defineStore({
           },
         };
         let response = await axios.request(options);
-<<<<<<< HEAD
         console.log(response.data);
-=======
->>>>>>> mapView
         return response.data.candidates[0].geometry;
       } catch (err) {
         console.log(err);
       }
     },
-<<<<<<< HEAD
-    async allTour() {
-      try {
-        let response = await axios.get(
-          "https://triplocator.net/api/rest/get/tours"
-        );
-        console.log(response);
-=======
     async fetchData() {
       try {
         let res = await axios.get(this.baseUrl + "tour");
         this.dataTour = res.data.response;
->>>>>>> mapView
       } catch (err) {
         console.log(err);
       }
     },
-<<<<<<< HEAD
     async googleSign(credential) {
       try {
         let res = await axios({
@@ -80,12 +59,9 @@ export const useCounterStore = defineStore({
             credential,
           },
         });
-        console.log(res, "<<<<< store");
-        localStorage.setItem("authorId", res.data.user.id);
-        localStorage.setItem("email", res.data.user.email);
+
         localStorage.setItem("access_token", res.data.data.access_token);
-        this.authorId = res.data.user.id;
-        this.email = res.data.user.email;
+
         return true;
       } catch (err) {
         console.log(err, "store");
@@ -102,17 +78,38 @@ export const useCounterStore = defineStore({
             password,
           },
         });
+        localStorage.setItem("access_token", response.data.access_token);
         return true;
       } catch (err) {
         return false;
-=======
+      }
+    },
     async fetchOneData(id) {
       try {
         let response = await axios.get(this.baseUrl + `tour/${id}`);
         this.oneData = response.data.response;
       } catch (err) {
         console.log(err);
->>>>>>> mapView
+      }
+    },
+    async registerHandler(obj) {
+      try {
+        const { username, email, password, phoneNumber, address } = obj;
+        await axios({
+          method: "POST",
+          url: this.baseUrl + "/register",
+          data: {
+            username,
+            email,
+            password,
+            phoneNumber,
+            address,
+          },
+        });
+        return true;
+      } catch (err) {
+        console.log(err);
+        return false;
       }
     },
   },

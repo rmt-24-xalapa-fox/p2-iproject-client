@@ -50,7 +50,7 @@ export default {
   <div
     class="d-flex rounded shadow"
     style="
-      background-color: #c2ded1;
+      background-color: #b7e5dd;
       width: 60%;
       margin: auto;
       margin-top: 5%;
@@ -77,7 +77,13 @@ export default {
         <form action="#" class="signin-form" @submit.prevent="login">
           <div class="form-group mt-3">
             <label class="form-control-placeholder" for="email">Email</label>
-            <input type="text" class="form-control" required v-model="email" />
+            <input
+              type="text"
+              class="form-control"
+              required
+              v-model="email"
+              placeholder="input email"
+            />
           </div>
           <div class="form-group">
             <label class="form-control-placeholder" for="password"
@@ -87,6 +93,7 @@ export default {
               id="password-field"
               type="password"
               class="form-control"
+              placeholder="input password"
               required
               v-model="password"
             />

@@ -25,7 +25,7 @@
           <label>2000 Coins</label>
         </div>
         <div class="col-4">
-          <button class="btn btn-dark" style="height: 35px">Xendit</button>
+          <button @click="clickMidTrans" id="pay-button">Pay!</button>
         </div>
       </div>
     </div>
@@ -71,6 +71,10 @@ import { useMainStore } from "../stores";
 export default {
   methods: {
     ...mapActions(useMainStore, ["fetchReferralData"]),
+    clickMidTrans: function () {
+      console.log("masok");
+      window.snap.pay("TRANSACTION_TOKEN_HERE");
+    },
     clickCopyClipboard: function () {
       // console.log("masok");
       // console.log(this.userReferralLink);

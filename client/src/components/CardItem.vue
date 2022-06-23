@@ -69,6 +69,9 @@ export default {
           console.log(error);
         })
       }
+    },
+    GiftCoin(){
+      
     }
   }
 }
@@ -87,7 +90,8 @@ export default {
                 <button class="btn btn-secondary" v-for="genre in movie.MovieGenres" :key="genre.GenreId">{{genre.Genre.name}}</button> -->
               </div>
               <button @click="setDetail">See details</button>
-              <button v-if="msg=='my'" @click="promoted">Promote this post</button>
+              <button v-if="isLogin && post.canDonate!=true" @click="promoted">Promote this post</button>
+              <button v-if="isLogin && post.canDonate==true" @click="GiftCoin">Gift Coin</button>
               <button v-if="isLogin" @click="favourited">{{text}}</button>
             </div>
             

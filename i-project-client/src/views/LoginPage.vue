@@ -12,7 +12,7 @@ export default {
     handleCredentialResponse(response) {
       axios({
         method: 'POST',
-        url: `http://localhost:3000/loginGoogle`,
+        url: `https://i-project-p2.herokuapp.com/loginGoogle`,
         data: {
           credential: response.credential
         }

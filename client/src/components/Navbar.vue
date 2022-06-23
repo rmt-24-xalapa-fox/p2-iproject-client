@@ -27,10 +27,10 @@ export default {
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item active">
-            <router-link to="/" class="nav-link" href="#">Home</router-link>
+            <router-link to="/" class="nav-link" href="">Home</router-link>
           </li>
           <li class="nav-item active">
-            <router-link to="/favorite" class="nav-link" href="#">My Order</router-link>
+            <router-link to="/myorder" class="nav-link" href="">My Order</router-link>
           </li>
         </ul>
         <button type="button" class="btn btn-outline-light btn-sm d-flex" @click.prevent="logout">Sign out</button>

@@ -25,13 +25,13 @@ export default {
   <div
     v-for="(movie, id) in moviesData"
     :key="id"
-    class="flex flex-shrink-0 justify-center items-center w-1/2 max-w-sm mx-auto my-8"
+    class="flex flex-row w-1/2 max-w-sm mx-auto my-8"
   >
     <div
-      :style="{
-        backgroundImage: `url(${this.baseImgUrl}/w500${movie.backdrop_path})`,
-      }"
       class="bg-gray-300 h-64 w-full rounded-lg shadow-md bg-cover bg-center"
+      :style="{
+        backgroundImage: `url(${baseImgUrl}/w500${movie.backdrop_path})`,
+      }"
     ></div>
   </div>
 </template>

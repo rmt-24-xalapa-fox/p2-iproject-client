@@ -28,7 +28,7 @@ export default {
       try {
         let res = await axios({
           method: "post",
-          url: `http://localhost:3000/posts/likes/${this.item.id}`,
+          url: `https://instalite-i-project.herokuapp.com/posts/likes/${this.item.id}`,
           headers: {
             access_token: localStorage.getItem("access_token"),
           },

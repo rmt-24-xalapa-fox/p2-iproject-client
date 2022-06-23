@@ -43,7 +43,7 @@ export default {
         console.log(">>>", formData);
         let res = await axios({
           method: "post",
-          url: "http://localhost:3000/posts/upload",
+          url: "https://instalite-i-project.herokuapp.com/posts/upload",
           headers: {
             access_token: localStorage.getItem("access_token"),
             "Content-Type": "multipart/form-data",
@@ -66,7 +66,7 @@ export default {
         try {
           let res = await axios({
             method: "get",
-            url: "http://localhost:3000/posts/myposts",
+            url: "https://instalite-i-project.herokuapp.com/posts/myposts",
             headers: {
               access_token: localStorage.getItem("access_token"),
             },
@@ -85,7 +85,9 @@ export default {
       try {
         let res = await axios({
           method: "get",
-          url: `http://localhost:3000/followers/${localStorage.getItem("id")}`,
+          url: `https://instalite-i-project.herokuapp.com/followers/${localStorage.getItem(
+            "id"
+          )}`,
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
@@ -100,7 +102,9 @@ export default {
       try {
         let res = await axios({
           method: "get",
-          url: `http://localhost:3000/followings/${localStorage.getItem("id")}`,
+          url: `https://instalite-i-project.herokuapp.com/followings/${localStorage.getItem(
+            "id"
+          )}`,
           headers: {
             access_token: localStorage.getItem("access_token"),
           },

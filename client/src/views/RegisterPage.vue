@@ -16,7 +16,7 @@ export default {
       try {
         let res = await axios({
           method: "post",
-          url: "http://localhost:3000/register",
+          url: "https://instalite-i-project.herokuapp.com/register",
           data: {
             email: this.email,
             password: this.password,

@@ -13,7 +13,7 @@ export default {
       try {
         let res = await axios({
           method: "post",
-          url: "http://localhost:3000/login",
+          url: "https://instalite-i-project.herokuapp.com/login",
           data: {
             email: this.email,
             password: this.password,

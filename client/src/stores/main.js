@@ -16,7 +16,7 @@ export const useMainStore = defineStore({
         try {
           let res = await axios({
             method: "get",
-            url: "http://localhost:3000/posts",
+            url: "https://instalite-i-project.herokuapp.com/posts",
             headers: {
               access_token: localStorage.getItem("access_token"),
             },

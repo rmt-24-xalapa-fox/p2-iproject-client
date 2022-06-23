@@ -98,10 +98,11 @@ export const useMainStore = defineStore({
     discardTransform(i){
       if(i>0){
         // replace ditto
-        this.roundlog.push(`[ ${this.ditto.transforms[i].name} ] has been replaced with [ ${this.enemy.name} ]`)
-        console.log(`[ ${this.ditto.transforms[i].name} ] has been replaced with [ ${this.enemy.name} ]`);
+
+        this.roundlog.push(`[ ${this.ditto.transforms[i+1].name} ] has been replaced with [ ${this.enemy.name} ]`)
+        console.log(`[ ${this.ditto.transforms[i+1].name} ] has been replaced with [ ${this.enemy.name} ]`);
         
-        this.ditto.transforms.splice(i, 1, this.enemy);
+        this.ditto.transforms.splice(i+1, 1, this.enemy);
       }
 
       this.enemy = false
@@ -111,8 +112,12 @@ export const useMainStore = defineStore({
 
     calcDmg(move, levelatk, attacker, leveldef, defender){      
       // dmg = (0.5 * power * (atk/deff) * mod) + 1
+      console.log("ATK atccker", attacker.attack , levelatk);
+      console.log("DEF defender", defender.defense , leveldef);
       const reduc = (((attacker.attack+15) * levelatk) / ((defender.defense+15) * leveldef) )
+      console.log("REDUCTION",reduc);
       const mod = this.typematchup[move.type][defender.type]
+      console.log("MOD", move.type, defender.type, mod);
       if(mod>1){
         this.roundlog.push(`It's super effective!`)
       } 
@@ -120,6 +125,7 @@ export const useMainStore = defineStore({
         this.roundlog.push(`It's not very effective...`)
       }
       const dmg = Math.floor( 0.5 * move.power * reduc * mod ) + 1
+      console.log("YEP DMG", dmg);
       return dmg
     },
 
@@ -136,7 +142,9 @@ export const useMainStore = defineStore({
         enemylvl, this.enemy
       )
       // check enemy hp
+      console.log("HP BEFORE", this.enemy.currenthp);
       this.enemy.currenthp -= dmg1
+      console.log("HP AFTER", this.enemy.currenthp);
 
       setTimeout(() => {}, 1000);
 

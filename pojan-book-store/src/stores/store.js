@@ -266,7 +266,7 @@ export const useStore = defineStore({
     },
     async callMidtrans(price, obj) {
       try {
-        console.log(obj);
+        // console.log(obj);
         const response = await axios.post(
           `${this.baseUrl}/pay`,
           { price },
@@ -305,7 +305,7 @@ export const useStore = defineStore({
             });
           },
           onClose(result) {
-            console.log(result);
+            // console.log(result);
           },
         });
       } catch (err) {

@@ -64,6 +64,55 @@ export default {
         this.isAlreadyChooseCity = true;
       });
     },
+    DateMinFunc() {
+      if (this.shippingOption[this.indexShippingOption]) {
+        let num = this.shippingOption[
+          this.indexShippingOption
+        ].cost[0].etd.split(" ")[1]
+          ? this.shippingOption[this.indexShippingOption].cost[0].etd.split(
+              " "
+            )[0]
+          : this.shippingOption[this.indexShippingOption].cost[0].etd.split(
+              "-"
+            )[0];
+        Date.prototype.addDays = function (days) {
+          this.setDate(this.getDate() + parseInt(days));
+          return this;
+        };
+        let now = new Date();
+        this.orderObj.receivedDateMin = now.addDays(num);
+        return this.receivedDateMin;
+      }
+    },
+    DateMaxFunc() {
+      if (this.shippingOption[this.indexShippingOption]) {
+        let num2 = this.shippingOption[
+          this.indexShippingOption
+        ].cost[0].etd.split(" ")[1]
+          ? this.shippingOption[this.indexShippingOption].cost[0].etd.split(
+              " "
+            )[0]
+          : this.shippingOption[this.indexShippingOption].cost[0].etd.split(
+              "-"
+            )[1];
+
+        if (!num2) {
+          num2 = this.shippingOption[this.indexShippingOption].cost[0].etd;
+        }
+        Date.prototype.addDays = function (days) {
+          this.setDate(this.getDate() + parseInt(days));
+          return this;
+        };
+        let now = new Date();
+        this.orderObj.receivedDateMax = now.addDays(num2);
+        return this.receivedDateMax;
+      }
+    },
+    submitMidtrans(totalPriceAndCost, orderObj) {
+      this.DateMinFunc();
+      this.DateMaxFunc();
+      this.callMidtrans(totalPriceAndCost, orderObj);
+    },
   },
   computed: {
     ...mapState(useStore, [
@@ -136,6 +185,12 @@ export default {
         this.orderObj.receivedDateMax = now.addDays(num2);
         return this.receivedDateMax;
       }
+    },
+  },
+  watch: {
+    orderObj(newVal) {
+      this.DateMinFunc();
+      this.DateMaxFunc();
     },
   },
   created() {
@@ -273,7 +328,7 @@ export default {
           This shipping option is not available
         </h4>
         <button
-          @click.prevent="this.callMidtrans(totalPriceAndCost, orderObj)"
+          @click.prevent="submitMidtrans(totalPriceAndCost, orderObj)"
           v-if="
             shippingOption.length !== 0 &&
             shippingOption[indexShippingOption] &&

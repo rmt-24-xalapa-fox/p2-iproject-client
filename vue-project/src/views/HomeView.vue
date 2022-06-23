@@ -1,5 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
+import headerVue from "../components/header.vue";
 import navbarVue from "../components/navbar.vue";
 import { useCounterStore } from "../stores/counter";
 
@@ -12,6 +13,7 @@ export default {
   },
   components: {
     navbarVue,
+    headerVue,
   },
   computed: {
     ...mapState(useCounterStore, ["map"]),
@@ -29,6 +31,7 @@ export default {
 
 <template>
   <navbarVue />
+  <headerVue />
   <div>
     <form action="" @submit.prevent="find">
       <label for="">Location</label>

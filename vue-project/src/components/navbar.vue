@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-  <nav class="navbar bg-light">
+  <nav class="navbar bg-light shadow fixed-top">
     <div class="container">
       <a class="navbar-brand">
         <img

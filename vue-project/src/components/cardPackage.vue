@@ -1,17 +1,29 @@
 <script>
-import { mapState } from "pinia";
+import { mapState, mapActions, mapWritableState } from "pinia";
 import { useCounterStore } from "../stores/counter";
 
 export default {
   name: "cards",
   computed: {
     ...mapState(useCounterStore, ["dataTour"]),
+    ...mapWritableState(useCounterStore, ["map"]),
+  },
+  methods: {
+    ...mapActions(useCounterStore, ["findMap", "fetchOneData"]),
+    async find(value1, value2) {
+      let res = await this.findMap(value1);
+      await this.fetchOneData(value2);
+      const { lat, lng } = res.location;
+      this.map = `https://api.maptiler.com/maps/e335f49c-b410-4b3a-ad43-c57425e058c8/?key=acVZ15jdGumikR4TcSxG#8.2/${lat}/${lng}`;
+      this.$router.push("/map");
+    },
   },
 };
 </script>
 
 <template>
   <div>
+    <h3 style="text-align: center; margin: 5%">List Tour Package</h3>
     <div class="d-flex container align-content-start flex-wrap">
       <div
         v-for="data in dataTour"
@@ -44,7 +56,12 @@ export default {
             </div>
             <div class="d-flex" style="justify-content: center; margin: 5%">
               <div>
-                <button class="btn btn-outline-primary">Detail</button>
+                <button
+                  class="btn btn-outline-primary"
+                  @click="find(data.name, data.id)"
+                >
+                  Detail
+                </button>
               </div>
               <div>
                 <button class="btn btn-outline-success">order</button>
@@ -55,10 +72,13 @@ export default {
       </div>
     </div>
   </div>
+  <div style="margin-bottom: -20%">
+    <p style="text-align: center">@ 2022 - Arizal Fikri</p>
+  </div>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 1440 320"
-    style="position: absolute"
+    style="position: absolute; z-index: -999"
   >
     <path
       fill="#0099ff"

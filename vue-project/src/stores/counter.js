@@ -5,8 +5,9 @@ export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
     counter: 0,
-    map: [],
+    map: "",
     dataTour: [],
+    oneData: [],
     baseUrl: "http://localhost:5656/",
   }),
   getters: {
@@ -35,7 +36,6 @@ export const useCounterStore = defineStore({
           },
         };
         let response = await axios.request(options);
-        // console.log(response.data);
         return response.data.candidates[0].geometry;
       } catch (err) {
         console.log(err);
@@ -45,6 +45,14 @@ export const useCounterStore = defineStore({
       try {
         let res = await axios.get(this.baseUrl + "tour");
         this.dataTour = res.data.response;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async fetchOneData(id) {
+      try {
+        let response = await axios.get(this.baseUrl + `tour/${id}`);
+        this.oneData = response.data.response;
       } catch (err) {
         console.log(err);
       }

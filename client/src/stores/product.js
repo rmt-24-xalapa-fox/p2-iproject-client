@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 export const useProductStore = defineStore('product', {
     state() {
         return {
-            baseUrl: `http://localhost:4000`,
+            // baseUrl: `http://localhost:4000`,
             baseUrl: `https://cardbas.herokuapp.com`,
             card: [],
             favorites: [],

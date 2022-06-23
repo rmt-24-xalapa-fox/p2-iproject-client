@@ -6,7 +6,8 @@ export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
     isLogin: localStorage.getItem("access_token"),
-    baseUrl: 'http://localhost:3000',
+    baseUrl: "https://ps-anywhere-fix.herokuapp.com",
+    // baseUrl: 'http://localhost:3000',
     gameNews: [],
     rentalans: [],
     perRentalan: ""
@@ -41,6 +42,12 @@ export const useCounterStore = defineStore({
         )
         this.router.push('/home')
       } catch (err) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Invalid email/password!',
+          footer: 'Do you have Register?'
+        })
         console.log(err);
       }
     },
@@ -73,9 +80,10 @@ export const useCounterStore = defineStore({
       }
     },
 
-    async fetchRentalanById(id) {
+    async fetchRentalanById(id, query) {
       try {
-        const response = await axios.get(this.baseUrl + `/rentalan/${id}`)
+        console.log(id, query);
+        const response = await axios.get(this.baseUrl + `/rentalan/${id}?${query}`)
         console.log(response);
         this.perRentalan = response.data.perRentalan
       } catch (err) {

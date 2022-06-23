@@ -60,7 +60,7 @@ export default {
                     <img src="../assets/img/stik ps.jpg" class="img-fluid" alt="Phone image">
                 </div>
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                    
+                    <p>World no.2 easiest login. Cause no.1 was taken our own register!</p>
                     <form>
                         <!-- Email input -->
                         <div class="form-outline mb-4">
@@ -79,7 +79,7 @@ export default {
                         <div class="d-flex justify-content-around align-items-center mb-4">
                             <!-- Checkbox -->
                             <p>Don't have an account?
-                            <routerLink to="/register">Register</routerLink>
+                                <routerLink to="/register">Register</routerLink>
                             </p>
                         </div>
 
@@ -91,9 +91,16 @@ export default {
                             <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
                         </div>
 
+                        <div class="container">
+                            <a class="btn btn-lg btn-social btn-facebook" href="auth/facebook">
+                                <i class="fa fa-facebook fa-fw"></i> Sign in with Facebook
+                            </a>
+                        </div>
 
-                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                        <fb:login-button>
                         </fb:login-button>
+
+                        <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
 
                     </form>
                 </div>

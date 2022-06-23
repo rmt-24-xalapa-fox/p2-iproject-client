@@ -27,7 +27,7 @@ export default {
                         class="img-fluid" alt="Phone image">
                 </div><br>
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                    <p><strong>World no.1 easiest register. Just fill the email and password!</strong></p>
+                    <p>World no.1 easiest register. Just fill the email and password!</p>
                     <form>
                         <!-- Email input -->
                         <div class="form-outline mb-4">
@@ -45,18 +45,9 @@ export default {
                             <label class="form-label" for="form1Example23">Password</label>
                         </div>
 
-                        <!-- <div class="d-flex justify-content-around align-items-center mb-4"> -->
-                            <!-- Checkbox -->
-                            <!-- <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
-                                <label class="form-check-label" for="form1Example3"> Remember me </label>
-                            </div>
-                            <a href="#!">Forgot password?</a>
-                        </div> -->
-
                         <!-- Submit button -->
                         <button @click.prevent="registerHandler(this.email, this.password)" type="submit" class="btn btn-primary btn-lg btn-block">Sign up</button>
-                        <router-link class="btn btn-primary btn-lg btn-block" to="/login">Back to Login</router-link>
+                        <router-link class="btn btn-danger btn-lg btn-block" to="/login">Back to Login</router-link>
                     </form>
                 </div>
             </div>
@@ -68,4 +59,5 @@ export default {
 h3 {
     text-align: center;
 }
+
 </style>

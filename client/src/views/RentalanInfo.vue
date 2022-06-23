@@ -3,13 +3,17 @@ import { mapActions, mapState } from 'pinia';
 import { useCounterStore } from '../stores/counter';
 import { StripeCheckout } from '@vue-stripe/vue-stripe'
 import TableRowUnit from '../components/TableRowUnit.vue';
+import Filter from '../components/FIlter.vue';
+import FIlter from '../components/FIlter.vue';
 
 export default {
     name: "RentalanInfo",
     components: {
-        StripeCheckout,
-        TableRowUnit
-    },
+    Filter,
+    StripeCheckout,
+    TableRowUnit,
+    FIlter
+},
     data() {
         this.publishableKey = "pk_test_51LD3zSGsdBMqOjdKIb4BRSiGTvU83wzJtWzk6XgbMSsiihtxfS1wovHiyicDl3Q9qWqLvnbN2Fpj6NsGn6fLovfI00Aq3CB98E"
         return {
@@ -37,7 +41,7 @@ export default {
     },
     created() {
         this.fetchRentalanById(this.$route.params.id)
-    }
+    },
 }
 </script>
 
@@ -49,6 +53,7 @@ export default {
     </div>
     <div>
       <h5>List unit of PS you can booked everywhere</h5>
+      <Filter />
         <table class="table">
             <thead>
                 <tr>

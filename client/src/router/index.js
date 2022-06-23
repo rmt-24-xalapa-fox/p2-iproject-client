@@ -6,6 +6,7 @@ import RentalanInfo from "../views/RentalanInfo.vue"
 import Success from "../views/Success.vue"
 import ErrorPage from "../views/ErrorPage.vue"
 import CurrencyChanger from "../components/CurrencyChanger.vue"
+import NotFoundPage from "../views/NotFoundPage.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,6 +50,10 @@ const router = createRouter({
       path: '/feature',
       name: 'feature',
       component: CurrencyChanger
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      component: NotFoundPage
     }
     // {
     //   path: "/about",

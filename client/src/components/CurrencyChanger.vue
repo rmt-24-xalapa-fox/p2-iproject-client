@@ -37,43 +37,8 @@ export default {
 </script>
 
 <template>
-
-    <form class="top">
-        <h3>Currency Changer if you need</h3>
-        <div class="form-row">
-            <div class="col">
-                <label for="">From</label>
-                <select v-model="from" id="inputState" class="form-control">
-                    <option selected>Choose...</option>
-                    <option value="USD">USD</option>
-                    <option value="IDR">IDR</option>
-                    <option value="GBP">GBP</option>
-                    <option value="EUR">EUR</option>
-                    <option value="JPY">JPY</option>
-                </select>
-            </div>
-            <div class="col">
-                <label for="">To</label>
-                <select v-model="to" id="inputState" class="form-control">
-                    <option selected>Choose...</option>
-                    <option value="USD">USD</option>
-                    <option value="IDR">IDR</option>
-                    <option value="GBP">GBP</option>
-                    <option value="EUR">EUR</option>
-                    <option value="JPY">JPY</option>
-                </select>
-            </div>
-            <div class="col">
-                 <label for="">Amount</label>
-                 <input v-model="amount" type="number" id="inputState" class="form-control">
-            </div><br>
-            <button class="btn btn-primary" @click.prevent="fetchCurrency">Submit</button>
-        </div><br>
-        <div>
-            Result: <strong style="color:tomato">{{this.result}}</strong> 
-        </div>
-    </form>
-
+<h4 class="top">Our Standard Rate for PS rent based on type and time
+</h4>
     <table class="table">
             <thead>
                 <tr>
@@ -111,6 +76,42 @@ export default {
 
             </tbody>
         </table>
+
+        <form>
+        <h3>Currency Changer if you need</h3>
+        <div class="form-row">
+            <div class="col">
+                <label for="">From</label>
+                <select v-model="from" id="inputState" class="form-control">
+                    <option selected>Choose...</option>
+                    <option value="USD">USD</option>
+                    <option value="IDR">IDR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="EUR">EUR</option>
+                    <option value="JPY">JPY</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="">To</label>
+                <select v-model="to" id="inputState" class="form-control">
+                    <option selected>Choose...</option>
+                    <option value="USD">USD</option>
+                    <option value="IDR">IDR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="EUR">EUR</option>
+                    <option value="JPY">JPY</option>
+                </select>
+            </div>
+            <div class="col">
+                 <label for="">Amount</label>
+                 <input v-model="amount" type="number" id="inputState" class="form-control">
+            </div><br>
+            <button class="btn btn-primary" @click.prevent="fetchCurrency">Submit</button>
+        </div><br>
+        <div>
+            Result: <strong style="color:tomato">{{this.result}}</strong> 
+        </div>
+    </form>
 </template>
 
 <style scoped>

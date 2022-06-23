@@ -24,7 +24,7 @@ export default {
         <td class="btn-outline-success">{{ unit.status }}</td>
         <td>
             <button v-if="unit.status !== 'Booked'" class="btn btn-success" @click="submit(unit.id)"
-                type="submit">Booked</button>
+                type="submit">Book</button>
         </td>
 
     </tr>

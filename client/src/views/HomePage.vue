@@ -75,7 +75,7 @@ export default {
                             <div class="row g-0">
                                 <div class="col-md-4">
                                     <img :src="rentalan.iconImage"
-                                        alt="Trendy Pants and Shoes" class="img-fluid rounded-start" />
+                                        alt="icon" class="img-fluid rounded-start" />
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">

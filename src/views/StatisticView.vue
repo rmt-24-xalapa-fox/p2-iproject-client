@@ -16,7 +16,7 @@ export default {
 
   },
   computed:{
-    ...mapState(useMainStore, ["runlog"]),
+    ...mapState(useMainStore, ["runlog", "runStatus"]),
 
   },
   created(){
@@ -28,7 +28,7 @@ export default {
 <template>
   <div class="page-container">
     <div class="title-page">
-      <h1>YOU LOSE</h1>
+      <h1 v-show="runStatus==='finish'">YOU LOSE</h1>
     </div>
     <!-- stat run here -->
     <div class="stat-container">
@@ -49,7 +49,7 @@ export default {
   min-height: 400px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
   align-content: center;
 }

@@ -30,7 +30,7 @@ export const useMainStore = defineStore({
     enemies: [],
     maps: [],
     rounds: 0,
-    runStatus: false, // start (select enemy/transform) -> combat -> end (replace transform) -> finish
+    runStatus: 'finish', // start (select enemy/transform) -> combat -> end (replace transform) -> finish
     itemlog: '',
     typematchup: {},
     runlog: [],
@@ -97,12 +97,10 @@ export const useMainStore = defineStore({
 
     discardTransform(i){
       if(i>0){
-        // replace ditto
-
-        this.roundlog.push(`[ ${this.ditto.transforms[i+1].name} ] has been replaced with [ ${this.enemy.name} ]`)
-        console.log(`[ ${this.ditto.transforms[i+1].name} ] has been replaced with [ ${this.enemy.name} ]`);
+        this.roundlog.push(`[ ${this.ditto.transforms[i].name} ] has been replaced with [ ${this.enemy.name} ]`)
+        console.log(`[ ${this.ditto.transforms[i].name} ] has been replaced with [ ${this.enemy.name} ]`);
         
-        this.ditto.transforms.splice(i+1, 1, this.enemy);
+        this.ditto.transforms.splice(i, 1, this.enemy);
       }
 
       this.enemy = false
@@ -116,8 +114,12 @@ export const useMainStore = defineStore({
       console.log("DEF defender", defender.defense , leveldef);
       const reduc = (((attacker.attack+15) * levelatk) / ((defender.defense+15) * leveldef) )
       console.log("REDUCTION",reduc);
-      const mod = this.typematchup[move.type][defender.type]
-      console.log("MOD", move.type, defender.type, mod);
+      let mod = 1
+      defender.type.forEach( e => {
+        mod *= this.typematchup[move.type][e]
+        console.log("MOD", move.type, e, mod);
+      });
+      console.log("MOD Final", move.type, defender.type, mod);
       if(mod>1){
         this.roundlog.push(`It's super effective!`)
       } 
@@ -141,10 +143,8 @@ export const useMainStore = defineStore({
         this.ditto.level, this.ditto.transforms[this.ditto.active], 
         enemylvl, this.enemy
       )
-      // check enemy hp
-      console.log("HP BEFORE", this.enemy.currenthp);
+      // check enemy hp      
       this.enemy.currenthp -= dmg1
-      console.log("HP AFTER", this.enemy.currenthp);
 
       setTimeout(() => {}, 1000);
 
@@ -214,19 +214,25 @@ export const useMainStore = defineStore({
       }
       // enemy attack
 
-      let enemymove = Math.random() < 0.37 ? this.enemy.moves[0] : this.enemy.moves[1]
+      let enemymove = Math.random() < 0.72 ? this.enemy.moves[0] : this.enemy.moves[1]
+      
+      // this.runlog.push(`Enemy use move [ ${enemymove.name} ]`)
+      this.roundlog.push(`Enemy use move [ ${enemymove.name} ]`)
+      console.log(`Enemy use move [ ${enemymove.name} ]`);
 
       const dmg2 = this.calcDmg(enemymove, 
         enemylvl, this.enemy,
         this.ditto.level, this.ditto.transforms[this.ditto.active]
       )
 
-      // this.runlog.push(`Enemy use move [ ${enemymove.name} ]`)
-      this.roundlog.push(`Enemy use move [ ${enemymove.name} ]`)
-      console.log(`Enemy use move [ ${enemymove.name} ]`);
 
       // cehck hp
-      this.ditto.hp = (( this.ditto.hp * this.getMaxHp * 0.01 ) - dmg2) * 100 / this.getMaxHp
+      this.ditto.currenthp = Math.ceil( this.ditto.hp * this.getMaxHp * 0.01 )
+      console.log("HP BEFORE", this.enemy.currenthp);
+      this.ditto.currenthp -= dmg2
+      console.log("HP AFTER", this.enemy.currenthp);
+
+      this.ditto.hp = Math.ceil((this.ditto.currenthp) * 100 / this.getMaxHp)
 
       if(this.ditto.hp<0){
         // end run        
@@ -243,68 +249,75 @@ export const useMainStore = defineStore({
 
     },
 
-    useInventItem(invent, idx){
-      if(invent.type==="Berries" || invent.type==="Medicine"){
+    useInventItem(key, name){      
+      const item = this.items[key].find( itm => itm.name === name )
+
+      if(key==="Berries" || key==="Medicine"){
         if(this.ditto.hp===100){
           this.itemlog = "Already full HP!";
           return
         }
+
         // current hp
-        let currenthp = ( this.ditto.hp * this.getMaxHp * 0.01 )
-        let hpafter = this.ditto.hp
-        // heal        
-        if(this.inventory[invent.type][idx].heal.includes("%")){
-          hpafter += Number(this.inventory[invent.type][idx].heal.replace('%',''))
+        let currenthp = Math.ceil( this.ditto.hp * this.getMaxHp * 0.01 )
+        let hpafter = currenthp
+
+        // console.log(item.heal, item.heal.includes("%"));
+
+        if(item.heal.includes("%")){
+          hpafter += Math.ceil(Number(item.heal.replace('%',''))*this.getMaxHp*0.01)
         } else {          
-          hpafter = currenthp + Number(this.inventory[invent.type][idx].heal)
+          hpafter = currenthp + Number(item.heal)
         }
+
+        hpafter = Math.ceil( hpafter * 100 / this.getMaxHp )
+
         if(hpafter > 100 ){
           this.ditto.hp = 100
         } else {
           this.ditto.hp = hpafter
         }
-        this.itemlog = `[ ${this.inventory[invent.type][idx].name} ] Used! Restored ${this.inventory[invent.type][idx].heal} HP!`
-        // this.runlog.push(`[ ${this.inventory[invent.type][idx].name} ] Used! Restored ${this.inventory[invent.type][idx].heal} HP!`)
-        this.roundlog.push(`[ ${this.inventory[invent.type][idx].name} ] Used! Restored ${this.inventory[invent.type][idx].heal} HP!`)
-        this.inventory[invent.type][idx].stock--
+
+        this.itemlog = `[ ${item.name} ] Used! Restored ${item.heal} HP!`
+        // this.runlog.push(`[ ${item.name} ] Used! Restored ${item.heal} HP!`)
+        this.roundlog.push(`[ ${item.name} ] Used! Restored ${item.heal} HP!`)
+        this.inventory[key][name].stock--
         
-        console.log(`[ ${this.inventory[invent.type][idx].name} ] Used! Restored ${this.inventory[invent.type][idx].heal} HP!`);
-      }
-
-      if(invent.type==="Utils"){
-        if(invent.name==='Rare Candy'){
-          if(this.runStatus==='end'){
-            this.ditto.level++
-            this.itemlog = `[ ${this.inventory.Utils[idx].name} ] Used!`
-            this.roundlog.push(`[ ${this.inventory.Utils[idx].name} ] Used!`)
-            this.inventory.Utils[idx].stock--
-
-            console.log(`[ ${this.inventory.Utils[idx].name} ] Used!`)
-          }
-          else {
-            this.itemlog = `[ ${this.inventory.Utils[idx].name} ] Cannot be used now!`
-          }
-        }
-
-        if(invent.name==='Escape Rope'){
-          if(this.runStatus!=='combat'){
-            this.itemlog = `[ Escape Rope ] Cannot be used now!`
-            return
-          }
-          this.rounds++
-          this.ditto.active = 0
-          this.enemy = false
-          this.pokemons = []
-          this.getPokemons()
-          this.runStatus = 'end'
-          this.loots = []
-          this.itemlog = `[ ${this.inventory.Utils[idx].name} ] Used!`
-          this.roundlog.push(`[ ${this.inventory.Utils[idx].name} ] Used!`)
-          this.inventory.Utils[idx].stock--
-        }
+        console.log(`[ ${item.name} ] Used! Restored ${item.heal} HP!`);
 
       }
-      
+
+      if(name==='Rare Candy'){
+        if(this.runStatus==='end'){
+          this.ditto.level++
+          this.itemlog = `[ ${name} ] Used!`
+          this.roundlog.push(`[ ${name} ] Used!`)
+          this.inventory[key][name].stock--
+
+          console.log(`[ ${name} ] Used!`)
+        }
+        else {
+          this.itemlog = `[ ${name} ] Cannot be used now!`
+        }
+      }
+
+      if(invent.name==='Escape Rope'){
+        if(this.runStatus!=='combat'){
+          this.itemlog = `[ Escape Rope ] Cannot be used now!`
+          return
+        }
+        this.rounds++
+        this.ditto.active = 0
+        this.enemy = false
+        this.pokemons = []
+        this.getPokemons()
+        this.runStatus = 'end'
+        this.loots = []
+        this.itemlog = `[ ${name} ] Used!`
+        this.roundlog.push(`[ ${name} ] Used!`)
+        this.inventory[key][idx].stock--
+      }
+
     },
 
     async LoginHandler(data){
@@ -350,6 +363,10 @@ export const useMainStore = defineStore({
       }
     },
 
+    contgamehandler(){
+      this.router.push({ name: 'battle'})
+    },
+
     async newgamehandler(){
       try {
         this.initState()
@@ -378,16 +395,20 @@ export const useMainStore = defineStore({
             itemstemp[item.type].push(item)
           }
         });
+
         this.items = itemstemp
         
         // starting items
-        const potion = recv.items.find(i => i.name==='Potion')
-        potion.stock = 5
-        const rope = recv.items.find(i => i.name==='Escape Rope')
-        rope.stock = 1
-        this.inventory.Medicine = [potion]
-        this.inventory.Utils = [rope]
-
+        // const potion = recv.items.find(i => i.name==='Potion')
+        // potion.stock = 5
+        // const rope = recv.items.find(i => i.name==='Escape Rope')
+        // rope.stock = 1
+        this.inventory = {
+          Medicine: { 'Potion': { stock: 5 }, 'Max Potion': { stock: 1} },
+          Berries: {},
+          Valuable: {},
+          Utils: { 'Escape Rope': { stock: 1} },
+        }
 
       } catch (error) {
         console.log(error);
@@ -444,8 +465,7 @@ export const useMainStore = defineStore({
     setTypes(p1, p2){
       this.ditto.transforms[this.ditto.active].type = p1
       this.enemy.type = p2
-      this.enemy.currenthp = (this.enemy.hp + 15) * (0.02*(this.getEnemyLvl))      
-      this.enemy.maxhp = (this.enemy.hp + 15) * (0.02*(this.getEnemyLvl))
+      this.enemy.currenthp = this.enemy.maxhp = Math.ceil(this.enemy.hp + 15) * (0.02*(this.getEnemyLvl))
     },
 
     initState(){
@@ -465,6 +485,7 @@ export const useMainStore = defineStore({
       this.runlog = [],
       this.roundlog = []
       this.loots = [],
+      this.map = []
       
       this.gettypematchup()
       this.getMaps()

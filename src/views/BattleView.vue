@@ -59,14 +59,27 @@ export default {
 
         this.dittoimg = recv_ditto.sprites.back_default;
 
-        let dittotype = recv_ditto.types[0].type.name;
-        let enemytype = recv.types[0].type.name;
+        // let dittotype = recv_ditto.types[0].type.name;
+        // let enemytype = recv.types[0].type.name;
 
-        // capitalize first char
-        this.setTypes(
-          dittotype.replace(dittotype[0], dittotype[0].toUpperCase()),
-          enemytype.replace(enemytype[0], enemytype[0].toUpperCase())
-        );
+        let dittotype = recv_ditto.types.map( p => {
+          let name = p.type.name
+          return name.replace(name[0], name[0].toUpperCase())
+        });
+
+        let enemytype = recv.types.map( p => {
+          let name = p.type.name
+          return name.replace(name[0], name[0].toUpperCase())
+        });
+
+        // // capitalize first char
+        // this.setTypes(
+        //   dittotype.replace(dittotype[0], dittotype[0].toUpperCase()),
+        //   enemytype.replace(enemytype[0], enemytype[0].toUpperCase())
+        // );
+
+        this.setTypes(dittotype, enemytype)
+
       } catch (error) {
         console.log(error);
       }
@@ -80,11 +93,8 @@ export default {
       "ditto",
       "enemy",
       "enemies",
-      "ditto",
       "getMaxHp",
       "itemlog",
-      "runends",
-      "showmap",
       "runlog",
       "runStatus",
       "loots",
@@ -120,20 +130,23 @@ export default {
     //   console.log("continue");
     // } else {
     // sniped to new game
-    this.counter = 0;
-    (this.nextStop = ""),
-      (this.dittoimg =
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png"),
-      (this.enemyimg =
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/1026px-Pok%C3%A9_Ball_icon.svg.png"),
+    this.dittoimg = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png"
+    this.enemyimg = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/1026px-Pok%C3%A9_Ball_icon.svg.png"
+    if(this.runStatus==='finish'){
+      this.nextStop = ""
+      this.counter = 0;
       this.newgamehandler();
-      this.skip=true
+    }
+    this.skip=true
     // }
   },
 
   watch: {
     runStatus(newval, oldval) {
       if (newval === "combat") {
+        this.fetchsrpiteimgNType();
+      }
+      if (newval === "finish" && !oldval) {
         this.fetchsrpiteimgNType();
       }
     },
@@ -211,15 +224,15 @@ export default {
       <div v-show="notDupe">
         <h1>SELECT TRANSFORMATION TO DISCARD</h1>
         <div class="battle-map-select-container">
-          <StarterCard class="map-selector-card selected-red" @click="discardTransform(i)"
+          <StarterCard class="map-selector-card selected-red" @click="discardTransform(i+1)"
             v-for="(pokemon, i) in ditto.transforms.slice(1)" :key="pokemon.id"
             :pokemon="pokemon"/>
           <StarterCard class="map-selector-card selected-red" @click="discardTransform(0)"          
             :pokemon="enemy"/>
         </div>
       </div>
-      <div class="battle-map-area-container" v-show="!notDupe">
-        <h1 @click="discardTransform(0)">CLICK HERE TO CONTINUE</h1>
+      <div class="battle-map-area-container" v-show="!notDupe" @click="discardTransform(0)">
+        <h1>CLICK HERE TO CONTINUE</h1>
       </div>
       <div class="stat-container" v-if="rounds > 0" v-show="runStatus === 'end'" @click="discardTransform(0)">
         <div v-for="loot in loots" class="detail-container">
@@ -260,7 +273,28 @@ export default {
           <span class="span-headers">Money: {{ money }} </span>
         </div>
         <div class="info-inventory">
-          <div class="info-invent-container" v-show="inventory.Medicine.length">
+          <!--  -->
+          <div class="info-invent-container" v-for="(cat, key) in inventory" 
+          v-show="Object.keys(cat).length > 0">
+            <div class="invent-item-title">
+              <span class="span-headers">{{key}}</span>
+            </div>
+            <table class="invent-item-container" >
+              <tr class="invent-item-row" 
+              v-for="(item, name) in cat" 
+              v-show="item.stock > 0" @click="useInventItem(key, name)" 
+              :key="name" >
+                <td class="invent-item-name">
+                  <span class="span-headers invent-item-detail">{{name}}</span>
+                </td>
+                <td class="invent-item-val">
+                  <span class="span-headers invent-item-detail">{{item.stock}}</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <!--  -->
+          <!-- <div class="info-invent-container" v-show="inventory.Medicine.length">
             <div class="invent-item-title">
               <span class="span-headers">Consumables</span>
             </div>
@@ -323,7 +357,7 @@ export default {
                 </td>
               </tr>
             </table>
-          </div>
+          </div> -->
           <div class="info-invent-container">
             <div class="invent-item-title" v-show="itemlog.length">
               <span class="span-headers">{{ itemlog }}</span>

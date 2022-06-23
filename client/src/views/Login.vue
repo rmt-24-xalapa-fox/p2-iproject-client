@@ -1,8 +1,12 @@
 <script>
 import axiosInstance from "../axiosInstance";
+import WelcomeNav from "../components/WelcomeNav.vue";
 
 export default {
   name: "Login",
+  components: {
+    WelcomeNav,
+  },
   data() {
     return {
       email: "",
@@ -20,12 +24,17 @@ export default {
 
         localStorage.setItem("id", data.id);
         localStorage.setItem("email", data.email);
+        localStorage.setItem("username", data.username);
         localStorage.setItem("access_token", data.access_token);
-
+        swal("You Have Logged In", "");
         this.$router.push("/");
       } catch (err) {
         console.log(err);
+        swal("Warning", "Invalid Email/Password", "error");
       }
+    },
+    changePage(page) {
+      this.$router.push(`${page}`);
     },
   },
 };
@@ -62,7 +71,12 @@ export default {
             <div>
               <p class="text-center text-muted mb-0" style="margin-top: 15px">
                 Don't have an account yet?
-                <a href="#" class="fw-bold text-body"><u>Register here</u></a>
+                <a
+                  @click.prevent="changePage('/register')"
+                  href="#"
+                  class="fw-bold text-body"
+                  ><u>Register here</u></a
+                >
               </p>
             </div>
           </div>

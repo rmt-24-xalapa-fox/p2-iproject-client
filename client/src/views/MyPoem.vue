@@ -1,14 +1,14 @@
 <script>
 import Navbar from "../components/Navbar.vue";
-import ReadContent from "../components/ReadContent.vue";
-import ChatBox from "../components/ChatBox.vue";
+import AddCard from "../components/AddCard.vue";
+import MyPoemContent from "../components/MyPoemContent.vue";
 
 export default {
-  name: "Home",
+  name: "MyPoem",
   components: {
     Navbar,
-    ReadContent,
-    ChatBox,
+    AddCard,
+    MyPoemContent,
   },
 };
 </script>
@@ -16,8 +16,8 @@ export default {
 <template>
   <Navbar />
   <div class="container">
-    <ReadContent />
-    <ChatBox />
+    <AddCard />
+    <MyPoemContent />
   </div>
 </template>
 

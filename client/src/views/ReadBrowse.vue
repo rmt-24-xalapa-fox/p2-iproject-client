@@ -1,14 +1,12 @@
 <script>
 import Navbar from "../components/Navbar.vue";
-import ReadContent from "../components/ReadContent.vue";
-import ChatBox from "../components/ChatBox.vue";
+import ReadBrowseContent from "../components/ReadBrowseContent.vue";
 
 export default {
   name: "Home",
   components: {
     Navbar,
-    ReadContent,
-    ChatBox,
+    ReadBrowseContent,
   },
 };
 </script>
@@ -16,13 +14,13 @@ export default {
 <template>
   <Navbar />
   <div class="container">
-    <ReadContent />
-    <ChatBox />
+    <ReadBrowseContent />
   </div>
 </template>
 
 <style scoped>
 .container {
   display: flex;
+  justify-content: center;
 }
 </style>

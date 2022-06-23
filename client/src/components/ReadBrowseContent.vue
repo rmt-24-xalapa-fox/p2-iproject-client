@@ -1,15 +1,15 @@
 <script>
-import ReadContentCard from "./ReadContentCard.vue";
+import ReadBrowseContentCard from "./ReadBrowseContentCard.vue";
 export default {
-  name: "ReadContent",
+  name: "ReadBrowseContent",
   components: {
-    ReadContentCard,
+    ReadBrowseContentCard,
   },
 };
 </script>
 <template>
   <div class="content">
-    <ReadContentCard />
+    <ReadBrowseContentCard />
   </div>
 </template>
 

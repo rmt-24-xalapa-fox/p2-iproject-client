@@ -1,6 +1,16 @@
 <script>
 export default {
   name: "Navbar",
+  methods: {
+    changePage(page) {
+      this.$router.push(`${page}`)
+    },
+    logout() {
+      localStorage.clear()
+      swal("You Have Logged Out", "");
+      this.$router.push("/login")
+    }
+  }
 };
 </script>
 <template>
@@ -24,24 +34,24 @@ export default {
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link active text-white" aria-current="page" href="#"
+            <a @click.prevent="changePage('/')" class="nav-link active text-white" aria-current="page" href="#"
               >Home</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link active text-white" aria-current="page" href="#"
+            <a @click.prevent="changePage('/mypoem')" class="nav-link active text-white" aria-current="page" href="#"
               >My Poem</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link active text-white" aria-current="page" href="#"
+            <a @click.prevent="changePage('/browse')" class="nav-link active text-white" aria-current="page" href="#"
               >Browse Poem</a
             >
           </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link text-white" href="#">Logout</a>
+            <a @click.prevent="logout" class="nav-link text-white" href="#">Logout</a>
           </li>
         </ul>
       </div>

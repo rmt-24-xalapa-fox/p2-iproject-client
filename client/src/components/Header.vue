@@ -51,7 +51,7 @@
                                 <div class="control-group">
                                     <ul class="categories-filter animate-dropdown">
                                         <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown"
-                                                href="category.html">Categories <b class="caret"></b></a>
+                                                href="#">Categories <b class="caret"></b></a>
                                             <ul class="dropdown-menu" role="menu">
                                                 <li class="menu-header">Computer</li>
                                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">-
@@ -288,5 +288,42 @@ export default {
 </script>
 
 <style scoped>
-
+.animate-dropdown .open > .dropdown-menu,
+.animate-dropdown .open > .dropdown-menu > .dropdown-submenu > .dropdown-menu {
+  animation-name: slidenavAnimation;
+  animation-duration: 200ms;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  -webkit-animation-name: slidenavAnimation;
+  -webkit-animation-duration: 200ms;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-timing-function: ease-out;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-name: slidenavAnimation;
+  -moz-animation-duration: 200ms;
+  -moz-animation-iteration-count: 1;
+  -moz-animation-timing-function: ease-out;
+  -moz-animation-fill-mode: forwards;
+}
+@keyframes slidenavAnimation {
+  from {
+    margin-top: -30px;
+    opacity: 0;
+  }
+  to {
+    margin-top: 0;
+    opacity: 1;
+  }
+}
+@-webkit-keyframes slidenavAnimation {
+  from {
+    margin-top: -30px;
+    opacity: 0;
+  }
+  to {
+    margin-top: 0;
+    opacity: 1;
+  }
+}
 </style>

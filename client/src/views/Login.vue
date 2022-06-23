@@ -28,7 +28,7 @@ export default {
         handleCredentialResponse(response) {
             axios({
                 method: 'POST',
-                url: `http://localhost:3001/google-sign`,
+                url: `https://marazzo-by-nurma.herokuapp.com/google-sign`,
                 data: {
                     credential: response.credential
                 }

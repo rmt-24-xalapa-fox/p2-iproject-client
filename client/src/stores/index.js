@@ -4,7 +4,7 @@ import axios from "axios"
 export const useIndexStore = defineStore({
   id: "index",
   state: () => ({
-    url: "http://localhost:3001",
+    url: "https://marazzo-by-nurma.herokuapp.com",
     products: [],
     carts: [],
     blogs: [],
@@ -156,7 +156,7 @@ export const useIndexStore = defineStore({
       try {
         const result = await axios({
           method: "GET",
-          url: `${this.url}/blog`,
+          url: "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=0c5be6ecf9e44df09394fc44bea5e816",
         });
 
         this.blogs = result.data.articles;
@@ -195,15 +195,6 @@ export const useIndexStore = defineStore({
     async patchStatus() {
       return new Promise(async (resolve, reject) => {
         try {
-          const result = await axios({
-            method: "PATCH",
-            url: `${this.url}/charge`,
-            data: { total },
-            headers: { access_token: localStorage.getItem("access_token") },
-          });
-
-          this.tokenMidtrans = result.data.token;
-          console.log(result.data.articles, "<<<<< get blog");
           resolve();
         } catch (err) {
           console.log(err.message, "<<< error");

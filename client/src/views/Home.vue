@@ -142,6 +142,7 @@
       <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
 
       <Product :products="products" />
+
     </div>
     <!-- /.container -->
   </div>
@@ -149,13 +150,11 @@
 
 <script>
 import Product from '../views/Product.vue'
-import Sidebar from '../components/Sidebar.vue'
 import { mapActions, mapState, mapWritableState } from 'pinia'
 import { useIndexStore } from '../stores'
 export default {
   components: {
     Product,
-    Sidebar
   },
   methods: {
     ...mapActions(useIndexStore, ["fetchProduct"]),

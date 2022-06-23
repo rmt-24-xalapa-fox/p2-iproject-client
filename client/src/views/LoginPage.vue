@@ -12,41 +12,41 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useCounterStore, ["loginHandler", "facebookLogin"]),
+        ...mapActions(useCounterStore, ["loginHandler"]),
 
         checkLoginState() {
             FB.getLoginStatus(function (response) {
                 statusChangeCallback(response);
             });
-        },
-
-        // firebase x fb
-        facebookLogin() {
-            let that = this
-            const provider = new $nuxt.$fireModule.auth.FacebookAuthProvider()
-            this.$fire.auth.signInWithPopup(provider)
-            .catch(function (err){
-                that.snackbarText = error.message
-                that.snackbar = true
-            }).then((user) => {
-                $nuxt.$router.push('/home')
-            })
         }
+
+        // firebase_x_fb
+        // facebookLogin() {
+        //     let that = this
+        //     const provider = new $nuxt.$fireModule.auth.FacebookAuthProvider()
+        //     this.$fire.auth.signInWithPopup(provider)
+        //         .catch(function (err) {
+        //             that.snackbarText = error.message
+        //             that.snackbar = true
+        //         }).then((user) => {
+        //             $nuxt.$router.push('/home')
+        //         })
+        // }
 
     },
 
     created() {
+        // doc_facebook
 
         FB.getLoginStatus(function (response) {
             statusChangeCallback(response);
         });
-
         window.fbAsyncInit = function () {
             FB.init({
-                appId: '1382494195590177',
+                appId: '{your-app-id}',
                 cookie: true,
                 xfbml: true,
-                version: 'v14.0'
+                version: '{api-version}'
             });
 
             FB.AppEvents.logPageView();
@@ -104,25 +104,12 @@ export default {
                             <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
                         </div>
 
-                        <!-- <div class="container">
-                            <a class="btn btn-lg btn-social btn-facebook" href="auth/facebook">
-                                <i class="fa fa-facebook fa-fw"></i> Sign in with Facebook
-                            </a>
-                        </div> -->
+                        <!-- @click="facebookLogin"  -->
+                        <!-- <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with"
+                            data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div> -->
 
-                        <!-- <fb:login-button>
-                        </fb:login-button> -->
-                        <!-- <v-btn
-                        class="login-buttin my-2 pa-2"
-                        width="100px"
-                        @click="facebookLogin"
-                        depressed
-                        large>
-                        <v-icon color="blue" large>
-                            mdi-facebook
-                        </v-icon>&nsbp;Login with Facebook
-                        </v-btn> -->
-                        <div @click="facebookLogin" class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                        </fb:login-button>
 
                     </form>
                 </div>

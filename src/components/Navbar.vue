@@ -29,11 +29,7 @@
           <router-link to="/profile/edit" class="hover:font-medium"
             >Edit profile</router-link
           >
-          <a
-            v-if="user.plan === 'Free'"
-            href=""
-            @click.prevent="upgradePlan"
-            class="hover:font-medium"
+          <a href="" @click.prevent="upgradePlan" class="hover:font-medium"
             >Upgrade</a
           >
           <a href="#" @click.prevent="logoutHandler" class="hover:font-medium"
@@ -61,7 +57,6 @@ export default {
   name: "Navbar",
   computed: {
     ...mapWritableState(useMainStore, ["isLogin"]),
-    ...mapState(useMainStore, ["user"]),
     CTAAuth() {
       const currentPageName = this.$route.name;
       let CTAAuth = "";

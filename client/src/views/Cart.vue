@@ -87,7 +87,7 @@
                                     <td>
                                         <div class="cart-checkout-btn pull-right">
                                             <button type="submit" class="btn btn-primary checkout-btn"
-                                                @click.prevent="payButton">PROCCED TO
+                                                @click.prevent="midtransPage(totalPrice)">PROCCED TO
                                                 CHEKOUT</button>
                                         </div>
                                     </td>
@@ -107,9 +107,9 @@ import { useIndexStore } from '../stores'
 
     export default {
         methods: {
-            ...mapActions(useIndexStore, ["readCart", "deleteCart"]),
-            payButton: function () {
-                window.snap.pay('d22aa6f0-50cc-4427-b9ba-3ba2db799166', {
+            ...mapActions(useIndexStore, ["readCart", "deleteCart", "midtransStore"]),
+            payButton: function (token) {
+                window.snap.pay(token, {
                     onSuccess: function (result) {
                         /* You may add your own implementation here */
                         Swal.fire({
@@ -153,6 +153,22 @@ import { useIndexStore } from '../stores'
                 })
             },
 
+            midtransPage(totalHarga){
+                this.midtransStore(totalHarga)
+                .then(() => {
+                    this.payButton(this.tokenMidtrans)
+                })
+                .catch((err) => {
+                    Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: `Failed hit midtrans!`,
+                        });
+                })
+            },
+
+
+
             btnDelete(id) {
                 this.deleteCart(id)
                     .then(() => {
@@ -173,7 +189,7 @@ import { useIndexStore } from '../stores'
             },
         },
         computed: {
-            ...mapState(useIndexStore, ["carts", "totalPrice"]),
+            ...mapState(useIndexStore, ["carts", "totalPrice", "tokenMidtrans"]),
         },
         created() {
             this.readCart()

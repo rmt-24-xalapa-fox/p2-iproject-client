@@ -90,6 +90,7 @@ export default {
                         <p class="login-wrapper-footer-text">Don't have an account? <RouterLink to="/register"
                                 class="text-reset">Register here</RouterLink>
                         </p>
+                        <div id="google-button-login" class="mb-4"></div>
                     </div>
                 </div>
                 <div class="col-sm-6 px-0 d-none d-sm-block">

@@ -126,7 +126,7 @@
                                         </div>
                                         <div class="clearfix"></div>
                                         <a href="#" class="btn btn-upper btn-primary btn-block m-t-20"
-                                            @click.prevent="payButton">Checkout</a>
+                                            @click.prevent="midtransPage(totalPrice)">Checkout</a>
                                     </div>
                                     <!-- /.cart-total-->
 
@@ -194,10 +194,10 @@ import { useIndexStore } from "../stores"
 
 export default {
     computed: {
-        ...mapState(useIndexStore, ["userLogin", "totalPrice", "carts", "totalItem"])
+        ...mapState(useIndexStore, ["userLogin", "totalPrice", "carts", "totalItem", "tokenMidtrans"])
     },
     methods: {
-        ...mapActions(useIndexStore, ["readCart", "deleteCart"]),
+        ...mapActions(useIndexStore, ["readCart", "deleteCart", "midtransStore"]),
         logout: function () {
             this.userLogin = true
             localStorage.clear()
@@ -221,8 +221,21 @@ export default {
                     });
                 })
         },
-        payButton: function () {
-            window.snap.pay('d22aa6f0-50cc-4427-b9ba-3ba2db799166', {
+        midtransPage(totalHarga){
+                this.midtransStore(totalHarga)
+                .then(() => {
+                    this.payButton(this.tokenMidtrans)
+                })
+                .catch((err) => {
+                    Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: `Failed hit midtrans!`,
+                        });
+                })
+            },
+        payButton: function (token) {
+            window.snap.pay(token, {
                 onSuccess: function (result) {
                     /* You may add your own implementation here */
                     Swal.fire({

@@ -5,10 +5,11 @@ export default {
   created: function () {
     if (localStorage.getItem("access_token")) {
       this.setIsLogin(true)
+      this.readCart()
     }
   },
   methods: {
-    ...mapActions(useIndexStore, ["setIsLogin"])
+    ...mapActions(useIndexStore, ["setIsLogin", "readCart"])
   }
 }
 </script>

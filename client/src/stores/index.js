@@ -10,6 +10,7 @@ export const useIndexStore = defineStore({
     blogs: [],
     totalPrice: 0,
     totalItem: 0,
+    tokenMidtrans: "",
   }),
   getters: {},
   actions: {
@@ -163,6 +164,52 @@ export const useIndexStore = defineStore({
       } catch (err) {
         console.log(err.message, "<<< error");
       }
+    },
+
+    /*--------------------------------------------------------------
+    # GET MIDTRANS TOKEN
+    --------------------------------------------------------------*/
+    async midtransStore(total) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const result = await axios({
+            method: "POST",
+            url: `${this.url}/charge`,
+            data: { total },
+            headers: { access_token: localStorage.getItem("access_token") },
+          });
+
+          this.tokenMidtrans = result.data.token;
+          console.log(result.data.articles, "<<<<< get blog");
+          resolve();
+        } catch (err) {
+          console.log(err.message, "<<< error");
+          reject(err);
+        }
+      });
+    },
+
+    /*--------------------------------------------------------------
+    # UPDATE STATUS WHEN CHECKOUT
+    --------------------------------------------------------------*/
+    async patchStatus() {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const result = await axios({
+            method: "PATCH",
+            url: `${this.url}/charge`,
+            data: { total },
+            headers: { access_token: localStorage.getItem("access_token") },
+          });
+
+          this.tokenMidtrans = result.data.token;
+          console.log(result.data.articles, "<<<<< get blog");
+          resolve();
+        } catch (err) {
+          console.log(err.message, "<<< error");
+          reject(err);
+        }
+      });
     },
   },
 });

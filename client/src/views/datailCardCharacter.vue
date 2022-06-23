@@ -41,12 +41,12 @@ export default {
             <p>{{ description }}.</p>
           </div>
         </div>
-        <div class="qr-code">
-          <img :src="this.QR_Code" alt="" />
-        </div>
       </div>
+      <div class="qr-code">
+        <img :src="this.QR_Code" alt="" />
+      </div>
+      <!-- </div> -->
     </div>
-    <!-- </div> -->
   </section>
 </template>
 
@@ -55,10 +55,23 @@ html {
   font-size: 10px;
 }
 
-.qr-code img {
-  width: 20%;
-  margin-left: 440px;
+.title {
+  margin-left: 10px;
   margin-top: 10px;
+  max-width: 80%;
+}
+
+.overview {
+  margin-top: 80px;
+  margin-left: -10px;
+}
+.qr-code img {
+  width: 15%;
+  margin-left: -180px;
+  margin-top: 20px;
+  position: absolute;
+  /* color: blue; */
+  /* background-color: blue; */
 }
 
 .tv-content {

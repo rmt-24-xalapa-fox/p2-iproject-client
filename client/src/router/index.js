@@ -5,10 +5,12 @@ import Register from "../views/Register.vue"
 import Movies from "../views/MainMovies.vue"
 import Detail from "../views/MovieDetail.vue"
 import Transaction from "../views/Transaction.vue"
+import Payment from "../views/Payment.vue"
+import NotfoundPage from "../views/NotFound.vue"
 
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -40,12 +42,27 @@ const router = createRouter({
       name: "Detail",
       component: Detail,
     },
+    {
+      path: "/payment/:id",
+      name: "Payment",
+      component: Payment,
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: NotfoundPage
+    },
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name == "Transaction" && !localStorage.getItem("access_token"))
-    next({ name: "Login" });
+  if (
+    (to.name == "login" || to.name == "register") &&
+    localStorage.getItem("access_token")
+  )
+    next({ name: "home" });
+  else if (to.name == "Detail" && !localStorage.getItem("access_token"))
+    next({ name: "login" });
   else next();
 });
 export default router

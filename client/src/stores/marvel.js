@@ -5,8 +5,8 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 export const useMaarvelStore = defineStore({
   id: 'marvel',
   state: () => ({
-    // url: 'https://redmarvel24.herokuapp.com/marvel',
-    url: 'http://localhost:5550/marvel',
+    url: 'https://redmarvel24.herokuapp.com/marvel',
+    // url: 'http://localhost:5550/marvel',
     characterId: 0,
     character: [],
     characters: [],

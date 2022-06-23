@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import swal from "sweetalert";
 export default {
   name: "PaletteCard",
   props: ["colorPalette"],
@@ -65,6 +66,7 @@ export default {
     colors.forEach((color) => {
       color.addEventListener("click", (event) => {
         navigator.clipboard.writeText(event.target.getAttribute("data-color"));
+        swal("Success", "Color has been copied to clipboard", "success");
       });
     });
   },

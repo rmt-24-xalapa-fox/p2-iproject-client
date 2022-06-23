@@ -24,7 +24,7 @@ export const useCounterStore = defineStore({
         console.log(email, "dariiiii store");
         const userLog = await axios({
           method: "POST",
-          url: "http://localhost:3000/customer/login",
+          url: "https://muvistore.herokuapp.com/customer/login",
           data: {
             email: email,
             password: password,
@@ -55,7 +55,7 @@ export const useCounterStore = defineStore({
         console.log(username, email, password, phoneNumber, address);
         const newCust = await axios({
           method: "POST",
-          url: "http://localhost:3000/customer/register",
+          url: "https://muvistore.herokuapp.com/customer/register",
           data: {
             name,
             username,
@@ -81,7 +81,7 @@ export const useCounterStore = defineStore({
       try {
         const allProduct = await axios({
           method: "GET",
-          url: "http://localhost:3000/customer/product",
+          url: "https://muvistore.herokuapp.com/customer/product",
         });
         console.log(allProduct);
         this.dataProduct = allProduct.data.allProduct;
@@ -100,7 +100,7 @@ export const useCounterStore = defineStore({
         console.log(id, name, qty);
         const forPaid = await axios({
           method: "PATCH",
-          url: `http://localhost:3000/customer/cart/${id}`,
+          url: `https://muvistore.herokuapp.com/customer/cart/${id}`,
           data: {
             id,
             name,
@@ -137,7 +137,7 @@ export const useCounterStore = defineStore({
         console.log(id);
         const detailProduct = await axios({
           method: "GET",
-          url: `http://localhost:3000/customer/detail/${id}`,
+          url: `https://muvistore.herokuapp.com/customer/detail/${id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
@@ -155,7 +155,7 @@ export const useCounterStore = defineStore({
       try {
         const addChart = await axios({
           method: "POST",
-          url: `http://localhost:3000/customer/cart/${id}`,
+          url: `https://muvistore.herokuapp.com/customer/cart/${id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
@@ -180,7 +180,7 @@ export const useCounterStore = defineStore({
       try {
         const cartData = await axios({
           method: "GET",
-          url: 'http://localhost:3000/customer/cart',
+          url: 'https://muvistore.herokuapp.com/customer/cart',
           headers: {
             access_token: localStorage.getItem("access_token")
           },
@@ -198,7 +198,7 @@ export const useCounterStore = defineStore({
         console.log(id);
         const deleted = await axios({
           method: "DELETE",
-          url: `http://localhost:3000/customer/cart/${+id}`,
+          url: `https://muvistore.herokuapp.com/customer/cart/${+id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           }
@@ -214,7 +214,7 @@ export const useCounterStore = defineStore({
         let query = "obat herbal";
         const obatHerbal = await axios({
           method: "GET",
-          url: `http://localhost:3000/api3rdParty/youtubeList?query=${query}`,
+          url: `https://muvistore.herokuapp.com/api3rdParty/youtubeList?query=${query}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },

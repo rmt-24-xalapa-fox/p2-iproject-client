@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-import { mapState } from "pinia";
+import { mapState, mapWritableState } from "pinia";
 import { useMaarvelStore } from "../stores/marvel";
 import CardCharacters from "../components/cardCharacters.vue";
 
@@ -10,19 +10,23 @@ export default {
 
   data() {
     return {
-      characters: [],
       urlCharacters: "",
       size: "standard_large.jpg",
       totalCharacters: 0,
-      alphabet: "A",
-      page: 1,
-      totalPage: 0,
+      // alphabet: "A",
+      // page: 1,
+      // totalPage: 0,
     };
   },
   methods: {
     async fetchCharacters() {
       try {
-        const { data } = await axios.get(`${this.url}/characters`);
+        this.characters = [];
+
+        const { data } = await axios.get(
+          `${this.url}/characters?page=${this.currentPage}&name=${this.alphabet}`
+        );
+
         this.totalCharacters = data.data.total;
         this.totalPage = Math.ceil(this.totalCharacters / 50);
 
@@ -36,56 +40,32 @@ export default {
         console.log(error);
       }
     },
-
-    async seachByAlphabet() {
-      try {
-        this.characters = [];
-        this.totalCharacters = 0;
-        const { data } = await axios.get(
-          `${this.url}/characters?page=${this.page}&name=${this.alphabet}`
-        );
-
-        this.totalCharacters = data.data.total;
-        this.totalPage = Math.ceil(this.totalCharacters / 50);
-        const result = data.data.results;
-        result.forEach((el) => {
-          this.characters.push(el);
-          el.url = `${el.thumbnail.path}/${this.size}`;
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
-    changeAlphabet(alphabet) {
-      this.alphabet = alphabet;
-      this.seachByAlphabet();
-    },
-
-    previousPage() {
-      this.page = this.page - 1;
-      this.seachByAlphabet();
-    },
-
-    nextPage() {
-      this.page = this.page + 1;
-      this.seachByAlphabet();
-    },
   },
+
   computed: {
     ...mapState(useMaarvelStore, ["url"]),
+    ...mapWritableState(useMaarvelStore, [
+      "isCharacters",
+      "isComics",
+      "currentPage",
+      "totalPage",
+      "alphabet",
+      "characters",
+    ]),
   },
 
   mounted() {
     this.fetchCharacters();
+    // this.searchByAlphabet();
+    this.isCharacters = true;
+    this.isComics = false;
   },
 };
 </script>
 
 <template>
- 
   <!-- DISPLAY CHARACTERS CARD  -->
-  <h2>
+  <h2 class="h2-char">
     <strong
       >All Characters<span class="total-char">( {{ totalCharacters }} )</span></strong
     >
@@ -93,7 +73,7 @@ export default {
 
   <div class="cards">
     <CardCharacters
-      v-for="(character, i) in characters"
+      v-for="(character, i) in this.characters"
       :key="i"
       :character="character"
     />
@@ -101,25 +81,6 @@ export default {
 </template>
 
 <style>
-.pagination {
-  margin-top: 2px;
-  display: inline-block;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-}
-
-.total-char {
-  color: whitesmoke;
-  font-size: 20px;
-}
-.pagination a {
-  color: whitesmoke;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  font-size: 20px;
-}
 .abs,
 h2:after,
 .cards .card figcaption,
@@ -180,11 +141,12 @@ body {
 .wrapper {
   padding: 15px;
 }
-h2 {
+h2.h2-char {
   padding: 10px;
   padding-left: 25px;
   color: #ccc;
   margin: 0;
+  margin-top: 230px;
 }
 h2 strong {
   z-index: 2;

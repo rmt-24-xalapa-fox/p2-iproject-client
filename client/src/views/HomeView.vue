@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-import { mapState } from "pinia";
+import { mapState, mapWritableState } from "pinia";
 import { useMaarvelStore } from "../stores/marvel";
 
 export default {
@@ -16,6 +16,7 @@ export default {
   },
   computed: {
     ...mapState(useMaarvelStore, ["url"]),
+    ...mapWritableState(useMaarvelStore, ["isCharacters", "isComics"]),
   },
 
   methods: {
@@ -39,6 +40,8 @@ export default {
 
   mounted() {
     this.getNewComics();
+    this.isCharacters = false;
+    this.isComics = false
   },
 };
 </script>
@@ -47,12 +50,12 @@ export default {
   <section>
     <div class="container">
       <div class="component">
-   <h2>
-    <strong
-      >All Comics<span class="total-comics">( {{ 10 }} )</span></strong
-    >
-  </h2>
-        <ul class="align">
+        <h2 class="ha-home">
+          <strong
+            >All Comics<span class="total-comics">( {{ 9 }} )</span></strong
+          >
+        </h2>
+        <ul class="align-home">
           <li v-for="(comic, i) in newComics" :key="i" :comic="comic">
             <figure class="book">
               <!-- Front -->
@@ -82,8 +85,8 @@ export default {
                 <li></li>
               </ul>
               <figcaption>
-                 <h1 class="comic-title">{{ comic.title }}</h1>
-                <span  class="author-comics">By Marvel</span>
+                <h1 class="comic-title">{{ comic.title }}</h1>
+                <span class="author-comics">By Marvel</span>
                 <!-- <p>
                   Fennel bamboo shoot pea sprouts rutabaga parsnip green bean gram wattle
                   seed lentil horseradish nori. Grape lettuce turnip greens.
@@ -132,6 +135,10 @@ export default {
 </template>
 
 <style>
+
+.container {
+  margin-top: 200px;
+}
 /*
 	A. Mini Reset 
 */
@@ -201,17 +208,20 @@ a {
   color: #16a085;
 }
 
-/* basic grid, only for this demo */
+h2.h2-home {
+  margin-top: -10px;
+  margin-bottom: -190px;
+}
 
-.align {
+ul.align-home {
   clear: both;
   margin: auto;
   width: 100%;
-  /* max-width: 1170px; */
-  /* text-align: center; */
+  max-width: 3000px;
+  text-align: center;
 }
 
-.align > li {
+.align-home > li {
   width: 500px;
   min-height: 300px;
   display: inline-block;
@@ -220,23 +230,6 @@ a {
   vertical-align: top;
 }
 
-/* ///////////////////////////////////////////////////
-
-HARDCOVER
-Table of Contents
-
-1. container
-2. background & color
-3. opening cover, back cover and pages
-4. position, transform y transition
-5. events
-6. Bonus
-	- Cover design
-	- Ribbon
-	- Figcaption
-7. mini-reset
-
-/////////////////////////////////////////////////////*/
 
 /*
 	1. container

@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-import { mapState } from "pinia";
+import { mapState , mapWritableState} from "pinia";
 import { useMaarvelStore } from "../stores/marvel";
 
 export default {
@@ -18,6 +18,7 @@ export default {
 
   computed: {
     ...mapState(useMaarvelStore, ["url"]),
+    ...mapWritableState(useMaarvelStore, ["isComics", "isCharacters"]),
   },
 
   methods: {
@@ -30,8 +31,6 @@ export default {
         this.totalComics = data.data.total;
         this.totalPage = Math.ceil(this.totalComics / 20);
 
-        console.log(data);
-        console.log(this.totalPage);
         const result = data.data.results;
 
         result.forEach((el) => {
@@ -62,12 +61,13 @@ export default {
 
   mounted() {
     this.fetchComics();
+    this.isCharacters = false;
+    this.isComics = true;
   },
 };
 </script>
 
 <template>
-
   <div class="byline"></div>
 
   <!-- PAGINATION  -->
@@ -79,7 +79,7 @@ export default {
     <a href="#" v-if="this.page < this.totalPage" v-on:click.prevent="next">&raquo;</a>
   </div>
   <!-- DISPLAY COMMICS  -->
-  <h2>
+  <h2 class="h2-comics">
     <strong
       >All Comics<span class="total-comics">( {{ totalComics }} )</span></strong
     >
@@ -123,7 +123,18 @@ export default {
         </li>
       </ul>
     </div>
+
   </div>
+
+  <!-- PAGINATION  -->
+  <div class="pagination-comics-buttom">
+    <a href="#" v-if="this.page > 1 && this.page !== 0" v-on:click.prevent="previous"
+      >&laquo;</a
+    >
+    <a href="#">{{ this.page }}</a>
+    <a href="#" v-if="this.page < this.totalPage" v-on:click.prevent="next">&raquo;</a>
+  </div>
+
 </template>
 
 <style>
@@ -134,6 +145,15 @@ export default {
   display: flex;
   justify-content: center;
 }
+
+.pagination-comics-buttom {
+  margin-top: 90px;
+  display: inline-block;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
 
 .total-comics {
   color: whitesmoke;
@@ -149,6 +169,11 @@ h2 {
   font-size: 25px;
 }
 
+h2.h2-comics {
+  margin-top: -150px;
+  margin-bottom: -190px;
+}
+
 .pagination-comics a {
   color: whitesmoke;
   float: left;
@@ -159,8 +184,22 @@ h2 {
   align-items: center;
   justify-content: center;
   font-size: 30px;
-  margin-top: -40px;
-  margin-bottom: 10px;
+  margin-top: -350px;
+  /* margin-bottom: -100px; */
+}
+
+.pagination-comics-buttom a {
+  color: whitesmoke;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  margin-top: -350px;
+  margin-bottom: -150px;
 }
 
 .author-comics {
@@ -194,112 +233,7 @@ a {
 
 /*-------------------------------------*/
 
-.form-wrapper {
-  width: 500px;
-  height: 70px;
-  padding: 15px;
-  margin: 30px auto 20px auto;
-  /* justify-content: center; */
-  /* align-items: center; */
-  background: #444;
-  background: rgba(0, 0, 0, 0.2);
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4) inset, 0 1px 0 rgba(255, 255, 255, 0.2);
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4) inset, 0 1px 0 rgba(255, 255, 255, 0.2);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4) inset, 0 1px 0 rgba(255, 255, 255, 0.2);
-}
 
-.form-wrapper input {
-  width: 360px;
-  height: 40px;
-  padding: 10px 5px;
-  float: left;
-  font: bold 20px "lucida sans", "trebuchet MS", "Tahoma";
-  border: 0;
-  background: #eee;
-  -moz-border-radius: 3px 0 0 3px;
-  -webkit-border-radius: 3px 0 0 3px;
-  border-radius: 3px 0 0 3px;
-}
-
-.form-wrapper input:focus {
-  outline: 0;
-  background: #fff;
-  -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.8) inset;
-  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.8) inset;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.8) inset;
-}
-
-.form-wrapper input::-webkit-input-placeholder {
-  color: #999;
-  font-weight: normal;
-  font-style: italic;
-}
-
-.form-wrapper input:-moz-placeholder {
-  color: #999;
-  font-weight: normal;
-  font-style: italic;
-}
-
-.form-wrapper input:-ms-input-placeholder {
-  color: #999;
-  font-weight: normal;
-  font-style: italic;
-}
-
-.form-wrapper button {
-  overflow: visible;
-  position: relative;
-  float: right;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  height: 40px;
-  width: 110px;
-  font: bold 15px/40px "lucida sans", "trebuchet MS", "Tahoma";
-  color: #fff;
-  text-transform: uppercase;
-  background: #d83c3c;
-  -moz-border-radius: 0 3px 3px 0;
-  -webkit-border-radius: 0 3px 3px 0;
-  border-radius: 0 3px 3px 0;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
-}
-
-.form-wrapper button:hover {
-  background: #e54040;
-}
-
-.form-wrapper button:active,
-.form-wrapper button:focus {
-  background: #c42f2f;
-}
-
-.form-wrapper button:before {
-  content: "";
-  position: absolute;
-  border-width: 8px 8px 8px 0;
-  border-style: solid solid solid none;
-  border-color: transparent #d83c3c transparent;
-  top: 12px;
-  left: -6px;
-}
-
-.form-wrapper button:hover:before {
-  border-right-color: #e54040;
-}
-
-.form-wrapper button:focus:before {
-  border-right-color: #c42f2f;
-}
-
-.form-wrapper button::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
 .byline p {
   text-align: center;
   color: #c6c6c6;
@@ -385,6 +319,10 @@ a {
   margin: auto;
   width: 100%;
   text-align: center;
+}
+
+ul.align {
+  margin-top: 100px
 }
 
 .align > li {

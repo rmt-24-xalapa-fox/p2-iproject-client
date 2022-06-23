@@ -18,7 +18,7 @@ export const useCounterStore = defineStore({
       address: ""
     },
     counter: 0,
-    baseUrl: "http://localhost:4000",
+    baseUrl: "https://dhaflix.herokuapp.com",
     apiKey: "38f2cc376208d37fec1e1dbaa6c3ae29",
     trendingUrl: "https://api.themoviedb.org/3",
     moviesData: [],

@@ -96,9 +96,9 @@ export const useMainStore = defineStore("main", {
             swal("Success", succMsg, "success");
           },
         });
-        this.readUser();
       } catch (err) {
-        console.log(err);
+        const errMsg = err.response.data.error.message;
+        swal("Error", errMsg, "error");
       }
     },
   },

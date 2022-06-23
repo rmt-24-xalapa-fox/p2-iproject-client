@@ -19,9 +19,6 @@ export default {
   },
   created() {
     this.checkIsLogin();
-    if (this.isLogin) {
-      this.readUser();
-    }
   },
 };
 </script>

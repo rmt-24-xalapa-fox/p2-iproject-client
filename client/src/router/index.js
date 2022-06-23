@@ -6,6 +6,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Add from "../views/AddBuild.vue";
 import Build from "../views/BuildItem.vue";
+import ErrorPage from "../views/ErrorPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,11 @@ const router = createRouter({
       path: "/build",
       name: "build",
       component: Build,
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "errPage",
+      component: ErrorPage,
     },
   ],
 });

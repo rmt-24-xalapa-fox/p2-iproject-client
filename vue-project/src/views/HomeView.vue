@@ -1,5 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
+import cardPackageVue from "../components/cardPackage.vue";
 import headerVue from "../components/header.vue";
 import navbarVue from "../components/navbar.vue";
 import { useCounterStore } from "../stores/counter";
@@ -14,6 +15,7 @@ export default {
   components: {
     navbarVue,
     headerVue,
+    cardPackageVue,
   },
   computed: {
     ...mapState(useCounterStore, ["map"]),
@@ -32,6 +34,7 @@ export default {
 <template>
   <navbarVue />
   <headerVue />
+  <cardPackageVue />
   <div>
     <form action="" @submit.prevent="find">
       <label for="">Location</label>

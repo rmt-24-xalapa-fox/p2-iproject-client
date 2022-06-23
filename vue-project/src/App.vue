@@ -6,6 +6,12 @@ export default {
   components: {
     RouterView,
   },
+  methods: {
+    ...mapActions(useCounterStore, ["fetchData"]),
+  },
+  async created() {
+    await this.fetchData();
+  },
 };
 </script>
 <template>

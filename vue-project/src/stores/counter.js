@@ -6,6 +6,8 @@ export const useCounterStore = defineStore({
   state: () => ({
     counter: 0,
     map: [],
+    dataTour: [],
+    baseUrl: "http://localhost:5656/",
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -35,6 +37,14 @@ export const useCounterStore = defineStore({
         let response = await axios.request(options);
         // console.log(response.data);
         return response.data.candidates[0].geometry;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async fetchData() {
+      try {
+        let res = await axios.get(this.baseUrl + "tour");
+        this.dataTour = res.data.response;
       } catch (err) {
         console.log(err);
       }

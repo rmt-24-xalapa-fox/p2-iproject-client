@@ -16,12 +16,13 @@ export default {
   },
   computed: {
     ...mapState(useMaarvelStore, ["url"]),
-    ...mapWritableState(useMaarvelStore, ["isCharacters", "isComics"]),
+    ...mapWritableState(useMaarvelStore, ["isCharacters", "isComics", "isLogin"]),
   },
 
   methods: {
     async getNewComics() {
       try {
+        this.isLogin = true;
         const { data } = await axios.get(`${this.url}/new-comics`);
 
         console.log(data);
@@ -41,7 +42,7 @@ export default {
   mounted() {
     this.getNewComics();
     this.isCharacters = false;
-    this.isComics = false
+    this.isComics = false;
   },
 };
 </script>
@@ -135,7 +136,6 @@ export default {
 </template>
 
 <style>
-
 .container {
   margin-top: 200px;
 }
@@ -229,7 +229,6 @@ ul.align-home {
   padding: 0 0 0 60px;
   vertical-align: top;
 }
-
 
 /*
 	1. container

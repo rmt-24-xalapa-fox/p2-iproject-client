@@ -35,5 +35,17 @@ const router = createRouter({
     }
   ]
 })
+//! NAVGUARD
+router.beforeEach((to, from, next) => {
+  const cekToken = localStorage.getItem("access_token")
+  if (cekToken && to.name === 'login') {
+    next({ name: 'home' })
+  }
+  else if (!cekToken && to.name === 'home') {
+    next({ name: 'login' })
+  } else {
+    next()
+  }
+})
 
 export default router

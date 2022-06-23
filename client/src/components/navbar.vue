@@ -39,6 +39,12 @@ export default {
       this.$router.push("/");
     },
 
+    logout() {
+      localStorage.clear();
+      this.$router.push("/login");
+      this.isLogin = false;
+    },
+
     previousPage() {
       this.currentPage = this.currentPage - 1;
       this.seachByAlphabet();
@@ -50,7 +56,7 @@ export default {
     },
 
     searchLocalHandler() {
-      this.fetchComics()
+      this.fetchComics();
     },
   },
 
@@ -64,6 +70,7 @@ export default {
       "characters",
       "alphabet",
       "year",
+      "isLogin",
     ]),
   },
   // created() {
@@ -86,7 +93,7 @@ export default {
           <li><a href="#">Favourite</a></li>
           <li><a href="#">Memes</a></li>
           <!-- <li><a href="#">Trailer</a></li> -->
-          <li><a href="#">Logout</a></li>
+          <li><a href="#" v-on:click.prevent="logout">Logout</a></li>
         </ul>
       </nav>
 

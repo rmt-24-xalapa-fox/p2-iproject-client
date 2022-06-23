@@ -19,11 +19,11 @@ export default {
         formatCurrency(num) {
             return num?.toLocaleString("id-ID", { style: "currency", currency: "IDR" });
         },
-        ...mapActions(useCounterStore, ['detailHandler', 'addToChart'])
+        ...mapActions(useCounterStore, ['detailHandler', 'addToChart', 'fetchYoutube'])
     },
     created() {
         this.detailHandler(this.$route.params.id);
-        // this.fetchYoutube();
+        this.fetchYoutube();
         console.log(this.$route.params.id);
     }
 };
@@ -31,44 +31,47 @@ export default {
 
 <template>
     <div class="container bootdey">
-        <div class="col-md-12">
-            <section class="panel">
-                <div class="panel-body">
-                    <div class="col-md-6">
-                        <div class="pro-img-details">
-                            <img :src="productDetail.imgUrl" alt="">
+        <div class="row">
+            <div class="col-6">
+                <section class="panel">
+                    <div class="panel-body">
+                        <div class="col-md-6">
+                            <div class="pro-img-details">
+                                <img :src="productDetail.imgUrl" alt="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="pro-d-title">
+                                <a href="#" class="" syle="font-size:14px">
+                                    {{ productDetail.name }}
+                                </a>
+                            </h4>
+                            <p>
+                                {{ productDetail.description }}
+                            </p>
+                            <div class="m-bot15"> <strong>Price : </strong><span class="pro-price">
+                                    {{ formatCurrency(productDetail.price) }} </span></div>
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="quantiy" placeholder="1" class="form-control quantity" v-model="qty">
+                            </div>
+                            <p>
+                                <button class="btn btn-round btn-danger" type="button"
+                                    @click.prevent="addToChart(productDetail.id, productDetail.name, qty)"><i
+                                        class="fa fa-shopping-cart"></i>
+                                    Add to Cart</button>
+                            </p>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <h4 class="pro-d-title">
-                            <a href="#" class="" syle="font-size:14px">
-                                {{ productDetail.name }}
-                            </a>
-                        </h4>
-                        <p>
-                            {{ productDetail.description }}
-                        </p>
-                        <div class="m-bot15"> <strong>Price : </strong><span class="pro-price">
-                                {{ formatCurrency(productDetail.price) }} </span></div>
-                        <div class="form-group">
-                            <label>Quantity</label>
-                            <input type="quantiy" placeholder="1" class="form-control quantity" v-model="qty">
-                        </div>
-                        <p>
-                            <button class="btn btn-round btn-danger" type="button"
-                                @click.prevent="addToChart(productDetail.id, productDetail.name, qty)"><i
-                                    class="fa fa-shopping-cart"></i>
-                                Add to Cart</button>
-                        </p>
-                    </div>
-                </div>
-            </section>
+                </section>
+            </div>
+            <div class="col-6">
+                <iframe width="420" height="345" :src="youtubeUrl">
+                </iframe>
+            </div>
         </div>
     </div>
-    <div class="col-4">
-        <iframe width="420" height="345" :src="youtubeUrl">
-        </iframe>
-    </div>
+
 </template>
 
 <style>

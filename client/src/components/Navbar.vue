@@ -52,10 +52,6 @@ export default {
                         <router-link to="/register" class="nav-link" href="#" v-if="!isLogin">Sign Up</router-link>
                     </li>
                 </ul>
-                <form class="d-flex" style="height:30px">
-                    <input class="form-control me-2" type="text" placeholder="Search">
-                    <button class="btn btn-primary" type="button">Search</button>
-                </form>
             </div>
         </div>
     </nav>

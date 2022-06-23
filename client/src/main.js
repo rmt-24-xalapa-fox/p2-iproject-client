@@ -5,6 +5,7 @@ import BootstrapVue3 from "bootstrap-vue-3";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
+
 import App from './App.vue';
 import router from './router';
 
@@ -21,5 +22,6 @@ app.use(router);
 app.use(pinia);
 
 app.use(BootstrapVue3);
+
 
 app.mount('#app');

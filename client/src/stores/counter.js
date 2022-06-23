@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from "axios";
+import { swal } from 'sweetalert2/dist/sweetalert2';
 
 export const useCounterStore = defineStore({
   id: 'counter',
@@ -109,10 +110,22 @@ export const useCounterStore = defineStore({
             access_token: localStorage.getItem("access_token")
           },
         });
-        console.log(forPaid);
-
-
-        // this.router.push('/bookmark');
+        Swal.fire({
+          title: '<strong>HTML <u>Pay Here</u></strong>',
+          icon: 'success',
+          html:
+            `You can use <b>bold text</b>, 
+            <a href="${forPaid.data.invoice.invoice_url}" target="_blank">links</a>`,
+          showCloseButton: true,
+          showCancelButton: true,
+          focusConfirm: false,
+          confirmButtonText:
+            '<i class="fa fa-thumbs-up"></i> Great!',
+          confirmButtonAriaLabel: 'Thumbs up, great!',
+          cancelButtonText:
+            '<i class="fa fa-thumbs-down"></i>',
+          cancelButtonAriaLabel: 'Thumbs down'
+        });
 
       } catch (err) {
         console.log(err);
@@ -201,12 +214,13 @@ export const useCounterStore = defineStore({
         let query = "obat herbal";
         const obatHerbal = await axios({
           method: "GET",
-          url: `http://localhost:3000/api3rdPartyRoute/youtubeList?query=${query}`,
+          url: `http://localhost:3000/api3rdParty/youtubeList?query=${query}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
         });
-        console.log(obatHerbal);
+        this.youtubeUrl = obatHerbal.data;
+        console.log(this.youtubeUrl);
       } catch (err) {
         console.log(err);
       }

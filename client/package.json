@@ -20,7 +20,8 @@
     "sweetalert2": "^11.4.18",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16",
-    "vue-sweetalert2": "^5.0.5"
+    "vue-sweetalert2": "^5.0.5",
+    "vue-youtube-embed": "^2.2.2"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",

@@ -45,11 +45,15 @@ export const useMainStore = defineStore("main", {
         const headers = {
           access_token: localStorage.getItem("access_token"),
         };
-        const res = await axiosInstance.post(
+        let res = await axiosInstance.post(
           "/palettes/add",
           { name, colors },
           { headers }
         );
+        res = res.data;
+        const succMsg = res.message;
+        swal("Success", succMsg, "success");
+        this.router.push("/");
       } catch (err) {
         console.log(err);
       }
@@ -78,7 +82,7 @@ export const useMainStore = defineStore("main", {
         window.snap.pay(res.data.token, {
           onSuccess: async function (result) {
             console.log("masuk success");
-            await axiosInstance.patch(
+            let res = await axiosInstance.patch(
               "/profile/upgradePlan",
               {},
               {
@@ -87,7 +91,9 @@ export const useMainStore = defineStore("main", {
                 },
               }
             );
-            this.router.push("/");
+            res = res.data;
+            const succMsg = res.message;
+            swal("Success", succMsg, "success");
           },
         });
         this.readUser();

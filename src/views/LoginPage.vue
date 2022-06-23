@@ -77,6 +77,7 @@
 import { mapWritableState } from "pinia";
 import axiosInstance from "../axiosInstance";
 import { useMainStore } from "../stores/main";
+import swal from "sweetalert";
 export default {
   name: "LoginPage",
   data() {
@@ -100,7 +101,8 @@ export default {
         this.isLogin = true;
         this.$router.push("/");
       } catch (err) {
-        console.log(err);
+        const errMsg = err.response.data.error.message;
+        swal("Error", errMsg, "error");
       }
     },
   },

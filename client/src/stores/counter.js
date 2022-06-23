@@ -25,7 +25,8 @@ export const useCounterStore = defineStore({
     trendingMovies: [],
     topMovies: [],
     moviesDetail: {},
-    prices: []
+    prices: [],
+    orders: []
   }),
   getters: {
     doubleCount: (state) => state.counter * 2
@@ -33,6 +34,14 @@ export const useCounterStore = defineStore({
   actions: {
     setLogin(status = false) {
       this.isLogin = status
+    },
+    checkLogin() {
+      if (!localStorage.getItem("access_token")) {
+        this.isLogin = false
+        return this.router.push("/login")
+      }
+      this.isLogin = true
+      return this.router.push("/")
     },
 
     async Register() {
@@ -44,12 +53,12 @@ export const useCounterStore = defineStore({
           phoneNumber: this.registerForm.phoneNumber,
           address: this.registerForm.address
         })
+        this.router.push('/login')
         Swal.fire({
           icon: "success",
           title: `Success`,
           text: `Success Register`,
         });
-        this.$router.push('/login')
       } catch (err) {
         console.log(err, "ini error");
         Swal.fire({
@@ -77,14 +86,13 @@ export const useCounterStore = defineStore({
         localStorage.setItem("UserId", custData.data.id)
         localStorage.setItem("email", custData.data.email)
         localStorage.setItem("username", custData.data.username)
+        this.checkLogin()
 
         Swal.fire({
           icon: 'success',
           title: 'Nice!',
           text: `${this.LoginForm.email}`,
         })
-        this.isLogin = true
-        this.$router.push('/')
       } catch (err) {
         console.log(err);
         Swal.fire({
@@ -107,7 +115,7 @@ export const useCounterStore = defineStore({
 
     async getTrendingMovies() {
       try {
-        let response = await axios.get(`${this.trendingUrl}/trending/movie/week?api_key=${this.apiKey}`)
+        let response = await axios.get(`${this.baseUrl}/movies/trending`)
 
         this.trendingMovies = response.data.results
 
@@ -118,7 +126,7 @@ export const useCounterStore = defineStore({
 
     async getTopMovies() {
       try {
-        let response = await axios.get(`${this.trendingUrl}/movie/top_rated?api_key=${this.apiKey}`)
+        let response = await axios.get(`${this.baseUrl}/movies/top`)
 
         this.topMovies = response.data.results
       } catch (err) {
@@ -134,16 +142,31 @@ export const useCounterStore = defineStore({
           },
         });
         console.log(response, "ini movie detail");
-        this.moviesDetail = response.data.results
+        this.moviesDetail = response.data
       } catch (err) {
         console.log(err, "ini error detail");
+      }
+    },
+
+    async getDataOrder() {
+      try {
+        const response = await axios.get(`${this.baseUrl}/transactions`, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        console.log(response.data, "orders");
+        this.orders = response.data
+      } catch (err) {
+        console.log(err, "ini error Order");
       }
     },
 
     async dataPrice() {
       try {
         const response = await axios.get(`${this.baseUrl}/prices`);
-        this.price = response.data
+        console.log(response, "prices");
+        this.prices = response.data
       } catch (err) {
         console.log(err, "ini error price");
       }
@@ -151,6 +174,7 @@ export const useCounterStore = defineStore({
 
     async addTransaction(data) {
       try {
+        console.log(data, "ini data addtrans");
         await axios.post(
           `${this.baseUrl}/movies/${data.MovieId}`,
           {
@@ -162,10 +186,39 @@ export const useCounterStore = defineStore({
             },
           }
         );
-        // console.log(response.data, "=========");
       } catch (err) {
         console.log(err);
       }
     },
-  }
+
+    async getTokenPayment(data) {
+      try {
+        const response = await axios.post(
+          `${this.baseUrl}/transactions/${data.id}`,
+          { MovieId: data.MovieId },
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
+        console.log(response, "ini respon gettoken");
+        localStorage.setItem("redirect_url", response.data.redirect_url);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async editPayment(id) {
+      try {
+        await axios.patch(`${this.baseUrl}/payment/${id}`, null, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
 })

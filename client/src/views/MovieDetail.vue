@@ -14,10 +14,11 @@ export default {
       "addTransaction",
     ]),
     async fetchDataMovieDetail() {
-      await this.dataMovieDetail();
+      await this.dataMovieDetail(this.moviesDetail.id);
     },
 
-    button3days(id) {
+    rent3Day(id) {
+      console.log(id, "ini id 1 week");
       this.addTransaction({
         MovieId: id,
         PriceId: this.prices[0].id,
@@ -25,21 +26,18 @@ export default {
       this.$router.push({ name: "Transaction" });
     },
 
-    button1week(id) {
+    rent1Week(id) {
+      console.log(id, "ini id 1 week");
       this.addTransaction({
         MovieId: id,
         PriceId: this.prices[1].id,
       });
       this.$router.push({ name: "Transaction" });
     },
-
-    fetchDataPrice() {
-      this.dataPrice;
-    },
   },
   created() {
     this.dataMovieDetail();
-    this.fetchDataPrice();
+    this.dataPrice();
   },
 };
 </script>
@@ -50,7 +48,7 @@ export default {
       class="min-w-screen min-h-screen bg-gray-800 flex items-center p-5 lg:p-10 overflow-hidden relative"
     >
       <div
-        class="w-full max-w-4xl rounded bg-cyan-600 shadow-xl p-10 lg:p-20 mx-auto text-gray-800 relative md:text-left"
+        class="w-full max-w-4xl rounded bg-gray-300 shadow-xl p-10 lg:p-20 mx-auto text-gray-800 relative md:text-left"
       >
         <div class="md:flex items-center -mx-10">
           <div class="w-full md:w-1/2 px-10 mb-10 md:mb-0 space-x-4">
@@ -91,14 +89,14 @@ export default {
               <div class="flex flex-row gap-4 py-4">
                 <button
                   type="button"
-                  @click.prevent="button3days(moviesDetail.id)"
+                  @click.prevent="rent3Day(moviesDetail.id)"
                   class="ml-auto uppercase border px-4 py-1.5 rounded font-medium tracking-wide bg-cyan-600 hover:bg-orange-600 hover:text-black transition duration-200"
                 >
                   Rent 3-days
                 </button>
                 <button
                   type="button"
-                  @click.prevent="button1week(moviesDetail.id)"
+                  @click.prevent="rent1Week(moviesDetail.id)"
                   class="ml-auto uppercase border px-4 py-1.5 rounded font-medium tracking-wide bg-cyan-600 hover:bg-orange-600 hover:text-black transition duration-200"
                 >
                   Rent 1-week

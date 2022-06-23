@@ -21,5 +21,6 @@ export default {
 <style scoped>
 .container {
   display: flex;
+  justify-content: center;
 }
 </style>

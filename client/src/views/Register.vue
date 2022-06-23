@@ -1,8 +1,12 @@
 <script>
 import axiosInstance from "../axiosInstance";
+import WelcomeNav from "../components/WelcomeNav.vue";
 
 export default {
   name: "Register",
+  components: {
+    WelcomeNav,
+  },
   data() {
     return {
       email: "",
@@ -23,7 +27,11 @@ export default {
         this.$router.push("/login");
       } catch (err) {
         console.log(err);
+        swal("Warning", "Fields Must Not Be Empty", "error");
       }
+    },
+    changePage(page) {
+      this.$router.push(`${page}`)
     },
   },
 };
@@ -69,7 +77,7 @@ export default {
             <div>
               <p class="text-center text-muted mb-0" style="margin-top: 15px">
                 Already have an account?
-                <a href="#" class="fw-bold text-body"><u>Login here</u></a>
+                <a @click.prevent="changePage('/login')" href="#" class="fw-bold text-body"><u>Login here</u></a>
               </p>
             </div>
           </div>

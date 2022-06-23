@@ -7,6 +7,7 @@ export default {
     },
     logout() {
       localStorage.clear()
+      swal("You Have Logged Out", "");
       this.$router.push("/login")
     }
   }

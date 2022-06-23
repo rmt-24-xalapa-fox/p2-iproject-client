@@ -17,7 +17,7 @@ export default {
 .content {
   height: 85vh;
   /* background-color: gray; */
-  width: 100%;
+  width: 60%;
   padding: 20px;
   /* flex-wrap: wrap;
   overflow-y: auto; */

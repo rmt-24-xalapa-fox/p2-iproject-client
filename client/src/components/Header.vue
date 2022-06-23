@@ -10,7 +10,6 @@
                             <li class="header_cart hidden-xs">
                                 <RouterLink to="/cart"><span>My Cart</span></RouterLink>
                             </li>
-                            <li class="check"><a href="#"><span>Checkout</span></a></li>
                             <li class="login">
                                 <RouterLink to="/login" v-if="!userLogin"><span>Login</span></RouterLink>
                                 <RouterLink to="/login" v-if="userLogin" @click.prevent="logout"><span>Logout</span>
@@ -55,16 +54,16 @@
                                                 href="category.html">Categories <b class="caret"></b></a>
                                             <ul class="dropdown-menu" role="menu">
                                                 <li class="menu-header">Computer</li>
-                                                <li role="presentation"><a role="menuitem" tabindex="-1"
-                                                        href="category.html">- Clothing</a>
+                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">-
+                                                        Clothing</a>
                                                 </li>
-                                                <li role="presentation"><a role="menuitem" tabindex="-1"
-                                                        href="category.html">- Electronics</a>
+                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">-
+                                                        Electronics</a>
                                                 </li>
-                                                <li role="presentation"><a role="menuitem" tabindex="-1"
-                                                        href="category.html">- Shoes</a></li>
-                                                <li role="presentation"><a role="menuitem" tabindex="-1"
-                                                        href="category.html">- Watches</a></li>
+                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">-
+                                                        Shoes</a></li>
+                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">-
+                                                        Watches</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -126,8 +125,8 @@
                                                 }}</span>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <a href="checkout.html"
-                                            class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a>
+                                        <a href="#" class="btn btn-upper btn-primary btn-block m-t-20"
+                                            @click.prevent="payButton">Checkout</a>
                                     </div>
                                     <!-- /.cart-total-->
 
@@ -166,11 +165,10 @@
                                     <li class="active dropdown">
                                         <RouterLink to="/">Home</RouterLink>
                                     </li>
-                                    <li class="dropdown  navbar-right special-menu"> <a href="#">Get 30% off on selected
-                                            items</a> </li>
+                                    <li class="dropdown">
+                                        <RouterLink to="/blog">Blog</RouterLink>
+                                    </li>
                                 </ul>
-                                <!-- /.navbar-nav -->
-                                <div class="clearfix"></div>
                             </div>
                             <!-- /.nav-outer -->
                         </div>
@@ -222,6 +220,50 @@ export default {
                         text: `Failed deleted product from cart!`,
                     });
                 })
+        },
+        payButton: function () {
+            window.snap.pay('d22aa6f0-50cc-4427-b9ba-3ba2db799166', {
+                onSuccess: function (result) {
+                    /* You may add your own implementation here */
+                    Swal.fire({
+                        icon: "success",
+                        title: "Success!",
+                        text: `Payment success!`,
+                    });
+                    console.log(result);
+                },
+                onPending: function (result) {
+                    Swal.fire({
+                        title: 'Waiting your payment!',
+                        width: 600,
+                        padding: '3em',
+                        color: '#716add',
+                        background: '#fff url(/images/trees.png)',
+                        backdrop: `
+                                    rgba(0,0,123,0.4)
+                                    url("/images/nyan-cat.gif")
+                                    left top
+                                    no-repeat
+                                `
+                    })
+                    console.log(result);
+                },
+                onError: function (result) {
+                    /* You may add your own implementation here */
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: `payment failed!`,
+                    }); console.log(result);
+                },
+                onClose: function () {
+                    /* You may add your own implementation here */
+                    Swal.fire({
+                        icon: "info",
+                        title: "You closed the popup without finishing the payment",
+                    }); console.log(result);
+                }
+            })
         },
     },
     created() {

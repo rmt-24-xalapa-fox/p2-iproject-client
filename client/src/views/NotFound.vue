@@ -10,7 +10,7 @@
                             <input placeholder="Search" autocomplete="off">
                             <button class="  btn-default le-button">Go</button>
                         </form>
-                        <a href="home.html"><i class="fa fa-home"></i> Go To Homepage</a>
+                        <RouterLink to="/" ><i class="fa fa-home"></i> Go To Homepage</RouterLink>
                     </div>
                 </div><!-- /.row -->
             </div><!-- /.sigin-in-->

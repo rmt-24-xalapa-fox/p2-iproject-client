@@ -7,8 +7,9 @@ export const useIndexStore = defineStore({
     url: "http://localhost:3001",
     products: [],
     carts: [],
+    blogs: [],
     totalPrice: 0,
-    totalItem: 0
+    totalItem: 0,
   }),
   getters: {},
   actions: {
@@ -108,7 +109,7 @@ export const useIndexStore = defineStore({
     },
 
     /*--------------------------------------------------------------
-    # FETCH cART
+    # FETCH CART
     --------------------------------------------------------------*/
     async readCart() {
       try {
@@ -122,14 +123,13 @@ export const useIndexStore = defineStore({
         this.totalPrice = result.data.totalPrice;
         this.totalItem = result.data.totalItem;
         console.log(result.data, "<<<<< get Cart");
-        this.router.push(`/cart`);
       } catch (err) {
         console.log(err.message, "<<< error");
       }
     },
 
     /*--------------------------------------------------------------
-    # DELETE cART
+    # DELETE CART
     --------------------------------------------------------------*/
     async deleteCart(id) {
       return new Promise(async (resolve, reject) => {
@@ -146,6 +146,23 @@ export const useIndexStore = defineStore({
           reject(err);
         }
       });
+    },
+
+    /*--------------------------------------------------------------
+    # FETCH BLOG API
+    --------------------------------------------------------------*/
+    async fetchBlog() {
+      try {
+        const result = await axios({
+          method: "GET",
+          url: `${this.url}/blog`,
+        });
+
+        this.blogs = result.data.articles;
+        console.log(result.data.articles, "<<<<< get blog");
+      } catch (err) {
+        console.log(err.message, "<<< error");
+      }
     },
   },
 });

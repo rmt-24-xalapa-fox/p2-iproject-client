@@ -5,6 +5,7 @@ import Register from "../views/Register.vue";
 import DetailProduct from "../views/DetailProduct.vue";
 import Cart from "../views/Cart.vue";
 import Dashboard from "../views/Dashboard.vue";
+import Blog from "../views/Blog.vue";
 import HandleFav from "../views/HandleFav.vue";
 import NotFound from "../views/NotFound.vue";
 
@@ -21,6 +22,11 @@ const router = createRouter({
           path: "/",
           name: "home",
           component: Home,
+        },
+        {
+          path: "/blog",
+          name: "blog",
+          component: Blog,
         },
         {
           path: "/detail/:id",

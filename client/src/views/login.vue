@@ -8,7 +8,7 @@ export default {
   name: "Login",
   computed: {
     ...mapState(useMaarvelStore, ["url"]),
-    ...mapWritableState(useMaarvelStore, ["isLogin"])
+    ...mapWritableState(useMaarvelStore, ["isLogin"]),
   },
   data() {
     return {
@@ -28,7 +28,7 @@ export default {
         const { access_token } = data;
 
         localStorage.setItem("access_token", access_token);
-        this.isLogin = true
+        this.isLogin = true;
 
         this.$router.push("/");
 
@@ -49,6 +49,56 @@ export default {
         (this.email = ""), (this.password = "");
       }
     },
+
+    handleCredentialResponse(response) {
+      axios
+        .post(`${this.url}/google-login`, {
+          credential: response.credential,
+        })
+        .then((res) => {
+          const { access_token, email } = res.data;
+
+          //     //* set local storage
+          localStorage.setItem("access_token", access_token);
+
+          this.isLogin = true;
+          this.cek = false;
+
+          this.$router.push("/");
+
+          Swal.fire({
+            icon: "success",
+            title: `Wellcome ${email}`,
+            text: "Hope you enjoy",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        })
+
+        .catch((error) => {
+          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: `Oops...`,
+            text: `${error.response.data.message}`,
+          });
+        });
+    },
+  },
+
+  mounted() {
+    const cb = this.handleCredentialResponse;
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id:
+          "1071514386727-40iels1mkp6b5488e40nfjv7lonnu0ir.apps.googleusercontent.com",
+        callback: cb,
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"),
+        { theme: "outline", size: "large" } // customization attributes
+      );
+    };
   },
 };
 </script>
@@ -73,6 +123,22 @@ export default {
         Login
       </a>
     </form>
+
+    <div
+      id="buttonDiv"
+      data-client_id="YOUR_GOOGLE_CLIENT_ID"
+      data-login_uri="https://your.domain/your_login_endpoint"
+      data-auto_prompt="false"
+    ></div>
+    <div
+      class="g_id_signin"
+      data-type="standard"
+      data-size="large"
+      data-theme="outline"
+      data-text="sign_in_with"
+      data-shape="rectangular"
+      data-logo_alignment="left"
+    ></div>
   </div>
 </template>
 

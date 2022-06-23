@@ -4,8 +4,8 @@ import axios from 'axios'
 export const useMaarvelStore = defineStore({
   id: 'marvel',
   state: () => ({
-    // url: 'http://localhost:5550/marvel',
-    url: 'https://redmarvel24.herokuapp.com/marvel',
+    url: 'http://localhost:5550/marvel',
+    // url: 'https://redmarvel24.herokuapp.com/marvel',
     characterId: 0,
     character: [],
     characters: [],

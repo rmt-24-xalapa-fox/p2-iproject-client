@@ -6,7 +6,7 @@ import { nextTick } from "vue";
 export const useStore = defineStore({
   id: "store",
   state: () => ({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "https://pojan-book-store.herokuapp.com",
     isLogin: false,
     books: [],
     booksObj: {},

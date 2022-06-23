@@ -6,8 +6,8 @@ export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
     isLogin: localStorage.getItem("access_token"),
-    // baseUrl: "https://ps-anywhere-fix.herokuapp.com",
-    baseUrl: 'http://localhost:3000',
+    baseUrl: "https://ps-anywhere-fix.herokuapp.com",
+    // baseUrl: 'http://localhost:3000',
     gameNews: [],
     rentalans: [],
     perRentalan: ""

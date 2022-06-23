@@ -46,12 +46,12 @@ export default {
             <div class="col-2">
                 <img src="../assets/img/pes-2021-ps4.jpg">
             </div>
-            <div class="col-2">
+            <!-- <div class="col-2">
                 <img src="../assets/img/uncharted.jpg">
             </div>
             <div class="col-2">
                 <img src="../assets/img/watch-dogs-ps4.jpg">
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -131,4 +131,6 @@ img {
     color: #fff;
     border: 3px solid #eee;
 }
+
+
 </style>

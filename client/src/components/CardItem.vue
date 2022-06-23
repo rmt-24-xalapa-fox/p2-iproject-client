@@ -31,7 +31,7 @@ export default {
     }
   },
   methods:{
-    ...mapActions(useCounterStore, ['populateFavourite','setError']),
+    ...mapActions(useCounterStore, ['populateFavourite','setError','doGift']),
     setDetail(){
       this.postDetail=this.post;
       this.$router.push({path:'/detail/'+this.postDetail.id})
@@ -71,7 +71,7 @@ export default {
       }
     },
     GiftCoin(){
-      
+      doGift(this.post.UserId)
     }
   }
 }
@@ -84,7 +84,7 @@ export default {
             <div class="card-body card-body">
               <h5 v-show="!hovered" class="card-title">{{post.title}}</h5>
               <label v-show="hovered"><small class="text-muted">Description:</small></label><p v-show="hovered" class="card-text">{{post.description}}</p>
-              <p v-show="hovered" class="card-text">Favourited:{{post.rating}}</p>
+              <p v-show="hovered" class="card-text">By:{{post.User.email}}</p>
               
               <!-- <label><small class="text-muted">Genre:</small></label>
                 <button class="btn btn-secondary" v-for="genre in movie.MovieGenres" :key="genre.GenreId">{{genre.Genre.name}}</button> -->

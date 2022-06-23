@@ -21,7 +21,7 @@ export const useCounterStore = defineStore({
     baseFollow: "users/follow",
     baseCoinPrice: "users/coinPrice",
     basegetLink: "users/getLink",
-    baseBuyCoin: "users/buyCoin",
+    baseBuyCoin: "users/getInvoices",
     baseGiftCoin: "users/giftCoin",
     baseWallet: "users/wallet",
     basePromotePost:"promotePost",
@@ -173,9 +173,26 @@ export const useCounterStore = defineStore({
     doBuyCoin(id){
       let tempThis=this;
       console.log(this.baseUrl + this.basegetLink+"/"+id);
-      axios.post(this.baseUrl + this.baseBuyCoin+"/"+id,{}, { headers: { access_token: localStorage.getItem("access_token") } }).then((response) => {
-        console.log(response.data.message);
-        tempThis.setError(response.data.message);
+      axios.post(this.baseUrl + this.basegetLink+"/"+id,{}, { headers: { access_token: localStorage.getItem("access_token") } }).then((response) => {
+        console.log(response.data);
+        tempThis.linkXendit=response.data;
+        tempThis.setError("Link for payment "+response.data.replace("https://checkout-staging.xendit.co/web/",""));
+      // axios.post(this.baseUrl + this.basegetLink+"/"+id, { headers: { access_token: localStorage.getItem("access_token") } }).then((response) => {
+      //   console.log(response.data);
+      //   console.log(response.data.invoice_url);
+      //  this.linkXendit=response.data.invoice_url;
+      }).catch((error) => {
+        console.log(error);
+        this.setError(error.response.data.message)
+      })
+    },
+    finishBuyCoin(){
+      let tempThis=this;
+      console.log(this.baseUrl + this.baseBuyCoin+linkXendit.replace("https://checkout-staging.xendit.co/web/",""));
+      axios.post(this.baseUrl + this.baseBuyCoin,{invoice_link:linkXendit.replace("https://checkout-staging.xendit.co/web/","")}, { headers: { access_token: localStorage.getItem("access_token") } }).then((response) => {
+        console.log(response.data);
+        tempThis.linkXendit=response.data;
+        tempThis.setError("Link for payment "+response.data);
       // axios.post(this.baseUrl + this.basegetLink+"/"+id, { headers: { access_token: localStorage.getItem("access_token") } }).then((response) => {
       //   console.log(response.data);
       //   console.log(response.data.invoice_url);
@@ -189,6 +206,15 @@ export const useCounterStore = defineStore({
       axios.get(this.baseUrl + this.wallet+"/"+id, { headers: { access_token: localStorage.getItem("access_token") } }).then((response) => {
         console.log(response.data);
         
+      }).catch((error) => {
+        console.log(error);
+        this.setError(error.response.data.message)
+      })
+    },
+    doGift(id){
+      axios.post(this.baseUrl + this.baseBuyCoin+"/"+id,{total:1}, { headers: { access_token: localStorage.getItem("access_token") } }).then((response) => {
+        console.log(response.data.message);
+        tempThis.setError(response.data.message);
       }).catch((error) => {
         console.log(error);
         this.setError(error.response.data.message)

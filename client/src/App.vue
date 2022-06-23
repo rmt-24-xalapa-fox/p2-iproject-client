@@ -11,12 +11,19 @@ export default {
     NavBar
   },
   computed: {
-    ...mapWritableState(useCounterStore, ['errorHandler'])
+    ...mapWritableState(useCounterStore, ['errorHandler','linkXendit'])
   },
   watch:{
     errorHandler(newValue,oldValue){
       if(oldValue!=""){
         this.errorHandling(newValue);
+      }
+    },
+    linkXendit(newValue,oldValue){
+      if(newValue!=""){
+        console.log(oldValue);
+        console.log(newValue);
+
       }
     }
   },
@@ -48,7 +55,8 @@ export default {
                     <div class="modal-popup">
                         <div class="modal-popup__icon-close"></div>
                         <iframe
-                            id="iframe-invoice"
+                            v-if="linkXendit!=''"
+                            :src="linkXendit"
                             class="iframe-invoice"
                             title="Invoice"
                         ></iframe>

@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCQjIs75mWzGtxuESoY_L3ntNPFrnDLFVc",
-  authDomain: "book-club-6a621.firebaseapp.com",
-  projectId: "book-club-6a621",
-  storageBucket: "book-club-6a621.appspot.com",
-  messagingSenderId: "18753130520",
-  appId: "1:18753130520:web:d7ab1879c1b51d5b26b36d",
+  apiKey: "AIzaSyDgNdd5ILF8wpRnN3JGRB7-2LxwgOp4Vb0",
+  authDomain: "book-club-v2.firebaseapp.com",
+  projectId: "book-club-v2",
+  storageBucket: "book-club-v2.appspot.com",
+  messagingSenderId: "1058447238300",
+  appId: "1:1058447238300:web:dc6e147f6fb232879df959",
 };
 
 // init firebase

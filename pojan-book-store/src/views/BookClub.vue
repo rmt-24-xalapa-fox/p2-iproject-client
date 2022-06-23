@@ -1,6 +1,12 @@
 <script>
 import { db } from "@/firebase/config";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  onSnapshot,
+  doc,
+} from "firebase/firestore";
 import Navbar from "../components/Navbar.vue";
 import HeroSection from "../components/HeroSection.vue";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
@@ -18,39 +24,52 @@ export default {
       arrayOfMessages: [],
     };
   },
+  computed: {
+    arrayMessage() {
+      return this.arrayOfMessages.sort((a, b) => {
+        return b.createdAt - a.createdAt;
+      });
+    },
+  },
   methods: {
     async createMessage(string) {
       try {
+        this.theMessage = "";
         await addDoc(collection(db, "chats"), {
           message: string,
           user: localStorage.getItem("Username"),
           createdAt: new Date(),
         });
-        this.theMessage = "";
-        this.getMessage(db);
+        this.unsub();
       } catch (err) {
         swal(err);
       }
     },
-    async getMessage(db) {
-      const chatCollections = collection(db, "chats");
-      const chatSnapshot = await getDocs(chatCollections);
-      const chatList = chatSnapshot.docs.map((doc) => doc.data());
-      this.arrayOfMessages = chatList.sort((a, b) => {
-        return b.createdAt - a.createdAt;
+    // async getMessage(db) {
+    //   const chatCollections = collection(db, "chats");
+    //   const chatSnapshot = await getDocs(chatCollections);
+    //   const chatList = chatSnapshot.docs.map((doc) => doc.data());
+    //   this.arrayOfMessages = chatList.sort((a, b) => {
+    //     return b.createdAt - a.createdAt;
+    //   });
+    //   return chatList;
+    // },
+    unsub() {
+      onSnapshot(collection(db, "chats"), (snap) => {
+        let result = [];
+        snap.forEach((doc) => {
+          result.push(doc.data());
+          this.arrayOfMessages = result;
+        });
       });
-      return chatList;
     },
   },
   mounted() {
     const objDiv = document.getElementById("messages");
     objDiv.scrollTop = objDiv.scrollHeight;
   },
-  updated() {
-    this.getMessage(db);
-  },
   created() {
-    this.getMessage(db);
+    this.unsub();
   },
 };
 </script>
@@ -61,7 +80,7 @@ export default {
     <div class="book-club-container">
       <div id="chat-windows" class="chat-window">
         <div v-if="arrayOfMessages" id="messages" class="messages">
-          <div v-for="doc in arrayOfMessages" :key="doc.id" class="single">
+          <div v-for="doc in arrayMessage" :key="doc.id" class="single">
             <span class="created-at"
               >{{ formatDistanceToNow(doc.createdAt.toDate()) }} ago</span
             >

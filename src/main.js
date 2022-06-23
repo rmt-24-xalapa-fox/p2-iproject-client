@@ -21,7 +21,6 @@ const pinia = createPinia();
 pinia.use(({store}) => {
     store.router = markRaw(router)
 });
-
 app.use(createPinia());
 app.use(router);
 

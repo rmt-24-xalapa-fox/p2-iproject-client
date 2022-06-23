@@ -91,7 +91,9 @@ export default {
         }
     },
     created() {
-        if (!localStorage.hasOwnProperty("id")) this.$router.push("/");
+        if (!localStorage.getItem("id")) {
+            this.$router.push("/login")
+        }
     }
 }
 </script>

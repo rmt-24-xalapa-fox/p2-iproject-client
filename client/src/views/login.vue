@@ -52,7 +52,7 @@ export default {
 
     handleCredentialResponse(response) {
       axios
-        .post(`${this.url}/google-login`, {
+        .post(`${this.url}/login-google`, {
           credential: response.credential,
         })
         .then((res) => {
@@ -122,23 +122,22 @@ export default {
         <span></span>
         Login
       </a>
+      <a
+        id="buttonDiv"
+        data-client_id="YOUR_GOOGLE_CLIENT_ID"
+        data-login_uri="https://your.domain/your_login_endpoint"
+        data-auto_prompt="false"
+      ></a>
+      <a
+        class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="rectangular"
+        data-logo_alignment="left"
+      ></a>
     </form>
-
-    <div
-      id="buttonDiv"
-      data-client_id="YOUR_GOOGLE_CLIENT_ID"
-      data-login_uri="https://your.domain/your_login_endpoint"
-      data-auto_prompt="false"
-    ></div>
-    <div
-      class="g_id_signin"
-      data-type="standard"
-      data-size="large"
-      data-theme="outline"
-      data-text="sign_in_with"
-      data-shape="rectangular"
-      data-logo_alignment="left"
-    ></div>
   </div>
 </template>
 
@@ -201,6 +200,12 @@ body {
   transition: 0.5s;
 }
 
+/* form a {
+display: flex;
+align-items: center;
+justify-content: center;
+} */
+
 .login-box .user-box input:focus ~ label,
 .login-box .user-box input:valid ~ label {
   top: -20px;
@@ -211,7 +216,8 @@ body {
 
 .login-box form a {
   position: relative;
-  display: inline-block;
+  display: flex;
+  /* display: inline-block; */
   padding: 10px 20px;
   color: #03e9f4;
   font-size: 16px;
@@ -221,6 +227,10 @@ body {
   transition: 0.5s;
   margin-top: 40px;
   letter-spacing: 4px;
+  align-items: center;
+  justify-content: center;
+  /* max-width: 200px; */
+  /* width: 20px; */
 }
 
 .login-box a:hover {

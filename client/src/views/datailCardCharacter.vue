@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState } from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import { useMaarvelStore } from "../stores/marvel";
 
 export default {
@@ -10,10 +10,12 @@ export default {
   },
   computed: {
     ...mapState(useMaarvelStore, ["description", "imageUrl", "name"]),
+    ...mapWritableState(useMaarvelStore, ["isCharacters"]),
   },
 
   mounted() {
     // this.getDetailCharacter()
+    this.isCharacters = false
   },
 };
 </script>

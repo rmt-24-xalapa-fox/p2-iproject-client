@@ -23,7 +23,7 @@ export default {
             <div class="row d-flex align-items-center justify-content-center h-100">
                 <h3>Register</h3>
                 <div class="col-md-8 col-lg-7 col-xl-6">
-                    <img src='../assets/img/stik ps.jpg'
+                    <img src='../assets/img/stik-ps.jpg'
                         class="img-fluid" alt="Phone image">
                 </div><br>
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">

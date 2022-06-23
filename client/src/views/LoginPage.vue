@@ -57,7 +57,7 @@ export default {
             <div class="row d-flex align-items-center justify-content-center h-100">
                 <h3 class="center">Login</h3>
                 <div class="col-md-8 col-lg-7 col-xl-6">
-                    <img src="../assets/img/stik ps.jpg" class="img-fluid" alt="Phone image">
+                    <img src="../assets/img/stik-ps.jpg" class="img-fluid" alt="Phone image">
                 </div>
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                     <p>World no.2 easiest login. Cause no.1 was taken our own register!</p>

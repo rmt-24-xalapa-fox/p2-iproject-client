@@ -35,16 +35,22 @@ export default {
                 <img src="../assets/img/Assassins-Creed-II.jpg">
             </div>
             <div class="col-2">
-                <img src="../assets/img/battle field.jpg">
+                <img src="../assets/img/fifa-ps5.jpg">
             </div>
             <div class="col-2">
-                <img src="../assets/img/fifa ps5.jpg">
+                <img src="../assets/img/battle-field.jpg">
             </div>
             <div class="col-2">
-                <img src="../assets/img/gta v.jpg">
+                <img src="../assets/img/gta-v.jpg">
             </div>
             <div class="col-2">
-                <img src="../assets/img/pes 2021 ps4.jpg">
+                <img src="../assets/img/pes-2021-ps4.jpg">
+            </div>
+            <div class="col-2">
+                <img src="../assets/img/uncharted.jpg">
+            </div>
+            <div class="col-2">
+                <img src="../assets/img/watch-dogs-ps4.jpg">
             </div>
         </div>
     </div>

@@ -62,9 +62,13 @@ export default {
 </style>
 
 <style scoped>
+*{
+  cursor: default;
+}
+
 span {
   color: white;
-  font-size: x-large;
+  font-size: x-large;  
 }
 
 span:hover {

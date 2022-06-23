@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     async fetchsrpiteimg(){
+      if(!this.pokemon) return
       try {
         const {data:recv} = await axios.request({
           method: 'GET',

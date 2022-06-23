@@ -23,10 +23,10 @@ export default {
 <template>
     <nav>
         <div class="container mt-5 rounded">
-            <div class="row text-center" style="background-color: rgba(253, 242, 231, 0.84); margin: 0px">
-                <span class="navbar-text text-center">
-                    My Wishlists
-                </span>
+            <div class="row text-center" style="background-color: transparent; margin: 0px">
+                <h2 class="navbar-text text-center" style="font-family: 'Montserrat Alternates', sans-serif;">
+                    WISHLIST
+                </h2>
             </div>
         </div>
     </nav>

@@ -85,13 +85,13 @@ export default {
             })
             this.getAllProducts(query)
         },
-        getProductByBrand: function(){
+        getProductByBrand: function () {
             const brand = this.brand
             let query = {}
             query.brand = brand
             if (this.page) {
                 query.page = this.page
-            }            
+            }
             if (this.product_tag) {
                 query.tag = this.product_tag
             }
@@ -110,7 +110,7 @@ export default {
         this.brand = this.$route.query.brand
         this.product_tag = this.$route.query.tag
         this.product_type = this.$route.query.type
-        const {query} = this.$route
+        const { query } = this.$route
 
         this.getAllProducts(query)
     },
@@ -303,61 +303,78 @@ export default {
     <div class="container mt-5">
         <div class="row">
             <div class="col-3">
-                <div class="card mb-4">
-                    <div class="card-body text-center">
+                <div class="card mb-4 fieldsearch">
+                    <div class="card-body ">
                         <form @submit.prevent="getProductByBrand">
                             <div class="input-group">
                                 <input type="text" name="search" class="form-control search-input d-inline-flex"
-                                    placeholder="Search By Brands" v-model="brand">
-                                <button type="submit" class="btn btn-search">
+                                    placeholder="Search By Brands" v-model="brand" style="background-color: rgba(208, 226, 245, 0.1);">
+                                <button type="submit" class="btn btn-search rounded">
                                     <img src="https://cdn.icon-icons.com/icons2/1769/PNG/512/4092559-magnifier-mobile-ui-search-ui-website-zoom_114034.png"
                                         alt="" style="width: 20px;">
                                 </button>
                             </div>
                         </form>
                         <div class="mt-3">
-                            <button class="btn btn-light d-block" type="button" data-bs-toggle="collapse"
+                            <button class="btn btn-light d-block filter" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#multiCollapseExample1" aria-expanded="false"
                                 aria-controls="multiCollapseExample1" style="width: 100%;">
-                                FILTER BY TAGS
+                                Filter By Product Tags
                             </button>
                             <div class="collapse multi-collapse mt-3 list-group list-group-flush"
-                                id="multiCollapseExample1">
+                                id="multiCollapseExample1" style="background-color: tra;">
                                 <li class="list-group-item">
                                     <input type="radio" class="btn-check" name="product_tags" id="Hypoallergenic"
                                         value="Hypoallergenic" v-model="product_tag">
                                     <label for="Hypoallergenic" class="btn btn-light"
-                                        style="width:fit-content;font-size: 12px;">Hypoallergenic</label>
+                                        style="width:fit-content;font-size: 12px;background-color: transparent;border: none;">
+                                        <img src="../assets/Plus-Sign.png" alt="" style="width: 10px;margin-right:10px">
+                                        Hypoallergenic
+                                    </label>
                                 </li>
                                 <li class="list-group-item">
                                     <input type="radio" class="btn-check" name="product_tags" id="No Talc"
                                         value="No+Talc" v-model="product_tag">
                                     <label for="No Talc" class="btn btn-light"
-                                        style="width:fit-content;font-size: 12px;">No Talc</label>
+                                        style="width:fit-content;font-size: 12px;background-color: transparent;border: none;">
+                                        <img src="../assets/Plus-Sign.png" alt="" style="width: 10px;margin-right:10px">
+                                        No Talc
+                                        </label>
                                 </li>
                                 <li class="list-group-item">
                                     <input type="radio" class="btn-check" name="product_tags" id="alcohol free"
                                         value="alcohol+free" v-model="product_tag">
                                     <label for="alcohol free" class="btn btn-light"
-                                        style="width:fit-content;font-size: 12px;">Alcohol Free</label>
+                                        style="width:fit-content;font-size: 12px;background-color: transparent;border: none;">
+                                        <img src="../assets/Plus-Sign.png" alt="" style="width: 10px;margin-right:10px">
+                                        Alcohol Free
+                                        </label>
                                 </li>
                                 <li class="list-group-item">
                                     <input type="radio" class="btn-check" name="product_tags" id="cruelty free"
                                         value="cruelty+free" v-model="product_tag">
                                     <label for="cruelty free" class="btn btn-light"
-                                        style="width:fit-content;font-size: 12px;">Cruelty Free</label>
+                                        style="width:fit-content;font-size: 12px;background-color: transparent;border: none;">
+                                        <img src="../assets/Plus-Sign.png" alt="" style="width: 10px;margin-right:10px">
+                                        Cruelty Free
+                                        </label>
                                 </li>
                                 <li class="list-group-item">
                                     <input type="radio" class="btn-check" name="product_tags" id="oil free"
                                         value="oil+free" v-model="product_tag">
                                     <label for="oil free" class="btn btn-light"
-                                        style="width:fit-content;font-size: 12px;">Oil Free</label>
+                                        style="width:fit-content;font-size: 12px;background-color: transparent;border: none;">
+                                        <img src="../assets/Plus-Sign.png" alt="" style="width: 10px;margin-right:10px">
+                                        Oil Free</label>
                                 </li>
                                 <li class="list-group-item">
                                     <input type="radio" class="btn-check" name="product_tags" id="silicone free"
                                         value="silicone+free" v-model="product_tag">
                                     <label for="silicone free" class="btn btn-light"
-                                        style="width:fit-content;font-size: 12px;">Silicone Free</label>
+                                        style="width:fit-content;font-size: 12px;background-color: transparent;border: none;">
+                                        <img src="../assets/Plus-Sign.png" alt="" style="width: 10px;margin-right:10px">
+                                        Silicone
+                                        Free</label>
                                 </li>
                             </div>
                         </div>
@@ -368,7 +385,8 @@ export default {
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <!-- <Spinner v-if="useLoader" /> -->
                     <div v-if="useLoader" style="size: cover;">
-                        <img src="https://media2.giphy.com/media/fBDHEIhKGNveDbdiHn/giphy.gif?cid=6c09b9522ud0wublok0ll1n6furz79rwqogqnknuaooyfdbw&rid=giphy.gif&ct=s" style="width: 750px;max-height:300px">
+                        <img src="https://media2.giphy.com/media/fBDHEIhKGNveDbdiHn/giphy.gif?cid=6c09b9522ud0wublok0ll1n6furz79rwqogqnknuaooyfdbw&rid=giphy.gif&ct=s"
+                            style="width: 750px;max-height:300px">
                     </div>
                     <Card v-if="!useLoader" v-for="product in products" :key="product.id" :product="product" />
                 </div>
@@ -412,3 +430,14 @@ export default {
         </nav>
     </div>
 </template>
+<style>
+.filter {
+    font-size: large;
+    font-family: 'Nanum Myeongjo', serif;
+    background-color: rgba(63, 191, 191, 0.1);
+}
+.fieldsearch {
+    background-color: rgba(245, 208, 226, 0.3);
+    border: none;
+}
+</style>

@@ -60,8 +60,8 @@ export default {
 }
 </script>
 <template>
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
+    <div class="modal-dialog modal-xl modal-dialog-centered forregist" >
+        <div class="modal-content" style="background-color: #F1EDE8">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Register Form</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -110,7 +110,7 @@ export default {
                                         </div>
 
                                         <div class="text-center text-lg-start mt-4 pt-2">
-                                            <button type="submit" class="btn btn-lg"
+                                            <button type="submit" class="btn btn-lg form-control"
                                                 style="padding-left: 2.5rem; padding-right: 2.5rem;background-color: rgba(231, 253, 253, 1);">Register</button>
                                         </div>
 
@@ -118,8 +118,8 @@ export default {
                                     <div v-show="hasRegistered">
                                     <img src="https://www.legalpillers.com/wp-content/uploads/2020/09/success.gif" alt="">
                                         <h1>Welcome, Beauty!</h1>
-                                        <button type="button" class="btn btn-primary dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            Now, you can sign in here :)
+                                        <button type="button" class="btn btn-primary dropdown-item form-control" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color:#F1EDE8">
+                                            Now, you can click me to sign in :)
                                         </button>
                                     </div>
                                 </div>
@@ -134,3 +134,8 @@ export default {
         <Login/>
     </div>
 </template>
+<style>
+.forregist{
+    font-family: 'Changa', sans-serif;
+}
+</style>

@@ -46,7 +46,7 @@ export default {
 }
 </script>
 <template>
-    <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered forcart">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Your Cart</h5>
@@ -77,8 +77,18 @@ export default {
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" @click.prevent="checkingOut">Checkout for {{converTotalPrice()}}</button>
+                <button type="button" class="btn btn-primary buttoncart form-control" @click.prevent="checkingOut">Checkout for <i>{{converTotalPrice()}}</i></button>
             </div>
         </div>
     </div>
 </template>
+<style>
+.buttoncart{
+    background-color: rgba(208, 226, 245, 0.5);
+    color: black;
+    border: none;
+}
+.forcart{
+    font-family: 'Changa', sans-serif;
+}
+</style>

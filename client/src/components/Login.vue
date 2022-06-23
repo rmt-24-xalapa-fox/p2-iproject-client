@@ -33,8 +33,8 @@ export default {
 }
 </script>
 <template>
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
+    <div class="modal-dialog modal-xl modal-dialog-centered forlogin">
+        <div class="modal-content" style="background-color: #F1EDE8">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Login Form</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -67,7 +67,7 @@ export default {
                                         </div>
 
                                         <div class="text-center text-lg-start mt-4 pt-2">
-                                            <button type="submit" class="btn btn-lg"
+                                            <button type="submit" class="btn btn-lg form-control"
                                                 style="padding-left: 2.5rem; padding-right: 2.5rem;background-color: rgba(231, 253, 253, 1);">Login</button>
 
                                         </div>
@@ -85,3 +85,8 @@ export default {
         </div>
     </div>
 </template>
+<style>
+.forlogin{
+    font-family: 'Changa', sans-serif;
+}
+</style>

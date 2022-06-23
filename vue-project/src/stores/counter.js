@@ -6,6 +6,10 @@ export const useCounterStore = defineStore({
   state: () => ({
     counter: 0,
     map: [],
+    tour: [],
+    baseUrl: "http://localhost:5656",
+    authorId: 0,
+    email: "",
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -33,10 +37,56 @@ export const useCounterStore = defineStore({
           },
         };
         let response = await axios.request(options);
-        // console.log(response.data);
+        console.log(response.data);
         return response.data.candidates[0].geometry;
       } catch (err) {
         console.log(err);
+      }
+    },
+    async allTour() {
+      try {
+        let response = await axios.get(
+          "https://triplocator.net/api/rest/get/tours"
+        );
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async googleSign(credential) {
+      try {
+        let res = await axios({
+          method: "POST",
+          url: `${this.baseUrl}/google-sign`,
+          data: {
+            credential,
+          },
+        });
+        console.log(res, "<<<<< store");
+        localStorage.setItem("authorId", res.data.user.id);
+        localStorage.setItem("email", res.data.user.email);
+        localStorage.setItem("access_token", res.data.data.access_token);
+        this.authorId = res.data.user.id;
+        this.email = res.data.user.email;
+        return true;
+      } catch (err) {
+        console.log(err, "store");
+        return false;
+      }
+    },
+    async loginHandler(email, password) {
+      try {
+        let response = await axios({
+          method: "POST",
+          url: this.baseUrl + "/login",
+          data: {
+            email,
+            password,
+          },
+        });
+        return true;
+      } catch (err) {
+        return false;
       }
     },
   },

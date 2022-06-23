@@ -14,7 +14,7 @@ export const useDataStore = defineStore({
       try {
         const { data } = await axios({
           method: "GET",
-          url: "http://localhost:3000/laundries",
+          url: "https://laundryqilo.herokuapp.com/laundries",
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
@@ -30,7 +30,7 @@ export const useDataStore = defineStore({
       try {
         const { data } = await axios({
           method: "GET",
-          url: "http://localhost:3000/myorders",
+          url: "https://laundryqilo.herokuapp.com/myorders",
           headers: {
             access_token: localStorage.getItem("access_token"),
           },

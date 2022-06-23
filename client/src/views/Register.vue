@@ -14,7 +14,7 @@ export default {
   methods: {
     async register() {
       try {
-        const register = await axios.post("http://localhost:3000/register", {
+        const register = await axios.post("https://laundryqilo.herokuapp.com/register", {
           username: this.username,
           email: this.email,
           password: this.password,

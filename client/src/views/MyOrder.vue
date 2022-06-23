@@ -15,7 +15,7 @@ export default {
         const update = status;
         const newStats = await axios({
           method: "PATCH",
-          url: `http://localhost:3000/myorders/${+id}`,
+          url: `https://laundryqilo.herokuapp.com/myorders/${+id}`,
           headers: {
             access_token: localStorage.getItem("access_token"),
           },

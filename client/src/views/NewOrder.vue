@@ -16,7 +16,7 @@ export default {
         const LaundryId = +this.$router.currentRoute.value.params.id;
         const newOrders = await axios({
           method: "POST",
-          url: `http://localhost:3000/neworder/${LaundryId}`,
+          url: `https://laundryqilo.herokuapp.com/neworder/${LaundryId}`,
           headers: {
             access_token: localStorage.getItem("access_token"),
           },

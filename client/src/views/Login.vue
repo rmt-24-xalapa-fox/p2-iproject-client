@@ -15,7 +15,7 @@ export default {
   methods: {
     async login() {
       try {
-        const {data} = await axios.post("http://localhost:3000/login", {
+        const {data} = await axios.post("https://laundryqilo.herokuapp.com/login", {
           username: this.username,
           password: this.password,
         });

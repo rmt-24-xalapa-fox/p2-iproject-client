@@ -146,7 +146,7 @@ export default {
       
     </div></div>
 </template>
-<style>
+<style scoped>
 .container{max-width:1170px; margin:auto;}
 img{ max-width:100%;}
 .inbox_people {

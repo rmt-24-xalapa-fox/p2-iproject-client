@@ -132,7 +132,7 @@ export default {
       </div>
     </div>
     <NoProductFound
-      v-if="orders.data.length === 0"
+      v-if="orders && orders.data && orders.data.length === 0"
       title="You don't have order history"
     />
   </div>

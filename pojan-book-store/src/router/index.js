@@ -68,7 +68,12 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem("accessToken");
-  if (to.name === "Wishlists" && !isAuthenticated) {
+  if (
+    to.name !== "Login" &&
+    to.name !== "Register" &&
+    to.name !== "Home" &&
+    !isAuthenticated
+  ) {
     next({ name: "Home" });
   } else if (
     (to.name === "Login" || to.name === "Register") &&

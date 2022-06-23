@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar.vue";
 import HeroSection from "../components/HeroSection.vue";
 import ProductsList from "../components/ProductsList.vue";
 import Card from "../components/Card.vue";
+import NoProductFound from "../components/NoProductFound.vue";
 export default {
   name: "OrderHistory",
   components: {
@@ -12,6 +13,7 @@ export default {
     HeroSection,
     ProductsList,
     Card,
+    NoProductFound,
   },
   methods: {
     ...mapActions(useStore, ["readOrders"]),
@@ -129,6 +131,10 @@ export default {
         />
       </div>
     </div>
+    <NoProductFound
+      v-if="orders.data.length === 0"
+      title="You don't have order history"
+    />
   </div>
 </template>
 

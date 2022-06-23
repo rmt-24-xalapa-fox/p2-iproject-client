@@ -6,7 +6,7 @@ export const useCounter = defineStore({
   id: "counter",
   state() {
     return {
-      baseURL: `http://localhost:3000`,
+      baseURL: `https://count-me-in-app.herokuapp.com`,
       products: [],
       sales: [],
       chart: "",

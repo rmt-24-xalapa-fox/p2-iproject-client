@@ -4,10 +4,13 @@ import { moviesStore } from "../stores/movies";
 import { RouterLink } from "vue-router";
 import axios from "axios";
 const baseUrl = "http://localhost:3000";
+// const baseUrl = "https://movie-fikar-server.herokuapp.com"
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default {
   name: "TheFavoriteMovieCard",
   props: ["el2"],
+  emits: ["fetchMovies"],
   computed: {
     ...mapState(moviesStore, [""]),
     ...mapWritableState(moviesStore, [""]),
@@ -17,20 +20,26 @@ export default {
     
     async hapus() {
       try {
-        const response = await axios.delete(`${baseUrl}/favourite/delete`, {
-          id: this.el2.id
-        }, {
+        const response = await axios.delete(`${baseUrl}/favourite/delete/${this.el2.id}`, {
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
         })
+        this.$router.push(`/`)
         console.log(response);
+        Swal.fire({
+            icon: "success",
+            text: "Delete Success",
+        });
       } catch (error) {
         console.log(error);
       }
     }
   },
-  created() {},
+  created() {
+    this.el2.id
+    this.fetchMovies
+  },
 };
 </script>
 

@@ -4,6 +4,7 @@ import { mapState, mapWritableState, mapActions } from "pinia";
 import { actorsStore } from "../stores/actors";
 import axios from "axios";
 const baseUrl = "http://localhost:3000";
+// const baseUrl = "https://movie-fikar-server.herokuapp.com"
 
 let currentPage = 1;
 

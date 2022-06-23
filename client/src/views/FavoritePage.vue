@@ -3,6 +3,7 @@ import TheFavoriteMovieCard from "../components/TheFavoriteMovieCard.vue";
 
 import axios from "axios";
 const baseUrl = "http://localhost:3000";
+// const baseUrl = "https://movie-fikar-server.herokuapp.com"
 
 export default {
   name: "FavoritePage",
@@ -46,7 +47,9 @@ export default {
       <div
         class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-8"
       >
-        <TheFavoriteMovieCard v-for="el in moviesFavorite" :key="el.id" :el2="el"/>
+        <TheFavoriteMovieCard v-for="el in moviesFavorite" :key="el.id" :el2="el"
+        v-on:fetchMovies="fetchMoviesFavorite"
+         />
       </div>
     </div>
   </div>

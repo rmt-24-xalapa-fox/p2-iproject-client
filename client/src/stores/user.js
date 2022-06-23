@@ -3,6 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 
 const baseUrl = "http://localhost:3000";
+// const baseUrl = "https://movie-fikar-server.herokuapp.com"
 
 export const userStore = defineStore("user", {
   state: () => {
@@ -68,6 +69,10 @@ export const userStore = defineStore("user", {
       this.isLogin = false;
       localStorage.clear();
       this.router.push("/");
+      Swal.fire({
+        icon: "success",
+        text: "Logout Success",
+      });
     },
   },
 });

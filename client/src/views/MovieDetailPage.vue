@@ -5,8 +5,10 @@ import TheMovieDetailPageCast from "../components/TheMovieDetailPageCast.vue";
 import TheMovieDetailPageMedia from "../components/TheMovieDetailPageMedia.vue";
 import { mapState, mapWritableState, mapActions } from "pinia";
 import { userStore } from "../stores/user";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 const baseUrl = "http://localhost:3000";
+// const baseUrl = "https://movie-fikar-server.herokuapp.com"
 
 export default {
   name: "MovieDetailPage",
@@ -81,8 +83,16 @@ export default {
           },
         });
         console.log(response, "ini tess");
+        Swal.fire({
+            icon: "success",
+            text: "Added to favorite",
+          });
       } catch (error) {
         console.log(error);
+        Swal.fire({
+            icon: "error",
+            text: "Movie already favourite",
+          });
       }
     }
   },

@@ -5,7 +5,8 @@ export default {
 </script>
 
 <template>
-<h1>Payment is successful!</h1>
+    <h1>Payment is successful!</h1>
+
 </template>
 
 <style>
@@ -13,4 +14,5 @@ h1 {
     margin-top: 200px;
     text-align: center;
 }
+
 </style>

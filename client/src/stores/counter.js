@@ -6,8 +6,8 @@ export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
     isLogin: localStorage.getItem("access_token"),
-    baseUrl: "https://ps-anywhere-fix.herokuapp.com",
-    // baseUrl: 'http://localhost:3000',
+    // baseUrl: "https://ps-anywhere-fix.herokuapp.com",
+    baseUrl: 'http://localhost:3000',
     gameNews: [],
     rentalans: [],
     perRentalan: ""
@@ -69,7 +69,11 @@ export const useCounterStore = defineStore({
 
     async fetchRentalan() {
       try {
-        const response = await axios.get(this.baseUrl + '/rentalan')
+        const response = await axios.get(this.baseUrl + '/rentalan', {
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
+        })
         console.log(response);
         this.rentalans = response.data.rentalan
       } catch (err) {
@@ -83,7 +87,11 @@ export const useCounterStore = defineStore({
     async fetchRentalanById(id, query) {
       try {
         console.log(id, query);
-        const response = await axios.get(this.baseUrl + `/rentalan/${id}?${query}`)
+        const response = await axios.get(this.baseUrl + `/rentalan/${id}?${query}`, {
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
+        })
         console.log(response);
         this.perRentalan = response.data.perRentalan
       } catch (err) {
@@ -98,8 +106,12 @@ export const useCounterStore = defineStore({
 
     async hitStripe() {
       try {
-        const response = await axios.post(this.baseUrl + '/create-checkout-session')
-        console.log(response);
+        const response = await axios.post(this.baseUrl + '/create-checkout-session', {
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
+        })
+        console.log(response.data);
         window.location.href = response.data.url
       } catch (err) {
         console.log(err);
@@ -108,7 +120,11 @@ export const useCounterStore = defineStore({
 
     async bookedUnit(id) {
       try {
-        const response = await axios.patch(this.baseUrl + `/rentalan/${id}`)
+        const response = await axios.patch(this.baseUrl + `/rentalan/${id}`, {
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
+        })
         console.log(response);
       } catch {
         console.log(err);

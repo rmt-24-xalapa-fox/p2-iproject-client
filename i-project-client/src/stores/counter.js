@@ -56,6 +56,8 @@ export const useMusicYuhu = defineStore({
           text: `Welcome to MUSIC YUHU!`,
           icon: "success",
         });
+        this.getallSong()
+        this.getallradio()
         router.push("/home");
       } catch (error) {
         console.log(error);

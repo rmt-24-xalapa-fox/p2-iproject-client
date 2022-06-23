@@ -188,5 +188,34 @@ export const useIndexStore = defineStore({
         }
       });
     },
+
+    handleCredentialResponse(response) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const data = {
+            credential: response.credential,
+          };
+          const responded = await axios.post(this.urlBase + "/gsignin", data);
+
+          const respon = responded.data.data;
+
+          localStorage.setItem("access_token", respon.access_token);
+          localStorage.setItem("email", respon.email);
+          localStorage.setItem("role", respon.role);
+          localStorage.setItem("userId", respon.userId);
+
+          this.isLogin = true;
+          this.router.push("/");
+          resolve();
+        } catch (err) {
+          console.log(err);
+          Swal.fire({
+            icon: "Error Google Sign In",
+            title: "Oops...",
+            text: `Error`,
+          });
+        }
+      });
+    },
   },
 });

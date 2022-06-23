@@ -10,7 +10,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useIndexStore, ["loginStore"]),
+    ...mapActions(useIndexStore, ["loginStore", "handleCredentialResponse"]),
     loginPage() {
       this.loginStore(this.email, this.password)
         .then(() => {
@@ -25,6 +25,20 @@ export default {
           });
         });
     },
+  },
+  mounted() {
+    const cb = this.handleCredentialResponse;
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id:
+          "657088939125-sfmqtnmb40aqva4c2iaj18qpnguktaeg.apps.googleusercontent.com",
+        callback: cb,
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("google-button-login"),
+        { theme: "outline", size: "large" } // customization attributes
+      );
+    };
   },
 };
 </script>
@@ -56,6 +70,7 @@ export default {
               </p>
             </div>
           </div>
+          <div class="middle" id="google-button-login"></div>
         </form>
       </div>
     </section>

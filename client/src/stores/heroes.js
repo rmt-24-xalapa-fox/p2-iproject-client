@@ -39,6 +39,11 @@ export const useHeroStore = defineStore({
         return true;
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${err.response.data.message}`,
+        });
         return false;
       }
     },
@@ -50,8 +55,14 @@ export const useHeroStore = defineStore({
           url: `${this.baseUrl}/register`,
           data: data,
         });
+        Swal.fire("Thank You for Register!", "Please Login!", "success");
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${err.response.data.message}`,
+        });
       }
     },
 
@@ -65,6 +76,11 @@ export const useHeroStore = defineStore({
         this.heroes = data.response.data;
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${err.response.data.message}`,
+        });
       }
     },
 
@@ -78,6 +94,11 @@ export const useHeroStore = defineStore({
         this.roles = data.response;
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${err.response.data.message}`,
+        });
       }
     },
 
@@ -91,6 +112,11 @@ export const useHeroStore = defineStore({
         this.sortByRole = data.response.data;
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${err.response.data.message}`,
+        });
       }
     },
 
@@ -104,6 +130,11 @@ export const useHeroStore = defineStore({
         this.detail = data.response.data;
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${err.response.data.message}`,
+        });
       }
     },
 
@@ -122,6 +153,11 @@ export const useHeroStore = defineStore({
         this.ytApi = data.items;
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${err.response.data.message}`,
+        });
       }
     },
 
@@ -138,6 +174,11 @@ export const useHeroStore = defineStore({
         this.items = response.data.itemList;
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${err.response.data.message}`,
+        });
       }
     },
 
@@ -151,8 +192,14 @@ export const useHeroStore = defineStore({
           },
         });
         console.log(response);
+        Swal.fire("Success Add Bookmarks", "Please Check in Bookmarks", "success");
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${err.response.data.message}`,
+        });
       }
     },
 
@@ -169,6 +216,11 @@ export const useHeroStore = defineStore({
         this.buildList = response.data.buildList;
       } catch (err) {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${err.response.data.message}`,
+        });
       }
     },
   },

@@ -17,9 +17,22 @@ export default {
     },
 
     toLogout() {
-      localStorage.clear();
-      this.fetchHeroes();
-      this.$router.push(`/`);
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You want to Logout?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, LogOut!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("LogOut!", "Success to Logout", "success");
+        }
+        localStorage.clear();
+        this.fetchHeroes();
+        this.$router.push(`/`);
+      });
     },
   },
   created() {

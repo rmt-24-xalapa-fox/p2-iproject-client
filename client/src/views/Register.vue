@@ -23,6 +23,11 @@ export default {
         console.log(err);
         this.email = "";
         this.password = "";
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${err.response.data.message}`,
+        });
       }
     },
   },

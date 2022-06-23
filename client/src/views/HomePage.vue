@@ -45,8 +45,8 @@ export default {
           method: "post",
           url: "https://instalite-i-project.herokuapp.com/posts/upload",
           headers: {
+            // "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
             access_token: localStorage.getItem("access_token"),
-            "Content-Type": "multipart/form-data",
           },
           data: formData,
         });

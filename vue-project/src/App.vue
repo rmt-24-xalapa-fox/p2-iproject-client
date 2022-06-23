@@ -6,12 +6,21 @@ export default {
   components: {
     RouterView,
   },
+<<<<<<< HEAD
   // methods: {
   //   ...mapActions(useCounterStore, ["allTour"]),
   // },
   // async created() {
   //   await this.allTour();
   // },
+=======
+  methods: {
+    ...mapActions(useCounterStore, ["fetchData"]),
+  },
+  async created() {
+    await this.fetchData();
+  },
+>>>>>>> mapView
 };
 </script>
 <template>

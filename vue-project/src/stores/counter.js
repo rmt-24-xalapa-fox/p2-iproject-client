@@ -5,11 +5,18 @@ export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
     counter: 0,
+<<<<<<< HEAD
     map: [],
     tour: [],
     baseUrl: "http://localhost:5656",
     authorId: 0,
     email: "",
+=======
+    map: "",
+    dataTour: [],
+    oneData: [],
+    baseUrl: "http://localhost:5656/",
+>>>>>>> mapView
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -37,22 +44,33 @@ export const useCounterStore = defineStore({
           },
         };
         let response = await axios.request(options);
+<<<<<<< HEAD
         console.log(response.data);
+=======
+>>>>>>> mapView
         return response.data.candidates[0].geometry;
       } catch (err) {
         console.log(err);
       }
     },
+<<<<<<< HEAD
     async allTour() {
       try {
         let response = await axios.get(
           "https://triplocator.net/api/rest/get/tours"
         );
         console.log(response);
+=======
+    async fetchData() {
+      try {
+        let res = await axios.get(this.baseUrl + "tour");
+        this.dataTour = res.data.response;
+>>>>>>> mapView
       } catch (err) {
         console.log(err);
       }
     },
+<<<<<<< HEAD
     async googleSign(credential) {
       try {
         let res = await axios({
@@ -87,6 +105,14 @@ export const useCounterStore = defineStore({
         return true;
       } catch (err) {
         return false;
+=======
+    async fetchOneData(id) {
+      try {
+        let response = await axios.get(this.baseUrl + `tour/${id}`);
+        this.oneData = response.data.response;
+      } catch (err) {
+        console.log(err);
+>>>>>>> mapView
       }
     },
   },

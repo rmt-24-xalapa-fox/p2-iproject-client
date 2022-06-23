@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+<<<<<<< HEAD
 import LoginView from "../views/LoginView.vue";
+=======
+import mapViewVue from "../views/mapView.vue";
+>>>>>>> mapView
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,9 +15,15 @@ const router = createRouter({
       component: HomeView,
     },
     {
+<<<<<<< HEAD
       path: "/login",
       name: "login",
       component: LoginView,
+=======
+      path: "/map",
+      name: "map",
+      component: mapViewVue,
+>>>>>>> mapView
     },
   ],
 });

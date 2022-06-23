@@ -62,31 +62,34 @@ export default {
 </script>
 
 <template>
-  <table class="col-12">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">No</th>
-          <th scope="col">Nama User</th>
-          <th scope="col">Nama Gunung</th>
-          <th scope="col">Date Simaksi</th>
-          <th scope="col">Number Of Climbers</th>
-          <th scope="col">Total Price</th>
-          <th scope="col">Status</th>
-          <th scope="col">Action</th>
+  <div class="container">
+    <!-- table -->
+    <table class="table table-responsive mt-5 mb-5">
+      <thead class="thead-inverse">
+        <tr class="text-center">
+          <th>No</th>
+          <th>Nama User</th>
+          <th>Nama Gunung</th>
+          <th>Date Simaksi</th>
+          <th>Number Of Climbers</th>
+          <th>Total Price</th>
+          <th>Status</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(el, i) in licenses" :key="i">
+        <tr class="text-center" v-for="(el, i) in licenses" :key="i">
           <td>{{ i + 1 }}</td>
           <td>{{ el.User.name }}</td>
           <td>{{ el.Mountain.name }}</td>
-          <td>{{ el.Quotum.date }}</td>
+          <td>{{ el.Quotum.date.substring(0, 10) }}</td>
           <td>{{ el.numberOfClimbers }}</td>
           <td>Rp.{{ el.totalPrice }}</td>
           <td>{{ el.status }}</td>
           <td>
             <button
+              type="button"
+              class="btn btn-primary"
               v-if="el.status === 'Waiting For Payment'"
               @click.prevent="hitMidTransPage(el.id)"
               id="pay-button"
@@ -97,7 +100,7 @@ export default {
         </tr>
       </tbody>
     </table>
-  </table>
+  </div>
 </template>
 
 <style scoped></style>

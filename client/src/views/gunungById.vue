@@ -19,76 +19,91 @@ export default {
 </script>
 
 <template>
-  <div class="row">
-    <div class="page">
-      <div class="col-12 picture">
-        <img class="entity-id" :src="mountainsById.imageUrl" alt="img" />
-      </div>
+  <main>
+    <div class="container">
+      <!--Section: Blog v.4-->
+      <section class="section mt-5 pb-3 wow fadeIn">
+        <!--Grid row-->
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Card -->
+            <div class="card card-cascade wider reverse">
+              <!-- Card image -->
+              <div class="view view-cascade overlay">
+                <img
+                  class="card-img-top"
+                  :src="mountainsById.imageUrl"
+                  alt="Mountain By Id"
+                />
+                <a href="#!">
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+            </div>
 
-      <div class="col-6">
-        <!-- <h6 style="padding: 10px">
-            <span>Created By: </span>{{ displayNewsById.User.email }}
-          </h6> -->
-        <h1 style="padding: 10px">{{ mountainsById.name }}</h1>
-        <p style="padding: 10px">Height: {{ mountainsById.height }}</p>
-        <p style="padding: 10px">
-          License Cost: Rp. {{ mountainsById.licenseCost }}
-        </p>
-        <p style="padding: 10px">{{ mountainsById.description }}</p>
-      </div>
-      <div class="col-6">
-        <h1 style="padding: 10px">Quota {{ mountainsById.name }}</h1>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">Date</th>
-              <th scope="col">Quota Tersisa</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(el, i) in mountainsById.Quota" :key="el.id">
-              <td>{{ i + 1 }}</td>
-              <td>{{ el.date }}</td>
-              <td>{{ el.quotaUse }}/{{ el.quotaMax }}</td>
-              <td>
-                <button
-                  v-if="el.quotaMax - el.quotaUse > 0"
-                  @click.prevent="toPostLicensePage(mountainsById.id, el.id)"
-                >
-                  Get License
+            <!--Excerpt-->
+            <div class="excerpt mt-5 wow fadeIn" data-wow-delay="0.3s">
+              <h1 class="mb-3 text-center">
+                {{ mountainsById.name }}
+              </h1>
+              <h5 class="mb-3 text-center">
+                Height: {{ mountainsById.height }}
+              </h5>
+              <div class="text-center">
+                <button class="btn btn-info disabled" style="font-size: 14px">
+                  License Cost: Rp. {{ mountainsById.licenseCost }}
                 </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              </div>
+              <p class="mt-5">{{ mountainsById.description }}</p>
+            </div>
+          </div>
+        </div>
+        <!--Grid row-->
+      </section>
+
+      <!-- table -->
+
+      <table class="table table-responsive mt-5 mb-5">
+        <thead class="thead-inverse">
+          <tr class="text-center">
+            <th>No</th>
+            <th>Date</th>
+            <th>Quota</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="text-center"
+            v-for="(el, i) in mountainsById.Quota"
+            :key="el.id"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ el.date.substring(0, 10) }}</td>
+            <td>{{ el.quotaUse }}/{{ el.quotaMax }}</td>
+            <td>
+              <button
+                class="btn btn-primary"
+                type="button"
+                v-if="el.quotaMax - el.quotaUse > 0"
+                @click.prevent="toPostLicensePage(mountainsById.id, el.id)"
+              >
+                Get License
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
+  </main>
 </template>
 
 <style scoped>
-/* Gunung By Id */
-.page {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 50px;
-}
-.picture {
-  height: 500px;
-}
-.entity-id {
-  height: 100%;
+table {
   width: 100%;
 }
-h1 {
-  text-align: center;
+
+td {
+  width: 25%;
 }
-/* global */
-.middle {
-  flex-direction: column;
-  justify-content: center;
-}
-/* end Gunung By Id */
 </style>

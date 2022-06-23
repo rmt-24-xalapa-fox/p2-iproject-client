@@ -44,31 +44,61 @@ export default {
 </script>
 
 <template>
-  <div class="row middle">
-    <div class="col-12">
-      <h1>Form Add License</h1>
-      <form @submit.prevent="postLicensePage">
-        <div class="form-group">
-          <label for="">Number Of Climbers</label>
-          <input
-            v-model="numberOfClimbers"
-            type="number"
-            class="form-control"
-            placeholder="0"
-          />
+  <div id="intro" class="bg-image shadow-2-strong" style="margin-top: 0px">
+    <div class="mask d-flex align-items-center h-100">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-5 col-md-8">
+            <form
+              class="bg-white rounded-5 shadow-5-strong p-5"
+              @submit.prevent="postLicensePage"
+            >
+              <h1 class="h1-responsive font-weight-bold text-center my-4">
+                Form Add License
+              </h1>
+              <!-- Number of climbers input -->
+              <p class="text-center">Number Of Climbers</p>
+              <div class="mb-4 mx-4 text-center">
+                <input
+                  v-model="numberOfClimbers"
+                  type="number"
+                  id="name"
+                  name="name"
+                  class="mt-3"
+                  style="
+                    height: 50px;
+                    font-size: 30px;
+                    width: 100px;
+                    margin-top: 50px;
+                    padding-left: 10px;
+                  "
+                  placeholder="0"
+                />
+              </div>
+              <div class="mt-5 mb-4 text-center">
+                <h5>Total Price: Rp.{{ makeTotalPrice }}</h5>
+              </div>
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block">
+                Add License
+              </button>
+            </form>
+          </div>
         </div>
-        <div class="form-group">
-          <h1>Total Price: Rp.{{ makeTotalPrice }}</h1>
-        </div>
-        <button type="submit" class="btn btn-primary">Buy License</button>
-      </form>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.middle {
-  flex-direction: column;
-  justify-content: center;
+#intro {
+  height: 89.3vh;
+}
+
+/* Height for devices larger than 576px */
+@media (min-width: 992px) {
+  #intro {
+    margin-top: -58.59px;
+  }
 }
 </style>

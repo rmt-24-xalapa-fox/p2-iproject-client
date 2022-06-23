@@ -28,66 +28,61 @@ export default {
 </script>
 
 <template>
-  <!-- Nabar -->
-  <nav class="col-12">
-    <div class="header">
-      <div class="judul">
-        <h1 @click.prevent="toHomePage">Integrasi Simaksi Online</h1>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Container wrapper -->
+    <div class="container">
+      <!-- Navbar brand -->
+      <router-link to="/" class="navbar-brand me-2">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/619/619010.png"
+          height="25"
+          alt="Mountain Logo"
+          style="margin-top: -1px"
+        />
+        <h5 class="mt-3 ml-2">Simaksi Online</h5>
+      </router-link>
+
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarButtonsExample">
+        <!-- Left links -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <router-link to="/mountains" class="nav-link mt-2" href="#"
+              >List Gunung</router-link
+            >
+          </li>
+          <li v-if="isLogin" class="nav-item">
+            <router-link to="/licenses" class="nav-link mt-2" href="#"
+              >My License</router-link
+            >
+          </li>
+        </ul>
+        <!-- Left links -->
+
+        <div class="d-flex align-items-center">
+          <router-link
+            v-if="!isLogin"
+            to="/login"
+            type="button"
+            class="btn btn-primary me-3"
+            >Login</router-link
+          >
+          <a
+            @click.prevent="logoutPage"
+            v-if="isLogin"
+            to="/logout"
+            type="button"
+            class="btn btn-primary me-3"
+            >Logout</a
+          >
+        </div>
       </div>
-      <div class="menu">
-        <router-link
-          to="/mountains"
-          class="pointer"
-          style="text-decoration: none"
-          >List Gunung</router-link
-        >
-        <router-link
-          to="/licenses"
-          class="pointer"
-          style="text-decoration: none"
-          >My License</router-link
-        >
-        <a
-          @click.prevent="logoutPage"
-          v-if="isLogin"
-          class="pointer"
-          style="text-decoration: none"
-          >Logout</a
-        >
-        <router-link
-          to="/login"
-          v-if="!isLogin"
-          class="pointer"
-          style="text-decoration: none"
-          >Login</router-link
-        >
-      </div>
+      <!-- Collapsible wrapper -->
     </div>
+    <!-- Container wrapper -->
   </nav>
-  <!-- End Nabar -->
+  <!-- Navbar -->
 </template>
 
-<style scoped>
-/* navbar */
-.header {
-  display: flex;
-  padding: 10px;
-  background: #000000;
-  color: white;
-  font-size: 30px;
-  min-width: 100vw;
-}
-.header a {
-  padding-left: 30px;
-  padding-right: 30px;
-  color: white;
-}
-.pointer {
-  cursor: pointer;
-}
-.header h1 {
-  margin-left: 20px;
-  margin-right: 20px;
-}
-/* end navbar */
-</style>
+<style scoped></style>

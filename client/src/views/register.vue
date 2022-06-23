@@ -32,72 +32,98 @@ export default {
 </script>
 
 <template>
-  <div class="app-login-register">
-    <section class="register">
-      <h3 class="middle">Register Integrasi Simaksi</h3>
-      <div class="middle">
-        <form @submit.prevent="registerPage">
-          <div class="input">
-            <label for="">Email</label>
-            <input v-model="email" type="text" placeholder="Email" />
+  <!-- Background image -->
+  <div id="intro" class="bg-image shadow-2-strong" style="margin-top: 0px">
+    <div
+      class="mask d-flex align-items-center h-100"
+      style="background-color: rgba(0, 0, 0, 0.2)"
+    >
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-xl-5 col-md-8">
+            <form
+              class="bg-white rounded-5 shadow-5-strong p-5"
+              @submit.prevent="registerPage"
+            >
+              <!-- Email input -->
+              <div class="form-outline mb-4">
+                <input
+                  v-model="email"
+                  type="email"
+                  id="form1Example1"
+                  class="form-control"
+                />
+                <label class="form-label" for="form1Example1"
+                  >Email address</label
+                >
+              </div>
+
+              <!-- Name input -->
+              <div class="form-outline mb-4">
+                <input
+                  v-model="name"
+                  type="text"
+                  id="form1Example2"
+                  class="form-control"
+                />
+                <label class="form-label" for="form1Example2">Full Name</label>
+              </div>
+
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+                <input
+                  v-model="password"
+                  type="password"
+                  id="form1Example3"
+                  class="form-control"
+                />
+                <label class="form-label" for="form1Example3">Password</label>
+              </div>
+
+              <!-- Phone Number input -->
+              <div class="form-outline mb-4">
+                <input
+                  v-model="phoneNumber"
+                  type="text"
+                  id="form1Example4"
+                  class="form-control"
+                />
+                <label class="form-label" for="form1Example4"
+                  >Phone Number</label
+                >
+              </div>
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block">
+                Sign up
+              </button>
+              <div>
+                <p class="mt-3">
+                  Already have an account?
+                  <router-link to="/login" id="loginRegister"
+                    >Log In</router-link
+                  >
+                </p>
+              </div>
+            </form>
           </div>
-          <div class="input">
-            <label for="">Name</label>
-            <input v-model="name" type="text" placeholder="Name" />
-          </div>
-          <div class="input">
-            <label for="">Password</label>
-            <input v-model="password" type="password" placeholder="password" />
-          </div>
-          <div class="input">
-            <label for="">Phone Number</label>
-            <input
-              v-model="phoneNumber"
-              type="text"
-              placeholder="Phone Number"
-            />
-          </div>
-          <div class="input">
-            <div class="button">
-              <button type="submit">Register</button>
-            </div>
-            <p class="button">
-              Have have an account?
-              <router-link to="/login" href="#">Login</router-link>
-            </p>
-          </div>
-        </form>
+        </div>
       </div>
-    </section>
+    </div>
   </div>
+  <!-- Background image -->
 </template>
 
 <style scoped>
-.register {
-  margin: 30px;
-  width: 30%;
-  height: 450px;
-  background-color: rgb(255, 255, 255);
+#intro {
+  background-image: url(https://images.unsplash.com/photo-1581888517319-570283943d82?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80);
+  height: 89.3vh;
 }
-.register h3 {
-  margin: 20px;
-}
-.input {
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-}
-.button {
-  margin-top: 10px;
-}
-/* global */
-.app-login-register {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.middle {
-  display: flex;
-  justify-content: center;
+
+/* Height for devices larger than 576px */
+@media (min-width: 992px) {
+  #intro {
+    margin-top: -58.59px;
+  }
 }
 </style>

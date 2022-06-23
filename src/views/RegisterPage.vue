@@ -143,8 +143,8 @@ export default {
         swal("Success", succMsg, "success");
         this.$router.push("/login");
       } catch (err) {
-        const errType = err.response.data.statusCode;
-        let errMsg = err.response.data.error.message;
+        const errType = err.response.data.status;
+        let errMsg = err.response.data.message;
         if (errType === 400) {
           errMsg = errMsg.join(", ");
         }

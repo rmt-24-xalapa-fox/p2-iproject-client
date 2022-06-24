@@ -13,8 +13,8 @@ export const useHeroStore = defineStore({
     ytApi: [],
     items: [],
     buildList: [],
-    // baseUrl: "https://be-pro-vue.herokuapp.com",
-    baseUrl: "http://localhost:3300",
+    baseUrl: "https://be-pro-vue.herokuapp.com",
+    // baseUrl: "http://localhost:3300",
     isLogin: localStorage.getItem("access_token"),
   }),
   getters: {

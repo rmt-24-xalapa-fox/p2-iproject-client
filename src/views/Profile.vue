@@ -7,7 +7,7 @@ export default {
     name: "Profile",
     data() {
         return {
-            firebaseDocId: localStorage.getItem("FirebaseDocumentId"),
+            firebaseDocId: localStorage.getItem("FirebaseDocId"),
             id: localStorage.getItem("id"),
             name: localStorage.hasOwnProperty("name")
                 ? localStorage.getItem("name")
@@ -101,7 +101,7 @@ export default {
     <div class="w-100 mt-3">
         <h2 class="fw-600 text-center">Welcome to Profile section</h2>
         <div class="profile">
-            <img class="br-06" :src="imageUrl" width="100%" height="100%" />
+            <img class="br-06" :src="imageUrl" alt=""/>
             <label class="avatar">
                 <font-awesome-icon icon="pencil-alt" />
                 <input type="file" name="upload" class="w-0" @change="changeAvatar" />
@@ -154,7 +154,7 @@ label {
     margin: 20px auto;
     width: 150px;
     height: 150px;
-    background-color: gray;
+    background-color: white;
     position: relative;
     border-radius: 0.6rem;
 }

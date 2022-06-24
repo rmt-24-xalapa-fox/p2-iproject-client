@@ -3,16 +3,20 @@ import { db, app } from "../../config/firebaseconfig"
 import { setDoc, doc, collection, getDocs, addDoc, where, query } from "firebase/firestore"
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth"
 import swal from 'sweetalert';
+import ChatBox from '../components/ChatBox.vue'
 export default {
     name: "Chat",
+    components: {
+        ChatBox
+    },
     data() {
         return {
             currentUserName: localStorage.getItem("name"),
             currentPeerUser: null,
             currentUserId: localStorage.getItem("id"),
-            currentUserPhoto: localStorage.getItem("photoURL"),
+            currentUserPhoto: localStorage.getItem("imageUrl"),
             searchUsers: [],
-            photoURL: localStorage.getItem("photoURL")
+            photoURL: localStorage.getItem("imageUrl")
         };
     },
     methods: {
@@ -20,16 +24,19 @@ export default {
             this.$router.push("/profile");
         },
         logout() {
-            firebase.auth().signOut();
+            getAuth().signOut();
             this.$router.push("/login");
             localStorage.clear();
         },
         letsChat(item) {
             this.currentPeerUser = item;
+            console.log("oi");
         },
         async getUsers() {
             const querySnapshot = await getDocs(collection(db, "Users"));
-            querySnapshot.forEach((doc, index) => {
+            let newList = [...querySnapshot.docs];
+            newList.forEach((doc, index) => {
+                console.log(doc.id, doc.data());
                 this.searchUsers.push({
                     documentKey: doc.id,
                     key: index,
@@ -52,54 +59,40 @@ export default {
 </script>
 <template>
     <div class="container">
+        <br>
         <h3 class=" text-center">Messaging</h3>
+        <br>
         <div class="messaging">
             <div class="inbox_msg">
                 <div class="inbox_people">
                     <div class="headind_srch">
                         <div class="recent_heading">
-                            <h4>Recent</h4>
+<!--                             
+                        <div class="chat_img"> 
+                            <img :src="photoURL"
+                                alt="template_user"> </div> -->
+                        <button type="button" class="btn btn-primary" @click="logout">Logout</button>
                         </div>
                     </div>
                     <div class="inbox_chat">
-                        <div class="chat_list active_chat">
+                        <div class="chat_list" v-for="item in searchUsers" :key="item.id" @click="letsChat(item)" v-show="item.id != currentUserId">
                             <div class="chat_people">
-                                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png"
-                                        alt="sunil"> </div>
+                                <div class="chat_img"> <img :src="item.imageUrl"
+                                        alt="template_user"> </div>
                                 <div class="chat_ib">
-                                    <h5>User Test <span class="chat_date">Dec 25</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
+                                    <h5>{{item.name}}</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="mesgs">
-                    <div class="msg_history">
-                        <div class="incoming_msg">
-                            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png"
-                                    alt="sunil"> </div>
-                            <div class="received_msg">
-                                <div class="received_withd_msg">
-                                    <p>Test which is a new approach to have all
-                                        solutions</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="outgoing_msg">
-                            <div class="sent_msg">
-                                <p>Test which is a new approach to have all
-                                    solutions</p>
-                            </div>
-                        </div>
+                    <div v-if="currentPeerUser===null" class="text-center">
+                        <h1>Welcome {{currentUserName}}</h1>
+                        <h5>Enjoy messagin in YourChat</h5>
                     </div>
-                    <div class="type_msg">
-                        <div class="input_msg_write">
-                            <input type="text" class="write_msg" placeholder="Type a message" />
-                            <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o"
-                                    aria-hidden="true"></i></button>
-                        </div>
+                    <div v-else>
+                        <ChatBox :currentPeerUser="currentPeerUser"/>
                     </div>
                 </div>
             </div>
@@ -107,7 +100,7 @@ export default {
         </div>
     </div>
 </template>
-<style>
+<style scoped>
 .container {
     max-width: 1170px;
     margin: auto;
@@ -218,9 +211,17 @@ img {
     padding: 18px 16px 10px;
 }
 
+.chat_list :hover {
+    background-color: #ebebeb;
+}
+
 .inbox_chat {
     height: 550px;
     overflow-y: scroll;
+}
+
+.inbox_chat :hover {
+    background-color: #ebebeb;
 }
 
 .active_chat {

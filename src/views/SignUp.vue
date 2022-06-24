@@ -3,6 +3,8 @@ import {db, app} from "../../config/firebaseconfig"
 import {setDoc, doc, collection, getDocs, addDoc} from "firebase/firestore"
 import {createUserWithEmailAndPassword, getAuth} from "firebase/auth"
 import swal from 'sweetalert';
+import {mapActions} from "pinia"
+import {useMainStore} from "../stores"
 export default {
     name: "SignUp",
     data() {
@@ -14,6 +16,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(useMainStore, ["sendNotif"]),
         signUp() {
             let auth = getAuth(app)
             createUserWithEmailAndPassword(auth, this.email, this.password)
@@ -24,15 +27,16 @@ export default {
                     name: `${this.firstName} ${this.lastName}` || null,
                     email: this.email || null,
                     password: this.password || null,
-                    imageUrl: "",
+                    imageUrl: "https://ptetutorials.com/images/user-profile.png",
                     status: ""
                 });
                 localStorage.setItem("id", res.user.uid);
                 localStorage.setItem("name", `${this.firstName} ${this.lastName}`);
                 localStorage.setItem("email", this.email);
-                localStorage.setItem("imageUrl", "");
-                localStorage.setItem("status", "");
+                localStorage.setItem("imageUrl", "https://ptetutorials.com/images/user-profile.png");
+                localStorage.setItem("status", "Hey I'm using YourChat!");
                 localStorage.setItem("FirebaseDocId", newDoc.id);
+                await this.sendNotif(this.email);
                 this.firstName= "";
                 this.lastName= "";
                 this.email= "";

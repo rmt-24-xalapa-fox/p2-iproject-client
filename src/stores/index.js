@@ -4,15 +4,25 @@ import axios from "axios"
 export const useMainStore = defineStore({
   id: "main",
   state: () => ({
-    // counter: 0,
+    baseUrl: "http://localhost:3000"
   }),
   getters: {
     // doubleCount: (state) => state.counter * 2,
   },
   actions: {
-    // increment() {
-    //   this.counter++;
-    // },
+    async sendNotif(userEmail) {
+      try {
+        const response = await axios({
+          method: "post",
+          url:`${this.baseUrl}/send-notif`,
+          data: {
+            userEmail
+          }
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    }
     
   },
 });

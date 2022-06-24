@@ -16,10 +16,10 @@ export default {
 </script>
 
 <template>
-  <div class="py-5" style="background-color: rgb(192, 131, 130)">
+  <div class="py-md-5" style="background-color: rgb(192, 131, 130)">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-6">
+        <div class="col-md-6">
           <img :src="detail.cover_picture" alt="" class="border border-2 border-dark" />
         </div>
       </div>

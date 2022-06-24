@@ -6,13 +6,15 @@ export const useHeroStore = defineStore({
   state: () => ({
     counter: 0,
     heroes: [],
+    heroNotApi: [],
     roles: [],
     sortByRole: [],
     detail: [],
     ytApi: [],
     items: [],
     buildList: [],
-    baseUrl: "https://be-pro-vue.herokuapp.com",
+    // baseUrl: "https://be-pro-vue.herokuapp.com",
+    baseUrl: "http://localhost:3300",
     isLogin: localStorage.getItem("access_token"),
   }),
   getters: {
@@ -72,8 +74,26 @@ export const useHeroStore = defineStore({
           method: "GET",
           url: `${this.baseUrl}/api/heroes`,
         });
-        // console.log(data.response.data);
+        console.log(data.response.data);
         this.heroes = data.response.data;
+      } catch (err) {
+        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${err.response.data.message}`,
+        });
+      }
+    },
+
+    async getHeroNotApi() {
+      try {
+        let response = await axios({
+          method: "GET",
+          url: `${this.baseUrl}/heroes`,
+        });
+        console.log(response);
+        this.heroNotApi = response.data.heroList;
       } catch (err) {
         console.log(err);
         Swal.fire({
@@ -182,11 +202,12 @@ export const useHeroStore = defineStore({
       }
     },
 
-    async addBuild() {
+    async addBuild(data) {
       try {
         let response = await axios({
           method: "POST",
           url: `${this.baseUrl}/builds`,
+          data: data,
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
@@ -221,6 +242,22 @@ export const useHeroStore = defineStore({
           title: `Oops...`,
           text: `${err.response.data.message}`,
         });
+      }
+    },
+
+    async votting(id) {
+      try {
+        let response = await axios({
+          method: "PATCH",
+          url: `${this.baseUrl}/builds/${id}`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        console.log(response);
+        Swal.fire("Success Votting", "You can vote in other list", "success");
+      } catch (err) {
+        console.log(err);
       }
     },
   },

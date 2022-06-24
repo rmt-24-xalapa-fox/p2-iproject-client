@@ -109,13 +109,15 @@ export default {
   text-align: center;
 }
 
-</style>
-
-<style scoped>
 hr.rounded {
   margin: auto;
   width: 80%;
   border-top: 3px solid #bbb;
   border-radius: 5px;
 }
+
+</style>
+
+<style scoped>
+
 </style>

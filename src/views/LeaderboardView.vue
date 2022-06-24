@@ -17,7 +17,7 @@ export default {
 
     async fetchTopTen(){
       try {
-        page = this.$route.query.page ?? 1
+        const page = this.$route.query.page ?? 1
         const { data: recv } = await axios.get(this.getPath(`/stats/leaderboard?page=${page}`))
 
         this.topten = recv
@@ -30,23 +30,32 @@ export default {
 
   },
   created(){
-    
+    this.fetchTopTen()
   }
 }
 </script>
 
 <template>
-  <div v-if="!topten">
-    <h1>Loading Data</h1>  
-  </div>
-  <div v-else>
-    <div v-if="topten.length>0">
-
+<div class="page-container">
+  <div v-if="!topten" class="stat-container">
+    <div class="title-page">
+      <h1>Loading Data</h1>  
     </div>
-    <div v-else>
+  </div>
+  <div v-else class="stat-container">
+    <div v-if="topten.length>0" v-for="(row, i) in topten" class="detail-container">
+      <span class="stat-detail" >{{row.User.username}}</span>
+      <span class="stat-detail" >{{row.rounds}} Rounds</span>
+      <span class="stat-detail" >Level {{row.level}}</span>
+      <span class="stat-detail" >{{row.createdAt}}</span>
+      <hr class="rounded" />
+    </div>    
+    <div class="title-page" v-else>
       <h1>Be the first to reach round 20!</h1>
     </div>
   </div>
+
+</div>
 </template>
 
 <style>

@@ -48,7 +48,7 @@ export default {
     if(this.msg=="home"){
       console.log("This is home page")
       this.type="Home"
-    }else if(this.msg=="my"){
+    }else if(this.msg=="mypost"){
       this.type="My list"
     }
     else{
@@ -146,9 +146,9 @@ export default {
         <h1 v-if="posts.length==0">No Post Yet</h1>
         <CardItem v-for="post in posts" :key="post.id" :post="post" :msg="msg"/>
       </div>
-      <div v-else-if="msg=='my'" class="row justify-content-start">
-        <h1 v-if="favourites.length==0">No Post Yet, Add one</h1>
-        <CardItem v-for="mypost in myposts" :key="mypost.id" :post="mypost.Post" :msg="msg"/>
+      <div v-else-if="msg=='mypost'" class="row justify-content-start">
+        <h1 v-if="posts.length==0">No Post Yet, Add one</h1>
+        <CardItem v-for="post in posts" :key="post.id" :post="post" :msg="msg"/>
       </div>
       <div v-else class="row justify-content-start">
         <h1 v-if="favourites.length==0">No Favourite Yet</h1>

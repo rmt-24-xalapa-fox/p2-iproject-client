@@ -20,7 +20,7 @@ export default {
     ...mapWritableState(useCounterStore, ['isLogin','baseUrl','baseMovies','baseFavourite','movies','favourites'])
   },
   methods:{
-    ...mapActions(useCounterStore, ['checkLogin','populateData','populateFavourite']),
+    ...mapActions(useCounterStore, ['checkLogin','populateData','populateMyData','populateFavourite']),
    
     
   },
@@ -36,6 +36,8 @@ export default {
       console.log("Logged in")
       if(this.path=="favourite"){
         this.populateFavourite();
+      }else if(this.path=="mypost"){
+        this.populateMyData();
       }else{
         this.populateData();
       }

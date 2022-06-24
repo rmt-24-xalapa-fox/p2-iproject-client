@@ -8,39 +8,38 @@ export default {
       "fetchLicensesStore",
       "hitMidTransStore",
       "patchLicenseStore",
+      "deleteLicensesStore",
     ]),
-    async buttonMidtrans(token) {
-      try {
-        await window.snap.pay(token, {
-          onSuccess: function (result) {
-            /* You may add your own implementation here */
-            console.log("payment success!");
-            console.log(result);
-          },
-          onPending: function (result) {
-            /* You may add your own implementation here */
-            console.log("wating your payment!");
-            console.log(result);
-          },
-          onError: function (result) {
-            /* You may add your own implementation here */
-            console.log("payment failed!");
-            console.log(result);
-          },
-          onClose: function () {
-            /* You may add your own implementation here */
-            console.log("you closed the popup without finishing the payment");
-          },
-        });
-      } catch (error) {
-        console.log(error);
-      }
+    buttonMidtrans(token) {
+      window.snap.pay(token, {
+        onSuccess: function (result) {
+          /* You may add your own implementation here */
+          Swal.fire("Success!", "Payment Success", "success");
+        },
+        onPending: function (result) {
+          /* You may add your own implementation here */
+          Swal.fire("Success!", "Payment Success", "success");
+        },
+        onError: function (result) {
+          /* You may add your own implementation here */
+          console.log("payment failed!");
+          console.log(result);
+        },
+        onClose: function () {
+          /* You may add your own implementation here */
+          console.log("you closed the popup without finishing the payment");
+        },
+      });
     },
+
     hitMidTransPage(LicenseId) {
       this.hitMidTransStore(LicenseId)
         .then(() => {
           this.buttonMidtrans(this.tokenMidtrans);
-          this.patchLicenseStore(LicenseId);
+          return this.patchLicenseStore(LicenseId);
+        })
+        .then(() => {
+          this.fetchLicensesStore();
         })
         .catch((err) => {
           console.log(err);
@@ -50,6 +49,34 @@ export default {
             text: `Hit Midtrans`,
           });
         });
+    },
+
+    deleteLicensesPage(QuotaId) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteLicensesStore(QuotaId)
+            .then(() => {
+              Swal.fire("Success!", "Delete license Success", "success");
+              this.fetchLicensesStore();
+            })
+            .catch((err) => {
+              let errMsg = err.response.data.message;
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: `${errMsg}`,
+              });
+            });
+        }
+      });
     },
   },
   computed: {
@@ -85,17 +112,39 @@ export default {
           <td>{{ el.Quotum.date.substring(0, 10) }}</td>
           <td>{{ el.numberOfClimbers }}</td>
           <td>Rp.{{ el.totalPrice }}</td>
-          <td>{{ el.status }}</td>
           <td>
             <button
+              v-if="el.status === 'Completed Payment'"
               type="button"
-              class="btn btn-primary"
-              v-if="el.status === 'Waiting For Payment'"
-              @click.prevent="hitMidTransPage(el.id)"
-              id="pay-button"
+              class="btn btn-success disabled"
             >
-              Payment Online
+              {{ el.status }}
             </button>
+            <button v-else type="button" class="btn btn-warning disabled">
+              {{ el.status }}
+            </button>
+          </td>
+          <td>
+            <div>
+              <button
+                type="button"
+                class="btn btn-primary"
+                v-if="el.status === 'Waiting For Payment'"
+                @click.prevent="hitMidTransPage(el.id)"
+                id="pay-button"
+              >
+                Pay Now!
+              </button>
+            </div>
+            <div v-if="el.status === 'Waiting For Payment'" class="mt-2">
+              <button
+                @click.prevent="deleteLicensesPage(el.id)"
+                type="button"
+                class="btn btn-danger pl-2"
+              >
+                Delete
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>

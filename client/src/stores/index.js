@@ -217,5 +217,20 @@ export const useIndexStore = defineStore({
         }
       });
     },
+
+    deleteLicensesStore: function (QuotaId) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          await axios.delete(this.urlBase + "/licenses/" + QuotaId, {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          });
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
+      });
+    },
   },
 });

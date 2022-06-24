@@ -91,7 +91,7 @@ export const useMainStore = defineStore({
       this.rounds++
       this.ditto.active = i+1
       this.roundlog.push(`[ Ditto ] transform into [ ${this.ditto.transforms[i+1].name} ]`)
-      console.log(`[ Ditto ] transform into [ ${this.ditto.transforms[i+1].name} ]`);
+      // console.log(`[ Ditto ] transform into [ ${this.ditto.transforms[i+1].name} ]`);
       this.runStatus = 'combat'
       // console.log(this.ditto.transforms[this.ditto.active].moves);
     },
@@ -111,16 +111,16 @@ export const useMainStore = defineStore({
 
     calcDmg(move, levelatk, attacker, leveldef, defender){      
       // dmg = (0.5 * power * (atk/deff) * mod) + 1
-      console.log("ATK atccker", attacker.attack , levelatk);
-      console.log("DEF defender", defender.defense , leveldef);
+      // console.log("ATK atccker", attacker.attack , levelatk);
+      // console.log("DEF defender", defender.defense , leveldef);
       const reduc = (((attacker.attack+15) * levelatk) / ((defender.defense+15) * leveldef) )
-      console.log("REDUCTION",reduc);
+      // console.log("REDUCTION",reduc);
       let mod = 1
       defender.type.forEach( e => {
         mod *= this.typematchup[move.type][e]
-        console.log("MOD", move.type, e, mod);
+        // console.log("MOD", move.type, e, mod);
       });
-      console.log("MOD Final", move.type, defender.type, mod);
+      // console.log("MOD Final", move.type, defender.type, mod);
       if(mod>1){
         this.roundlog.push(`It's super effective!`)
       } 
@@ -128,7 +128,7 @@ export const useMainStore = defineStore({
         this.roundlog.push(`It's not very effective...`)
       }
       const dmg = Math.floor( 0.5 * move.power * reduc * mod ) + 1
-      console.log("YEP DMG", dmg);
+      // console.log("YEP DMG", dmg);
       return dmg
     },
 
@@ -145,9 +145,9 @@ export const useMainStore = defineStore({
         enemylvl, this.enemy
       )
       // check enemy hp      
-      console.log("HP BEFORE", this.enemy.currenthp);
+      // console.log("HP BEFORE", this.enemy.currenthp);
       this.enemy.currenthp -= dmg1
-      console.log("HP AFTER", this.enemy.currenthp);
+      // console.log("HP AFTER", this.enemy.currenthp);
 
       setTimeout(() => {}, 1000);
 
@@ -254,9 +254,9 @@ export const useMainStore = defineStore({
 
       // cehck hp
       this.ditto.currenthp = Math.ceil( this.ditto.hp * this.getMaxHp * 0.01 )
-      console.log("HP BEFORE", this.enemy.currenthp);
+      // console.log("HP BEFORE", this.enemy.currenthp);
       this.ditto.currenthp -= dmg2
-      console.log("HP AFTER", this.enemy.currenthp);
+      // console.log("HP AFTER", this.enemy.currenthp);
 
       this.ditto.hp = Math.ceil((this.ditto.currenthp) * 100 / this.getMaxHp)
 
@@ -311,7 +311,7 @@ export const useMainStore = defineStore({
         this.roundlog.push(`[ ${item.name} ] Used! Restored ${item.heal} HP!`)
         this.inventory[key][name].stock--
         
-        console.log(`[ ${item.name} ] Used! Restored ${item.heal} HP!`);
+        // console.log(`[ ${item.name} ] Used! Restored ${item.heal} HP!`);
 
       }
 
@@ -323,7 +323,7 @@ export const useMainStore = defineStore({
             this.roundlog.push(`[ ${name} ] Used!`)
             this.inventory[key][name].stock--
   
-            console.log(`[ ${name} ] Used!`)
+            // console.log(`[ ${name} ] Used!`)
           } else{
             his.itemlog = `[ ${name} ] Cannot be used now!`
           }

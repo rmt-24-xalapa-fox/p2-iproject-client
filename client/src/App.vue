@@ -1,6 +1,7 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 import NavBar from '@/components/Navbar.vue'
+import XenditModal from '@/components/XenditModal.vue'
 import { mapWritableState } from 'pinia'
 import { useCounterStore } from '@/stores/counter'
 
@@ -8,10 +9,11 @@ export default {
   components: {
     RouterLink,
     RouterView,
-    NavBar
+    NavBar,
+    XenditModal
   },
   computed: {
-    ...mapWritableState(useCounterStore, ['errorHandler','linkXendit'])
+    ...mapWritableState(useCounterStore, ['errorHandler','linkXendit','showModal'])
   },
   watch:{
     errorHandler(newValue,oldValue){
@@ -50,6 +52,7 @@ export default {
   </header>
   <body>
   <router-view :key="$route.fullPath"></router-view>
+  <XenditModal :show="showModal" @close="showModal = false" />
     <div id="snackbar">Some text some message..</div>
     <div class="modal-background"></div>
                     <div class="modal-popup">

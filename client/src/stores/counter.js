@@ -11,12 +11,13 @@ export const useCounterStore = defineStore({
     comments:[],
     linkXendit:'',
     loggedinEmail: "Guest",
-    baseUrl: "http://localhost:3000/",
-    //baseUrl: "https://ipserver-insta-vue.herokuapp.com/",    
+    //baseUrl: "http://localhost:3000/",
+    baseUrl: "https://ipserver-insta-vue.herokuapp.com/",    
     baseLogin: "users/login",
     baseLoginGoogle: "users/loginGoogle",
     baseRegister: "users/register",
     basePost: "post",
+    baseMyPost:"mypost",
     baseFollowing: "users/following",
     baseFollow: "users/follow",
     baseCoinPrice: "users/coinPrice",
@@ -27,6 +28,7 @@ export const useCounterStore = defineStore({
     basePromotePost:"promotePost",
     baseFavourite: "favourite",
     isLogin: false,
+    showModal: false,
     errorHandler: "",
     totalPages:0,
     currentPages:0,
@@ -82,6 +84,25 @@ export const useCounterStore = defineStore({
         })
       
 
+    },
+    populateMyData() {
+      // if (localStorage.getItem("access_token")) {
+        console.log("Logged in")
+        console.log("Pages: "+this.currentPages);
+        let tempThis = this;
+        this.posts = [];
+        axios.get(this.baseUrl + "" + this.baseMyPost , { headers: { access_token: localStorage.getItem("access_token") } }).then((response) => {
+          console.log(response.data);
+          this.totalPages=response.data.totalPages;
+          response.data.Posts.forEach(element => {
+            tempThis.posts.push(element);
+          });
+          console.log(tempThis.posts);
+        }).catch((error) => {
+
+          console.log(error);
+          this.setError(error.response.data.message)
+        })
     },
     populateFavourite() {
       if (localStorage.getItem("access_token")) {
@@ -177,6 +198,7 @@ export const useCounterStore = defineStore({
         console.log(response.data);
         tempThis.linkXendit=response.data;
         tempThis.setError("Link for payment "+response.data.replace("https://checkout-staging.xendit.co/web/",""));
+        tempThis.showModal=true;
       // axios.post(this.baseUrl + this.basegetLink+"/"+id, { headers: { access_token: localStorage.getItem("access_token") } }).then((response) => {
       //   console.log(response.data);
       //   console.log(response.data.invoice_url);
@@ -188,8 +210,8 @@ export const useCounterStore = defineStore({
     },
     finishBuyCoin(){
       let tempThis=this;
-      console.log(this.baseUrl + this.baseBuyCoin+linkXendit.replace("https://checkout-staging.xendit.co/web/",""));
-      axios.post(this.baseUrl + this.baseBuyCoin,{invoice_link:linkXendit.replace("https://checkout-staging.xendit.co/web/","")}, { headers: { access_token: localStorage.getItem("access_token") } }).then((response) => {
+      console.log(this.baseUrl + this.baseBuyCoin+this.linkXendit.replace("https://checkout-staging.xendit.co/web/",""));
+      axios.post(this.baseUrl + this.baseBuyCoin,{invoice_link:this.linkXendit.replace("https://checkout-staging.xendit.co/web/","")}, { headers: { access_token: localStorage.getItem("access_token") } }).then((response) => {
         console.log(response.data);
         tempThis.linkXendit=response.data;
         tempThis.setError("Link for payment "+response.data);

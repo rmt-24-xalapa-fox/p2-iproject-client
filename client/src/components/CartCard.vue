@@ -31,7 +31,8 @@ export default {
                 <p class="card-text" style="font-size:12px">Qty: {{ data.qty }} </p>
                 <p class="card-text" style="color:gray">{{ formatCurrency(data.paidPrice) }}</p>
             </div>
-            <button class="btn btn-primary" type="button" @click.prevent="buyHandler(data.id, data.name, data.qty)">Pay
+            <button class="btn btn-primary" type="button"
+                @click.prevent="buyHandler(data.ProductId, data.name, data.qty, data.id)">Pay
                 Now</button>
             <button class="btn btn-danger" type="button" @click.prevent="deleteHandler(data.id)">Delete</button>
         </div>

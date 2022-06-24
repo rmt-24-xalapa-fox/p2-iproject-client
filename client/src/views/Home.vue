@@ -18,11 +18,11 @@ export default {
 };
 </script>
 <template>
-    <div style="background-color:darkslategrey; height: 100vh;">
+    <div style="background-color:darkslategrey; padding: auto;">
         <div>
             <Header />
         </div>
-        <div class="container row">
+        <div class="container row" style="margin-left:100px;">
             <Card v-for="data in dataProduct" :key="id" :data="data" />
         </div>
     </div>

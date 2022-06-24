@@ -21,10 +21,9 @@ export const useCounterStore = defineStore({
 
     async login(email, password) {
       try {
-        console.log(email, "dariiiii store");
         const userLog = await axios({
           method: "POST",
-          url: "https://muvistore.herokuapp.com/customer/login",
+          url: "http://localhost:3000/customer/login",
           data: {
             email: email,
             password: password,
@@ -32,7 +31,6 @@ export const useCounterStore = defineStore({
         });
         localStorage.setItem("access_token", userLog.data.access_token);
         this.isLogin = true;
-        console.log(userLog);
         Swal.fire({
           icon: 'success',
           title: 'Success Login',
@@ -41,7 +39,6 @@ export const useCounterStore = defineStore({
         });
         this.router.push("/");
       } catch (err) {
-        console.log(err);
         swal.fire({
           icon: "error",
           title: "Oops...",
@@ -52,10 +49,9 @@ export const useCounterStore = defineStore({
     },
     async regHandler(name, username, email, password, phoneNumber, address) {
       try {
-        console.log(username, email, password, phoneNumber, address);
         const newCust = await axios({
           method: "POST",
-          url: "https://muvistore.herokuapp.com/customer/register",
+          url: "http://localhost:3000/customer/register",
           data: {
             name,
             username,
@@ -73,20 +69,6 @@ export const useCounterStore = defineStore({
         });
         this.router.push("/login");
       } catch (err) {
-        console.log(err);
-      }
-    },
-
-    async getData() {
-      try {
-        const allProduct = await axios({
-          method: "GET",
-          url: "https://muvistore.herokuapp.com/customer/product",
-        });
-        console.log(allProduct);
-        this.dataProduct = allProduct.data.allProduct;
-      } catch (err) {
-        console.log(err);
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -95,12 +77,27 @@ export const useCounterStore = defineStore({
       }
     },
 
-    async buyHandler(id, name, qty) {
+    async getData() {
       try {
-        console.log(id, name, qty);
+        const allProduct = await axios({
+          method: "GET",
+          url: "http://localhost:3000/customer/product",
+        });
+        this.dataProduct = allProduct.data.allProduct;
+      } catch (err) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err
+        });
+      }
+    },
+
+    async buyHandler(id, name, qty, cartId) {
+      try {
         const forPaid = await axios({
           method: "PATCH",
-          url: `https://muvistore.herokuapp.com/customer/cart/${id}`,
+          url: `http://localhost:3000/customer/cart/${id}`,
           data: {
             id,
             name,
@@ -127,27 +124,35 @@ export const useCounterStore = defineStore({
           cancelButtonAriaLabel: 'Thumbs down'
         });
 
+        this.deleteHandler(cartId);
+        this.getAllCart();
+
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err
+        });
       }
     },
 
     async detailHandler(id) {
       try {
-        console.log(id);
         const detailProduct = await axios({
           method: "GET",
-          url: `https://muvistore.herokuapp.com/customer/detail/${id}`,
+          url: `http://localhost:3000/customer/detail/${id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
         });
         this.productDetail = detailProduct.data;
-        // console.log(this.productDetail);
-        // this.router.push("/detail");
 
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err
+        });
       }
     },
 
@@ -155,7 +160,7 @@ export const useCounterStore = defineStore({
       try {
         const addChart = await axios({
           method: "POST",
-          url: `https://muvistore.herokuapp.com/customer/cart/${id}`,
+          url: `http://localhost:3000/customer/cart/${id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
@@ -172,7 +177,11 @@ export const useCounterStore = defineStore({
           timer: 1500,
         });
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err
+        });
       }
     },
 
@@ -180,32 +189,38 @@ export const useCounterStore = defineStore({
       try {
         const cartData = await axios({
           method: "GET",
-          url: 'https://muvistore.herokuapp.com/customer/cart',
+          url: 'http://localhost:3000/customer/cart',
           headers: {
             access_token: localStorage.getItem("access_token")
           },
         });
-        console.log(cartData);
         this.dataCart = cartData.data;
 
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err
+        });
       }
     },
 
     async deleteHandler(id) {
       try {
-        console.log(id);
         const deleted = await axios({
           method: "DELETE",
-          url: `https://muvistore.herokuapp.com/customer/cart/${+id}`,
+          url: `http://localhost:3000/customer/cart/${+id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           }
         });
         this.getAllCart();
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err
+        });
       }
     },
 
@@ -214,15 +229,18 @@ export const useCounterStore = defineStore({
         let query = "obat herbal";
         const obatHerbal = await axios({
           method: "GET",
-          url: `https://muvistore.herokuapp.com/api3rdParty/youtubeList?query=${query}`,
+          url: `http://localhost:3000/api3rdParty/youtube?query=${query}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
         });
         this.youtubeUrl = obatHerbal.data;
-        console.log(this.youtubeUrl);
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err
+        });
       }
     }
   }

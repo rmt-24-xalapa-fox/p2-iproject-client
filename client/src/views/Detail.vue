@@ -2,6 +2,7 @@
 import { mapState } from 'pinia';
 import { useCounterStore } from "../stores/counter";
 import { mapActions } from 'pinia';
+import { mapWritableState } from 'pinia';
 export default {
     name: "Detail",
     data() {
@@ -13,7 +14,8 @@ export default {
     },
 
     computed: {
-        ...mapState(useCounterStore, ['productDetail', 'youtubeUrl'])
+        ...mapState(useCounterStore, ['productDetail', 'youtubeUrl']),
+        ...mapWritableState(useCounterStore, ['isLogin'])
     },
     methods: {
         formatCurrency(num) {
@@ -24,7 +26,6 @@ export default {
     created() {
         this.detailHandler(this.$route.params.id);
         this.fetchYoutube();
-        console.log(this.$route.params.id);
     }
 };
 </script>
@@ -33,7 +34,7 @@ export default {
     <div class="container bootdey">
         <div class="row">
             <div class="col-6">
-                <section class="panel">
+                <div class="panel">
                     <div class="panel-body">
                         <div class="col-md-6">
                             <div class="pro-img-details">
@@ -51,25 +52,27 @@ export default {
                             </p>
                             <div class="m-bot15"> <strong>Price : </strong><span class="pro-price">
                                     {{ formatCurrency(productDetail.price) }} </span></div>
-                            <div class="form-group">
+                            <div class="form-group" v-if="isLogin">
                                 <label>Quantity</label>
-                                <input type="quantiy" placeholder="1" class="form-control quantity" v-model="qty">
+                                <input v-if="isLogin" type="quantiy" placeholder="1" class="form-control quantity"
+                                    v-model="qty">
                             </div>
                             <p>
                                 <button class="btn btn-round btn-danger" type="button"
-                                    @click.prevent="addToChart(productDetail.id, productDetail.name, qty)"><i
-                                        class="fa fa-shopping-cart"></i>
+                                    @click.prevent="addToChart(productDetail.id, productDetail.name, qty)"
+                                    v-if="isLogin"><i class="fa fa-shopping-cart"></i>
                                     Add to Cart</button>
                             </p>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
             <div class="col-6">
                 <iframe width="420" height="345" :src="youtubeUrl">
                 </iframe>
             </div>
         </div>
+        <h5 style="color:red; align-content: center;" v-if="!isLogin"> Login for order!</h5>
     </div>
 
 </template>
@@ -77,7 +80,7 @@ export default {
 <style>
 body {
     margin-top: 20px;
-    background: #eee;
+    background: darkslategrey;
 }
 
 /*panel*/

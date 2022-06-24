@@ -3,7 +3,7 @@ import axios from "axios";
 export const useIndexStore = defineStore({
   id: "counter",
   state: () => ({
-    urlBase: "http://localhost:3000",
+    urlBase: "https://individual-project-simaksi.herokuapp.com",
     isLogin: false,
     weather: [],
     mountains: [],

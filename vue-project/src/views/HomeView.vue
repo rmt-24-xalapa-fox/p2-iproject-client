@@ -1,9 +1,9 @@
 <script>
-import { mapActions, mapState } from "pinia";
 import cardPackageVue from "../components/cardPackage.vue";
 import headerVue from "../components/header.vue";
 import navbarVue from "../components/navbar.vue";
-import { useCounterStore } from "../stores/counter";
+import CategoryToursVue from "../components/CategoryTours.vue";
+import footerVue from "../components/footer.vue";
 
 export default {
   data() {
@@ -16,6 +16,8 @@ export default {
     navbarVue,
     headerVue,
     cardPackageVue,
+    CategoryToursVue,
+    footerVue,
   },
 };
 </script>
@@ -24,6 +26,8 @@ export default {
   <navbarVue />
   <headerVue />
   <cardPackageVue />
+  <CategoryToursVue />
+  <footerVue />
 </template>
 
 <style></style>

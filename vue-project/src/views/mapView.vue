@@ -16,16 +16,8 @@ export default {
 
 <template>
   <navbarVue />
-  <div
-    style="
-      width: 700px;
-      height: 500px;
-      overflow: hidden;
-      margin: auto;
-      margin-top: 5%;
-    "
-  >
-    <img :src="oneData.imageUrl" alt="" style="margin: auto" />
+  <div class="ontainer" style="margin-top: 5%">
+    <img :src="oneData.imageUrl" alt="" style="width: 100%; height: 600px" />
   </div>
   <div class="d-flex container" style="margin: 5%">
     <div class="col-6">

@@ -19,6 +19,7 @@ export default {
     async callback(response) {
       console.log(response.credential);
       let res = await this.googleSign(response.credential);
+      console.log(res);
       if (res) {
         this.$router.push("/");
         this.$swal({
@@ -50,7 +51,7 @@ export default {
   <div
     class="d-flex rounded shadow"
     style="
-      background-color: #b7e5dd;
+      background-color: #0099ff;
       width: 60%;
       margin: auto;
       margin-top: 5%;
@@ -112,7 +113,9 @@ export default {
           </div>
           <div class="form-group d-md-flex">
             <p>Don't have account yet ?</p>
-            <RouterLink to="/register" href=""> sign-up here</RouterLink>
+            <RouterLink to="/register" href="" style="color: white">
+              sign-up here</RouterLink
+            >
           </div>
         </form>
         <div style="text-align: center">

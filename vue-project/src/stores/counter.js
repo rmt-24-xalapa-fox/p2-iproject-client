@@ -9,6 +9,8 @@ export const useCounterStore = defineStore({
     dataTour: [],
     oneData: [],
     baseUrl: "https://arizal-travel.herokuapp.com/",
+    isLogin: false,
+    data: [],
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -54,17 +56,18 @@ export const useCounterStore = defineStore({
       try {
         let res = await axios({
           method: "POST",
-          url: `${this.baseUrl}/google-sign`,
+          url: `${this.baseUrl}google-sign`,
           data: {
             credential,
           },
         });
 
         localStorage.setItem("access_token", res.data.data.access_token);
-
+        this.isLogin = true;
+        console.log(res);
         return true;
       } catch (err) {
-        console.log(err, "store");
+        console.log(err);
         return false;
       }
     },
@@ -72,13 +75,14 @@ export const useCounterStore = defineStore({
       try {
         let response = await axios({
           method: "POST",
-          url: this.baseUrl + "/login",
+          url: this.baseUrl + "login",
           data: {
             email,
             password,
           },
         });
         localStorage.setItem("access_token", response.data.access_token);
+        this.isLogin = true;
         return true;
       } catch (err) {
         return false;
@@ -95,9 +99,9 @@ export const useCounterStore = defineStore({
     async registerHandler(obj) {
       try {
         const { username, email, password, phoneNumber, address } = obj;
-        await axios({
+        let response = await axios({
           method: "POST",
-          url: this.baseUrl + "/register",
+          url: this.baseUrl + "register",
           data: {
             username,
             email,
@@ -106,6 +110,22 @@ export const useCounterStore = defineStore({
             address,
           },
         });
+        console.log(response);
+        return true;
+      } catch (err) {
+        console.log(err);
+        return false;
+      }
+    },
+    async categories(value) {
+      try {
+        console.log(value);
+        let res = await axios({
+          method: "GET",
+          url: this.baseUrl + `spesifictour?q=${value}`,
+        });
+        console.log(res.data.response);
+        this.data = res.data.response;
         return true;
       } catch (err) {
         console.log(err);

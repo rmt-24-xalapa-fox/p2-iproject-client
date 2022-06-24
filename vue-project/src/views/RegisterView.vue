@@ -23,6 +23,7 @@ export default {
     ...mapActions(useCounterStore, ["registerHandler"]),
     async register() {
       let res = await this.registerHandler(this.dataRegister);
+      console.log(res);
       if (res) {
         this.$router.push("/login");
         this.$swal({
@@ -43,10 +44,14 @@ export default {
 <template>
   <div
     class="shadow rounded"
-    style="width: 50%; margin: auto; padding: 3%; background-color: #b7e5dd"
+    style="width: 50%; margin: auto; padding: 3%; background-color: #0099ff"
   >
     <RouterLink to="/login" href="">
-      <img src="../assets/back(2).png" alt="" />
+      <img
+        src="../assets/back(2).png"
+        alt=""
+        style="width: 30px; height: 30px"
+      />
     </RouterLink>
     <div style="width: 100px; margin: auto">
       <img

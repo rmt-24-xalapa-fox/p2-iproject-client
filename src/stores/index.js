@@ -208,7 +208,17 @@ export const useMainStore = defineStore({
         this.enemies = []
         // this.enemy = false
         this.runStatus = 'end'
-        this.getPokemons()
+        if(this.rounds<20){
+          this.getPokemons()
+        } 
+        else if(this.rounds%20===0){
+          // BOSS MODE guarantee every 20 rounds
+          this.getBossEnemies()
+        } 
+        else {
+          // infinite time
+          this.getRandEnemies()
+        }
         // get new pokemon enemy
         return
       }
@@ -404,7 +414,7 @@ export const useMainStore = defineStore({
         // const rope = recv.items.find(i => i.name==='Escape Rope')
         // rope.stock = 1
         this.inventory = {
-          Medicine: { 'Potion': { stock: 5 }, 'Max Potion': { stock: 1} },
+          Medicine: { 'Potion': { stock: 5 }},
           Berries: {},
           Valuable: {},
           Utils: { 'Escape Rope': { stock: 1} },
@@ -424,8 +434,18 @@ export const useMainStore = defineStore({
       }
     },
 
-    getEnemies(){
+    async getRandEnemies(){
+      // time for all shuffle
+      try {        
+        const { data: recv } = await axios({
+          method: 'get',
+          url: this.getPath('/battle/random'),
+        });
 
+        this.enemies = recv
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     async getPokemons(){
@@ -458,8 +478,18 @@ export const useMainStore = defineStore({
       }
     },
 
-    getPokemonById(id){
+    async getBossEnemies(){
+      // time for EPIC BOSS BATTLE
+      try {        
+        const { data: recv } = await axios({
+          method: 'get',
+          url: this.getPath('/battle/boss'),
+        });
 
+        this.enemies = recv
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     setTypes(p1, p2){

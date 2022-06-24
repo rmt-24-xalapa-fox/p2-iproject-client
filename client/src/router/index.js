@@ -57,8 +57,18 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   let isLogin = localStorage.getItem("access_token");
   if (!isLogin && to.name === "add") {
+    Swal.fire({
+      icon: "error",
+      title: `Oops...`,
+      text: `Please login to access this feature`,
+    });
     return { name: "home" };
   } else if (!isLogin && to.name === "build") {
+    Swal.fire({
+      icon: "error",
+      title: `Oops...`,
+      text: `Please login to access this feature`,
+    });
     return { name: "home" };
   }
   return true;

@@ -15,13 +15,15 @@ export default {
 };
 </script>
 <template>
-  <section class="py-5" style="background-color: rgb(192, 131, 130)">
+  <section class="py-md-5" style="background-color: rgb(192, 131, 130)">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-4">
           <div class="row" v-for="(yt, i) in ytApi" :key="i" :yt="yt">
             <div class="col-md-6">
-              <img :src="yt.snippet.thumbnails.medium.url" class="rounded-circle img-thumbnail" width="200" />
+              <a href="https://www.youtube.com/c/YanshenLim" target="_blank" rel="noopener noreferrer">
+                <img :src="yt.snippet.thumbnails.medium.url" class="rounded-circle img-thumbnail" width="200" />
+              </a>
             </div>
             <div class="col-md-6">
               <h3>{{ yt.snippet.title }}</h3>

@@ -7,7 +7,7 @@ export const useMainStore = defineStore({
     pokedex: [], // id/tag of pokemon encounter
     inventory: {
       Medicine: {},
-      Berries: {},
+      Berry: {},
       Valuable: {},
       Utils: {},
     }, 
@@ -36,6 +36,7 @@ export const useMainStore = defineStore({
     runlog: [],
     roundlog: [],
     loots: [],
+    bonusstage: false
   }),
   getters: {
     getMaxHp(){
@@ -144,7 +145,9 @@ export const useMainStore = defineStore({
         enemylvl, this.enemy
       )
       // check enemy hp      
+      console.log("HP BEFORE", this.enemy.currenthp);
       this.enemy.currenthp -= dmg1
+      console.log("HP AFTER", this.enemy.currenthp);
 
       setTimeout(() => {}, 1000);
 
@@ -186,20 +189,28 @@ export const useMainStore = defineStore({
 
         if(this.items[loot]){
           const val = Math.floor(Math.random() * this.items[loot].length)
-          if(!this.inventory[loot][this.items[loot][val].name]){
-            this.inventory[loot][this.items[loot][val].name] = { stock: 0 }
-          }
           this.inventory[loot][this.items[loot][val].name].stock++
           // this.runlog.push(`Obtained [ ${this.inventory[loot][this.items[loot][val].name]} ] `)
           this.roundlog.push(`Obtained [ ${this.items[loot][val].name} ] `)
           this.loots.push(`Obtained [ ${this.items[loot][val].name} ] `)
         }
 
+        // bonus from rounds
+        if(this.rounds%20===0){
+          this.inventory["Utils"]['Rare Candy'].stock++
+        }
+        else if(this.rounds%5===0){
+          this.inventory["Medicine"]['Super Potion'].stock++
+        }
+        else if(this.rounds%3===0){          
+          this.inventory["Berry"][this.items.Berry[Math.floor(Math.random()*this.items.Berry.length)].name].stock++
+        }
+
         // incr money
         this.money += this.rounds < 20 ? 200 : 150
         // this.runlog.push(`Obtained money + ${ this.rounds < 20 ? 200 : 150 } `)
-        this.roundlog.push(`Obtained money +${ this.rounds < 20 ? 200 : 150 } `)
-        this.loots.push(`Obtained money +${ this.rounds < 20 ? 200 : 150 } `)
+        this.roundlog.push(`Obtained ${ this.rounds < 20 ? 200 : 150 } coins.`)
+        this.loots.push(`Obtained ${ this.rounds < 20 ? 200 : 150 } coins.`)
 
         // this.runlog.push(this.roundlog)
         // this.roundlog = []
@@ -208,6 +219,8 @@ export const useMainStore = defineStore({
         this.enemies = []
         // this.enemy = false
         this.runStatus = 'end'
+
+        // get next enemies
         if(this.rounds<20){
           this.getPokemons()
         } 
@@ -219,7 +232,10 @@ export const useMainStore = defineStore({
           // infinite time
           this.getRandEnemies()
         }
-        // get new pokemon enemy
+
+        // refresh every round
+        this.bonusstage = true
+        
         return
       }
       // enemy attack
@@ -262,7 +278,7 @@ export const useMainStore = defineStore({
     useInventItem(key, name){      
       const item = this.items[key].find( itm => itm.name === name )
 
-      if(key==="Berries" || key==="Medicine"){
+      if(key==="Berry" || key==="Medicine"){
         if(this.ditto.hp===100){
           this.itemlog = "Already full HP!";
           return
@@ -288,6 +304,8 @@ export const useMainStore = defineStore({
           this.ditto.hp = hpafter
         }
 
+        const heal = item.heal.includes("%") ? Math.ceil(Number(item.heal.replace('%',''))*this.getMaxHp) : item.heal
+
         this.itemlog = `[ ${item.name} ] Used! Restored ${item.heal} HP!`
         // this.runlog.push(`[ ${item.name} ] Used! Restored ${item.heal} HP!`)
         this.roundlog.push(`[ ${item.name} ] Used! Restored ${item.heal} HP!`)
@@ -298,20 +316,24 @@ export const useMainStore = defineStore({
       }
 
       if(name==='Rare Candy'){
-        if(this.runStatus==='end'){
-          this.ditto.level++
-          this.itemlog = `[ ${name} ] Used!`
-          this.roundlog.push(`[ ${name} ] Used!`)
-          this.inventory[key][name].stock--
-
-          console.log(`[ ${name} ] Used!`)
+        if(this.ditto.level<100){
+          if(this.runStatus==='end' || this.runStatus==='start'){
+            this.ditto.level++
+            this.itemlog = `[ ${name} ] Used!`
+            this.roundlog.push(`[ ${name} ] Used!`)
+            this.inventory[key][name].stock--
+  
+            console.log(`[ ${name} ] Used!`)
+          } else{
+            his.itemlog = `[ ${name} ] Cannot be used now!`
+          }
         }
         else {
-          this.itemlog = `[ ${name} ] Cannot be used now!`
+          this.itemlog = `[ Ditto ] Already at max level!`
         }
       }
 
-      if(invent.name==='Escape Rope'){
+      if(name==='Escape Rope'){
         if(this.runStatus!=='combat'){
           this.itemlog = `[ Escape Rope ] Cannot be used now!`
           return
@@ -327,6 +349,65 @@ export const useMainStore = defineStore({
         this.roundlog.push(`[ ${name} ] Used!`)
         this.inventory[key][idx].stock--
       }
+
+    },
+
+    traderHandler(){
+      if( this.money >= 500){
+        this.money -= 500
+
+        const num1 = Math.random()
+        let bonus
+
+        if(num1<0.45){
+          bonus = 'Valuable'
+        } else if (num1<0.9) {
+          bonus = 'Medicine'
+        } else{
+          bonus = 'Utils'
+        }
+
+        const num2 = Math.floor( Math.random() * this.items[bonus].length )
+        const item = this.items[bonus][num2].name
+        this.inventory[bonus][item].stock++
+
+        this.itemlog = `You received [ ${item} ] from [ Trader Meowth ] !`
+        this.roundlog.push(`You received [ ${item} ] from [ Trader Meowth ] !`)
+      }
+      else {
+        this.itemlog = `[ Trader Meowth ] is displeased with your action and leaves!`
+        this.roundlog.push(`[ Trader Meowth ] is displeased with your action and leaves!`)
+      }
+
+      this.bonusstage = false
+    },
+
+    bonfireHandler(){
+      // heal
+      this.ditto.hp = 100
+      this.itemlog = `( Resting at Bonfire replenish your Motivation )`
+      this.roundlog.push(`( Resting at Bonfire replenish your Motivation )`)
+      // sell all valuables
+      for (const key in this.inventory.Valuable) {
+        if(this.inventory.Valuable[key].stock > 0){
+          const price = this.items.Valuable.find(i => i.name===key).price
+          const sell = this.inventory.Valuable[key].stock * price
+          this.money += sell
+          this.roundlog.push(`Burned [ ${key} ] x${this.inventory.Valuable[key].stock} and recieved ${sell} coins`)
+          this.inventory.Valuable[key].stock = 0
+        }
+      }
+
+      // and candy if max lvl
+      if(this.ditto.level===100 && this.inventory.Utils['Rare Candy'].stock > 0){
+        const price = this.items.Utils.find(i => i.name==='Rare Candy').price
+        const sell = this.inventory.Utils['Rare Candy'].stock * price
+        this.money += sell
+        this.roundlog.push(`Burned [ Rare Candy ] x${this.inventory.Utils['Rare Candy'].stock} and recieved ${sell} coins`)
+        this.inventory.Utils['Rare Candy'].stock = 0
+      }
+
+      this.bonusstage = false
 
     },
 
@@ -353,15 +434,22 @@ export const useMainStore = defineStore({
       const access_token = localStorage.getItem('access_token')
       if(!access_token) return
       try {
+        // const data = {
+        //   newrun:this.newrun,
+        //   rounds:this.rounds,
+        //   hp:this.ditto.hp,
+        //   level:this.ditto.level,
+        //   money:this.money,
+        //   transforms:JSON.stringify(this.transforms),          
+        //   map:JSON.stringify(this.maps),
+        //   inventory:this.inventory,
+        // }
+
         const data = {
-          newrun:this.newrun,
           rounds:this.rounds,
-          hp:this.ditto.hp,
           level:this.ditto.level,
           money:this.money,
-          transforms:JSON.stringify(this.transforms),          
-          map:JSON.stringify(this.maps),
-          inventory:this.inventory,
+          map:JSON.stringify(this.runlog)
         }
 
         await axios.post(this.getPath("/run/save"), data, {
@@ -414,11 +502,20 @@ export const useMainStore = defineStore({
         // const rope = recv.items.find(i => i.name==='Escape Rope')
         // rope.stock = 1
         this.inventory = {
-          Medicine: { 'Potion': { stock: 5 }},
-          Berries: {},
+          Medicine: {},
+          Berry: {},
           Valuable: {},
-          Utils: { 'Escape Rope': { stock: 1} },
+          Utils: {},
         }
+
+        for (const key in this.items) {
+          this.items[key].forEach(itm => {
+            this.inventory[key][itm.name] = { stock: 0 , img:itm.img }
+          });
+        }
+
+        this.inventory.Medicine['Potion'].stock = 5
+        this.inventory.Utils['Escape Rope'].stock = 1
 
       } catch (error) {
         console.log(error);

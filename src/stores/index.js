@@ -433,6 +433,7 @@ export const useMainStore = defineStore({
     async saveRun(){
       const access_token = localStorage.getItem('access_token')
       if(!access_token) return
+      if(this.rounds<21) return
       try {
         // const data = {
         //   newrun:this.newrun,
@@ -452,7 +453,7 @@ export const useMainStore = defineStore({
           map:JSON.stringify(this.runlog)
         }
 
-        await axios.post(this.getPath("/run/save"), data, {
+        await axios.post(this.getPath("/stats/run/save"), data, {
           headers: { access_token }
         });
 

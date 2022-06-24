@@ -434,15 +434,22 @@ export const useMainStore = defineStore({
       const access_token = localStorage.getItem('access_token')
       if(!access_token) return
       try {
+        // const data = {
+        //   newrun:this.newrun,
+        //   rounds:this.rounds,
+        //   hp:this.ditto.hp,
+        //   level:this.ditto.level,
+        //   money:this.money,
+        //   transforms:JSON.stringify(this.transforms),          
+        //   map:JSON.stringify(this.maps),
+        //   inventory:this.inventory,
+        // }
+
         const data = {
-          newrun:this.newrun,
           rounds:this.rounds,
-          hp:this.ditto.hp,
           level:this.ditto.level,
           money:this.money,
-          transforms:JSON.stringify(this.transforms),          
-          map:JSON.stringify(this.maps),
-          inventory:this.inventory,
+          map:JSON.stringify(this.runlog)
         }
 
         await axios.post(this.getPath("/run/save"), data, {

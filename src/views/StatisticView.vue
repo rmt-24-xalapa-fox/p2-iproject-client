@@ -16,7 +16,7 @@ export default {
 
   },
   computed:{
-    ...mapState(useMainStore, ["runlog", "runStatus"]),
+    ...mapState(useMainStore, ["runlog", "runStatus", "roundlog"]),
 
   },
   created(){
@@ -32,6 +32,11 @@ export default {
     </div>
     <!-- stat run here -->
     <div class="stat-container">
+      <div v-if="roundlog.length>0" class="detail-container">
+        <span class="stat-detail" style="font-weight: bold;">This Round</span>
+        <span class="stat-detail" v-for="detail in roundlog">{{detail}}</span>
+        <hr class="rounded" />
+      </div>
       <div v-for="(log, i) in runlog" class="detail-container">
         <span class="stat-detail" style="font-weight: bold;">Round {{i+1}}</span>
         <span class="stat-detail" v-for="detail in log">{{detail}}</span>

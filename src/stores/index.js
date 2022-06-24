@@ -145,7 +145,9 @@ export const useMainStore = defineStore({
         enemylvl, this.enemy
       )
       // check enemy hp      
+      console.log("HP BEFORE", this.enemy.currenthp);
       this.enemy.currenthp -= dmg1
+      console.log("HP AFTER", this.enemy.currenthp);
 
       setTimeout(() => {}, 1000);
 
@@ -302,6 +304,8 @@ export const useMainStore = defineStore({
           this.ditto.hp = hpafter
         }
 
+        const heal = item.heal.includes("%") ? Math.ceil(Number(item.heal.replace('%',''))*this.getMaxHp) : item.heal
+
         this.itemlog = `[ ${item.name} ] Used! Restored ${item.heal} HP!`
         // this.runlog.push(`[ ${item.name} ] Used! Restored ${item.heal} HP!`)
         this.roundlog.push(`[ ${item.name} ] Used! Restored ${item.heal} HP!`)
@@ -365,7 +369,7 @@ export const useMainStore = defineStore({
 
         const num2 = Math.floor( Math.random() * this.items[bonus].length )
         const item = this.items[bonus][num2].name
-        this.inventory[bonus][item]++
+        this.inventory[bonus][item].stock++
 
         this.itemlog = `You received [ ${item} ] from [ Trader Meowth ] !`
         this.roundlog.push(`You received [ ${item} ] from [ Trader Meowth ] !`)

@@ -68,8 +68,8 @@ export const useMainStore = defineStore({
 
   actions: {
     getPath(path){
-      const root = 'http://localhost:3000'
-      // const root = 'https://pokemon-ditto-roguelike.herokuapp.com'
+      // const root = 'http://localhost:3000'
+      const root = 'https://pokemon-ditto-roguelike.herokuapp.com'
       return root+path
     },
 

@@ -13,12 +13,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useMainStore, ["newgamehandler"]),
+    ...mapActions(useMainStore, ["newgamehandler", "contgamehandler"]),
 
 
   },
   computed:{
+    ...mapState(useMainStore, ["runStatus", "roundlog"]),
+
     isLoadAvail(){
+      if(this.runStatus==='finish') return false
       return true
     },
   },
@@ -31,10 +34,10 @@ export default {
 <template>
   <div class="home-container">
     <div class="home-menu">
-      <a @click.prevent="newgamehandler" ><span>New Game</span></a>
-      <!-- <router-link :to="{ path: '/battle' , query: { continue: 'true' } }" v-if="isLoadAvail"><span>Continue</span></router-link> -->
-      <!-- <router-link :to="{ path: '/statistic' }"><span>Statistic</span></router-link> -->
-      <router-link :to="{ path: '/leaderboard' }"><span>Leaderboard</span></router-link>
+      <a class="home-menu-item" @click.prevent="newgamehandler" ><span>New Game</span></a>
+      <a class="home-menu-item" @click.prevent="contgamehandler" v-show="isLoadAvail"><span>Continue</span></a>
+      <router-link class="home-menu-item" :to="{ path: '/statistic' }" v-show="roundlog.length > 0"><span>Statistic</span></router-link>
+      <router-link class="home-menu-item" :to="{ path: '/leaderboard' }"><span>Leaderboard</span></router-link>
     </div>
   </div>
 </template>
@@ -58,13 +61,25 @@ export default {
   justify-content: center;
   align-items: center;
   align-content: center;
+  gap: 5%;
 }
+
+.home-menu-item{
+  width: 100%;
+  margin: 10%;
+  text-align: center;
+}
+
 </style>
 
 <style scoped>
+*{
+  cursor: default;
+}
+
 span {
   color: white;
-  font-size: x-large;
+  font-size: x-large;  
 }
 
 span:hover {

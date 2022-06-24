@@ -31,19 +31,24 @@ export default {
 @import "@/assets/base.css";
 
 body {
-  min-width: 600px;
-  min-height: 456px;
-  height: 100vh;
   margin: 0;
   padding: 0;
   background-color: #222;
+  height: 100%;
 }
 
 a:link, a:visited, a:hover, a:active {
   color: transparent;
 }
 
+#app{
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+}
+
 .content-container {
+  height: 100%;
   display: flex;
   align-content: center;
   justify-content: center;

@@ -1,6 +1,6 @@
 <template>
 <div class="map-selector-card">
-  <span class="invent-item-title">{{pokemon.name}}</span>
+  <span class="span-headers invent-item-title">{{pokemon.name}}</span>
   <div class="map-image-container">
     <img
       :src="sprite"
@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     async fetchsrpiteimg(){
+      if(!this.pokemon) return
       try {
         const {data:recv} = await axios.request({
           method: 'GET',
@@ -46,6 +47,7 @@ export default {
   },
   created(){
     // fetch img
+    this.sprite = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Pok%C3%A9_Ball_icon.svg/1026px-Pok%C3%A9_Ball_icon.svg.png"
     this.fetchsrpiteimg()
   }
 }

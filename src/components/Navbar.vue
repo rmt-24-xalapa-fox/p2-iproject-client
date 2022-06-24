@@ -2,7 +2,7 @@
 <div class="topnav">
   <div class="nav-menu">
     <router-link :to="{ name: 'home' }" :class="$route.name==='home'?'active':''" ><span>Home</span></router-link>    
-    <!-- <router-link :to="{ path: '/statistic' }" :class="$route.path==='/statistic'?'active':''" ><span>Statistic</span></router-link> -->
+    <router-link :to="{ path: '/statistic' }" :class="$route.path==='/statistic'?'active':''" v-show="roundlog.length > 0" ><span>Statistic</span></router-link>
     <router-link :to="{ path: '/leaderboard' }" :class="$route.path==='/leaderboard'?'active':''" ><span>Leaderboard</span></router-link>  
   </div>
   <div class="nav-login">
@@ -42,7 +42,7 @@ export default {
   // end methods
 
   computed: {
-    ...mapState(useMainStore, ["logedIn"])
+    ...mapState(useMainStore, ["logedIn", "roundlog"])
   },
 
   mounted() {

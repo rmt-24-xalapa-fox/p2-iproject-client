@@ -88,7 +88,7 @@ export default {
   background-color: #6cf;
 }
 
-.type-fighthing {
+.type-fighting {
   background-color: #b54;
 }
 

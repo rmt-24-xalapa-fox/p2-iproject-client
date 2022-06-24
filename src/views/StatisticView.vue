@@ -16,7 +16,7 @@ export default {
 
   },
   computed:{
-    ...mapState(useMainStore, ["runlog"]),
+    ...mapState(useMainStore, ["runlog", "runStatus", "roundlog"]),
 
   },
   created(){
@@ -28,12 +28,19 @@ export default {
 <template>
   <div class="page-container">
     <div class="title-page">
-      <h1>YOU LOSE</h1>
+      <h1 v-show="runStatus==='finish'">YOU LOSE</h1>
     </div>
     <!-- stat run here -->
     <div class="stat-container">
-      <div v-for="log in runlog">
-        <span v-for="detail in log">{{detail}}</span>        
+      <div v-if="roundlog.length>0" class="detail-container">
+        <span class="stat-detail" style="font-weight: bold;">This Round</span>
+        <span class="stat-detail" v-for="detail in roundlog">{{detail}}</span>
+        <hr class="rounded" />
+      </div>
+      <div v-for="(log, i) in runlog" class="detail-container">
+        <span class="stat-detail" style="font-weight: bold;">Round {{i+1}}</span>
+        <span class="stat-detail" v-for="detail in log">{{detail}}</span>
+        <hr class="rounded" />
       </div>
     </div>
   </div>
@@ -47,7 +54,7 @@ export default {
   min-height: 400px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
   align-content: center;
 }
@@ -70,8 +77,8 @@ export default {
 .stat-container {
   min-width: 200px;
   min-height: 100px;
-  height: 80%;
-  width: fit-content;
+  width: 80%;
+  max-width: 600px;
   background-color: #2f4e62;
   border: white 5px solid;  
   border-radius: 10%;
@@ -82,19 +89,35 @@ export default {
   box-shadow: 0px 0px 0px 10px #c6a74a;
   display: flex;  
   flex-direction: column;
-  justify-content: center;
-  flex-wrap: wrap;
+  justify-content: flex-start;
+  overflow-y: auto;
   align-items: center;
   align-content: center;  
 }
 
-</style>
+.detail-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
 
-<style scoped>
-span {
+.stat-detail {
   color: white;
   font-size: 16px;
   margin: auto 10%;
   text-align: center;
 }
+
+hr.rounded {
+  margin: auto;
+  width: 80%;
+  border-top: 3px solid #bbb;
+  border-radius: 5px;
+}
+
+</style>
+
+<style scoped>
+
 </style>

@@ -18,6 +18,7 @@ export default {
     return {
       counter: 0,
       nextStop: "",
+      stopimg: "",
       dittoimg:
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png",
       enemyimg:
@@ -25,6 +26,7 @@ export default {
       // shinyRates: 1 / 4096,
       shinyRates: 1 / 322,
       skip: true,
+      openStop: false,
     };
   },
   methods: {
@@ -35,7 +37,32 @@ export default {
       "initFight",
       "setTypes",
       "discardTransform",
+      "bonfireHandler",
+      "traderHandler",
     ]),
+
+    setNextStop() {
+      if (this.counter === 3 && this.rounds%20!==0) {
+        // swap next stop
+        this.nextStop = this.nextStop === "Bonfire" ? "Trader" : "Bonfire";
+        this.stopimg = this.nextStop === "Bonfire" ? "79747017_p0.png" : "SHOP.png";
+        this.counter = 0;
+        this.openStop = true;
+      } else {
+        this.openStop = false;
+      }
+    },
+
+    bonusStagehandler(){
+      if(this.nextStop === "Bonfire") {
+        this.bonfireHandler()
+        return
+      }
+      if(this.nextStop === "Trader"){
+        this.traderHandler()
+        return
+      }
+    },
 
     async fetchsrpiteimgNType() {
       try {
@@ -98,17 +125,8 @@ export default {
       "runlog",
       "runStatus",
       "loots",
+      "bonusstage",
     ]),
-
-    showNextStop() {
-      if (this.counter === 3) {
-        // swap next stop
-        this.nextStop = this.nextStop === "center" ? "shop" : "center";
-        this.counter = 0;
-        return this.nextStop;
-      }
-      return false;
-    },
 
     notDupe(){
       const idx = this.ditto.transforms.findIndex( p => p.id === this.enemy.id)
@@ -156,6 +174,7 @@ export default {
         this.counter = 0;
       } else if (newval > oldval) {
         this.counter++;
+        this.setNextStop()
       }
     },
   },
@@ -175,10 +194,11 @@ export default {
         <StarterCard class="map-selector-card selected-yellow"
           v-for="pokemon in enemies" :pokemon="pokemon" :key="pokemon.id" @click="enemySelected(pokemon)" />
         <!-- bonus stage -->
-        <div class="map-selector-card" v-if="showNextStop">
-          <span class="span-headers invent-item-title">{{showNextStop.toUpperCase()}}</span>
+        <div class="map-selector-card" v-if="openStop" v-show="bonusstage" @click="bonusStagehandler">
+          <!-- <span class="span-headers invent-item-title">{{showNextStop.toUpperCase()}}</span> -->
+          <span class="span-headers invent-item-title">{{nextStop}}</span>
           <div class="map-image-container">
-            <img src="https://pokemongohub.net/wp-content/uploads/2019/12/jvy42zwoit741.jpg" alt="" />
+            <img :src="stopimg" alt="" />
           </div>
         </div>
       </div>
@@ -270,14 +290,14 @@ export default {
         </div>
         <div class="invent-item-title">
           <span class="span-headers">Round: {{ rounds }} </span>
-          <span class="span-headers">Money: {{ money }} </span>
+          <span class="span-headers">Coins: {{ money }} </span>
         </div>
         <div class="info-inventory">
           <!--  -->
           <div class="info-invent-container" v-for="(cat, key) in inventory" 
           v-show="Object.keys(cat).length > 0">
             <div class="invent-item-title">
-              <span class="span-headers">{{key}}</span>
+              <span class="span-headers">{{key === 'Utils' ? 'Items' : key}}</span>
             </div>
             <table class="invent-item-container" >
               <tr class="invent-item-row" 
@@ -285,7 +305,7 @@ export default {
               v-show="item.stock > 0" @click="useInventItem(key, name)" 
               :key="name" >
                 <td class="invent-item-name">
-                  <span class="span-headers invent-item-detail">{{name}}</span>
+                  <span class="span-headers invent-item-detail"><img :src="item.img" >{{name}}</span>
                 </td>
                 <td class="invent-item-val">
                   <span class="span-headers invent-item-detail">{{item.stock}}</span>
@@ -293,71 +313,6 @@ export default {
               </tr>
             </table>
           </div>
-          <!--  -->
-          <!-- <div class="info-invent-container" v-show="inventory.Medicine.length">
-            <div class="invent-item-title">
-              <span class="span-headers">Consumables</span>
-            </div>
-            <table class="invent-item-container">
-              <tr class="invent-item-row" v-show="invent.stock > 0" @click="useInventItem(invent, index)" 
-              v-for="(invent, index) in inventory.Medicine" :key="invent.id" >
-                <td class="invent-item-name">
-                  <span class="span-headers invent-item-detail">{{invent.name}}</span>
-                </td>
-                <td class="invent-item-val">
-                  <span class="span-headers invent-item-detail">{{invent.stock}}</span>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div class="info-invent-container" v-show="inventory.Utils.length">
-            <div class="invent-item-title">
-              <span class="span-headers">Utilities</span>
-            </div>
-            <table class="invent-item-container">
-              <tr class="invent-item-row" v-show="invent.stock > 0" @click="useInventItem(invent, index)" 
-              v-for="(invent, index) in inventory.Utils" :key="invent.id" >
-                <td class="invent-item-name">
-                  <span class="span-headers invent-item-detail">{{invent.name}}</span>
-                </td>
-                <td class="invent-item-val">
-                  <span class="span-headers invent-item-detail">{{invent.stock}}</span>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div class="info-invent-container" v-show="inventory.Berries.length">
-            <div class="span-headers invent-item-title">
-              <span class="span-headers">Berries</span>
-            </div>
-            <table class="invent-item-container">
-              <tr class="invent-item-row" v-show="invent.stock > 0" @click="useInventItem(invent, index)" 
-                v-for="(invent, index) in inventory.Berries" :key="invent.id" >
-                <td class="invent-item-name">
-                  <span class="span-headers invent-item-detail">{{invent.name}}</span>
-                </td>
-                <td class="invent-item-val">
-                  <span class="span-headers invent-item-detail">{{invent.stock}}</span>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div class="info-invent-container" v-show="inventory.Valuable.length">
-            <div class="invent-item-title">
-              <span class="span-headers">Valuable</span>
-            </div>
-            <table class="invent-item-container">
-              <tr class="invent-item-row" v-show="invent.stock > 0" 
-                v-for="(invent, index) in inventory.Valuable" :key="invent.id" >
-                <td class="invent-item-name">
-                  <span class="invent-item-detail">{{ invent.name }}</span>
-                </td>
-                <td class="invent-item-val">
-                  <span class="invent-item-detail">{{ invent.stock }}</span>
-                </td>
-              </tr>
-            </table>
-          </div> -->
           <div class="info-invent-container">
             <div class="invent-item-title" v-show="itemlog.length">
               <span class="span-headers">{{ itemlog }}</span>

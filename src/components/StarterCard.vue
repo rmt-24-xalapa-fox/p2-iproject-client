@@ -1,6 +1,6 @@
 <template>
 <div class="map-selector-card">
-  <span class="invent-item-title">{{pokemon.name}}</span>
+  <span class="span-headers invent-item-title">{{pokemon.name}}</span>
   <div class="map-image-container">
     <img
       :src="sprite"

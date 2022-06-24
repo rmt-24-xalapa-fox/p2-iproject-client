@@ -43,10 +43,10 @@ export default {
         });
         window.fbAsyncInit = function () {
             FB.init({
-                appId: '{your-app-id}',
+                appId: '1382494195590177',
                 cookie: true,
                 xfbml: true,
-                version: '{api-version}'
+                version: 'v14.0'
             });
 
             FB.AppEvents.logPageView();

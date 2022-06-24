@@ -16,7 +16,12 @@ export default {
   },
   computed: {
     ...mapState(useMaarvelStore, ["url"]),
-    ...mapWritableState(useMaarvelStore, ["isCharacters", "isComics", "isLogin"]),
+    ...mapWritableState(useMaarvelStore, [
+      "isCharacters",
+      "isComics",
+      "isLogin",
+      "isGifs",
+    ]),
   },
 
   methods: {
@@ -42,6 +47,7 @@ export default {
     this.getNewComics();
     this.isCharacters = false;
     this.isComics = false;
+    this.isGifs = false;
   },
 };
 </script>

@@ -2,6 +2,7 @@
 import { mapActions, mapWritableState } from "pinia";
 import { useMaarvelStore } from "../stores/marvel";
 import axios from "axios";
+import SearchGifs from "./search-gifs.vue";
 
 export default {
   name: "NavBar",
@@ -22,7 +23,6 @@ export default {
         const { data } = await axios.get(
           `${this.url}/characters?page=${page}&name=${alphabet}`
         );
-
         this.totalCharacters = data.data.total;
         this.totalPage = Math.ceil(this.totalCharacters / 50);
         const result = data.data.results;
@@ -34,32 +34,26 @@ export default {
         console.log(error);
       }
     },
-
     home() {
       this.$router.push("/");
     },
-
     logout() {
       localStorage.clear();
       this.$router.push("/login");
       this.isLogin = false;
     },
-
     previousPage() {
       this.currentPage = this.currentPage - 1;
       this.seachByAlphabet();
     },
-
     nextPage() {
       this.currentPage = this.currentPage + 1;
       this.seachByAlphabet();
     },
-
     searchLocalHandler() {
       this.fetchComics();
     },
   },
-
   computed: {
     ...mapWritableState(useMaarvelStore, [
       "isCharacters",
@@ -71,11 +65,10 @@ export default {
       "alphabet",
       "year",
       "isLogin",
+      "isGifs",
     ]),
   },
-  // created() {
-  //   this.seachByAlphabet();
-  // },
+  components: { SearchGifs },
 };
 </script>
 
@@ -91,7 +84,7 @@ export default {
           <li><router-link to="/characters">Characters</router-link></li>
           <li><router-link to="/comics">All Comics</router-link></li>
           <li><a href="#">Favourite</a></li>
-          <li><a href="#">Memes</a></li>
+          <li><router-link to="/gifs" href="#">GIF's</router-link></li>
           <!-- <li><a href="#">Trailer</a></li> -->
           <li><a href="#" v-on:click.prevent="logout">Logout</a></li>
         </ul>
@@ -156,6 +149,9 @@ export default {
           &raquo;</a
         >
       </div>
+
+      <!-- SEARCH GIFS  -->
+      <SearchGifs v-if="isGifs === true" />
     </div>
   </header>
 </template>

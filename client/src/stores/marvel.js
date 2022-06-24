@@ -11,11 +11,13 @@ export const useMaarvelStore = defineStore({
     character: [],
     characters: [],
     comics: [],
+    gifs: [],
     imageUrl: '',
     name: '',
     description: '',
     isComics: false,
     isCharacters: false,
+    isGifs: false,
     isLogin: false,
     currentPage: 1,
     totalPage: 0,
@@ -26,6 +28,7 @@ export const useMaarvelStore = defineStore({
     ID_Comic: 0,
     year: "",
     QR_Code: "",
+    searchDataGif:'',
   }),
   getters: {
     doubleCount: (state) => state.counter * 2
@@ -115,6 +118,29 @@ export const useMaarvelStore = defineStore({
           text: `${error.response.data.message}`,
         });
       }
-    }
+    },
+
+    input() {
+      clearTimeout(this.timeOutInput);
+      this.timeOutInput = setTimeout(() => {
+        this.searchGif();
+      }, 500);
+    },
+
+    async searchGif() {
+      try {
+        console.log(this.searchDataGif, '<<<<<<');
+        this.gifs = [];
+        // console.log(this.gifs);
+        const { data } = await axios.get(
+          `http://api.giphy.com/v1/gifs/search?q=${this.searchDataGif}&api_key=NqKS6feoumT4SeZzi5nS3kumS2kp2wZb&limit=100`
+        );
+        this.gifs = data.data;
+
+        console.log(this.gifs);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   }
 })

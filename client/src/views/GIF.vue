@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapWritableState } from "pinia";
 import { useMaarvelStore } from "../stores/marvel";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default {
   name: "GIF",
@@ -17,9 +18,15 @@ export default {
   },
   methods: {
     ...mapActions(useMaarvelStore, ["input"]),
-    copyUrl() {
-      const copy = this.$refs.url.select();
-      document.execCommand("copy", false, copy);
+
+    copyUrl(copy) {
+      navigator.clipboard.writeText(copy);
+      Swal.fire({
+        icon: "success",
+        title: `Copied to clipboard`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
     },
   },
 
@@ -39,15 +46,16 @@ export default {
     <div class="gift" v-for="gif in gifs" :key="gif.id">
       <img class="gift-display" :src="gif.images.original.url" alt="" />
       <div>
-        <form action="">
-          <input
-            class="copy-gift"
-            type="text"
-            ref="url"
-            :value="`${gif.images.original.url}`"
-          />
-          <button class="copy-btn" v-on:click="copyUrl">Copy</button>
-        </form>
+        <input
+          class="copy-gift"
+          type="text"
+          ref="url"
+          :value="`${gif.images.original.url}`"
+          readonly
+        />
+        <button class="copy-btn" v-on:click.prevent="copyUrl(gif.images.original.url)">
+          Copy
+        </button>
       </div>
     </div>
   </div>

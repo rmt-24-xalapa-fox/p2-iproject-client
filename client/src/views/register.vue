@@ -69,7 +69,6 @@ export default {
         Register Now
       </a>
     </form>
-    <!-- <hr class="my-2" /> -->
     <div class="to-login">
       Allready have an account?
       <router-link to="/login" ><a>Login Now</a></router-link>
@@ -94,7 +93,6 @@ export default {
      margin-left: 5px;
 }
 .login-box h3 {
-  /* margin: 0 0 30px; */
   padding: 0;
   color: #d83c3c;
   text-align: center;

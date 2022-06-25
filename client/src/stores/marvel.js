@@ -28,7 +28,7 @@ export const useMaarvelStore = defineStore({
     ID_Comic: 0,
     year: "",
     QR_Code: "",
-    searchDataGif:'',
+    searchDataGif: '',
   }),
   getters: {
     doubleCount: (state) => state.counter * 2
@@ -37,7 +37,6 @@ export const useMaarvelStore = defineStore({
     //* GET DETAIL
     async seachByAlphabet() {
       try {
-        console.log(this.alphabet);
         this.characters = [];
         this.totalCharacters = 0;
         const { data } = await axios.get(
@@ -67,7 +66,6 @@ export const useMaarvelStore = defineStore({
           `${this.url}/comics?page=${this.pageComics}&year=${Number(this.year)}`
         );
 
-        console.log(data);
         this.totalComics = data.data.total;
         this.totalPage = Math.ceil(this.totalComics / 20);
 
@@ -93,7 +91,6 @@ export const useMaarvelStore = defineStore({
         const { data } = await axios.get(
           `${this.url}/comics/${id}`
         );
-        console.log(data);
 
       } catch (error) {
         Swal.fire({
@@ -129,17 +126,21 @@ export const useMaarvelStore = defineStore({
 
     async searchGif() {
       try {
-        console.log(this.searchDataGif, '<<<<<<');
+
         this.gifs = [];
-        // console.log(this.gifs);
+
         const { data } = await axios.get(
           `http://api.giphy.com/v1/gifs/search?q=${this.searchDataGif}&api_key=NqKS6feoumT4SeZzi5nS3kumS2kp2wZb&limit=100`
         );
         this.gifs = data.data;
 
-        console.log(this.gifs);
       } catch (error) {
-        console.log(error);
+
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${error.response.data.message}`,
+        });
       }
     },
   }

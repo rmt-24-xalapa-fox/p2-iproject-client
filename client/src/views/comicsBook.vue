@@ -7,23 +7,28 @@ export default {
   name: "Comics",
   data() {
     return {
-      // comics: [],
       size: "portrait_xlarge.jpg",
       totalComics: 0,
       page: 1,
       year: "",
-      // totalPage: 0,
     };
   },
 
   computed: {
     ...mapState(useMaarvelStore, ["url", "comics"]),
-    ...mapWritableState(useMaarvelStore, ["isComics", "isCharacters", "pageComics", "totalPage", "ID_Comic", "isGifs"]),
+    ...mapWritableState(useMaarvelStore, [
+      "isComics",
+      "isCharacters",
+      "pageComics",
+      "totalPage",
+      "ID_Comic",
+      "isGifs",
+    ]),
   },
 
   methods: {
     ...mapActions(useMaarvelStore, ["fetchComics", "getDetailComics"]),
-    
+
     previous() {
       this.pageComics = this.pageComics - 1;
       this.fetchComics();
@@ -49,11 +54,16 @@ export default {
 
   <!-- PAGINATION  -->
   <div class="pagination-comics">
-    <a href="#" v-if="this.pageComics > 1 && this.pageComics !== 0" v-on:click.prevent="previous"
+    <a
+      href="#"
+      v-if="this.pageComics > 1 && this.pageComics !== 0"
+      v-on:click.prevent="previous"
       >&laquo;</a
     >
     <a href="#">{{ this.pageComics }}</a>
-    <a href="#" v-if="this.pageComics < this.totalPage" v-on:click.prevent="next">&raquo;</a>
+    <a href="#" v-if="this.pageComics < this.totalPage" v-on:click.prevent="next"
+      >&raquo;</a
+    >
   </div>
   <!-- DISPLAY COMMICS  -->
   <h2 class="h2-comics">
@@ -77,7 +87,12 @@ export default {
             <ul class="page">
               <li></li>
               <li>
-                <a class="btn-comics" href="#" v-on:click.prevent="getDetailComics(comic.id)">Download</a>
+                <a
+                  class="btn-comics"
+                  href="#"
+                  v-on:click.prevent="getDetailComics(comic.id)"
+                  >Download</a
+                >
               </li>
               <li></li>
               <li></li>
@@ -159,7 +174,6 @@ h2.h2-comics {
   justify-content: center;
   font-size: 30px;
   margin-top: -350px;
-  /* margin-bottom: -100px; */
 }
 
 .pagination-comics-buttom a {
@@ -180,14 +194,6 @@ h2.h2-comics {
   color: #d83c3c;
   font-size: 20px;
 }
-
-/* a :hofer {
-  color: #d83c3c;
-} */
-/* 
-a {
-  color: #ccc;
-} */
 
 /*-------------------------------------*/
 
@@ -239,12 +245,6 @@ a {
   content: "";
 }
 
-/* html,
-body {
-  height: 100%;
-  -webkit-font-smoothing: subpixel-antialiased;
-} */
-
 html {
   font-size: 100%;
 }
@@ -252,7 +252,6 @@ html {
 body {
   background: #1e1d32;
   color: #ecf0f1;
-  /* font-family: "Lato", "Arial", sans-serif; */
   font-weight: 400;
   line-height: 1.2;
 }

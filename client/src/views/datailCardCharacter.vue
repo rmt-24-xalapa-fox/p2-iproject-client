@@ -14,7 +14,6 @@ export default {
   },
 
   mounted() {
-    // this.getDetailCharacter()
     this.isCharacters = false;
     this.getQRCode();
   },
@@ -22,32 +21,29 @@ export default {
 </script>
 
 <template>
-  <section class="tv-content">
-    <!-- <div class="bg"> -->
-    <div class="content">
-      <div class="image">
-        <img :src="imageUrl" />
-      </div>
-      <div class="info">
-        <div class="title">
-          <a href="#">
-            <h2>{{ name }}</h2>
-          </a>
-          <!-- <span>(2019)</span> -->
+    <div  class="detail-content">
+      <div class="content">
+        <div class="image">
+          <img :src="imageUrl" />
         </div>
-        <div class="about">
-          <div class="overview">
-            <h3>Description</h3>
-            <p>{{ description }}.</p>
+        <div class="info">
+          <div class="title">
+            <a href="#">
+              <h2>{{ name }}</h2>
+            </a>
+          </div>
+          <div class="about">
+            <div class="overview">
+              <h3>Description</h3>
+              <p>{{ description }}.</p>
+            </div>
           </div>
         </div>
+        <div class="qr-code">
+          <img :src="this.QR_Code" alt="" />
+        </div>
       </div>
-      <div class="qr-code">
-        <img :src="this.QR_Code" alt="" />
-      </div>
-      <!-- </div> -->
     </div>
-  </section>
 </template>
 
 <style>
@@ -70,20 +66,7 @@ html {
   margin-left: -180px;
   margin-top: 20px;
   position: absolute;
-  /* color: blue; */
-  /* background-color: blue; */
 }
-
-.tv-content {
-  list-style: none;
-  text-decoration: none;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* *:focus {
-  outline: none;
-} */
 
 h3 {
   font-size: 22px;
@@ -99,14 +82,23 @@ a {
   color: #fff;
 }
 
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .content {
   display: flex;
-  /* margin: 200px auto auto 545px; */
   position: absolute;
   width: 100rem;
   height: 55rem;
   top: 20%;
-  left: 30%;
+  left: 26.5%;
+  justify-content: center;
+  /* align-items: center; */
 }
 
 .image {

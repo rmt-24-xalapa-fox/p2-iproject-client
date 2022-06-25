@@ -3,6 +3,7 @@ import { mapActions, mapWritableState } from "pinia";
 import { useMaarvelStore } from "../stores/marvel";
 import axios from "axios";
 import SearchGifs from "./search-gifs.vue";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default {
   name: "NavBar",
@@ -15,23 +16,29 @@ export default {
     ...mapActions(useMaarvelStore, ["fetchComics"]),
     async seachByAlphabet(alphabet, page) {
       try {
-        // console.log(this.alphabet);
         this.alphabet = alphabet;
         this.currentPage = page;
         this.characters = [];
         this.totalCharacters = 0;
+
         const { data } = await axios.get(
           `${this.url}/characters?page=${page}&name=${alphabet}`
         );
+
         this.totalCharacters = data.data.total;
         this.totalPage = Math.ceil(this.totalCharacters / 50);
         const result = data.data.results;
+
         result.forEach((el) => {
           this.characters.push(el);
           el.url = `${el.thumbnail.path}/${this.size}`;
         });
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: `Oops...`,
+          text: `${error.response.data.message}`,
+        });
       }
     },
     home() {
@@ -75,7 +82,6 @@ export default {
 <template>
   <header>
     <div class="nav-bar">
-      <!-- <div class="hello">Welcome!</div> -->
       <nav>
         <ul class="navbar-ul">
           <li class="active">
@@ -201,8 +207,6 @@ form.form-wrapper.cf {
   height: 70px;
   padding: 15px;
   margin: 30px auto 20px auto;
-  /* justify-content: center; */
-  /* align-items: center; */
   background: #444;
   background: rgba(0, 0, 0, 0.2);
   -moz-border-radius: 10px;
@@ -310,20 +314,17 @@ a {
 }
 
 .nav-bar {
-  /* position: sticky; */
   position: fixed;
   padding: 50px;
   top: 0;
   left: 0;
   width: 100%;
-  /* height: 2px; */
   z-index: 40;
   background-color: #1d1f20;
 }
 
 .nav-bar nav {
   margin: 0 auto;
-  /* border: 2px solid #fff; */
   max-width: 1300px;
 }
 
@@ -348,5 +349,4 @@ a {
   color: #ff5954;
 }
 
-/*# sourceMappingURL=entry.css.map */
 </style>

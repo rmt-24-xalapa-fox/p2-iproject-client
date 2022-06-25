@@ -56,7 +56,7 @@ export default {
         })
         .then((res) => {
           const { access_token, email } = res.data;
-          //     //* set local storage
+          //* set local storage
           localStorage.setItem("access_token", access_token);
 
           this.isLogin = true;
@@ -92,10 +92,10 @@ export default {
           "1071514386727-40iels1mkp6b5488e40nfjv7lonnu0ir.apps.googleusercontent.com",
         callback: cb,
       });
-      google.accounts.id.renderButton(
-        document.getElementById("buttonDiv"),
-        { theme: "outline", size: "large" } // customization attributes
-      );
+      google.accounts.id.renderButton(document.getElementById("buttonDiv"), {
+        theme: "outline",
+        size: "large",
+      });
     };
   },
 };
@@ -137,7 +137,6 @@ export default {
 <style>
 a #buttonDiv {
   margin-top: 20px;
-  /* margin-bottom: 50px; */
 }
 
 .to-register {
@@ -147,21 +146,16 @@ a #buttonDiv {
   margin-top: 40px;
   text-align: center;
   font-size: 15px;
-  /* margin-top: -30px; */
 }
 
 .to-register a {
   font-size: 17px;
   margin-left: 5px;
 }
-/* html { */
-/* height: 100%; */
-/* } */
+
 body {
   margin: 0;
   padding: 0;
-  /* font-family: sans-serif; */
-  /* background: linear-gradient(#141e30, #243b55); */
 }
 
 .login-box {
@@ -179,7 +173,6 @@ body {
 }
 
 .login-box h1 {
-  /* margin: 0 0 30px; */
   padding: 0;
   color: #d83c3c;
   text-align: center;
@@ -213,12 +206,6 @@ body {
   transition: 0.5s;
 }
 
-/* form a {
-display: flex;
-align-items: center;
-justify-content: center;
-} */
-
 .login-box .user-box input:focus ~ label,
 .login-box .user-box input:valid ~ label {
   top: -20px;
@@ -230,7 +217,6 @@ justify-content: center;
 .login-box form a {
   position: relative;
   display: flex;
-  /* display: inline-block; */
   padding: 10px 20px;
   color: #03e9f4;
   font-size: 16px;
@@ -242,8 +228,6 @@ justify-content: center;
   letter-spacing: 4px;
   align-items: center;
   justify-content: center;
-  /* max-width: 200px; */
-  /* width: 20px; */
 }
 
 .login-box a:hover {
@@ -256,7 +240,6 @@ justify-content: center;
 .login-box a span {
   position: absolute;
   display: block;
-  /* color: #d83c3c; */
 }
 
 .login-box a span:nth-child(1) {

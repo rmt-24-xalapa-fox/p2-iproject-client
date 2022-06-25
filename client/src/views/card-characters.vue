@@ -13,9 +13,6 @@ export default {
       urlCharacters: "",
       size: "standard_large.jpg",
       totalCharacters: 0,
-      // alphabet: "A",
-      // page: 1,
-      // totalPage: 0,
     };
   },
   methods: {
@@ -32,7 +29,6 @@ export default {
 
         const result = data.data.results;
         result.forEach((el) => {
-          // console.log(el);
           this.characters.push(el);
           el.url = `${el.thumbnail.path}/${this.size}`;
         });
@@ -51,14 +47,15 @@ export default {
       "totalPage",
       "alphabet",
       "characters",
+      "isGifs",
     ]),
   },
 
   mounted() {
     this.fetchCharacters();
-    // this.searchByAlphabet();
     this.isCharacters = true;
     this.isComics = false;
+    this.isGifs = false;
   },
 };
 </script>
@@ -117,7 +114,7 @@ h2 strong,
 .cards,
 .news {
   display: flex;
-  /* text-align: center; */
+  justify-content: center;
 }
 .dif {
   display: inline-flex;
@@ -136,7 +133,6 @@ h2 span {
 }
 body {
   background: #24282f;
-  /* font-family: "Alegreya Sans"; */
 }
 .wrapper {
   padding: 15px;
@@ -171,7 +167,6 @@ h2:after {
 .cards,
 .news {
   flex-flow: row wrap;
-  /* text-align: center; */
 }
 .cards .card,
 .news .card {
@@ -184,13 +179,11 @@ h2:after {
   transform-style: preserve-3d;
   transform: translateZ(0);
   transition: 0.3s;
-  /* text-align: center; */
 }
 .cards .card img,
 .news .card img {
   width: 100%;
   min-height: 100%;
-  /* text-align: center; */
 }
 .cards .card figcaption,
 .news .card figcaption {
@@ -201,13 +194,10 @@ h2:after {
   padding-bottom: 10px;
   font-size: 20px;
   background: none;
-  /* color: #fff; */
   color: red;
   transform: translateY(100%);
   transition: 0.3s;
-  /* text-align: center; */
   text-align: left;
-  /* justify-content: center; */
 }
 .cards .card:after,
 .news .card:after {

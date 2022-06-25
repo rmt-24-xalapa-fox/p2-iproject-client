@@ -49,7 +49,6 @@ export default {
 
 input.search-gifs {
   width: 100%;
-  /* height: 40px; */
   padding: 10px 5px;
   float: left;
   font: bold 20px "lucida sans", "trebuchet MS", "Tahoma";

@@ -93,10 +93,6 @@ export default {
               <figcaption>
                 <h1 class="comic-title">{{ comic.title }}</h1>
                 <span class="author-comics">By Marvel</span>
-                <!-- <p>
-                  Fennel bamboo shoot pea sprouts rutabaga parsnip green bean gram wattle
-                  seed lentil horseradish nori. Grape lettuce turnip greens.
-                </p> -->
               </figcaption>
             </figure>
           </li>
@@ -165,12 +161,6 @@ export default {
   content: "";
 }
 
-/* html,
-body {
-  height: 100%;
-  -webkit-font-smoothing: subpixel-antialiased;
-} */
-
 html {
   font-size: 100%;
 }
@@ -178,7 +168,6 @@ html {
 body {
   background: #1e1d32;
   color: #ecf0f1;
-  /* font-family: "Lato", "Arial", sans-serif; */
   font-weight: 400;
   line-height: 1.2;
 }

@@ -1,14 +1,20 @@
 <script>
 import Navbar from "./components/navbar.vue";
-import { mapState } from "pinia";
+import { mapWritableState } from "pinia";
 import { useMaarvelStore } from "./stores/marvel";
 
 export default {
   name: "app",
   components: { Navbar },
   computed: {
-    ...mapState(useMaarvelStore, ["isLogin"]),
-  }
+    ...mapWritableState(useMaarvelStore, ["isLogin"]),
+  },
+  created() {
+    const access_token = localStorage.getItem("access_token");
+    if (access_token) {
+      this.isLogin = true;
+    }
+  },
 };
 </script>
 

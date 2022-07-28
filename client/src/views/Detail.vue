@@ -36,7 +36,7 @@ export default {
             <div class="col-6">
                 <div class="panel">
                     <div class="panel-body">
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="margin-top:10px">
                             <div class="pro-img-details">
                                 <img :src="productDetail.imgUrl" alt="">
                             </div>
@@ -67,7 +67,7 @@ export default {
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-6" style="margin-top:10px">
                 <iframe width="420" height="345" :src="youtubeUrl">
                 </iframe>
             </div>
@@ -78,12 +78,8 @@ export default {
 </template>
 
 <style>
-body {
-    margin-top: 20px;
-    background: darkslategrey;
-}
-
 /*panel*/
+
 .panel {
     border: none;
     box-shadow: none;

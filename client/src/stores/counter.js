@@ -214,7 +214,7 @@ export const useCounterStore = defineStore({
             access_token: localStorage.getItem("access_token")
           }
         });
-        this.getAllCart();
+        this.getAllCart(); http;
       } catch (err) {
         Swal.fire({
           icon: 'error',

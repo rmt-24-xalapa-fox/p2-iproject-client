@@ -21,17 +21,26 @@ export default {
 </script>
 <template>
     <div class="col-2" style="display: grid;
-  justify-content: center;">
+  justify-content: center; margin-top: 10px; margin-bottom: 5px;">
         <router-link :to="{ name: 'detail', params: { id: data.id } }">
-            <div class="card h-100" style="width:100%;">
+            <div class="card h-100" style="width: 170px; height: 300px;">
                 <img :src="data.imgUrl" class="card-img-top" alt="...">
-                <div class="card-body">
+                <div class="card-body"
+                    style="display:flex; flex-direction: column; justify-content: space-between; text-decoration: none;">
                     <h5 class="card-title" style="font-size:14px">{{ data.name }}</h5>
-                    <p class="card-text" style="font-size:12px">{{ data.description }}</p>
-                    <p class="card-text" style="color:gray">{{ formatCurrency(data.price) }}</p>
+                    <p class="card-text" style="font-size:12px; color: gray;">{{
+                            data.description
+                    }}</p>
+                    <p class="card-text" style="color:black; text-decoration: none;">{{ formatCurrency(data.price) }}
+                    </p>
 
                 </div>
             </div>
         </router-link>
     </div>
 </template>
+<style>
+.col-2:hover {
+    background-color: yellowgreen;
+}
+</style>

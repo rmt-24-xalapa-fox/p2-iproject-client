@@ -21,7 +21,7 @@ export default {
 </script>
 <template>
     <div class="col-2" style="display: grid;
-  justify-content: center; margin-top: 10px; margin-bottom: 5px;">
+  justify-content: center; margin-top: 10px; margin-bottom: 5px; transition: transform .2s;">
         <router-link :to="{ name: 'detail', params: { id: data.id } }">
             <div class="card h-100" style="width: 170px; height: 300px;">
                 <img :src="data.imgUrl" class="card-img-top" alt="...">
@@ -42,5 +42,6 @@ export default {
 <style>
 .col-2:hover {
     background-color: yellowgreen;
+    transform: scale(1.06);
 }
 </style>

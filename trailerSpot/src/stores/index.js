@@ -37,11 +37,14 @@ export const useMainStore = defineStore({
 
     async register(query, email, password) {
       try {
-        const res = await axios.post("http://localhost:3000/users/register", {
-          query,
-          email,
-          password,
-        });
+        const res = await axios.post(
+          "https://trailerspot998.herokuapp.com/users/register",
+          {
+            query,
+            email,
+            password,
+          }
+        );
         if (res.status === "success") {
           swal("Success!", res.status, "success");
         }
@@ -53,10 +56,13 @@ export const useMainStore = defineStore({
 
     async login(email, password) {
       try {
-        const res = await axios.post("http://localhost:3000/users/login", {
-          email: email,
-          password: password,
-        });
+        const res = await axios.post(
+          "https://trailerspot998.herokuapp.com/users/login",
+          {
+            email: email,
+            password: password,
+          }
+        );
         const { access_token } = res.data.data;
         if (access_token) {
           swal("Successfully logged in!", "", "success");
@@ -92,7 +98,7 @@ export const useMainStore = defineStore({
         let response = "";
         response = await axios({
           method: "GET",
-          url: `http://localhost:3000/movies?page=${page}&query=${query}`,
+          url: `https://trailerspot998.herokuapp.com/movies?page=${page}&query=${query}`,
         });
         this.movies = response.data.results;
         this.activePage = response.data.page;
@@ -108,7 +114,7 @@ export const useMainStore = defineStore({
         const access_token = this.access_token;
         const response = await axios({
           method: "GET",
-          url: `http://localhost:3000/movies/${id}`,
+          url: `https://trailerspot998.herokuapp.com/movies/${id}`,
         });
         this.activeMovie = response.data;
       } catch (err) {

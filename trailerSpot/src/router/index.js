@@ -15,7 +15,17 @@ const router = createRouter({
         }
       },
     },
-
+    {
+      path: "/:id",
+      component: () => import("../components/detail.vue"),
+      beforeEnter(to, from, next) {
+        if (!localStorage.getItem("access_token")) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      },
+    },
     {
       path: "/login",
       name: "login",

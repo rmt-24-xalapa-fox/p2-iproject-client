@@ -35,12 +35,12 @@ export const useMainStore = defineStore({
       this.$router.push("/login");
     },
 
-    async register(query, email, password) {
+    async register(name, email, password) {
       try {
         const res = await axios.post(
           "https://trailerspot998.herokuapp.com/users/register",
           {
-            query,
+            name,
             email,
             password,
           }

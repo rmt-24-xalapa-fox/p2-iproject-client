@@ -22,11 +22,8 @@ export default {
       :src="'https://www.themoviedb.org/t/p/w1280' + movie.poster_path"
       alt="No poster available"
     />
-    <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">{{ movie.title }}</div>
-      <p class="text-white text-base">
-        {{ movie.description }}
-      </p>
+    <div class="lg:px-6 lg:py-4 flex w-full">
+      <div class="font-bold text-sm content-center">{{ movie.title }}</div>
     </div>
   </div>
 </template>

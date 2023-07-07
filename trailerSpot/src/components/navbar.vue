@@ -48,7 +48,6 @@ export default {
             <a @click.prevent ="logout" v-if= "loggedIn" class="cursor-pointer hover:text-stone-500" to="/login">
               Logout
             </a>
-
           </li>
       </li>
     </ul>

@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState, mapWritableState } from "pinia";
+import { mapActions } from "pinia";
 import { useMainStore } from "../stores";
 export default {
   name: "card",
